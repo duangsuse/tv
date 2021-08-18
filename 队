@@ -1,0 +1,75 @@
+你能知道![排序1] 自学&可视化?四种常见排序算法: 插入冒泡快排合并
+自带字幕的命令行卖瓜见过没? *蹭暖瓶 xbeibei,ffcrop=whxy,lrc_merg,montagepy
+误区?最全?自学?技术科普区流量密码是啥? *门后见
+前后端，IT人必要基本分工? *门前见
+把你对代码的每个修改保存到 GitHub 与 coding 吧~ *门后见:ssh-keygen -t ed25519 -C email&&config:Host-IdentityFile& ssh-add -K &git remote set-url origin git@github.com:repo.git
+苏观点[初学选C] 为什么我不建议靠C入门编程? : 懂易懂?倒果推因
+指针到底是啥?老程又爱又恨的不严谨性!
+带你欣赏编程区干货/寒窗强技up主们! *门前见
+极客小贴士 termux,cloudnas ondrive, MT,汉化C *门前见
+小苏编程课[0] 暑假教你编程~只是个开场白?给小白!
+集合,图像,视频,音频(混合,静音,音高)
+
+[1]基本定义与流程控制
+[2]数据集合与队列
+[]面向对象API
+[]IO和络
+[]热门:可视化,爬虫
+
+前端魔法[svg:stroke-dash] 只能在区间里 stroke, 还能动画其 offset? symbol[id]>text use[class href], 居中圆圈 bottom-top radius
+Office: 下划线ins键,右箭头,
+
+格局小了[组合子] 告别烦人的高引用变量? 你不需要了解函数式语言!
+格局小了[关系式] 逻辑式编程是啥? 为啥你们写的东西我看不懂?
+格局小了[文学编程] 程序是严谨的小说，谁把它变成空洞的符号? 是不配?
+
+这是啥?[计算器:四则中缀/递等式求值] 来看看能输出中间步骤的计算器! 还不懂协程吗?:  正则与树状组,求值序,逆波兰reduce, corotine/表达式语言, feed字符流, pub final, .k 的解析方法
+这是啥?[伪3D盒子与] 算距离差,画MC风地图,斜边列表, HIGH 到不行！
+
+格局小了[看JS大佬] 刻板印象! JavaScript 真的积弱吗？: slicker.me,marcgg.com,lab.xecades.xyz,houdini; ruanyifeng; tbfleming.github.io/cib, 98.js.org, 95.ajf.me, DTA, furigana,mdui
+格局小了[副作用:编译] 解释器和编译器本质不同? 写的程序执行顺带生成代码
+格局小了[缩进语义] Layout? 2D语法? 这是很难的东西吗?
+格局小了[解析器] 要区分解析/分词器? 几百行做形式法? 拆成几块讲你还敢锝色吗
+
+游戏时间[迷宫] 怎么从空壁布尔位图绘制墙边框? 这也算 AI? 确实算!
+游戏时间[飞机] 草，敌机的导弹能跟踪?
+游戏时间[2D方块地图] 随机几何的缝合? 具体是咋画
+
+s[::-1], title, deepflat /2 for, strip split int, set counter判计数, ''*n, for-else, rand.sample, sys.sizeof, dict.update
+
+
+是定义数据模型、实现语法及语义还是在用学术家汇编写辅助程序呢
+画蛇添足，投机取巧，鸡你太美
+没有进行路径合并压缩的树
+不在一个层次——真正了解问题、只将听到利用某些特质的一种解法
+
+
+彩块,弹球,盒隧道
+星空,粒子/集切变,Aster,迷宫,大西瓜
+
+窗口BadA,录音py, HachiLRC
+
+
+EQuery:el,Equiv/Fold
+snake,tetris,asteroid,maze,renju
+Android序列化与反射解释器
+动画复刻:分部,时差,涟漪
+UI:Tab与折叠树
+
+行号高亮编辑框
+Trie与Suffix
+计绘小惊喜/美树/canvas2bg
+scanjs
+mkey与查询UI/API:n=eval(by)
+
+EQuery 的 letIt: JS 不支持隐式 this 作用域但可用 ith 模拟，各自语法是
+f.apply(a)
+x.apply(f)
+这个顺序是完全冲突的，而且第一次看见 Kotlin 代码时一度以是 Rust 一样特性多到令人困惑的语言
+于是 let,run,also,apply 就变成了 let,letIt,also,alsoIt （一直就觉得四个应两两合并
+
+LPY文学编程/物理名
+RP8复刻
+xy函数图
+LittleDict
+挑战重写！分形,life,SGD
