@@ -1,9 +1,9 @@
 3行代码，竟然让网页为我心动18次！<em>求对象</>
-<script>
+<script>//这不是迭代的最终版本，抱歉因为临时插了两个点枚举算法，结构非常混乱，鞠躬道歉。
 let doc=document, g=doc.body.appendChild(doc.createElement("canvas")).getContext("2d"), {sqrt,abs,round,sin,cos,PI}=Math,
 //a*-y+l*1.8=a*sqrt(l),l=x^2+y^2,a=1;  x^2+(y-|x|^c)^2=a;  y=|x|(c+.3)-(a-x^2)^0.5 *sin(x*6.6*pi), c=.5 ，小数都是比率参数、仅f[2]减号顺序可调。
  loves=[a=>(x,y)=>(l=>a*(y-2.)+l*2.2 - a*sqrt(l)) (x**2+(y-2.)**2),  (a,c=0.5)=>(x,y)=>x*x+(y-abs(x)**c)**2 -a,  (a,c=0.8)=>(x,y)=>abs(x)*c - (a-x*x)**.5 *sin(x*6.6*PI) -y],
- 途1=0//另个基于dx,dy性能强一丢丢，数值稳定性不好,注意 if(途1) 二选一读
+ 途1=1//另个基于dx,dy性能强一丢丢，数值稳定性不好,注意 if(途1) 二选一读
  anim=(dur,rn,f, ease=x=> -cos(x*PI)/2 +0.5)=>new Promise(done=>{//电脑太慢会卡帧,单帧绘时过长 不降时延?吗, 其实dur是单次时间..
    let t=0.0,t1=1.0*nRep,dt=tf/dur, [v0,v1]=rn, id=setInterval(()=>{ f(v0+ ease(t)*(v1-v0)); (t<t1)?(t+=dt): done(rn)&clearInterval(id)}, tf)
  }),tf=(1000/ 60), nRep=18/loves.length *2/*往复*/, cFind={d:0.05, dsov:0.02, dvis:0.5, bgSov:"red",bgVisf:near=>`rgba(${120+near*(255-120)} , 30, 99, ${near}` }
@@ -27,7 +27,7 @@ view([-2,-2, 2,3])
 bgRed="#f48fb1 #e91e63 #ee0000".split(" ")//爱是分阶段的呢
 
 Promise.mapAll=(a,f)=>a.reduce((p,x,i)=>p.then(()=>f(x,i)), Promise.resolve())
-心跳=(t,rn,vp,fs)=>{vp=view(vp);return Promise.mapAll(fs,(f,i)=>doc.body.style.setProperty("--bg",bgRed[i])|| anim(t,rn, gCached(a=>find(vp,f(a)) )) )}
+心跳=(t,rn,vp,fs)=>{vp=view(vp);return Promise.mapAll(fs,(f,i)=>doc.body.style.setProperty("--bg",bgRed[i])|| anim(t,rn, gCached(a=>find(vp,f(a)) ))/*外提=单函缓存*/ )}
 心跳(1500,[0.3,3.3], [-2,-2, 2,3],loves).then(()=>alert("爱你呦"))
 </script>
 <style>body{background: linear-gradient(147deg, transparent,var(--bg)) fixed; transition:2s --bg ease; }  canvas{position:absolute;top:50px}
