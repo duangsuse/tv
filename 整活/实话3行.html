@@ -3,27 +3,64 @@
 let doc=document, g=doc.body.appendChild(doc.createElement("canvas")).getContext("2d"), {sqrt,abs,round,sin,cos,PI}=Math,
 //a*-y+l*1.8=a*sqrt(l),l=x^2+y^2,a=1;  x^2+(y-|x|^c)^2=a;  y=|x|(c+.3)-(a-x^2)^0.5 *sin(x*6.6*pi), c=.5 ，小数都是比率参数、仅f[2]减号顺序可调。
  loves=[a=>(x,y)=>(l=>a*(y-2.)+l*2.2 - a*sqrt(l)) (x**2+(y-2.)**2),  (a,c=0.5)=>(x,y)=>x*x+(y-abs(x)**c)**2 -a,  (a,c=0.8)=>(x,y)=>abs(x)*c - (a-x*x)**.5 *sin(x*6.6*PI) -y],
- 
- anim=(dur,rn,f, ease=x=> -cos(x*PI)/2 +0.5)=>new Promise(done=>{
+ 途1=0//另个基于dx,dy性能强一丢丢，数值稳定性不好,注意 if(途1) 二选一读
+ anim=(dur,rn,f, ease=x=> -cos(x*PI)/2 +0.5)=>new Promise(done=>{//电脑太慢会卡帧,单帧绘时过长 不降时延?吗, 其实dur是单次时间..
    let t=0.0,t1=1.0*nRep,dt=tf/dur, [v0,v1]=rn, id=setInterval(()=>{ f(v0+ ease(t)*(v1-v0)); (t<t1)?(t+=dt): done(rn)&clearInterval(id)}, tf)
  }),tf=(1000/ 60), nRep=18/loves.length *2/*往复*/, cFind={d:0.05, dsov:0.02, dvis:0.5, bgSov:"red",bgVisf:near=>`rgba(${120+near*(255-120)} , 30, 99, ${near}` }
 let {width:w,height:h}=g.canvas, find=(v0k,f)=>{
   let {d,dsov,dvis, bgSov,bgVisf}=cFind, [x0,y0,kx,ky]=v0k,  x,y, Px=x0,Py
   const
   setY=()=>{ Py=y0+y/ky }, ok=(X0,Y0)=>{
-    x++,y++; Px=x0+x/kx; setY(); x--,y--;
-    let X,Y,l;for(X=X0; X<Px; X+=d)for(Y=Y0; Y<Py; Y+=d){l=abs(f(X,Y)); if(l<dvis){g.fillStyle=(l<dsov)?bgSov:bgVisf( (dvis-l)/dvis);  g.fillRect(x,h-y,1,1);} }
+    let X,Y,l;if(途1){x++,y++; Px=x0+x/kx; setY(); x--,y--;
+    for(X=X0; X<Px; X+=d)for(Y=Y0; Y<Py; Y+=d){l=abs(f(X,Y)); if(l<dvis){g.fillStyle=(l<dsov)?bgSov:bgVisf( (dvis-l)/dvis);  if(true)g.fillRect(x,h-y,1,1);  } }
+    }else for(X=X0; X<X0+dx; X+=d)for(Y=Y0; Y<Y0+dy; Y+=d) 
+    {l=abs(f(X,Y)); if(l<dvis){g.fillStyle=(l<dsov)?bgSov:bgVisf( (dvis-l)/dvis);   g.fillRect(ix,h-iy,1,1);} }
   }
-  for(y=h;y!=0;y--)for(x=0;x<w;x++){setY();ok(Px,Py)} //Px use-left
+  let ix=0, iy=0, dx=kx/w,dy=ky/h; 
+  if(途1)for(y=h;y!=0;y--)for(x=0;x<w;x++){setY();ok(Px,Py)} //Px use-left
+  else{ for(y=y0;iy<h;iy++, y+=dy)for(ix=0,x=x0;ix<w;ix++, x+=dx){ok(x,y)} }
+  
 },
-view=rn2P=>{let a=rn2P,[x0,y0,x1,y1]=a; a[2]=w/(x1-x0),a[3]=h/(y1-y0); g.canvas.height=h=(a[2]/a[3])*h/*等比下,先*/; return a},
+view=rn2P=>{let a=rn2P,[x0,y0,x1,y1]=a; if(途1){a[2]=w/(x1-x0),a[3]=h/(y1-y0); g.canvas.height=h=(a[2]/a[3])*h/*等比下,先*/;}else{a[2]=(x1-x0),a[3]=(y1-y0); g.canvas.height=h=(a[3]/a[2])*(1?w: h) } return a},
 gCached=(f,frac=1000,c=new Map)=>a=>{g.clearRect(0,0,w,h); a=round(a*frac)/frac; let b=c.get(a); (b!=null)?g.putImageData(b,0,0) : f(a)&c.set(a,g.getImageData(0,0,w,h)); } //勿学&.
 view([-2,-2, 2,3])
 bgRed="#f48fb1 #e91e63 #ee0000".split(" ")//爱是分阶段的呢
 
 Promise.mapAll=(a,f)=>a.reduce((p,x,i)=>p.then(()=>f(x,i)), Promise.resolve())
-vp=view([-2,-2, 2,3])
-Promise.mapAll(loves,(f,i)=>doc.body.style.setProperty("--bg",bgRed[i])|| anim(1500,[0.3,3.3], gCached(a=> find(vp,f(a)) )) ).then(()=>alert("爱你呦"))
+心跳=(t,rn,vp,fs)=>{vp=view(vp);return Promise.mapAll(fs,(f,i)=>doc.body.style.setProperty("--bg",bgRed[i])|| anim(t,rn, gCached(a=>find(vp,f(a)) )) )}
+心跳(1500,[0.3,3.3], [-2,-2, 2,3],loves).then(()=>alert("爱你呦"))
 </script>
 <style>body{background: linear-gradient(147deg, transparent,var(--bg)) fixed; transition:2s --bg ease; }  canvas{position:absolute;top:50px}
 @property --bg {syntax:'<color>';inherits:false;initial-value:white}</style>
+
+<script>//另个话题咯,尝试中
+
+let julC=null,
+mandel=(nIter=60)=>(Px,Py)=>{
+  let x=0,y=0, i=0,x1=0;
+  if(julC!=null){x=Px,y=Py; [Px,Py]=julC} //0,0+N(P x y) vs. Pxy+N C
+  do {
+    x1=x*x-y*y +Px; y=2*x*y +Py; x=x1
+  } while(i++ <nIter&&(x*x+y*y)<4)
+  return i-1
+}
+
+eachP=f=>{//反比采样法,来由.
+  let ix=0, iy=0, [x,y]=[-0.8,.156],[kx,ky]=[1,1],//越大区域大 采样率持平
+    dx=kx/w,dy=ky/h, x0=x;
+  for(;iy<h;iy++, y+=dy)for(ix=0,x=x0;ix<w;ix++, x+=dx)f(x,y,ix,iy);
+}
+f=mandel()
+//eachP((x,y,sx,sy)=>{let i=f(x,y);if(i==0)return; g.fillStyle=`hsl(0,100%,${i/60*100}%)`;g.fillRect(sx,sy,1,1)})
+
+曼=()=>{eG=g.canvas
+w=eG.width=500,h=eG.height=500
+console.time()
+cFind.bgVisf=i=>`hsl(0,100%,${i*100}%)`
+cFind.d=1;cFind.dsov=5;cFind.bgSov="blueviolet";cFind.dvis=20
+find(0?[-0.8,.156,1,1] :view([-2,-1,.5,1]), mandel())
+console.timeEnd()}
+//(2sin t-sin 2t, 2cos t-cos 2t), t<2pi (=6.2) 是笛卡尔心的迭代式, 如果真打算三行内非它莫属了，再加个 filter:dropshadow 完事，但没教学意义
+//动画缓存好像可以优化为缓冲区-内重复，但既不规范也不灵活
+//另请:https://www.cnblogs.com/staven/p/4764709.html, mkey/love_4quad
+</script>

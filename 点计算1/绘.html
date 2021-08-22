@@ -197,7 +197,7 @@ dmax=5; que=[]
 晃树=(e,n,rn)=>{
   if(dep==dmax)return propMov(copy(eTail), {x1:"cx",y1:"cy"}) //是从同0伸出许多能转的，不是算出下点多少度
   e=propMov(e,{x1:"",y1:"",x2:"",y2:""})
-  dep++;let e1=newA(dep==dmax?1: n, _=> eSG.appendChild(晃树(copy(eLn),n,rn)) );dep--
+  dep++;let e1=newA(dep==dmax?1: n, _=> eSG.appendChild(晃树(copy(eLn),n,rn)) );dep-- //v 或许该分出 t=>v 和 setInterval 驱动者, 或许可以像 sorts2 加点声音?(
   if(0)if(dep%2==0)anim(5000, objRef({r:rn[0]},"r"),往复, v=>{let r=v[0](),N=e1.length,p0=plusRL([e.x1,e.y1],r,l),[x,y]=p0; e.x2=x,e.y2=y; for(let ee of e1)ee.x1=x,ee.y1=y;  e1.forEach((ee,i)=>{[x,y]=plusRL(p0,r*i/N,l); ee.x2=x,ee.y2=y;  });  }, rn[1])
   //{let r=v[0](),N=e1.length,p0=[e.x1,e.y1]; e1.forEach((ee,i)=>{let[x,y]=plusRL(p0,r*i/N,l); e.x2=x,e.y2=y; ee.x1=x,ee.y1=y;  });  }
   console.log(e1)
