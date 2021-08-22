@@ -1,0 +1,245 @@
+<svg style="display:none">
+<ellipse rx=1 ry=1 />
+<line x1=1 y1=50 x2=10 y2=50 stroke="black">
+</svg>
+<canvas></canvas>
+<textarea rows=20></textarea>
+<svg viewBox="0 0 100 100"></svg>
+<script>
+dep=0, T=0,dT=0;
+rnR=[20,50],
+l=20;
+
+const doc=document,
+copy=e=>e.cloneNode(0),
+[eLn,eTail,eG,eSG,eTa]="line ellipse canvas svg[viewBox] textarea".split(" ").map(k=>doc.querySelector(k)),
+//果冻状的树: 每点 dep<n_dep时 分叉n 子点, 长l,角d 往复 也改变子p0点; 嗯再加个变色
+tree=(upd,n=2, maxd=5)=>{ //该有封装..
+  let e,es=[],fs=[];
+  if(dep==maxd)return Object.assign(copy(eTail), {
+    set x1(v){this.cx=v;},
+    set y1(v){this.cy=v;}
+  });
+  while(n--) {e=copy(eLn); dep++; e.append(tree(fs,n,maxd)); dep--; es.push(e)}
+  upd.push((x0,y0)=>es.forEahc(e=>{
+    e.x1=x0;e.y1=y0; //v 不太可能给每个枝条保存角度时差算!
+    let [r0,r1]=rnR, [x,y]=plusRL([x0,y0], r0+(r1-r0)*(T%1.0), l);e.x2=x;e.y2=y;
+    for(let f of fs)f(x,y); //不用每层 setInterval, 不太准确,顺序必须父优先
+  }));//如果每层都有 div 组织 ee, NodeIter 就行，但层是铺平的, 必须前序遍历(末子点push,整体reverse), 好像不能用单层[e]保存
+  return e
+},
+line=(x0,y0,x1,y1)=>{
+  let lx=x1-x0,ly=y1-y0, dy=ly/lx, x=x0,y=y0;
+  for(;x<x1;x++,y+=dy)g.fillRect(x,y,1,1);
+},
+plusRL=([x,y],r,l)=>[x+l*Math.cos(r),y+l*Math.sin(r)],
+rad=d=>d*Math.PI/180,
+ball=(x,y,r,p=1)=>g.arc(x,y,r,0,Math.PI*r*p );
+g=eG.getContext("2d")
+
+line(0,0,50,50)
+line(0,0,25,90)
+line(90,20,100,90)//不是种稳定算法也不能处理 x1<x0 的情况
+
+//旋行成花、N角形 走l&转360/N
+p0=[50,50]
+for(let r=10;r<90;r+=25)(0&&g.rotate(10-r))&g.strokeText("你好混乱",...plusRL(p0, rad(r),100))//不能设rotate不好算位置
+
+g.lineWidth=2;g.moveTo(...p0);
+Tur=()=>({r:rad(50),
+  f(l){p0=plusRL(p0,this.r,l);let [x,y]=p0; g.lineTo(x,y);g.stroke(); g.moveTo(x,y)}
+})
+
+tu=Tur();
+triang=(l,n)=>{
+  let N=n;while(n--){tu.f(l); tu.r+=rad(180)+rad(180)/N} //270三遍是star,草没rad
+}
+triang(100,5)//仅单数
+
+//指针太阳系: d=0~360, l固定 多个步进l的环路径
+sun=()=>setInterval(()=>{g.clearRect(0,0,200,200);
+  let r=(new Date).getTime() %rad(360)//不必须
+  for(let l of [25,70]){g.beginPath();//不加这个会连成五环...
+  ball(...plusRL(p0, r, l), 10);//l==25?r : r-rad(180)*r 会乱飘, 不妙啊反向转圈需要 T1-T,... T1是秒数最大值么, 还是 r+dt 好
+  g.closePath();g.stroke();}
+}, 100)
+eG.onmousemove=ev=>{p0[0]=ev.offsetX;p0[1]=ev.offsetY}
+
+//Koch star, 赵爽弦图
+kochStar=(l0,l_min)=>{ // Turtle 里 n,k 的命名可真难懂
+  const R3=rad(-60), R=rad(120), ln=(l,r1)=>{ //试试改俩的符号, 同号内雪花
+    if (l < l_min){tu.f(l);tu.r+=r1; return}
+    l/=3.0
+    ln(l, R3);ln(l, R);
+    ln(l, R3);ln(l,0);
+    tu.r+=r1;
+  }
+  let n=3; while(n--) { ln(l0, R) }
+}
+0&&kochStar(120,12)
+
+爽=(x,y,l,lb)=>{//lb la =l
+  let x1=x+l,y1=y+l
+  g.strokeRect(x,y,l,l) //v 若锐角a, cos a 的直线90度依矩心转四次即成图
+  if(0){let ww=lb, hh=l-lb, Tri=(x,y,w,h)=>{g.moveTo(x,y)&g.lineTo(x,y-h)&g.lineTo(x+w,y); g.moveTo(x+w,y)&g.lineTo(x,y-h);g.stroke()}
+  Tri(x1-ww,y+hh,ww,hh)}
+  let cx=cV(x,x1),cy=cV(y,y1), cl=l-lb, xR=cx+cl,yR=cy+cl, n=5-1;
+  g.fillRect(cx,cy,5,5)
+  //g.moveTo(x,y);g.rotate(120)
+  while(n--) {g.moveTo(xR,yR);g.lineTo(x,y);g.stroke();g.rotate(30)}
+},cV=(a,b)=>a+(b-a)/2
+
+真爽=(x,y,l,lC)=>{
+const{asin,sin,cos,sqrt,tan}=Math;
+  g.strokeRect(x,y,l,l)
+  if(0){let ll=sqrt(-tan(l)), xC=x+ll*sin(a),yC=y+ll*cos(a);debugger //不记得弦图本就是斜着的了
+  g.fillRect(xC,yC,2,2)}
+  //弦图好像很难 sin+cos=l  这种关系, 是旋转出来的; 呃不对，弦图分形好像不需要靠 x,y,l 正方区间递归 或锐角度
+  //是两个 A切/AB 随便选边点的切分法,内方 y=lC, 角度=-asin lC
+  g.translate(x,y)
+  0&&g.rotate(-asin(lC/l))//咱只要图形转,源点不能转啊.. 傻JS, 而且居然是rad..
+  g.translate(-x,-y)
+  let d=l-lC, ll=sqrt(d*d+lC*lC) //l*-cos(lC) //tan90 不存在
+  1&&rot(-asin(lC/l), x+lC/2,y+lC/2,ll,ll,  (...a)=>g.strokeRect(...a))
+  //感谢MDN的图形中心旋转,但这是不是有些过度计算... 安这个差不多了
+  0&&g.strokeRect(x,y+lC,ll,ll)
+},
+rot=(r,x,y,w,h,f)=>{
+let xC=cV(x,x+w),yC=cV(y,y+h) // 还有N边形版本弦图,都是通过连接边切点继续构造缩小; 边接正方形勾股也有树形式
+g.translate(xC, yC);
+g.rotate(r);
+g.translate(-xC, -yC);
+f(x,y,w,h);
+}
+
+真爽(180,20,100,20)
+
+//附:走l&转N-i 螺纹、箭头、重复走/转递减 螺纹成花
+螺=(n,r,l)=>{
+  //let r=rad(n);while(n--) {tu.f(l*n); tu.r+=r}
+  let N=n;while(n--) {tu.f(l); tu.r+=rad((N-n)/N *r)}
+}
+螺(29,90,-10)
+
+四圈=l=>{
+let n=4,i;while(n--) for(i=1;i<l;i++){tu.f(l/10); tu.r+=rad(l-i);}
+}
+四圈(100)
+
+
+花=n=>{
+  let N=n,n1, rep=(f,r)=>{
+    while(n1--){tu.f(3*f); tu.r+=5*rad(r); }
+  };
+  while(n--){
+    n1=N/2;rep(7,6)
+    n1=N-1;rep(3,3)
+    n1=N+1;rep(1,2)
+  }
+}
+花(8)
+
+
+箭头=l=>{
+  tu.f(l); //45度补角
+  tu.f(边长)//补角
+  tu.f(弦长) //补角,边长
+}
+
+扫T=()=>{ // 只用T常数往返区间. 和动画补间仅差:不靠x变量
+let c=T/n, i=T%n
+return v0+(c%2==0? i: n-i)/n*l
+}
+
+//tu 暴露 rpan, p0 允许迭代法? 还是用 plusRL 处理点集好了
+</script>
+<script>
+
+anim=(dur,v,ease,f,...v1)=>{
+  const N=v.length,v0=v.map(g=>g()), upd=t=>{
+    //let l=v0.map((x,i)=>v1[i]-x) //基本补间, 把sleep变 timer task 了
+    for(let i=0;i<N;i++)v[i](v0[i]+ ease(t)*(v1[i]-v0[i]) ) //别更新 v0[i]= ! 别每次创建 v0 导致0~1区间崩坏,会变得不幸
+  }
+  f=_optFun(f,v1, noOp);ease=_optFun(ease,v1,noOp)
+  console.time()
+  let x=0.0,dx=10/dur, T0=time(), id=setInterval(()=>{ //1000ms 100个点
+    upd(x); f(v);
+    if(x<1.0)x+=dx; else clearInterval(id)&console.timeEnd();
+    0&&console.log("n")
+    T0=time()
+    //if(x<0.5)x+=dx*(1+time()-T0)/100; else clearInterval(id)&console.timeEnd();
+    //T0=time()
+    //if(x+dx*8<=1.0)x+=dx; else 草这都太不准确了!
+  }, 1?10: (1.0/dx) /dur*10) //dur*dx
+  //setTimeout(console.timeEnd, dur)
+},
+_optFun=(f,a,v_else)=>{
+  if(typeof f=="function")return f;
+  a.unshift(f); return v_else//undef?
+},noOp=x=>x,
+_objPuts=(o,ks)=>{ // in 是遍历原型链的
+  let k,v;for(k of ks? ks.split(" ") : Object.keys(o) ){v=o[k]; Object.defineProperty(o,k, {value:v1=>(v1==void 0)?v:(o[k]=v1) }) }
+  return o//草了,style px 和 SVG baseval.value 都有bind 需要
+},
+objRef=(o,ks)=>ks.split(" ").map(k=> v1=>(v1==void 0)?o[k]:(o[k]=v1) ),
+time=()=>(new Date).getTime(),
+往复=()=>time()/1000%1,
+往返=()=>{let T=time(),S=1000, c=Math.floor(T/S),i=T%S; return (c%2==0?i:S-i) /S } //适合x单调增,不想用sin波时使用, 第一次知道还能单变量不改步长这样
+
+swing=x=> -Math.cos(x*Math.PI)/2 +0.5
+
+eTa.value="awsl".repeat(200)
+eTa.select()//eTa.selectionEnd=eTa.value.length;eTa.focus()
+1&&anim(5000,objRef(eTa,"selectionEnd"),往返,0)
+
+//setInterval() 若不是同dt有序调度,收集到[]再合并, 固然可以让父层调子线 x2 ,忽略顶单线,但不方便
+dmax=5; que=[]
+晃树=(e,n,rn)=>{
+  if(dep==dmax)return propMov(copy(eTail), {x1:"cx",y1:"cy"}) //是从同0伸出许多能转的，不是算出下点多少度
+  e=propMov(e,{x1:"",y1:"",x2:"",y2:""})
+  dep++;let e1=newA(dep==dmax?1: n, _=> eSG.appendChild(晃树(copy(eLn),n,rn)) );dep--
+  if(0)if(dep%2==0)anim(5000, objRef({r:rn[0]},"r"),往复, v=>{let r=v[0](),N=e1.length,p0=plusRL([e.x1,e.y1],r,l),[x,y]=p0; e.x2=x,e.y2=y; for(let ee of e1)ee.x1=x,ee.y1=y;  e1.forEach((ee,i)=>{[x,y]=plusRL(p0,r*i/N,l); ee.x2=x,ee.y2=y;  });  }, rn[1])
+  //{let r=v[0](),N=e1.length,p0=[e.x1,e.y1]; e1.forEach((ee,i)=>{let[x,y]=plusRL(p0,r*i/N,l); e.x2=x,e.y2=y; ee.x1=x,ee.y1=y;  });  }
+  console.log(e1)
+  if(0)for(let ee of e1)que.push((e0=>{
+    let r=rn[0]+ 往返()*(rn[1]-rn[0]);
+    [e.x1,e.y1]=plusRL([e0.x2,e0.y2],r,l)
+  })(e) )
+  //ee.p0=e.p1 rn*i/N l
+  let k=1 +dep
+  que.push(()=>{
+    let p0=[e.x2,e.y2],t=往返(),rr=(rn[1]-rn[0])/e1.length
+    e1.forEach((ee,i)=>{ [ee.x1,ee.y1]=p0; [ee.x2,ee.y2]=plusRL(p0,rn[0] +( rr)*(i +1) *t*k , l); }) //+rr*(i) 则枝角不缩到0, +1 去掉则首项不变, +( 扩展则区间左值相当0
+  })
+  return e
+},
+propMov=(o,k_k0)=>{
+for(let[k,k0]of Object.entries(k_k0)){let v0;if(k0=="")v0=o[k]; Object.defineProperty(o,k,{get:()=>(v0||o[k0]).baseVal.value,set:v=>{(v0||o[k0]).baseVal.value=v}}) }
+return o
+},
+newA=(n,f)=>{let a=Array(n),i=0;for(;i<n;i++)a[i]=f(i); return a};
+
+l=10
+晃树(eSG.appendChild(copy(eLn)),2,[rad(10),rad(80)])
+que.reverse();//这顺序很重要哦
+setInterval(()=>{for(let f of que)f()}, 10)
+
+//弦图分形可以不用算两点角度，那是能靠同位点叠加的(正N边形的内角度也是确定的)，只用计算第一层的
+弦图=(n,l,lA,nIter)=>{
+  //第一次海龟并得初始点集，求[1]与[0]的角度差，次2直接角 a[i]+=da 长l(0,1)连线
+  连线=(ps,a,da)=>{}
+}
+
+/*
+首先连线成形，比如 n=4, 点0是90度，1是180度，记下它们的角度
+第一遍封闭后取点1-点0 相对角度 rC，这个在迭代中不变
+
+开始迭代 pr=[[x,y,r], ] ，每一点以其角度加上 lC ，连线后 每点角度增量rC (如左上增后 就是下斜内方的度数)，这样就能继续内部边点+lC迭代
+*/
+双数=(n,l)=>{
+  let N=n;while(n--){tu.f(l); tu.r+=rad(360)/N;}
+}
+双数(4,50)
+
+</script>
+<!---->

@@ -1,0 +1,43 @@
+<style>*{margin:0;padding:0} body{height:100vh;background:grey}  </style>
+<script>
+//横条等时差动画
+
+const doc=document,
+逐个=(dt,fs)=>fs.forEach((f,i)=>setTimeout(f,i*dt)),//new Promise(res=>{; setTimeout(res,dt*fs.length)}) //没意义不知单项时长
+anim=(s,c0="")=>(it,c="")=>{
+  let cs=/(?<=:)(.+?)(?=(\s[a-z]*)?[;}])/g[Symbol.replace](s, (_,m)=>eval(m)), o=doc.styleSheets[0], k;console.log(cs)
+  o.insertRule(`@keyframes _${new Date().getTime()}{${cs}}`);k=o.rules[0].name;
+  it.style.animation=k+" "+c+c0 //如果说有能在三行内完成封装,只有DOM的文本等价了; 取e 缓存 vs->k 需要 match&join 略烦,故不做
+}
+elm=(s,...a)=>{elm.e.innerHTML=String.raw(s,...a);return elm.e.firstElementChild}, //doc.body.appendChild(e).outerHTML=
+newA=(n,f)=>{let a=Array(n),i=0;for(;i<n;i++)a[i]=f(i); return a},n=o=>o.length,
+fref=(o,k,n)=>{let f=o[k]; return(...a)=>f.apply(o,a.slice(0,n))}//fref(seq,i,1)
+
+逐个过=(dt,es, ...seq)=>{
+  let i=0, done=seq.pop(), f=()=>{
+    if(i!=n(seq))逐个(dt, es.map((f=> e=>()=>f(doc.body.appendChild(e)))(seq[i++]) ));
+    else lis(null)},
+  lis=v=>{es[n(es)-1].onanimationend=ev=>done(i,es,ev)}
+  lis(f);return ()=>f()
+},
+计数过=(a,i=0)=>()=>{
+  do{ if(a[i]!=0){a[i]--; a[i+1](); break}
+  else i+=2 }while(1)
+}
+
+变宽=anim(`from{width:0}to{width:it.parentNode.offsetWidth px}`, "1.5s ease-out") //animate(dur,kfs, cfg) 咱不用
+色条=(w,h,c)=>elm`<div style="background:${c};width:${w};height:${h}" >`
+
+elm.e=doc.createElement("div");
+
+N=8, s="游戏时间到！", 色="red orange yellow green blue cyan purple".split(" ")
+
+消除=anim(`to{height:0}`, ".5s forwards")
+
+onload=()=>{
+  let h=doc.body.offsetHeight, w=doc.body.offsetWidth, hh=h/N,
+  点后=逐个过(200, newA(N, i=>色条(w,hh, 色[i%色.length] )), 变宽, 消除, (i,es)=>{es.reverse();if(0)点()}),
+  点字=()=>alert("是字")
+  onclick=计数过([1,点后, 1,点字,  1,点后])
+}
+</script>

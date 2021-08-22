@@ -1,0 +1,24 @@
+<title>三行字，让网页为我心动18次</title>
+<textarea rows=20></textarea><script>
+let doc=document, g=doc.body.appendChild(doc.createElement("canvas")).getContext("2d"), {sqrt,abs,floor,sin,cos,PI}=Math,
+ love=a=>(x,y)=>(l=>a* -y+l*1.8 - a* sqrt(l)) (x**2+y**2),love1=(a,c=0.58)=>(x,y)=> x**2+(y-abs(x)**c)**2 -a, slove=(a,b=6.6,c=0.5)=>(x,y)=>y- abs(x)**c-(a-x*x)**c *sin(x*b*PI),
+ anim=(dur,rn,f,ease=1?x=> -cos(x*PI)/2 +0.5  : x=>x%1)=>{//仅动画三行已经最小了, 再内联find()也缩不了行数嘤嘤
+  let tf=1000/fps, t=0.0,t1=1.0*nRep,dt=tf/dur, [v0,v1]=rn, id=setInterval(()=>{ f(v0+ ease(t)*(v1-v0)); if(t<t1)t+=dt; else clearInterval(id); }, tf)
+ },fps=70, nRep=18, cFind={d:0.05, diff_max:0.02, dvmax:0.5}//取至其距离差/其 百分比, 若用左浓 graident 则可不取差(可惜没有getColorAt画麻烦);  仅dvmax=diff 则表示非alpha区是实心线
+ let eT=doc.currentScript.previousSibling;eT.value="你好世界".repeat(100);eT.select()&anim(1000, [eT.value.length,0], i=>{eT.selectionEnd=i})
+
+let {width:w,height:h}=g.canvas, find=(rn2P,f)=>{
+  let {d,diff_max,dvmax}=cFind, [x0,y0,x1,y1]=rn2P,kx=w/(x1-x0),ky=h/(y1-y0),  x,y, Px=x0,Py // v0,k 也可传入,前单独算
+  //g.canvas.height=(kx/ky)*h
+  const
+  setY=()=>{ Py=y0+y/ky }, ok=(X0,Y0)=>{
+    x++,y++; Px=x0+x/kx; setY(); x--,y--; //Px saved
+    let X,Y,l;for(X=X0; X<Px; X+=d)for(Y=Y0; Y<Py; Y+=d){l=abs(f(X,Y)); if(l<dvmax){g.fillStyle=(l<diff_max)?"red":`rgba(${120+(dvmax-l)/dvmax*(255-120)}, 30, 99, ${(dvmax-l)/dvmax})`;  g.fillRect(x,h-y,1,1);} }
+  }
+  for(y=h;y!=0;y--)for(x=0;x<w;x++){setY();ok(Px,Py)}
+}
+find(1? [-2,-2, 2,3] : [-3,-5, 3,1], love(2.3))//.3~2.78
+cah=new Map//a.toFixed(5)
+anim(2000,[.3,2.78], a=>{g.clearRect(0,0,w,h); a=floor(a*1000)/1000; let b=cah.get(a); if(b!=null)g.putImageData(b,0,0);else{ find([-2,-2, 2,3] , love1(a));cah.set(a,g.getImageData(0,0,w,h)) } })
+//Promise.mapAll=(a,f)=>a.reduceRight((p,x)=>f(x).then(p), Promise.resolve())
+</script>

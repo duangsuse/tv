@@ -1,0 +1,29 @@
+3行代码，竟然让网页为我心动18次！<em>求对象</>
+<script>
+let doc=document, g=doc.body.appendChild(doc.createElement("canvas")).getContext("2d"), {sqrt,abs,round,sin,cos,PI}=Math,
+//a*-y+l*1.8=a*sqrt(l),l=x^2+y^2,a=1;  x^2+(y-|x|^c)^2=a;  y=|x|(c+.3)-(a-x^2)^0.5 *sin(x*6.6*pi), c=.5 ，小数都是比率参数、仅f[2]减号顺序可调。
+ loves=[a=>(x,y)=>(l=>a*(y-2.)+l*2.2 - a*sqrt(l)) (x**2+(y-2.)**2),  (a,c=0.5)=>(x,y)=>x*x+(y-abs(x)**c)**2 -a,  (a,c=0.8)=>(x,y)=>abs(x)*c - (a-x*x)**.5 *sin(x*6.6*PI) -y],
+ 
+ anim=(dur,rn,f, ease=x=> -cos(x*PI)/2 +0.5)=>new Promise(done=>{
+   let t=0.0,t1=1.0*nRep,dt=tf/dur, [v0,v1]=rn, id=setInterval(()=>{ f(v0+ ease(t)*(v1-v0)); (t<t1)?(t+=dt): done(rn)&clearInterval(id)}, tf)
+ }),tf=(1000/ 60), nRep=18/loves.length *2/*往复*/, cFind={d:0.05, dsov:0.02, dvis:0.5, bgSov:"red",bgVisf:near=>`rgba(${120+near*(255-120)} , 30, 99, ${near}` }
+let {width:w,height:h}=g.canvas, find=(v0k,f)=>{
+  let {d,dsov,dvis, bgSov,bgVisf}=cFind, [x0,y0,kx,ky]=v0k,  x,y, Px=x0,Py
+  const
+  setY=()=>{ Py=y0+y/ky }, ok=(X0,Y0)=>{
+    x++,y++; Px=x0+x/kx; setY(); x--,y--;
+    let X,Y,l;for(X=X0; X<Px; X+=d)for(Y=Y0; Y<Py; Y+=d){l=abs(f(X,Y)); if(l<dvis){g.fillStyle=(l<dsov)?bgSov:bgVisf( (dvis-l)/dvis);  g.fillRect(x,h-y,1,1);} }
+  }
+  for(y=h;y!=0;y--)for(x=0;x<w;x++){setY();ok(Px,Py)} //Px use-left
+},
+view=rn2P=>{let a=rn2P,[x0,y0,x1,y1]=a; a[2]=w/(x1-x0),a[3]=h/(y1-y0); g.canvas.height=h=(a[2]/a[3])*h/*等比下,先*/; return a},
+gCached=(f,frac=1000,c=new Map)=>a=>{g.clearRect(0,0,w,h); a=round(a*frac)/frac; let b=c.get(a); (b!=null)?g.putImageData(b,0,0) : f(a)&c.set(a,g.getImageData(0,0,w,h)); } //勿学&.
+view([-2,-2, 2,3])
+bgRed="#f48fb1 #e91e63 #ee0000".split(" ")//爱是分阶段的呢
+
+Promise.mapAll=(a,f)=>a.reduce((p,x,i)=>p.then(()=>f(x,i)), Promise.resolve())
+vp=view([-2,-2, 2,3])
+Promise.mapAll(loves,(f,i)=>doc.body.style.setProperty("--bg",bgRed[i])|| anim(1500,[0.3,3.3], gCached(a=> find(vp,f(a)) )) ).then(()=>alert("爱你呦"))
+</script>
+<style>body{background: linear-gradient(147deg, transparent,var(--bg)) fixed; transition:2s --bg ease; }  canvas{position:absolute;top:50px}
+@property --bg {syntax:'<color>';inherits:false;initial-value:white}</style>
