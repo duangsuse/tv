@@ -10,11 +10,15 @@
 小苏编程课[0] 暑假教你编程~只是个开场白?给小白!
 集合,图像,视频,音频(混合,静音,音高)
 
-[1]基本定义与流程控制
+[1]基本定义,基元值与流程控制
 [2]数据集合与队列
-[]面向对象API
-[]IO和络
-[]热门:可视化,爬虫
+[]面向对象API(封继多口), 泛型; enum,@Anno,case"",catch(|)
+[]IO和络,RegExp,Date,Timer
+[]热门:反射/混入/Stream/Filt,listener,router&templ&session,  可视化,爬虫
+[]黑:位运算,2D数组,B/DFS广搜索
+visualalgo,~galles/visuaz, cxyxiaowu
+
+某语言代码只是程序的形式,你要记的是遍历判定的这些结构; 体系化,算法仅记细节,实用只记名字
 
 前端魔法[svg:stroke-dash] text切分,随机换位, 只能在区间里 stroke, 还能动画其 offset? symbol[id]>text use[class href], 居中圆圈 bottom-top radius
 Office: 下划线ins键,右箭头,
@@ -41,7 +45,7 @@ Office: 下划线ins键,右箭头,
 随机数攻击的要求如果不是直接接触运维，或者说能手改数据库的很难做到，但对严谨的密码学应用来说从传感器获取的真随机是很重要的
 
 游戏时间[贪吃蛇/不判输,迷宫,俄罗斯方块; Java&Android,Py,C] 三游戏,三语言,90行代码
-FBird,大西瓜 圆球碰撞检测
+FBird,大西瓜 圆球碰撞检测: 质量g和重力G 计算的，可引擎本身也要按时间T或者时差啊dt 去计算当前位置，如果说所有最终都会落到地面，你的帧更新该是怎么样，比如 p*-G*dt 吧；这里有个问题，斜塔实验证明质量不同的物体下落速度一致，所以 G 10N/kg *g 代表的质量是和加速度没关系的，它和碰撞传递的势能有关。碰撞计算有检测和势能两部分，一个偏算法一个偏物理，弹球那期你们也看过简单的了，今天来讲圆碰撞检测,(四分树法)和势能传递
 魔塔,泡泡堂,飞机,粒子效果 "方格自瞄",渐变,精灵图,纸娃娃系统; 开发周期, 基于 2,30 格位图的方块游戏限制到底是啥
 
 s[::-1], title, deepflat /2 for, strip split int, set counter判计数, ''*n, for-else, rand.sample, sys.sizeof, dict.update
@@ -59,7 +63,7 @@ s[::-1], title, deepflat /2 for, strip split int, set counter判计数, ''*n, fo
 窗口BadA,录音py, HachiLRC
 
 
-EQuery:el,Equiv/Fold
+EQuery:el,Equiv/Fold; 状态表记录和反操作，就像EQ没有DOM diff一样，EQ选择了反操作；这有两个列表,把Apop入B,或splice的某位置, 反操作是移回；删除也是进入撤回队列垃圾箱，一个操作可以改变两个数据，以 TupleAry 记录
 snake,tetris,asteroid,maze,renju
 Android序列化与反射解释器
 动画复刻:分部,时差,涟漪
