@@ -1,5 +1,5 @@
 3行代码，竟然让网页为我心动18次！<em>求对象</>
-<script>//这不是迭代的最终版本，抱歉因为临时插了两个点枚举算法，结构非常混乱，鞠躬道歉。
+<script>//这不是迭代的最终版本，抱歉因为临时插了两个点枚举算法，结构非常混乱，鞠躬道歉。 新版看 点计算1/心
 let doc=document, g=doc.body.appendChild(doc.createElement("canvas")).getContext("2d"), {sqrt,abs,round,sin,cos,PI}=Math,
 //a*-y+l*1.8=a*sqrt(l),l=x^2+y^2,a=1;  x^2+(y-|x|^c)^2=a;  y=|x|(c+.3)-(a-x^2)^0.5 *sin(x*6.6*pi), c=.5 ，小数都是比率参数、仅f[2]减号顺序可调。
  loves=[a=>(x,y)=>(l=>a*(y-2.)+l*2.2 - a*sqrt(l)) (x**2+(y-2.)**2),  (a,c=0.5)=>(x,y)=>x*x+(y-abs(x)**c)**2 -a,  (a,c=0.8)=>(x,y)=>abs(x)*c - (a-x*x)**.5 *sin(x*6.6*PI) -y],

@@ -1,0 +1,29 @@
+<pre>
+画布e, funG(e?) 是函数图任区间上的点-屏位置封装, {g,w,h, whScale, set wh} 是基础宽高
+{x0,y0,kx,ky} 表示这个区间，x0小图左、kx小横缩，构成 屏幕单点->函数xy区间
+有 {set vpXY,useGFit, p(x,y) } 设图xy区间(并统一宽高比?)、转化坐标，是视口变动时[[]]数组缓存的，而 {cls(), putGP(x,y), draw(gf)} 进行清屏,画点, 绘制 y=x 函数的任务(得y需映回屏幕系,与p()得画布系对照)
+
+还扩充 cfg={d:0.1, vis:[0.04, 1], bgVis:["red", 0,"rgba(120,30,99,0)",1,"rgba(255,30,99,1)"] } 代表gf解 搜索细度、实/渐变区距离大限、渐变色(初次通过canvas水平绘制测度,最大256点,保留)
+anim(毫秒,[值0~1], 当更新,速率=缓动) 设置周期定时器,每秒 anim .fps 帧整体重复 .nRep 次, 缩放即xy0/k四参数共同变动; gCache(g,f,key,frac?,ca=Map) 按函数如 find(,f(a)), find(vp,f) 参数a,vp 对绘过画布整体缓存
+
+Mandelbrot 集是对0点始细度1每点的N次迭代，以Z=ZZ+C后复数模<2的次数/N 选色，Julia 集规则相同但从xy(非00)迭代+julC(非xy)
+此次还有t迭得图(默认 t=0~2pi),心跳动画,3D缩放,请愉快探索
+</pre><script>
+const
+{sqrt,abs,round, sin,cos,PI}=Math, {assign}=Object,
+zip=(a,b)=>a.map((x,i)=>[x,b[i]]), getOrCalc=(d,k,init)=>{let v=d.get(k);if(v===void 0)d.set(k,v=init()); return v},//缩放&多参缓存
+
+anim=assign((dur,v,f, ease=x=> -cos(x*PI)/2 +0.5)=>new Promise(done=>{
+let {tf,nRep}=anim,dt=tf/dur, t=0.0,t1=1.0*nRep, id=setInterval(()=>{ f(...v.map( ([v0,v1])=> rate(v0,v1,ease(t)) ) ); (t<t1)?(t+=dt): done(v)&clearInterval(id)}, tf)
+}), {tf:10,nRep:1, set fps(v){this.tf=1000/v} }),
+gCache=(g,f,key=x=>x,frac=1000,c=new Map)=>(...a)=>{let{width:w,height:h}=g;
+  g.clearRect(0,0,w,h); a=round(a*frac)/frac; let b=c.get(a); (b!=null)?g.putImageData(b,0,0) :f(a)&c.set(a,g.getImageData(0,0,w,h))
+}
+mandel=(nIter=60)=>(Px,Py)=>{
+  let i=0, x=0,y=0,x1=0;
+  if(julC!=null){x=Px,y=Py; [Px,Py]=julC} //0,0+N(P x y) vs. Pxy+N C; 别用do while
+  while(i<nIter&&(x*x+y*y)<4) {i++;//xy+yx, sqrt(xx+yy) <2
+    x1=x*x-y*y +Px; y=2*x*y +Py; x=x1} return i/nIter
+}
+let julC=null
+</script>

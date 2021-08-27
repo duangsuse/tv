@@ -1,0 +1,170 @@
+<svg style="display:none">
+<ellipse rx=1 ry=1 />
+<line x1=1 y1=50 x2=10 y2=50 stroke="black">
+</svg>
+<textarea rows=20></textarea>
+<svg viewBox="0 0 100 100"></svg>
+<script>
+const {sin,PI, cos,atan2,sqrt,abs,round}=Math,doc=document, eG=doc.createElement("canvas"),
+g=doc.body.appendChild(eG).getContext("2d"),
+rad = r => r * PI/180, r360=2*PI, r180=PI,
+gPose=(p0,r,l, f_l)=>{with(g){
+  save();  translate(...p0);rotate(r);
+  moveTo(0,l);beginPath(); f_l(l);  closePath();stroke();
+  restore();
+}},
+
+cfg={nPoly:5,lPoly:-200, r:rad(12),p0:[300,300] }, //不以lC取切点, w半径
+弦图=(nIter)=>{
+  let {r:dr,lPoly:l, nPoly:N,p0}=cfg, rA=(N-2)/N*r180, dk=sin(rA/2) / sin(dr+ rA/2) //用余弦定理和正弦定理推的
+  for (let 内=多边(N), r=0; nIter--; r+=dr,l*=dk) gPose(p0,r,l, 内)
+},
+多边=N=>l=>{ for(let r=r360/N, i=0; i<N; i++) {g.rotate(r);g.lineTo(0,l);} }
+
+eG.width = 600;eG.height = 600;
+弦图(20);
+
+const
+plusRL=([x,y],r,l)=>[x+l*cos(r),y+l*sin(r)],
+KR=2, Tur=(p0)=>({p0,ps:null,penup:false, r:g.moveTo(...p0)||rad(-90),//向上
+  l(v){let p,{ps,r,p0,penup}=this;if(ps){p0.push(r);ps.push(p0)} this.p0=p=plusRL(p0,r,v);let [x,y]=p; if(!penup){g.lineTo(x,y);g.stroke();} g.moveTo(x,y)},
+  pL(l,r){let {p0,r:r0}=this; if(r==null)r=r0;  return plusRL(p0,r,l)},
+  set go(lp){if(typeof lp=="number")lp=this.pL(lp);  this.p0=lp;g.moveTo(...lp); },
+  ball(l,pa=0,pb=100){let p=v=>2*PI*(v/1000); g.arc(...this.p0,l,l*p(pa),l*p(pb))}
+}),
+
+龟多边=(n,l,q=true)=>{
+  let N=n;n=abs(n);q=n>2?q:false; while(n--){ tu.r+=q? r360/N : r180+r180/N; tu.l(l) }//先r后l,末p0准确.
+},
+lines=a=>{let p=a[0],i=1,N=a.length; g.beginPath();g.moveTo(...p);for(; i<N;i++){p=a[i];g.lineTo(...p);g.moveTo(...p)}  g.lineTo(...a[0]); g.closePath(); },
+useLines=f=>{let a=[], ok=swap(tu,{ps:a,penup:true}); f(); lines(a); g.stroke(); ok(); return a},
+dis=([x,y],[x1,y1])=>{x-=x1,y-=y1; return sqrt(x*x+ y*y)},
+swap=(o,c)=>{let {keys,assign:asg}=Object,o0={},k; for(k of keys(c))o0[k]=o[k]; asg(o,c); return()=>asg(o,o0) }
+
+let tu=Tur(cfg.p0); //tu.l(-10); tu.r=0;  tu.l(15)
+
+向量弦图=(N,l,lC,nIter)=>{
+  let kl=lC/l,rC=atan2(lC,l-lC), a0,a1, ll
+  tu.ps=[]; 龟多边(N,l); a0=tu.ps;
+  a1=a0, nI=nIter;while(nI--){ll=dis(a1[0],a1[1]);  lines(a1=a1.map((a,i)=>plusRL(a,a0[i][KR], ll*kl) )); g.stroke(); for(let i=0;i<N;i++)a0[i][KR]+=rC; }
+
+  g.font="10pt sans"
+  a0.forEach((p,i)=> g.fillText("p"+i,...p.slice(0,2)))
+}
+向量弦图(5,200,17,90)
+tu.ps=null;
+
+line=(x0,y0,x1,y1)=>{
+  let lx=x1-x0,ly=y1-y0, dy=ly/lx, x=x0,y=y0;
+  for(;x<x1;x++,y+=dy)g.fillRect(x,y,1,1);
+}
+line(0,0,25,90)
+
+Tur.rrng=function*(a,b,step) {for(let r=rad(a), r1=rad(b),dr=rad(step);r<r1;r+=dr)  yield r}
+
+for(let r of Tur.rrng(150,250,25) )g.strokeText("你好混乱",...tu.pL(100,r));
+
+tu.go=[20,20]
+tu.ball(20)
+g.stroke()
+
+tu.go=[100,150]
+龟多边(5,70, 0)
+tu.l(20)
+
+xyLRect=([x,y],l)=>[x-l/2,y-l/2,l,l], sum=a=>a.reduce((n,x)=>n+x,0),
+time=()=>(new Date).getTime(),
+sun=(d=[25,70,90],bg=["red","green","blue"],l=10,k=0.2)=>{let N=d.length, dr=Array(N).fill(0), rectL=d[N-1]*2+l*N; setInterval(()=>{
+  let r=time()%r360, p0=tu.p0
+  g.clearRect(...xyLRect(p0,rectL));
+  for(let i=0;i<N; i++){g.beginPath();
+    tu.p0=p0;tu.r=r+dr[i]; tu.go=d[i]; tu.ball(l);
+    dr[i]+=i*k//速度差
+  g.closePath();g.fillStyle=bg[i];g.fill();} tu.p0=p0;
+}, 100)}
+eG.onmousemove=ev=>{let a=tu.p0;a[0]=ev.offsetX;a[1]=ev.offsetY}
+
+kochStar=(l0,l_min)=>{
+  const R3=rad(-60), R=rad(120), ln=(l,r1)=>{ //试试改俩的符号, 同号内雪花
+    if (l < l_min){tu.l(l);tu.r+=r1; return}
+    l/=3.0
+    ln(l, R3);ln(l, R);
+    ln(l, R3);ln(l,0);
+    tu.r+=r1;
+  }
+  let n=3; while(n--)ln(l0, R)
+}
+
+kochStar(120,5)
+
+tu.go=[100,490]
+螺=(n,r,l)=>{
+  let N=n;while(n--) {tu.r+=rad((N-n)/N *r); tu.l(l)}
+}
+螺(29,90,-10)
+
+四圈=l=>{
+let n=4,i;while(n--) for(i=1;i<l;i++){tu.r+=rad(l-i);tu.l(l/10)}
+}
+useLines(()=>四圈(100))
+
+花=n=>{
+  let N=n,n1, rep=(f,r)=>{
+    while(n1--){tu.r+=5*rad(r); tu.l(3*f)}
+  };
+  while(n--){
+    n1=N/2;rep(7,6)
+    n1=N-1;rep(3,3)
+    n1=N+1;rep(1,2)
+  }
+}
+useLines(()=>花(8))
+
+箭头=l=>{
+  tu.l(l); //45度补角
+  tu.l(边长)//补角
+  tu.l(弦长) //补角,边长
+}
+
+const {assign,entries,defineProperty}=Object,
+anim=assign((dur,vs,f, ease=x=> -cos(x*PI)/2 +0.5)=>new Promise(done=>{
+let {tf,nRep}=anim,dt=tf/dur, t=0.0,t1=1.0*nRep, v0=vs.map(r=>r[0]),l=vs.map(([v0,v1])=>v1-v0), id=setInterval(()=>{ f(...l.map((v,i)=>v0[i]+ v*ease(t)) ); (t<t1)?(t+=dt): done(vs)&clearInterval(id)}, tf)
+}), {tf:10,nRep:1, set fps(v){this.tf=1000/v} }),
+newA=(n,f)=>{let a=Array(n),i=0;for(;i<n;i++)a[i]=f(i); return a};
+
+let [eTa,eSG,eLn,eDot]="textarea svg[viewBox] line ellipse".split(" ").map(k=>doc.querySelector(k)), copy=e=>e.cloneNode(0)
+
+eTa.value="再见烂码".repeat(100); eTa.select();
+anim(2000, [[0,eTa.textLength], [60,30]], (i,n)=>{eTa.selectionEnd=round(i); eTa.cols=n})
+
+dep=0; dmax=5; que=[]
+晃树=(e,n,rn)=>{
+  if(dep==dmax)return propMov(copy(eDot), {x1:"cx",y1:"cy"}) //是从同0伸出许多能转的，不是算出下点多少度
+  e=propMov(e,{x1:"",y1:"",x2:"",y2:""})
+  dep++;let e1=newA(dep==dmax?1: n, _=> eSG.appendChild(晃树(copy(eLn),n,rn)) );dep--
+
+  console.log(e1)
+  if(0)for(let ee of e1)que.push((e0=>t=>{
+    let r=rn[0]+ t*(rn[1]-rn[0]);
+    [e.x1,e.y1]=plusRL([e0.x2,e0.y2],r,len)
+  })(e) )
+  let k=1 +dep
+  que.push(t=>{
+    let p0=[e.x2,e.y2],rr=(rn[1]-rn[0])/e1.length
+    e1.forEach((ee,i)=>{ [ee.x1,ee.y1]=p0; [ee.x2,ee.y2]=plusRL(p0,rn[0] +( rr)*i +1 *t*k , len); }) //(i+1) 括则枝角缩到0, +1 去掉则首项不变, +( 扩展则区间左值相当0
+  })
+  return e
+},
+propMov=(o,k_k0)=>{//SVG 属性便捷统一
+for(let[k,k0]of entries(k_k0)){let v0;if(k0=="")v0=o[k]; defineProperty(o,k,{get:()=>(v0||o[k0]).baseVal.value,set:v=>{(v0||o[k0]).baseVal.value=v}}) }
+return o
+},
+
+往复=()=>time()/1000%1,
+往返=()=>{let T=time(),S=1000, c=Math.floor(T/S),i=T%S; return (c%2==0?i:S-i) /S };
+
+len=10
+晃树(eSG.appendChild(copy(eLn)),2,[rad(10),rad(80)])
+que.reverse();//这顺序很重要哦
+setInterval(()=>{for(let f of que)f(往返())}, 10)
+</script>
