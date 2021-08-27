@@ -137,7 +137,7 @@ anim=assign((dur,vs,f, ease=x=> -cos(x*PI)/2 +0.5)=>fobj(function(t){f(...this.l
   v0:vs.map(r=>r[0]), l:vs.map(([v0,v1])=>v1-v0),
   rep(n=1){let {tf}=anim, dt=tf/dur, t=0.0,t1=1.0*n, id;
     return new Promise(done=>{id=setInterval(()=>{ this(t); (t<t1)?(t+=dt): done(vs)&clearInterval(id)}, tf)} )
-  }
+  }//可支持 ["value", "+2"], ["cx",x=>x/cfg.num], [(o,v)=>anim([o.innerText,[0,".length"],[v.length,0]]), "wtf"] 的这些简写&组合
 }), {tf:10, set fps(v){this.tf=1000/v} }),
 newA=(n,f)=>{let a=Array(n),i=0;for(;i<n;i++)a[i]=f(i); return a};
 
@@ -153,10 +153,7 @@ dep=0; dmax=5; que=[]
   dep++;let e1=newA(dep==dmax?1: n, _=> eSG.appendChild(晃树(copy(eLn),n,rn)) );dep--
 
   console.log(e1)
-  if(0)for(let ee of e1)que.push((e0=>t=>{
-    let r=rn[0]+ t*(rn[1]-rn[0]);
-    [e.x1,e.y1]=plusRL([e0.x2,e0.y2],r,len)
-  })(e) )
+  for(let ee of e1)ee.classList.add("dp"+dep)
   let k=1 +dep
   que.push(t=>{
     let p0=[e.x2,e.y2],rr=(rn[1]-rn[0])/e1.length
@@ -176,5 +173,27 @@ len=10
 晃树(eSG.appendChild(copy(eLn)),2,[rad(10),rad(80)])
 que.reverse();//这顺序很重要哦
 setInterval(()=>{for(let f of que)f(往返())}, 10)
-eG.onclick=()=>sun()
+eG.onclick=()=>sun()//再点击会闪屏哈哈
 </script>
+
+<style>
+line.dp1 {
+    stroke: red;
+}
+
+line.dp2 {stroke: aquamarine;}
+
+line.dp3 {
+    stroke: slateblue;
+    stroke-dasharray: 2 1;
+}
+
+ellipse {
+    stroke: deepskyblue;
+    stroke-width: 0.8px;
+}
+
+line.dp3:hover {
+    stroke: red;
+    stroke-dasharray: inherit;
+}</style>
