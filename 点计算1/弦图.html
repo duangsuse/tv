@@ -84,18 +84,24 @@ sun=(d=[25,70,90],bg=["red","green","blue"],l=10,k=0.2)=>{let N=d.length, dr=Arr
 }, 100)}
 eG.onmousemove=ev=>{let a=tu.p0;a[0]=ev.offsetX;a[1]=ev.offsetY}
 
-kochStar=(l0,l_min)=>{
-  const R3=rad(-60), R=rad(120), ln=(l,r1)=>{ //试试改俩的符号, 同号内雪花
-    if (l < l_min){tu.l(l);tu.r+=r1; return}
-    l/=3.0
-    ln(l, R3);ln(l, R);
-    ln(l, R3);ln(l,0);
-    tu.r+=r1;
+kochStar=(l0,l_min,kind=0 )=>{
+  const R=r180/3, outR=R-r180, ln=(l,rv)=>{ //试试改俩的符号, 同号内雪花, 
+    tu.r+=rv;
+    if (l < l_min){tu.l(l);return}
+    l/=3
+    switch (kind){case 0:
+    ln(l, 0);ln(l, R); ln(l, outR);ln(l,R); //_^_ 三部分中间变雪花,乃至两边
+    break;case 1:ln(l, outR);ln(l,R); ln(l, 0);ln(l, R);
+    break;case 2:ln(l, 0); ln(l, outR);ln(l,R);ln(l, R);
+    break;case 3:ln(0, 0);ln(l, R); ln(l, outR);ln(l,R);
+    break;case 4:ln(l, 0);ln(0, R); ln(l, outR);ln(l,R);
+    }
   }
-  let n=3; while(n--)ln(l0, R)
+  tu.r+=r180-R/2;
+  let n=3,rOut=outR;  if(kind>4)kind-=4,rOut*=-1; while(n--)ln(l0, rOut)
 }
 
-kochStar(120,5)
+kochStar(110,5)
 
 tu.go=[100,490]
 螺=(n,r,l)=>{
@@ -126,16 +132,19 @@ useLines(()=>花(8))
   tu.l(弦长) //补角,边长
 }
 
-const {assign,entries,defineProperty}=Object,
-anim=assign((dur,vs,f, ease=x=> -cos(x*PI)/2 +0.5)=>new Promise(done=>{
-let {tf,nRep}=anim,dt=tf/dur, t=0.0,t1=1.0*nRep, v0=vs.map(r=>r[0]),l=vs.map(([v0,v1])=>v1-v0), id=setInterval(()=>{ f(...l.map((v,i)=>v0[i]+ v*ease(t)) ); (t<t1)?(t+=dt): done(vs)&clearInterval(id)}, tf)
-}), {tf:10,nRep:1, set fps(v){this.tf=1000/v} }),
+const {assign,entries,defineProperty}=Object, fobj=(f,c)=>assign(f.bind(c),c),
+anim=assign((dur,vs,f, ease=x=> -cos(x*PI)/2 +0.5)=>fobj(function(t){f(...this.l.map((v,i)=>this.v0[i]+ v*ease(t))) }, {
+  v0:vs.map(r=>r[0]), l:vs.map(([v0,v1])=>v1-v0),
+  rep(n=1){let {tf}=anim, dt=tf/dur, t=0.0,t1=1.0*n, id;
+    return new Promise(done=>{id=setInterval(()=>{ this(t); (t<t1)?(t+=dt): done(vs)&clearInterval(id)}, tf)} )
+  }
+}), {tf:10, set fps(v){this.tf=1000/v} }),
 newA=(n,f)=>{let a=Array(n),i=0;for(;i<n;i++)a[i]=f(i); return a};
 
 let [eTa,eSG,eLn,eDot]="textarea svg[viewBox] line ellipse".split(" ").map(k=>doc.querySelector(k)), copy=e=>e.cloneNode(0)
 
 eTa.value="再见烂码".repeat(100); eTa.select();
-anim(2000, [[0,eTa.textLength], [60,30]], (i,n)=>{eTa.selectionEnd=round(i); eTa.cols=n})
+an=anim(500, [[0,eTa.textLength], [60,30]], (i,n)=>{eTa.selectionEnd=round(i); eTa.cols=n});an.rep(9).then(()=>{an.l[0]=100;return an.rep(5);}).then(()=>an(0))
 
 dep=0; dmax=5; que=[]
 晃树=(e,n,rn)=>{
@@ -167,4 +176,5 @@ len=10
 晃树(eSG.appendChild(copy(eLn)),2,[rad(10),rad(80)])
 que.reverse();//这顺序很重要哦
 setInterval(()=>{for(let f of que)f(往返())}, 10)
+eG.onclick=()=>sun()
 </script>
