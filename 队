@@ -6,7 +6,7 @@
 苏观点[初学选C] 为什么我不建议靠C入门编程? : 懂易懂?倒果推因
 指针到底是啥?老程又爱又恨的不严谨性!
 带你欣赏编程区干货/寒窗强技up主们! *门前见
-极客小贴士 termux,cloudnas ondrive, MT,汉化C *门前见
+极客小贴士 termux,cloudnas ondrive, MT,汉化C *门前见, ContentEditable,GDK_DEBUG
 小苏编程课[0] 暑假教你编程~只是个开场白?给小白!
 集合,图像,视频,音频(混合,静音,音高)
 
@@ -14,7 +14,7 @@
 [2]数据集合与队列
 []面向对象API(封继多口), 泛型; enum,@Anno,case"",catch(|)
 []IO和络,RegExp,Date,Timer
-[]热门:反射/混入/Stream/Filt,listener,router&templ&session,  可视化,爬虫
+[]热门:反射/混入/Stream/Filt,listener,router&templ&session,  可视化,爬虫 og:audio
 []黑:位运算,2D数组,B/DFS广搜索
 visualalgo,~galles/visuaz, cxyxiaowu
 
@@ -63,6 +63,20 @@ s[::-1], title, deepflat /2 for, strip split int, set counter判计数, ''*n, fo
 
 窗口BadA,录音py, HachiLRC
 
+词句、音高都是有起止时间的序列，标签轨TXT、SRT、空行LRC/LRC 都可存储它们，MID 可存储音高 不仅歌词?
+词句在录制时切焦，完整后可拼合建组、下部钢琴卷轴附加音高序列去录制
+
+播放 建组? 5字5音
+
+按S键下切至下项、按A键停止当前项，按D键后退3秒；正弦波
+录制预备3秒，LRC导入的单项时间默认5秒
+1代表音高 C1，以正则/(.)/分词，若符合/\s/则以/(\w+)/切分
+以文本形式编辑 时间 词@@音高@@时音高
+
+单指下项。双指停止。
+双击编辑。Ctrl+G 建组。长按/Shift多选。
+
+
 
 EQuery:el,Equiv/Fold; 状态表记录和反操作，就像EQ没有DOM diff一样，EQ选择了反操作；这有两个列表,把Apop入B,或splice的某位置, 反操作是移回；删除也是进入撤回队列垃圾箱，一个操作可以改变两个数据，以 TupleAry 记录
 snake,tetris,asteroid,maze,renju
@@ -89,3 +103,18 @@ LittleDict
 挑战重写！分形,life,SGD
 
 K-means 是k个分类,每项寻找最近聚类中心,更新其平均,放入数据组
+
+
+BGM:
+https://blogs.gnome.org/bastian/?s=music
+https://blogs.gnome.org/bastian/author/bastianilso/ music
+https://blogs.gnome.org/bastian/2016/04/10/behind-the-gnome-3-20-release-video/
+https://blogs.gnome.org/bastian/2016/09/26/gnome-3-22-release-video/
+https://wiki.gnome.org/ThreePointTwentyone/ReleaseVideo
+
+https://freesound.org/people/Cheeseheadburger/sounds/141517/
+https://www.jamendo.com/track/168288/on-the-way
+https://freemusicarchive.org/music/Little_Glass_Men/Spontaneous_Album_Sampler/Dream_Blaze
+https://freemusicarchive.org/music/Broke_For_Free/Grass_Hop/Broke_For_Free_-_Grass_Hop_-_01_Warm_Up_Suit
+https://www.musikery.com/free-track-the-126ers-by-water-lily/
+https://freemusicarchive.org/music/Little_Glass_Men/Kelp_Grooves/

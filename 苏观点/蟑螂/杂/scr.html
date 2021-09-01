@@ -1,0 +1,50 @@
+<!DOCTYPE HTML>
+<html>
+ <head>
+  <title> New Document </title>
+<script>
+const
+aCat=(a,a1)=>a.push(a1),
+H=(ss,...child)=>{
+let iS=0,s, i0=0,iC=0, a=[]
+for(;iS<ss.length;iS++){s=ss[iS],i0=0; while((iC=s.indexOf(",",i0))!=-1){a.push(s.slice(i0,iC));i0=iC+1} 
+a.push(s.slice(i0),child[iS])
+}
+return a
+},
+buildA=(f,p=x=>x!="")=>{
+let a=[];f(x=>!p(x)?0:a.push(x));return a
+},
+H1=(ss,...v)=>buildA(pu=>{
+//本来打算 ${} 不切分, 只逗号切分的，但单项只能有一个 pre, 看来只能忽视空切
+let iS=0,N=ss.length, s,i0=0,iC=0,it//只能忽略${}后的,? 疯了 很麻烦
+for(;iS<N;iS++){s=ss[iS],i0=0; while((iC=s.indexOf(",",i0))!=-1){pu(s.slice(i0,iC));i0=iC+1}
+if(pu(it=Object(s.slice(i0)))!=0&&iS!==N-1)it.pre=v[iS];}
+})
+
+H1`he,llo ${1}wor${3},ld`
+
+const
+splitOne=(cs,s,f)=>{
+let a=[],i=0,N=s.length, i0=i,c,k=0;
+for(;i<N;i++)if((k=cs.indexOf(s[i]))!=-1){a.push(s.slice(i0,i)); i0=i+1;f(a,k)}  a.push(s.slice(i0));f(a,-1)
+return a
+},
+splitCat=(ss,vs)=>{ // 唯一优雅且能同时 handle 扒取与重建 的方法
+  let nth=0,a=
+  splitOne("$\u0000",ss.join("\u0000"), (a,k)=>{ // 语法: span *{(e,v)=>} *{[3, (e,va)=>, ["点赞",,"投币",,"收藏",] ]}
+    if(k==1){nth++;a[nth]=Object.assign(a[nth],{pre:vs[nth-1]})} // 语法: td:title,bgColor${["ok","red"]}
+  })
+  return a
+},
+H2=(ss,...a)=>splitCat(ss,a),L=console.log
+splitOne(".#","a.b.c#d",L)
+
+L(H2`x$a${1}b${2}c$d`)
+</script>
+ </head>
+
+ <body>
+  
+ </body>
+</html>
