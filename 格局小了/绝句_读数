@@ -1,0 +1,16 @@
+我想实现 C++ istream 的 int a; a<<cin; 但不想混入 Scanner 分词的问题
+
+你可以选择在 readInt 时首先跳空格，当然此逻辑也可利用组合子在每项读取器调用前插入
+
+但是它没法预判下个字符，会把首数字弃掉，除非实现 ungetc 或 peek(N)
+
+我们可以把标准输入流变成 PeekConsume 流，`分词条(听去::数) 去切以空格` 怎么样
+
+这是把 ParserKt 的 API 引作标准库啊！也罢
+
+但这只是单字符的所有权区分，若有多字符的语法语序、部分所有权，此模型是没法规范的
+
+没关系，单字符的所有权是最基础的不是么，其他的有分支 交换法处理
+
+
+在同学电脑上处理下 DevCPP GCC GB18030编码问题，用 `#pragma GCC -fexec-charset=` 设置或 `#pragma setlocale(zh_CN)` 好像可行？而且 `<unistd.h> system("chcp 65001")` 亦可，理论上 wchar_t `L""` 也是可取的，只能说重编码实在麻烦
