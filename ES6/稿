@@ -3,3 +3,5 @@ ES6 的 template eval, Node each, {}[]destruct
 
 a%b -取决于a, NaN!=NaN
 CSS+ 和~ 相邻/下项选择器; 详见Share/ curs.html
+
+https://css-tricks.com/using-svg/ CSS x SVG

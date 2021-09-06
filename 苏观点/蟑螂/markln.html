@@ -1,0 +1,16 @@
+<body style="font-size:6px"><style>
+*{padding:0;margin:0}
+body>svg{display:none}
+
+p{background: url(#mark-ln) repeat-x; height:10px; animation: 15s 2s roll-x linear infinite}
+p:nth-child(even){animation-direction:alternate}
+p:nth-child(odd){animation-direction:alternate-reverse}
+@keyframes roll-x{0%{background-position-x:0%} 100%{background-position-x:100%}}
+</style>
+<svg id=mark-ln xmlns='http://www.w3.org/2000/svg' height=10 stroke=red viewBox="0 0 2.5 1"><line x2=0 y2=1></svg>
+<script>D=document
+D.styleSheets[0].rules[2].style.backgroundImage=`url(data:image/svg+xml;utf8,${escape(D.getElementById("mark-ln").outerHTML)})`//支持SVG背景
+
+for(let i=0;i<50;i++)
+D.body.appendChild(D.createElement("p")).style.backgroundPositionX=CSS.em(i)//创建50动画行;SVG内不能用 CSS height 属性了
+</script>
