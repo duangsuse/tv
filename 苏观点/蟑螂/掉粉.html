@@ -1,0 +1,52 @@
+<style>
+*{padding:0;margin:0}
+.bars{position:relative; width:100vw;height:calc(100vh - 20px); background:gray}
+.bars hr{ width: 90%;/*position,height, bg*/  transition: .4s top; box-shadow: -64px 0px 12px 0 inset rgb(0 0 0 / 28%); }
+.bars hr{ border:3px solid gray; padding: 20px; box-sizing:border-box; text-align:right; font: 20pt sans; color:white  }
+</style>
+
+<div class="bars"></div><p align=right></p>
+<script>
+const 数目=o=>o.length,
+rand=(a,b)=>a+Math.random()*(b-a),
+组=a=>Array(数目(a)).fill(0),
+gen=function*(a){
+  //平稳波动 -2 +20 吧，如果一个<20%/365 的事件在他身上发生就再判定一次，让它接下来 20 天内只会2倍速加减
+  let 粉=组(a), 奖惩=组(a),余天=组(a), 小率=()=>rand(0,100)<70/365
+  do{
+    粉.map( (x,i)=>{ let nd=余天[i], d=rand(-2,+10); 粉[i]+=nd!=0? Math.abs(d)*奖惩[i] : d; if(粉[i]<0)粉[i]=0; if(小率()){余天[i]=20;奖惩[i]=rand(0,1)<0.5?+2:-2; } if(nd!=0)余天[i]-- } )
+  yield [...粉]}while(1)
+},
+takeN=function*(N,xz){let i=0,x; for(x of xz)if(i++ ==N)break;else yield x},
+doc=document,色="red orange yellow green blue cyan purple".split(" ")
+
+录={t0:new Date, up:"张三 品如 桃桃 晒干 西瓜 歪点子 五先生".split(" "), fol:[],bg:1?色 : 色.sort((a,b)=>rand(0,1)<.5) }
+录.fol=[...takeN(365, gen(录.up) )]
+
+console.log(录.up)
+console.table(录.fol.slice(0,20))//好了，hr 界面部分
+let eBar=doc.querySelector(".bars"),eMet=eBar.nextSibling, nBar=数目(录.up), wBar,yBars=Array(nBar)
+{
+let N=nBar,c=doc.styleSheets[0].rules[2].style, e; c.height=`calc(100% / ${N})`
+for(let i=0;i<N;i++){e=eBar.appendChild(doc.createElement("hr") );e.style.background=录.bg[i];e.innerText=录.up[i];  yBars[i]=e.style.top=e.offsetTop+"px"}
+c.position="absolute"//绝对化布局
+wBar=e.offsetWidth
+}
+
+有序新位=a=>{
+  let xi=a.map((x,i)=>[x,i]).sort((a,b)=>a[0]-b[0]);//避免x冲突
+  xi.forEach(([x,i0],i)=>{a[i0]=i}); return a
+},
+单日=粉=>{
+  let 极=Math.max(...粉), k=wBar/极, ee=eBar.children,m, i
+  for(i=0;i<nBar;i++)ee[i].style.width=CSS.px(粉[i]*k)
+  let c=有序新位(粉), i1
+  for(i=0;i<nBar;i++){ i1=c[i];if(yBars[i1]!=ee[i].style.top) ee[i].style.top=yBars[i1] }
+  eMet.innerText=极.toFixed(2)
+},
+时帧=(a,f,dt)=>{
+let i=0,N=数目(a),id=setInterval(()=>i!=N? f(a[i++]) : clearInterval(id), dt)
+}
+
+时帧(录.fol,单日,30)
+</script>
