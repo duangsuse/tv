@@ -43,7 +43,8 @@ wBar=e.offsetWidth
   for(i=0;i<nBar;i++)ee[i].style.width=CSS.px(粉[i]*k)
   let c=有序新位(粉), i1
   for(i=0;i<nBar;i++){ i1=c[i];if(yBars[i1]!=ee[i].style.top) ee[i].style.top=yBars[i1] }
-  eMet.innerText=极.toFixed(2)+" 日"+no
+  let t1=new Date(录.t0);t1.setDate(no)//Date计算接口是改写性的,需复制; 此外有 setHours,
+  eMet.innerText=`${极.toFixed(2)} 日${no}  于${t1.toLocaleString()}`
 },
 时帧=(a,f,dt)=>{
 let i=0,N=数目(a),id=setInterval(()=>i!=N? f(a[i++],i) : clearInterval(id), dt)
