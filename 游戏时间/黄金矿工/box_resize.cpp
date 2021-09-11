@@ -21,7 +21,7 @@ int main(){
   initscr();noecho(); getmaxyx(stdscr, n1, m1);
   auto wi=newwin(5,10,y,x);
   box(wi, 0,0);mvwprintw(wi, 2,0, "Hello cur.");
-  anim(5000*frand(),{&x,&y}, {m1,n1}, [=,&y,&x](){ mvwin(wi,y,x); wrefresh(wi); });
+  anim(5000*frand(),{&x,&y}, {m1,n1}, [=,&y,&x](){ mvwin(wi,y,x); wnoutrefresh(wi);doupdate(); });
 
   return endwin();
 }

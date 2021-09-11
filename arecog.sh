@@ -66,8 +66,8 @@ for i,x in enumerate(zipTakeWhile(inSameLine,lineSrt(stdin))):
 }
 
 if [ $0 != bash ];then
-[ -f a.srt ]&&srtMerg $1 x <a.srt >b.srt  ||srtSTT 1 -i $1 1>a.srt
+[ -f a.srt ]&&srtMerg $1 'usersub(x)' <a.srt >b.srt  ||srtSTT 1 -i $1 1>a.srt
 fi
 #usage: arecog audfile  >a.srt|max_dist_sec a>b.srt
 #lib: srtSTT 1 -f alsa -i default a.wav|srtMerg 0.18 'userchk(rmspc(x))'
-#or srtMerg 0.2 'usersub(x)'
+#or srtMerg 0.2 'x'
