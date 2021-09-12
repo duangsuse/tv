@@ -1,3 +1,13 @@
+https://visualgmq.gitee.io/other_pages/wasm_sdl_demo/index.html
+http://main.lv/writeup/web_assembly_sdl_example.md
+https://blog.csdn.net/leafrenchleaf/article/details/106794571
+https://blog.csdn.net/leafrenchleaf/article/details/106880622
+https://cloud.tencent.com/developer/article/1133982
+
+https://atsushieno.github.io/2021/05/18/ktmidi.html MIDI
+https://github.com/mmontag/chip-player-js
+https://github.com/ccoreilly/vosk-browser
+
 rundll32 user32.dll,LockWorkStation #还不如直接上 bat,ps1 脚本
 rundll32 powrperf.dll,SetSuspendState #锁屏、休眠(rundll 限制不能调睡眠)
 
@@ -12,6 +22,11 @@ $sh.TargetPath="sysdm.cpl"; $sh.Save()
 和商余
 异或_按位交换
 闰年(n)=4,!100, 4*100
+
+/[我个]?草[爸妈奶你]?/g[
+Symbol.replace]("草",
+m=>"口".repeat(m.length)
+)
 
 用这种方法自底向上的学习语法结构无异于管中窥豹、盲人摸象，如果你想真正自由地重构程序，没对基础定义、程控、表达式 语言结构有个概念是不可能的，从关键字、不能咋给符号命名入手一门语言，一些人还真是有编译原理的心没编译原理的脑啊，咋整这么麻烦，讲半天一个完整逻辑没写出来，让你去菜市场买菜  跟大妈争议起微积分的微有几种写法，还觉得啊卖菜不懂微积分行不懂微机(微积)二字怎么写咋行，给爷整不会了都
 
@@ -35,6 +50,31 @@ $sh.TargetPath="sysdm.cpl"; $sh.Save()
 刚刚谈的「动名词」，真正的意义不是教大家理解面向对象，老实说我挺看不上现在有些人滥用面向对象进行过度设计的，冗长的代码一套又一套；刚刚的『点击监听』类，其实就是把几个值(点击目标,时间..)变成一个值(Void) 的操作，不就是一个函数吗？专门起个名字，大家都不得不用 class 去定义一个能分段执行、与人共享变量函数，把它的参数写在构造器里、用匿名子类(现已有Lambda)，实际造成了很大冗余语言结构
 
 语言结构越严谨，思想和过程的实质就越匮乏；正如一个人越是总爱侃侃而谈，背后的积淀就越少；如果你老想着服从这、规范那，这些表面功夫，是没法真正感受程序运行时各名词的变化的，很不巧，无论是算法还是应用，它们的实质都不是某语言的代码，而是我们能一分为二逐步解决的问题，是我们想要代码带来的结果和副作用，比如删掉用户输入里的脏字、或者开启一个窗口画布不断响应用户输入与交互
+
+eBtn=doc.body.children[0]
+计时=(e,f)=>{let t0;
+e.onmousedown=时(t=>{t0=t})
+e.onmouseup=时(t=>f(t-t0))}
+时=f=>ev=>f(ev.timestamp)
+
+计时(eBtn,dt=>alert("秒差"+dt))
+
+
+class 聒噪(xz:迭代器): 迭代器{
+int i=0;
+T 下项(){T x=xz.下项();
+out.println(i+" "+x);i++; return x;}
+}
+for(int i:聒噪(List.of(1,2,3)
+.iterator()) ){}
+
+def 聒噪(xz):
+  i=0
+  for x in xz:
+    print(i+" "+x);i+=1
+    yield x
+
+for 项 in 聒噪(iter([1,2,3])): pass
 
 而程序的实质，不在任何具体的值、不在任何单个的变量，正如 1+2=3 ，两个数字就只有个结果而已，(a+b==c)，是加号这动词，结合了两个名词，得到c这个加法结果，才有 c-a=b, c-b=a 等一大堆衍生操作和性质；单一的名词、单一的值意义不大，是因为一个动词把它们组合起来，它们才能赋予彼此意义；多利用函数抽象几个变量间的逻辑，你的程序就会变得优雅易读又简洁
 

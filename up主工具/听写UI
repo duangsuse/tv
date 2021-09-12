@@ -15,3 +15,5 @@ FFMpeg版本,媒体信息
 
 输入b.srt, 以Audacity修改 [行处理]->c.srt；硬字幕进视频；切分视频
 BV [下封面/下/传字幕]
+
+pacmd list-sources|grep monitor; ffmpeg -f pulse -i alsa_ o.wav
