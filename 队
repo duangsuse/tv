@@ -2,9 +2,8 @@
 自带字幕的命令行卖瓜见过没? *蹭暖瓶 xbeibei,ffcrop=whxy,lrc_merg,montagepy
 误区?最全?自学?技术科普区流量密码是啥? *门后见
 前后端，IT人必要基本分工? *门前见
-把你对代码的每个修改保存到 GitHub 与 coding 吧~ *门后见:ssh-keygen -t ed25519 -C email&&config:Host-IdentityFile& ssh-add -K &git remote set-url origin git@github.com:repo.git
 苏观点[初学选C] 为什么我不建议靠C入门编程? : 懂易懂?倒果推因
-指针到底是啥?老程又爱又恨的不严谨性!
+.指针到底是啥?老程又爱又恨的不严谨性!
 带你欣赏编程区干货/寒窗强技up主们! *门前见
 极客小贴士 termux,cloudnas ondrive, MT,汉化C *门前见, ContentEditable,GDK_DEBUG
 小苏编程课[0] 暑假教你编程~只是个开场白?给小白!
@@ -15,21 +14,31 @@
 
 机器学习: 给含未知参数的程序，在基于测试数据的世代更替中，按某标量的最大化进行调整
 
+给钥匙不给锁
+统一本质相同的东西，关联丝丝缕缕的海量知识
+浮点无严格相等 .1.2 .3
+C花括号嵌套作用域 不统一
+HTML:HNFSAA
+某语言代码只是程序的形式,你要记的是遍历判定的这些结构; 体系化,算法仅记细节,实用只记名字
+
 参动之画[时轴点TTS+srt]营销号一键生成！竟有多个文本模板可选？
 参动之画[纵柱图重排序]up主粉丝排名可视化？怎么做的
-参动之画[打字机,配对交换]哇，粒子文本好酷！字符走位？图像也能这样吧。
+参动之画[抖音常见]我裂开了、我音符动了、我码字了
+参动之画[打字机,配对交换]哇，粒子文本好酷！字符走位？图像,散点也能这样吧。
 参动之画[光线流,蒙版擦除-生成]两种渐变入场动画，JQuery 你不想！
 参动之画[出入场,时轴录制]如何把 PPT 变成视频？
 
 [1]基本定义,基元值与流程控制
 [2]数据集合与队列
 []面向对象API(封继多口), 泛型; enum,@Anno,case"",catch(|)
-[]IO和络,RegExp,Date,Timer
+类像可以带定义的 C header ，它定义公开的API操作、变量，而只有拿到实例，依据这个类型的动名词接口，才能在它上编程
+[]IO和网络,RegExp,Date,Timer
 []热门:反射/混入/Stream/Filt,listener,router&templ&session,  可视化,爬虫 og:audio
 []黑:位运算,2D数组,B/DFS广搜索
-visualalgo,~galles/visuaz, cxyxiaowu
+依赖注入(隐式参数 曝作属性),软组件对象,ORM,注解代码生成
+把你对代码的每个修改保存到 GitHub 与 coding 吧~ *门后见:ssh-keygen -t ed25519 -C email&&config:Host-IdentityFile& ssh-add -K &git remote set-url origin git@github.com:repo.git
 
-某语言代码只是程序的形式,你要记的是遍历判定的这些结构; 体系化,算法仅记细节,实用只记名字
+visualalgo,~galles/visuaz, cxyxiaowu
 
 前端魔法[svg:stroke-dash] text切分,随机换位, 只能在区间里 stroke, 还能动画其 offset? symbol[id]>text use[class href], 居中圆圈 bottom-top radius
 Office: 下划线ins键,右箭头,

@@ -1,0 +1,19 @@
+<meta charset="UTF-8">
+<title>输入输出框</title>
+<body></body>
+<script>
+let doc=document, el=(e0,k)=>e0.appendChild(document.createElement(k)),
+ss=s=>s.split(" "), zip=(a,b)=>a.map((x,i)=>[x,b[i]])
+
+俩框=(e,初化)=>{ let 盘;
+	初化(el(e,"textarea"),盘=el(e,"span"),el(e,"textarea"))
+	盘.prepend("进行操作：")
+}
+
+俩框(doc.body, (eI,btn,eO)=>{
+	for(let[k,name]of zip(ss("toUpperCase toLowerCase"),ss("大写 小写"))){
+	let x=el(btn,"button");x.innerText=name
+		x.onclick=ev=>{ eO.value=eI.value[k].call(eI.value)}
+	}
+})
+</script>
