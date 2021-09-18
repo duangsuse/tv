@@ -1,0 +1,56 @@
+<style>.界{display:grid; grid-template-columns:repeat(auto-fill,var(--l)); resize:both;overflow:hidden}
+.界>hr{box-sizing:border-box; width:var(--l);height:var(--l); margin:0; box-shadow:none}</style><input type=range min=10 max=40 step=5>
+<script>const
+doc=document, el=(e,k)=>e.appendChild(doc.createElement(k)),
+also=(x,f)=>{f(x);return x}, {floor:div,random}=Math,
+isZ=(i,n)=>i==0||i==n-1,
+
+watch=(e,f)=>new MutationObserver(f).observe(e,watch.c)
+watch.c={attributes:true, attributeNames:["style"]}
+
+let w,h,rect, eRect=also(el(doc.body,"div"), e=>{ e.className="界"
+  watch(e,()=>{ e.innerHTML=""
+    w=div(e.offsetWidth/e.l); h=div(e.offsetHeight/e.l);
+    let i=0,N=w*h
+    for(rect=Array(N),eRect.p=Array(N);i<N;i++)eRect.p[i]=el(e,"hr").style
+    蛇.画墙();
+  })
+}), pYX=(i,j)=>i*w+j;
+also(doc.body.children[0], e=>(e.onchange=ev=> eRect.style.setProperty("--l",(eRect.l=e.valueAsNumber)+"px"))() )//联动CSS网格
+eRect.style.height="50%"
+
+class 蛇{//于rect
+  constructor(p0,d){this.p0=p0,this.dir=d, this.que=[p0],this.queD=[d]; this.flag=0; this.giftDur=[] }
+  static 食名="增长 不死 幽灵 穿墙 倍速 卡住 :反向".split(" ")
+  走(){
+  }
+  static 食=蛇.食名.map((x,i)=>0b1<<i)
+  static 画墙(){
+    for(let i=0,j, p=0; i<h;i++)for(j=0;j<w;j++, p++)
+      rect[p]=isZ(i,h)||isZ(j,w)? 1 : 0;
+  }
+  static 礼(k){
+    let p; do{p=div(random()*w*h)}while(rect[p]!=0); rect[p]=k
+  }
+}
+</script>
+<script>
+
+cp="gray green yellow red lightyellow yellowgreen".split(" ")
+kaWeb=[-1,-w,+1,+w]
+
+游戏=(s, id=0)=>{
+doc.onkeydown=ev=>{let d1=kaWeb[ev.keyCode-37]; if(d1+s.dir!=0)s.dir=d1; else debugger} // 在单步前多次会导致dir可反向,该由 queD 判定?
+id=setInterval(()=>{
+  let {que,dir}=s, p1=s.p0+dir, c=rect[p1];
+  if(c!=0&&c<3){alert("GG");clearInterval(id)}
+  else qInc=(c==3);
+  que.push(s.p0= p1); rect[p1]=1;
+  if(qInc)蛇.礼(3); else rect[que.shift()]=0;
+  for(let i=0,N=rect.length;i<N;i++) eRect.p[i].backgroundColor=cp[rect[i]];
+}, 300)
+蛇.礼(3)
+}
+
+游戏(new 蛇(pYX(div(h/2),div(w/2)),-w) )
+</script>

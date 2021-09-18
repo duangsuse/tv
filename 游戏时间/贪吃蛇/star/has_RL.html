@@ -1,0 +1,29 @@
+<style>body{--l:25px}
+.界{display:grid; grid-template-columns:repeat(auto-fill,var(--l)); resize:both;overflow:hidden}
+.界>hr{box-sizing:border-box; width:var(--l);height:var(--l); margin:0; box-shadow:none}</style><br>
+<script>const
+doc=document, el=(e,k)=>e.appendChild(doc.createElement(k)),
+also=(x,f)=>{f(x);return x}, {floor,random}=Math,
+rateLim=(f,dt=300,id=0)=>(...a)=>{clearTimeout(id); id=setTimeout(()=>f(...a))},
+
+cval=(e,k,kt="r")=>{let c=e.style,r; c[kt]=`var(--${k})`; r=getComputedStyle(e)[kt]; c[kt]=""; return r},//只有这个办法访问CSS自定属性
+/* l=parseInt(doc.body.computedStyleMap().get("--l")) 的新API 无DOM修改但非常鸡肋
+l 是没必要在缩放时重读，这是假设 l 可以动画设计的，但 l 动画依赖 @property 注册且单独更新
+若注册CSS属性，又要时差更新才支持JS动画，其实不需要
+*/
+watch=(e,f)=>{let c=watch.c,run=()=>o.observe(e,c),o=new MutationObserver(x=>{o.disconnect();f(x,run)}); run()}
+watch.c={attributes:true, attributeNames:["style"]}
+
+let w,h,rect, eRect=also(el(doc.body,"div"), e=>{ e.className="界"
+  watch(e,rateLim((ch,ok)=>{ e.innerHTML=""
+    let l=parseInt(cval(e,"l")); ok();
+    w=floor(e.offsetWidth/l); h=floor(e.offsetHeight/l);
+    let i=0,N=w*h
+    for(rect=Array(N);i<N;i++)el(e,"hr")
+  }))
+})
+eRect.style.height="50%"
+
+
+
+</script>

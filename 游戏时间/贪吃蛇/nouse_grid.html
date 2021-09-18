@@ -1,0 +1,25 @@
+<style>
+@property --l{syntax: '<length>'; inherits:false;initial-value:0px}
+.界{
+  --l: 20px;
+  display:grid;
+  grid-template-columns: repeat(var(--m), var(--l));
+  overflow:hidden; resize:both;
+}
+.界>hr{width:100%;height:100%}
+</style><hr>
+<script>const
+doc=document, el=(e,k)=>e.appendChild(doc.createElement(k)),
+watchAttr=(e,f,ks=["style"])=>new MutationObserver(f).observe(e, {attributes:true, attributeNames:ks}),
+also=(x,f)=>{f(x);return x}, {floor,random}=Math,
+
+eRect=also(el(doc.body,"div"), e=>{ e.classList.add("界")
+  let l=e.computedStyleMap().get("--l").value
+  watchAttr(e,()=>setTimeout(()=>{ //calc(100% / var(--l))
+    e.style.setProperty("--m", floor(e.offsetWidth/l) )
+  }))
+})
+eRect.style.height="50%"
+for(let i=0;i<200;i++)el(eRect,"hr")
+
+</script>

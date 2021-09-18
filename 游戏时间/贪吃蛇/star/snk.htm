@@ -1,0 +1,52 @@
+<div class="dots"></div>
+<script>
+const doc=document,
+el=(e,k)=>e.appendChild(doc.createElement(k)),
+is0=(i,n)=>i==0||i==n-1,
+x1=a=>a[a.length-1],
+{floor,random}=Math;//随机果
+
+let h=20,w=30,yx=(i,j)=>i*w+j,
+rect=Array(w*h),e0=doc.querySelector(".dots"),
+cp="gray green yellow red lightyellow yellowgreen".split(" ")
+//空 墙 苹果 蛇:身头尾
+e0.style.setProperty("--m",w)
+
+//利用巡回模数j=块号i%w ，如果手算 i,j=0, iR 可能更好，重合则变成 4-patch 中一项
+for(let i=0,N=w*h,c; i<N;i++){c=rect[i]=el(e0,"hr").style; c.v=is0(i%w,w)? 1:0;}
+for(let i of [0,h-1])for(let j=1;j<w;j++)rect[yx(i,j)].v=1 //试试双数组存 e,c
+
+let que=[yx(h/2,w/2)],dir=-w;
+kaAnsi=[-w,+w,+1,-1], kaWeb=[-1,-w,+1,+w]
+fruitFn=[()=>{let c;
+	//for(;expr;){}
+	do{c=rect[floor(random()*(w*h))]}while(c.v)
+	c.v=3 //^试试不重分配
+	return true;
+}]
+fruitFn[0]()
+doc.onkeydown=ev=>{dir=kaWeb[ev.keyCode-37]}//没判错误反向
+
+walk=()=>{
+	let p1=x1(que)+dir, c=rect[p1], qInc;
+	if(c.v!=0&&c.v<3){alert("GG");clearInterval(id)}
+	else if(c.v!=0) qInc=fruitFn[c.v-3](); //试试把ret放这里.
+	que.push(p1); c.v=1;
+	if(!qInc)rect[que.shift()].v=0;
+}
+draw=()=>{
+	for(let c of rect) c.backgroundColor=cp[c.v];
+}
+
+id=setInterval(()=>walk()&draw(),300)
+</script>
+<style>
+.dots{
+	display: grid;
+	/*grid-auto-flow:dense; 乱序填孔?*/
+	grid-template-columns: repeat(var(--m),calc(100% / var(--m)));
+}
+.dots>hr {
+	width: 100%;height: 100%;
+}
+</style>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+	<title></title>
+	<style type="text/css">
+    .text{
+          text-anchor: middle;
+          dominant-baseline: middle;
+    }
+
+    body{
+    	text-align: content;
+    }
+	</style>
+	</head>
+
+<body>
+<svg xmlns="http://www.w3.org/200/svg" height="700" width="700">
+
+<circle cx="350" cy="350" r="300" fill="none" stroke="gray" stroke-width="40" stroke-linecap="round"/>
+
+<circle class="progess"
+
+ transform="rotate(-90,350,350)"
+
+ cx="350" cy="350" r="300"
+
+ fill="none" stroke="red"
+
+ stroke-width="40"
+
+ stroke-inecap="round"
+
+ stroke-dasharray="0,10000"/>
+
+ <text class="text" x="350" y="350" 
+
+ font-size="200" fill="red">36</text>
+
+ </svg>
+
+ <script>var progessDom = document.querySelector(".progess");
+
+var textDom = document.querySelector(".text");
+
+function rotateCircle(persent)
+ {
+  var circleLength = Math.floor(2*Math.PI*parseFloat(progessDom.getAttribute("r")) );
+
+  var value = persent*circleLength/100;
+
+  var red = 255+parseInt((0-255)/100*persent);
+
+  var green = 0+ parseInt((191-0)/100*persent);
+
+  var blue = 0+parseInt((255-0)/100*persent);
+
+  progessDom.setAttribute("stroke-dasharray",value+","+circleLength);//±ðÌî³£Á¿ ,10000..
+  textDom.innerHTML = persent+'%';
+
+  progessDom.setAttribute("stroke",`rgb(${red},${green},${blue}`);
+textDom.setAttribute("fill",`rgb(${red},${green},${blue})`);
+}
+
+let num = 0;
+
+setInterval(()=>{
+  
+  num ++;
+  
+  if(num>100){
+    
+    num =0
+  }
+
+rotateCircle(num)
+
+},30)</script>
+
+</body>
+</html>
