@@ -45,8 +45,25 @@
 
 当然，Windows 控制台不吃这一套，但它也有自己的光标位置操作方法， wincon.h 内有 SetConsoleCursorPosition(COORD {y,x}) ；完全可以把换行符变成 直接设光标到行i&输出，这比每次清屏或只靠 `mode con cols=m rows=n` 要好
 
+`calloc(N,n_1), _cputs(s)`
+
+`p1=p0+爬行方向; 可吃(c= 阵[p1])? 增=(c==苹果) : 示("死了啦")&停周期更新(); que.push(p0= p1);阵[p1]=1; 增? 随选点填(苹果) : 阵[que.shift()]=0`
+
+我真的是服了 ffi JS 开发者了，还真是熟练，FFI_TYPES 已经有一大堆 type，它不支持，非得分出个 ref 内建，看了下就支持个字节序 还是 pointer，还复制了一大堆给 SlowBuffer ，它不会用 `for(k) o[k]=v` 吗？真服了
+
+你 npm 的工作是下载到PATH,安装脚本，为什么 log 里多行你也要加状态 prefix ，还分什么global,project local，真是多此一举；脚本失败时 cache 也根本不行，正常也依赖 HTTP 304
+
+ref.js#L403 就是不支持 FFI_TYPES.int.name 非要size+indirection对吧？分的那么绝对
+
+Buffer 是流对吧， writeUintLE(v,nByte) 创建那么多便利方法，都是手写的？
+
+原来 int 就是 int32_t 啊，地址无效，难怪和 void* 不一样..
+
 而对 Linux 系呢，直接写 [H 控制序列就能输出下一帧了
 
+cat `find .`|wc -l|expr '/ 6666.0 * 100 limIn 0~100'
+
+往返于,限小于 ；批量 str insert 可以先 split i- i0+=n, join
 
 而对于控制台按键事件，又是鄙视链更大的一部分，C scanf 或 getc 能用吗？它们是阻塞的，就是说这个(终端输入=文件流)读取的系统调用，休眠程序主线程 啊直到用户敲了键盘，才恢复，你动画刷新是固定频率啊，能等这个吗？
 

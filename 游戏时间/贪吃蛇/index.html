@@ -1,56 +1,32 @@
-<style>.界{display:grid; grid-template-columns:repeat(auto-fill,var(--l)); resize:both;overflow:hidden}
-.界>hr{box-sizing:border-box; width:var(--l);height:var(--l); margin:0; box-shadow:none}</style><input type=range min=10 max=40 step=5>
-<script>const
-doc=document, el=(e,k)=>e.appendChild(doc.createElement(k)),
-also=(x,f)=>{f(x);return x}, {floor:div,random}=Math,
-isZ=(i,n)=>i==0||i==n-1,
-
-watch=(e,f)=>new MutationObserver(f).observe(e,watch.c)
-watch.c={attributes:true, attributeNames:["style"]}
-
-let w,h,rect, eRect=also(el(doc.body,"div"), e=>{ e.className="界"
-  watch(e,()=>{ e.innerHTML=""
-    w=div(e.offsetWidth/e.l); h=div(e.offsetHeight/e.l);
-    let i=0,N=w*h
-    for(rect=Array(N),eRect.p=Array(N);i<N;i++)eRect.p[i]=el(e,"hr").style
-    蛇.画墙();
-  })
-}), pYX=(i,j)=>i*w+j;
-also(doc.body.children[0], e=>(e.onchange=ev=> eRect.style.setProperty("--l",(eRect.l=e.valueAsNumber)+"px"))() )//联动CSS网格
-eRect.style.height="50%"
-
-class 蛇{//于rect
-  constructor(p0,d){this.p0=p0,this.dir=d, this.que=[p0],this.queD=[d]; this.flag=0; this.giftDur=[] }
-  static 食名="增长 不死 幽灵 穿墙 倍速 卡住 :反向".split(" ")
-  走(){
-  }
-  static 食=蛇.食名.map((x,i)=>0b1<<i)
-  static 画墙(){
-    for(let i=0,j, p=0; i<h;i++)for(j=0;j<w;j++, p++)
-      rect[p]=isZ(i,h)||isZ(j,w)? 1 : 0;
-  }
-  static 礼(k){
-    let p; do{p=div(random()*w*h)}while(rect[p]!=0); rect[p]=k
-  }
-}
-</script>
+<style>
+.阵{display:grid; grid-template-columns:repeat(auto,var(--l)); overflow:hidden;resize:both}
+.阵>hr{box-sizing:border-box; width:var(--l);height:var(--l); }
+.阵>canvas,.阵>iframe{width:100%;height:100%;border:0}
+</style><div>方块宽<b></b>：<input type=range min=5 max=50 step=5 value=25></div>
 <script>
-
-cp="gray green yellow red lightyellow yellowgreen".split(" ")
-kaWeb=[-1,-w,+1,+w]
-
-游戏=(s, id=0)=>{
-doc.onkeydown=ev=>{let d1=kaWeb[ev.keyCode-37]; if(d1+s.dir!=0)s.dir=d1; else debugger} // 在单步前多次会导致dir可反向,该由 queD 判定?
-id=setInterval(()=>{
-  let {que,dir}=s, p1=s.p0+dir, c=rect[p1];
-  if(c!=0&&c<3){alert("GG");clearInterval(id)}
-  else qInc=(c==3);
-  que.push(s.p0= p1); rect[p1]=1;
-  if(qInc)蛇.礼(3); else rect[que.shift()]=0;
-  for(let i=0,N=rect.length;i<N;i++) eRect.p[i].backgroundColor=cp[rect[i]];
-}, 300)
-蛇.礼(3)
+const doc=document, el=(e,k)=>e.appendChild(doc.createElement(k)), {random,floor:div}=Math
+var e阵,n,m,阵, 模式,换阵=console.trace, g,hcon;//画布,文本输出
+{
+  let s=doc.location.hash.slice(1),e,l,fm; if(s)el(doc.head,"script").src=s//加载
+  e=doc.querySelectorAll("b,input");//l&m 更新
+  fm=()=>{ m=div(e阵.offsetWidth/l); n=div(e阵.offsetHeight/l); e[0].innerText=l+`列数${m}*行${n}`; 换阵(n*m)}
+  new MutationObserver(fm).observe(e阵= el(doc.body,"div"), {attributes:true, attributeFilter:["style"]});//resize
+  (e[1].onchange=ev=>{ l=e[1].valueAsNumber; fm() })()
 }
-
-游戏(new 蛇(pYX(div(h/2),div(w/2)),-w) )
+{
+  e阵.className="阵"
+  let eOpt=el(doc.body.children[0],"select")
+  "阵列grid 画布canvas 文本doc 阵列+平滑移动".split(" ").forEach(k=>{el(eOpt,"option").innerText=k})
+  eOpt.onchange=ev=>{
+    let i;模式=i=eOpt.selectedIndex;
+    e阵.innerText=""
+    if(i==0||i==3)换阵(n*m);
+    else if(i==1)g=el(e阵,"canvas").getContext("2d");
+    else if(i==2){
+      let d=el(e阵,"iframe").contentDocument, fnt=`<style>body{white-space:pre;font: 20pt Consolas,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New,monospace;}</style>`
+      hcon={clear(){d.write(fnt)/*文档流已关闭=清空*/}, w(s){d.write(s)}, wLn(){d.writeln()} }
+    }
+    e阵.style.r=i//更新
+  }
+}
 </script>

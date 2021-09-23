@@ -1,0 +1,66 @@
+<style>.界{display:grid; grid-template-columns:repeat(auto-fill,var(--l));align-content:center; resize:both;overflow:hidden}
+.界>hr{box-sizing:border-box; width:var(--l);height:var(--l); margin:0; box-shadow:none; border:1px dotted gray}
+.界>hr{transition:.2s background;}</style><input type=range min=10 max=40 step=5>
+<script>const
+doc=document, el=(e,k)=>e.appendChild(doc.createElement(k)),
+also=(x,f)=>{f(x);return x}, {floor:div,random}=Math,
+isZ=(i,n)=>i==0||i==n-1,
+
+watch=(e,f)=>new MutationObserver(f).observe(e,watch.c)
+watch.c={attributes:true, attributeNames:["style"]}
+
+let w,h,rect, eRect=also(el(doc.body,"div"), e=>{ e.className="界"
+  watch(e,()=>{ e.innerHTML=""
+    w=div(e.offsetWidth/e.l); h=div(e.offsetHeight/e.l);
+    let i=0,N=w*h
+    for(rect=Array(N),eRect.p=Array(N);i<N;i++)eRect.p[i]=el(e,"hr").style
+    蛇.画墙();
+  })
+}), pYX=(i,j)=>i*w+j;
+also(doc.body.children[0], e=>(e.onchange=ev=> eRect.style.setProperty("--l",(eRect.l=e.valueAsNumber)+"px"))() )//联动CSS网格
+eRect.style.height="50%"
+
+class 蛇{//于rect
+  constructor(p0,d){this.p0=p0,this.dir=d, this.que=[p0],this.queD=[d]; this.flag=0; this.giftDur=[] }
+  static 食名="增长 不死 幽灵 穿墙 倍速 卡住 :反向".split(" ")
+  走(){
+  }
+  static 食=蛇.食名.map((x,i)=>0b1<<i)
+  static 画墙(){
+    for(let i=0,j, p=0; i<h;i++)for(j=0;j<w;j++, p++)
+      rect[p]=isZ(i,h)||isZ(j,w)? 1 : 0;
+  }
+  static 礼(k){
+    let p; do{p=div(random()*w*h)}while(rect[p]!=0); rect[p]=k
+  }
+}
+</script>
+<script>
+/*太难了吧！要我支持 DOM 的 grid/anim+canvas 也就算了，Win/Linux 的命令行也要支持，而且 DOM 也要能运行文本界面……
+其实，命令行和 DOM 唯一的区别就是用 process.stdin 按键事件，然后要初始取显示宽高，而 DOM 的文本输出呢
+利用  textarea 或 iframe document.write 实现按行渲染即可；只需让字符模式支持 DOM/WinCon SetCursorPos iLn=0 / ANSI [H
+
+ANSI,DOM 都是先清屏, print/ln ，Win 是按行号,移动光标写出
+居然还要我支持列的增长裁剪！这不是2D数组的实现 分区块插入很麻烦啊
+
+if(v8) 就直接设置 scon 初始化 win/linux ，否则看创建 canvas,hr,iframe
+*/
+cp="gray green yellow red lightyellow yellowgreen".split(" ")
+kaWeb=[-1,-w,+1,+w]
+
+游戏=(s, id=0)=>{ let waitAct=1;
+doc.onkeydown=ev=>{if(!waitAct)return; let d1=kaWeb[ev.keyCode-37]; if(d1+s.dir!=0)s.dir=d1,waitAct=0; else debugger} // 在单步前多次会导致dir可反向,该由 queD 判定?
+id=setInterval(()=>{
+  let {que,dir}=s, p1=s.p0+dir, c=rect[p1];
+  if(c!=0&&c<3){alert("GG");clearInterval(id)}
+  else qInc=(c==3);
+  que.push(s.p0= p1); rect[p1]=1;
+  if(qInc)蛇.礼(3); else rect[que.shift()]=0; // 据蛇尾 D 设置动画, transform 是不行,只能 background-position !
+  for(let i=0,N=rect.length;i<N;i++)eRect.p[i].backgroundColor=cp[rect[i]],eRect.children[i].innerText=rect[i]?i:"";
+  waitAct=1;
+}, 200)
+蛇.礼(3)
+}
+
+游戏(new 蛇(pYX(div(h/2),div(w/2)),-w) )
+</script>
