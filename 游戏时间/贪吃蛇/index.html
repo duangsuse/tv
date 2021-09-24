@@ -1,32 +1,47 @@
 <style>
-.阵{display:grid; grid-template-columns:repeat(auto,var(--l)); overflow:hidden;resize:both}
-.阵>hr{box-sizing:border-box; width:var(--l);height:var(--l); }
-.阵>canvas,.阵>iframe{width:100%;height:100%;border:0}
+.阵{display:grid;position:relative; grid-template-columns:repeat(auto-fill,var(--l));align-content:center; overflow:hidden;resize:both;  height:50%}
+.阵>hr{box-sizing:border-box;margin:0; width:var(--l);height:var(--l); }
+.阵>canvas,.阵>iframe{width:100%;height:100%;border:0; position:absolute;left:0;top:0}/*本具默认宽高,别抖*/
 </style><div>方块宽<b></b>：<input type=range min=5 max=50 step=5 value=25></div>
+
 <script>
 const doc=document, el=(e,k)=>e.appendChild(doc.createElement(k)), {random,floor:div}=Math
-var e阵,n,m,阵, 模式,换阵=console.trace, g,hcon;//画布,文本输出
+doc.title="多法贪吃蛇"
+var e阵,n,m,阵, l,//瓷块宽
+模式=0,重阵=console.trace,绘者=()=> ()=>{},绘=绘者(), updL,
+g,hcon,hFont,chFont=1;//画布,文本输出
+
+let pYX=(y,x)=>y*m+x, yxP=p=>[div(p/m), p%m],//2D数组铺平
+isZ=(i,N)=>i==0||i==N,
+sel=(ks,f)=>{
+  let e=el(doc.body.children[0],"select");ks.split(" ").forEach(k=>{el(e,"option").innerText=k})
+  e.onchange=()=>f(e.selectedIndex)
+},
+绘_素画文=(e,g,b)=> ()=>[e,g,b,e][模式], next=z=>z.next().value
+
 {
-  let s=doc.location.hash.slice(1),e,l,fm; if(s)el(doc.head,"script").src=s//加载
-  e=doc.querySelectorAll("b,input");//l&m 更新
-  fm=()=>{ m=div(e阵.offsetWidth/l); n=div(e阵.offsetHeight/l); e[0].innerText=l+`列数${m}*行${n}`; 换阵(n*m)}
+  let s=doc.location.hash.slice(1),e,fm; if(s)el(doc.head,"script").src=s//加载#.js
+  e=doc.querySelectorAll("b,input");// m,l 更新
+  fm=()=>{ m=div(e阵.offsetWidth/l); n=div(e阵.offsetHeight/l); e[0].innerText=l+`列数${m}*行${n}格${m*n}`; if(g){let c=g.canvas;c.width=m*l;c.height=n*l;} 重阵(n*m); 绘=绘者();绘()}//不看余数,别改style!
   new MutationObserver(fm).observe(e阵= el(doc.body,"div"), {attributes:true, attributeFilter:["style"]});//resize
-  (e[1].onchange=ev=>{ l=e[1].valueAsNumber; fm() })()
+
+  (updL=e[1].onchange=ev=>{ l=e[1].valueAsNumber; fm(); e阵.style.setProperty("--l",isZ(模式,3)?l+"px": ""); hFont=`<style>*{margin:0;padding:0}pre{font: ${l*.88/chFont}px DejaVu Sans Mono,Courier New,monospace;}</style><pre>` })()
 }
-{
-  e阵.className="阵"
-  let eOpt=el(doc.body.children[0],"select")
-  "阵列grid 画布canvas 文本doc 阵列+平滑移动".split(" ").forEach(k=>{el(eOpt,"option").innerText=k})
-  eOpt.onchange=ev=>{
-    let i;模式=i=eOpt.selectedIndex;
+{ e阵.className="阵"
+  sel("阵列grid 画布canvas 文本doc 阵列+平滑移动",i=>{模式=i;
     e阵.innerText=""
-    if(i==0||i==3)换阵(n*m);
-    else if(i==1)g=el(e阵,"canvas").getContext("2d");
+    if(i==1)g=el(e阵,"canvas").getContext("2d");
     else if(i==2){
-      let d=el(e阵,"iframe").contentDocument, fnt=`<style>body{white-space:pre;font: 20pt Consolas,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New,monospace;}</style>`
-      hcon={clear(){d.write(fnt)/*文档流已关闭=清空*/}, w(s){d.write(s)}, wLn(){d.writeln()} }
+      let d=el(e阵,"iframe").contentDocument
+      hcon={clear(){d.open();d.write(hFont)}, w(s){d.write(s)}, wLn(){d.writeln()} }
     }
-    e阵.style.r=i//更新
-  }
+    updL() //游戏流: dom click, 终端直接开始,不兼容游戏时resize, 统一p暂停步(),统一各渲染cfg
+  })
+}
+
+重阵=N=>{
+  let i,j, p=0, ae, q=isZ(模式,3);
+  阵=Array(N); if(q){e阵.innerText=""; ae=e阵.a=Array(N)}
+  for(i=0;i<n;i++)for(j=0;j<m;j++,p++){ 阵[p]=isZ(i,n-1)||isZ(j,m-1)?1:0; if(q)ae[p]=el(e阵,"hr").style }
 }
 </script>

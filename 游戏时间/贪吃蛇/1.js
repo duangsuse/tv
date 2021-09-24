@@ -12,8 +12,24 @@
 增加地图绘制模式，0~9选择、移动放置方块
 
 sin/爆罐、推箱子 的礼物
+
+要画圆， x=sin r, y=cos r ；r 是弧度，全角时 2pi
+
+半径r 的全角是 2pi/2pi 2r = 2pi/4pi r = pi*r/2 个点， 圆(xy rl, plim=0)
+
+p=临时点(10); p(0,xy, v) 自动撤回上个修改，制造烟花扩散效果
+
+罐头(v,N, xy) 添加烟花礼物
+
+弦波(v,xy0 wh) 迭代 x 取 y0+sin1(x) 添加礼物
+
 */ 
 const iEat=3+4, nDirImg=4 *2,iFood=iEat+nDirImg
+
+换阵=N=>{
+  let i,j, p=0;
+  for(i=0;i<n;i++)for(j=0;j<m;j++,p++){}
+}
 
 //墙面 00,nm 两点右斜, 0m,n0 两点左斜，生成带方向的墙
 

@@ -11,6 +11,18 @@
 */
 
 //e阵,n,m,阵, 模式:grid canvas:g hcon,换阵
-换阵=N=>{}
 
-e阵.style.height="50%"
+let 贴图="gray black green red".split(" "), 贴文=0?" #@*":"　凉逸桃"
+绘者=绘_素画文(()=>{
+  let i,N=n*m, a=e阵.a
+  for(i=0;i<N;i++)a[i].background=贴图[阵[i]]
+}, ()=>{
+  let i,y, j,x, p//编号
+  for(i=0,y=0,p=0;i<n;i++,y+=l)for(j=0,x=0;j<m;j++,p++,x+=l){g.fillStyle=贴图[阵[p]]; g.fillRect(x,y,l,l)}
+},
+()=>{ hcon.clear()
+  let i,N=n*m, j=0
+  for(i=0;i<N;i++){ hcon.w(贴文[阵[i]]); j++;if(j==m){j=0;hcon.wLn()} }
+})
+
+e阵.style.r=0
