@@ -1,8 +1,8 @@
 const doc=this.document,cmd=globalThis.process, el=(e,k)=>e.appendChild(doc.createElement(k)), {random,floor:div}=Math, ss=(s)=>s[0].split(" ")
 var 阵,n,m, e阵,l,//瓷块宽
 模式=0,updL, 重阵=console.trace,绘者=()=> ()=>{},绘=绘者(),步=绘,
-g,hcon, 配={$:ss`v sty styc`, oldM:0,ch:"",nCh:0,//画布,文本输出; 高格高速也=平滑 但比例不对
-  set 击键(f){cmd?cmd.stdin._events.keypress=f : e阵.onkeydown=f}
+g,hcon, 配={$:ss`v sty styc css`, oldM:0,ch:"",nCh:0,//画布,文本输出; 高格高速也=平滑 但比例不对
+  set 击键(f){cmd?require("repl").start().input._events.keypress=(k,o)=>{o.key=k;f(o)} : window.onkeydown=f}
 },C;//win,的字符终端ioctl接口
 
 let pYX=(y,x)=>y*m+x, yxP=p=>[div(p/m), p%m],//2D数组铺平m
@@ -51,6 +51,7 @@ sel("mode",ss`grid canv doc gridv`,i=>{配.oldM=模式; 模式=i;//1x 不重阵.
   updL()
 })
 if(s=配.v)el(doc.head,"script").src=s//加载.js
+if(s=配.css)el(doc.head,"style").innerText=s
 }//DOM
 
 角=[1,1,1,1]
@@ -61,11 +62,12 @@ if(s=配.v)el(doc.head,"script").src=s//加载.js
   if(!cmd)e阵.addEventListener("click", 游戏, {once:1})
 }
 
-function cmdNM(){return [20,30]}
+function cmdNM(){return [21,31]}
 gid=0
 function 游戏(){
-  if(gid)return clearInterval(gid)
-  let dt=div(1000/(配.cps||2))
+  if(gid){clearInterval(gid);gid=0;return}
+  配.初()
+  let dt=div(1000/(配.cps||7))
   console.trace(dt,配)
   gid=setInterval(步,dt)
 }

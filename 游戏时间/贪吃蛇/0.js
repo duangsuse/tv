@@ -25,8 +25,14 @@
   for(i=0;i<N;i++){ hcon.w(贴文[阵[i]]); j++;if(j==m){j=0;hcon.wLn()} }
 })
 
-e阵.style.r=0
+let p, dir=1,  que;
+配.初=()=>{p=pYX(div(n/2),div(m/2)); que=[p]; 新点(3);绘()}
 
+新点=k=>{let p; do{p=div(random()*n*m)}while(阵[p]!=0); 阵[p]=k }
+配.击键=cmd? ev=>{let c,d1;if(!(c=ev.code))return; d1=[-m,+m,+1,-1] [c.charCodeAt(1)-0x41]; if(d1+dir)dir=d1 } : ev=>{let d1=[-1,-m,+1,+m] [ev.keyCode-37]; if(d1+dir)dir=d1 }
 步=()=>{
+  p=p+dir; if((c= 阵[p])!=0&&c<3) (c=prompt("死了啦"))==null?游戏(): c||(游戏()&游戏()); else { que.push(p);阵[p]=2; c==3/*苹果*/? 新点(3) : 阵[que.shift()]=0 }
   绘()
 }
+
+e阵.style.r=0
