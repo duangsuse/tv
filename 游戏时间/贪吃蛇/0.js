@@ -12,7 +12,7 @@
 
 //e阵,n,m,阵, 模式:grid canvas:g hcon,换阵
 
-let 贴图="gray black green red".split(" "), 贴文=0?" #@*":"　凉逸桃"
+let 贴图=配.sty||ss`gray black green red`, 贴文=配.styc||"　凉逸桃"
 绘者=绘_素画文(()=>{
   let i,N=n*m, a=e阵.a
   for(i=0;i<N;i++)a[i].background=贴图[阵[i]]
@@ -26,3 +26,7 @@ let 贴图="gray black green red".split(" "), 贴文=0?" #@*":"　凉逸桃"
 })
 
 e阵.style.r=0
+
+步=()=>{
+  绘()
+}

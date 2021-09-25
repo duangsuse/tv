@@ -21,7 +21,7 @@ p=临时点(10); p(0,xy, v) 自动撤回上个修改，制造烟花扩散效果
 
 罐头(v,N, xy) 添加烟花礼物
 
-弦波(v,xy0 wh) 迭代 x 取 y0+sin1(x) 添加礼物
+弦波(v,xy0 wh) 迭代 x 取 y0+sin1(x) 添加礼物, 变色礼物
 
 */ 
 const iEat=3+4, nDirImg=4 *2,iFood=iEat+nDirImg
