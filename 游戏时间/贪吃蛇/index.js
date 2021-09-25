@@ -1,7 +1,9 @@
 const doc=this.document,cmd=globalThis.process, el=(e,k)=>e.appendChild(doc.createElement(k)), {random,floor:div}=Math, ss=(s)=>s[0].split(" ")
 var 阵,n,m, e阵,l,//瓷块宽
 模式=0,updL, 重阵=console.trace,绘者=()=> ()=>{},绘=绘者(),步=绘,
-g,hcon, 配={$:ss`v sty styc`, oldM:0,ch:"",nCh:0};//画布,文本输出; 高格高速也=平滑 但比例不对
+g,hcon, 配={$:ss`v sty styc`, oldM:0,ch:"",nCh:0,//画布,文本输出; 高格高速也=平滑 但比例不对
+  set 击键(f){cmd?cmd.stdin._events.keypress=f : e阵.onkeydown=f}
+},C;//win,的字符终端ioctl接口
 
 let pYX=(y,x)=>y*m+x, yxP=p=>[div(p/m), p%m],//2D数组铺平m
 isZ=(i,N)=>i==0||i==N, orBoth=(a,b, v,vnot, f)=>a&&b? f() : (a||b?v:vnot),
@@ -15,12 +17,17 @@ setParm=s=>{ let $=配.$, k,v, id=cmd?{}:doc.all,e
 },
 绘_素画文=(e,g,b)=> ()=>[e,g,b,e][模式]
 
-if(cmd){
+if(cmd){ fs=require("fs"); prompt=s=>{console.warn(s); return fs.readFileSync(0/*stdin,Ctrl-D*/).toString()} //全局属性,不是var 噢
   setParm(cmd.argv[2 +0])
-  let o=cmd.stdout
-  模式=2; hcon=cmd.platform=="win32"? {} : {w(s){o.write(s)}, wLn(){o.write("\n")}, clear(){o.write("\x1b[H")}};
-  [n,m]=cmdNM() // l,e,g 不会用到,无 resize 无初始sel
-  require("fs").readFile(配.v, (_,b)=>{eval(`${b}`); 重阵(n*m);绘=绘者(); 游戏() }) //node主循环就模拟了浏览器,为何不注册
+  let o=cmd.stdout, lno=0,q
+  try{setC(q= cmd.platform!="win32")}catch{prompt("export NODE_PATH=`npm -g root`; npm -g i ffi-napi")} //妈Lua都有 #io.read() ,Node竟需readline({input})...
+  [n,m]=cmdNM();n--,m--; // l,e,g 不会用到,无 resize 无初始sel; 亦可 o.columns rows
+
+  模式=2; hcon=q? {w(s){o.write(s)}, wLn(){o.write("\n")}, clear(){o.write("\x1b[H")}} : {
+    clear(){lno=0},
+    wLn(){lno+=1; C.ij[1]=lno; C.SetConsoleCursorPosition(C.ij)}, w(s){o.write(s)}
+  };
+  fs.readFile(配.v, (_,b)=>{eval(`${b}`); if(贴文[0]=='　')m=div(m*0.5); 重阵(n*m);绘=绘者(); 游戏() }) //node主循环就模拟了浏览器,为何不注册
   e阵={style:{}}
 } else {
 doc.title="多法贪吃蛇"
@@ -54,13 +61,26 @@ if(s=配.v)el(doc.head,"script").src=s//加载.js
   if(!cmd)e阵.addEventListener("click", 游戏, {once:1})
 }
 
-function cmdNM(){
-  return [20,30]
-}
+function cmdNM(){return [20,30]}
 gid=0
 function 游戏(){
   if(gid)return clearInterval(gid)
   let dt=div(1000/(配.cps||2))
   console.trace(dt,配)
   gid=setInterval(步,dt)
+}
+function setC(qstd){
+  const{Library:L}=require("ffi-napi"),U16=Uint16Array, I="int";Z="void*",
+  [GWINSZ,kStdO]=[0x5413,2**32-11]
+  C=qstd? L("libc",{ioctl:[I,[I,I],{varargs:1}]}) : L("kernel32",{GetConsoleScreenBufferInfo:[null,[Z,Z]], GetStdHandle:[Z,[I]], SetConsoleCursorPosition:[null,[Z,Z]] })
+
+  C.hStdO=qstd?0: C.GetStdHandle(kStdO)
+  cmdNM=qstd? ()=>{ let c=new U16(2);
+    C.ioctl(Z)(1,GWINSZ,c); return [...c]
+  } : ()=>{
+    let i0=2+2+(2), c=new U16(i0+4+2)
+    C.GetConsoleScreenBufferInfo(C.hStdO, c)
+    let [l,t,r,b]=c.slice(i0); return [b-t,r-l]
+  }
+  C.ij=new U16([0,0])
 }
