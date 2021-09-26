@@ -1,9 +1,11 @@
-const doc=this.document,cmd=globalThis.process, el=(e,k)=>e.appendChild(doc.createElement(k)), {random,floor:div}=Math, ss=(s)=>s[0].split(" ")
+const doc=this.document,cmd=globalThis.process, el=(e,k)=>e.appendChild(doc.createElement(k)), {random,floor:div}=Math, ss=(s)=>s[0].split(" "), asig=Object.assign, dict=()=>Object.create(null)
 var 阵,n,m, e阵,l,//瓷块宽
 模式=0,updL, 重阵=console.trace,绘者=()=> ()=>{},绘=绘者(),步=绘,
 g,hcon, 配={$:ss`v sty styc css`, oldM:0,ch:"",nCh:0,//画布,文本输出; 高格高速也=平滑 但比例不对
-  set 击键(f){cmd?require("repl").start().input._events.keypress=(k,o)=>{o.key=k;f(o)} : window.onkeydown=f}
-},C;//win,的字符终端ioctl接口
+  set 击键(f){
+    cmd?require("repl").start().input._events.keypress=(k,o)=>{o.key=k;let d1=f(o), kc=dirs.分(o); if(d1+(dirs.局[kc]||0) )dirs.push([kc,d1]) } : window.onkeydown=f
+  }
+},dirs=asig([],{分:k=>0, 局:dict()}),C;//win,的字符终端ioctl接口; 反正getch==-1 也是队列,分派吧
 
 let pYX=(y,x)=>y*m+x, yxP=p=>[div(p/m), p%m],//2D数组铺平m
 isZ=(i,N)=>i==0||i==N, orBoth=(a,b, v,vnot, f)=>a&&b? f() : (a||b?v:vnot),
@@ -15,7 +17,7 @@ setParm=s=>{ let $=配.$, k,v, id=cmd?{}:doc.all,e
   for([k,v]of new URLSearchParams(s)) { if(e=id[k])e.value=v
     if(k==$[1]||k==$[2]){if(-1!=(配.nCh=v.indexOf(";")) )v=v.split(";");else 配.nCh=1; }  配[k]=v}
 },
-绘_素画文=(e,g,b)=> ()=>[e,g,b,e][模式]
+绘_素画文=(e,g,b)=> ()=>[e,g,b,e][模式], 清空=(a,f)=>a.splice(0,a.length).forEach(f)
 
 if(cmd){ fs=require("fs"); prompt=s=>{console.warn(s); return fs.readFileSync(0/*stdin,Ctrl-D*/).toString()} //全局属性,不是var 噢
   setParm(cmd.argv[2 +0])
