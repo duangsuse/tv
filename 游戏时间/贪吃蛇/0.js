@@ -28,12 +28,18 @@
 let p, dir=1,  que;
 配.初=()=>{p=pYX(div(n/2),div(m/2)); que=[p]; 新点(3);绘()}
 
+const geta=(a,f,...arg)=>a[f(a,...arg)], maxBy=(a,f)=>{let x=a[0],ix=0, i=1,N=a.length; for(;i<N;i++)if(f(a[i])>f(x))x=a[i],ix=i;  return ix},
+触向=(e,k,f)=>{ let x0,y0; //^ geta([-5,3],maxBy,Math.abs)
+  e[`on${k}down`]=ev=>{x0=ev.x;y0=ev.y}; e[`on${k}up`]=ev=>f(x0,y0,ev.x,ev.y)
+}
 新点=k=>{let p; do{p=div(random()*n*m)}while(阵[p]!=0); 阵[p]=k }
-配.键向(cmd? ev=>{let c;return (c=ev.code)? [-m,+m,+1,-1] [c.charCodeAt(1)-0x41] :0} : ev=>[-1,-m,+1,+m] [ev.keyCode-37], _=>[0,dir])
+{ let a=[], f=配.kquee(a, _=>dir)
+  配.按键=cmd? ev=>{let c,r= (c=ev.code)? [-m,+m,+1,-1] [c.charCodeAt(1)-0x41] :0; f(0,r)} : ev=>f(0, [-1,-m,+1,+m] [ev.keyCode-37])
+  cmd?0: 触向(window,"pointer",(x0,y0,x,y)=>{ x-=x0;y-=y0; let a=[y,x],i=maxBy(a,Math.abs), v=i==0? m:1; f(0, a[i]<0? -v:v) }) //TODO 划分x或y 除蛇数 看id
 步=()=>{
-  清空(配.kdir,(i,d)=> dir=d)
+  清空(a,(i,d)=> dir=d)
   p=p+dir; if((c= 阵[p])!=0&&c<3) (c=prompt("死了啦"))==null?游戏(): c||(游戏()&游戏()); else { que.push(p);阵[p]=2; c==3/*苹果*/? 新点(3) : 阵[que.shift()]=0 }
   绘()
-}
+} }
 
 e阵.style.r=0

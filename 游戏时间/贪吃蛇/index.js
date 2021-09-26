@@ -2,10 +2,8 @@ const doc=this.document,cmd=globalThis.process, el=(e,k)=>e.appendChild(doc.crea
 var 阵,n,m, e阵,l,//瓷块宽
 模式=0,updL, 重阵=console.trace,绘者=()=> ()=>{},绘=绘者(),步=绘,
 g,hcon, 配={$:ss`v sty styc css`, oldM:0,ch:"",nCh:0,//画布,文本输出; 高格高速也=平滑 但比例不对
-  键向(f,防反,isQue=1){
-    let g=ev=>{let d1=f(ev), [kc,d]=防反(ev); if(d1+d) isQue?配.kdir.push(kc,d1):步(kc,d1) }
-    cmd?require("repl").start().input._events.keypress=(k,o)=>{o.key=k;g(o)} : window.onkeydown=g
-  },kdir:[]
+  set 按键(f){cmd?require("repl").start().input._events.keypress=(k,o)=>{o.key=k;f(o)} : window.onkeydown=f},
+  kquee:(a,防反)=>(id,d1)=>{if(防反(id)+d1/*!0,NaN*/) a?a.push(id,d1):步(id,d1)}
 },C;//win,的字符终端ioctl接口; 反正getch==-1 也是队列,分派吧,键能找到自己的蛇
 
 let pYX=(y,x)=>y*m+x, yxP=p=>[div(p/m), p%m],//2D数组铺平m
