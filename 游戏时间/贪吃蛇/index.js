@@ -10,13 +10,14 @@ let pYX=(y,x)=>y*m+x, yxP=p=>[div(p/m), p%m],//2D数组铺平m
 isZ=(i,N)=>i==0||i==N, orBoth=(a,b, v,vnot, f)=>a&&b? f() : (a||b?v:vnot),
 sel=(id,ks,f)=>{
   let e=el(doc.body.children[0],"select");ks.forEach(k=>{el(e,"option").innerText=k});
-  e.name=id; setParm(doc.location.search); (e.onchange=()=>f(e.selectedIndex))()
+  e.name=id; setParm(doc.location.search); (e.onchange=()=>{f(e.selectedIndex); e.parentNode.className="i"+e.selectedIndex })()//TODO 暴露旧值
 },
 setParm=s=>{ let $=配.$, k,v, id=cmd?{}:doc.all,e
   for([k,v]of new URLSearchParams(s)) { if(e=id[k])e.value=v
     if(k==$[1]||k==$[2]){if(-1!=(配.nCh=v.indexOf(";")) )v=v.split(";");else 配.nCh=1; }  配[k]=v}
 },
-绘_素画文=(e,g,b)=> ()=>[e,g,b,e][模式], 清空=(a,f)=>{ let i=0,N=a.length,nF=f.length; a=a.splice(0,N);for(;i<N;i+=nF)f(...a.slice(i,i+nF)) }
+绘_素画文=(e,g,b)=> ()=>[e,g,b,e][模式], 清空=(a,f)=>{ let i=0,N=a.length,nF=f.length; a=a.splice(0,N);for(;i<N;i+=nF)f(...a.slice(i,i+nF)) },
+pSwap=(a,p,f)=>{let r=p.map(f);r.forEach((v,i)=>{r[i]=a[p[i]];a[p[i]]=v}); return()=>r.forEach((v0,i)=>a[p[i]]=v0) }
 
 if(cmd){ fs=require("fs"); prompt=s=>{console.warn(s); return fs.readFileSync(0/*stdin,Ctrl-D*/).toString()} //全局属性,不是var 噢
   setParm(cmd.argv[2 +0])
@@ -55,12 +56,12 @@ if(s=配.v)el(doc.head,"script").src=s//加载.js
 if(s=配.css)el(doc.head,"style").innerText=s
 }//DOM
 
-角=[1,1,1,1]
+角=[1,1,1,1]//方块号
 重阵=N=>{
   let i,j, p=0, ae, q=isZ(模式,3),i角=0;
   阵=Array(N); if(q){e阵.innerText=""; ae=e阵.a=Array(N)}
-  for(i=0;i<n;i++)for(j=0;j<m;j++,p++){ 阵[p]=orBoth(isZ(i,n-1),isZ(j,m-1),1,0, ()=>角[i角++] ); if(q)ae[p]=el(e阵,"hr").style }
-  if(!cmd) e阵.addEventListener("click", (gid==0)?游戏:配.初, {once:1})//在跑则点击重开
+  for(i=0;i<n;i++)for(j=0;j<m;j++,p++){ 阵[p]=orBoth(isZ(i,n-1),isZ(j,m-1),2,0, ()=>角[i角++] ); if(q)ae[p]=el(e阵,"hr").style }
+  if(!cmd) e阵.addEventListener("click", (gid==0)?游戏:配.初, {once:1})//在跑则点击重开, m拖拽其实立刻游戏() ..
 }
 
 function cmdNM(){return [21,31]}

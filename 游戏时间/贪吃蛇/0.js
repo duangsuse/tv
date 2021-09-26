@@ -12,33 +12,38 @@
 
 //e阵,n,m,阵, 模式:grid canvas:g hcon,换阵
 
-贴图=配.sty||ss`gray black green red`, 贴文=配.styc||"　凉逸桃"
+贴图=配.sty||ss`gray green black red yellowgreen darkgreen`, 贴文=配.styc||"　小凉桃逸疯", i资=4
 绘者=绘_素画文(()=>{
   let i,N=n*m, a=e阵.a
   for(i=0;i<N;i++)a[i].background=贴图[阵[i]]
+  for(i=0;i<2;i++)a[que[i==0?0: que.length-1]].background=贴图[i资+i]//性能关键,副本码
 }, ()=>{
   let i,y, j,x, p//编号
   for(i=0,y=0,p=0;i<n;i++,y+=l)for(j=0,x=0;j<m;j++,p++,x+=l){g.fillStyle=贴图[阵[p]]; g.fillRect(x,y,l,l)}
+  for(i=0;i<2;i++){ [y,x]=yxP(que[i==0?0: que.length-1]); g.fillStyle=贴图[i资+i]; g.fillRect(x*l,y*l, l,l) }
 },
 ()=>{ hcon.clear()
-  let i,N=n*m, j=0
+  let i,N=n*m, j=0,
+  edg=pSwap(阵,[que[0],rget(que,0)], (x,i)=>i资+i)//赞
   for(i=0;i<N;i++){ hcon.w(贴文[阵[i]]); j++;if(j==m){j=0;hcon.wLn()} }
+  edg()
 })
 
-let p, dir=1,  que;
+let p, dir=1,  que=[0];
 配.初=()=>{p=pYX(div(n/2),div(m/2)); que=[p]; 新点(3);绘()}
 
-const geta=(a,f,...arg)=>a[f(a,...arg)], maxBy=(a,f)=>{let x=a[0],ix=0, i=1,N=a.length; for(;i<N;i++)if(f(a[i])>f(x))x=a[i],ix=i;  return ix},
+const geta=(a,f,...arg)=>a[f(a,...arg)], maxBy=(a,f)=>{let x=a[0],ix=0, i=1,N=a.length; for(;i<N;i++)if(f(a[i])>f(x))x=a[i],ix=i;  return ix}, rget=(a,i)=>a[a.length-1-i],
 触向=(e,k,f)=>{ let x0,y0; //^ geta([-5,3],maxBy,Math.abs)
   e[`on${k}down`]=ev=>{x0=ev.x;y0=ev.y}; e[`on${k}up`]=ev=>f(x0,y0,ev.x,ev.y)
-}
+},
 新点=k=>{let p; do{p=div(random()*n*m)}while(阵[p]!=0); 阵[p]=k }
+
 { let a=[], f=配.kquee(a, _=>dir)
   配.按键=cmd? ev=>{let c,r= (c=ev.code)? [-m,+m,+1,-1] [c.charCodeAt(1)-0x41] :0; f(0,r)} : ev=>f(0, [-1,-m,+1,+m] [ev.keyCode-37])
-  cmd?0: 触向(window,"pointer",(x0,y0,x,y)=>{ x-=x0;y-=y0; let a=[y,x],i=maxBy(a,Math.abs), v=i==0? m:1; f(0, a[i]<0? -v:v) }) //TODO 划分x或y 除蛇数 看id
+  cmd?0: 触向(window,"pointer",(x0,y0,x,y)=>{ x-=x0;y-=y0; let a=[y,x],i=maxBy(a,Math.abs), v=i==0? m:1; f(0, a[i]<0? -v:v) }) //TODO 划分x或y 除蛇数 看id; 风格： 空 蛇 墙:横竖斜反白 苹果 (资源>)四向:蛇头,蛇尾
 步=()=>{
   清空(a,(i,d)=> dir=d)
-  p=p+dir; if((c= 阵[p])!=0&&c<3) (c=prompt("死了啦"))==null?游戏(): c||(游戏()&游戏()); else { que.push(p);阵[p]=2; c==3/*苹果*/? 新点(3) : 阵[que.shift()]=0 }
+  p=p+dir; if((c= 阵[p])!=0&&c<3) (c=prompt("死了啦"))==null?游戏(): c||(游戏()&游戏()); else { que.push(p);阵[p]=1; c==3/*苹果*/? 新点(3) : 阵[que.shift()]=0 }
   绘()
 } }
 
