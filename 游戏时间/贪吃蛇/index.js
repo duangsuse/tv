@@ -1,11 +1,12 @@
-const doc=this.document,cmd=globalThis.process, el=(e,k)=>e.appendChild(doc.createElement(k)), {random,floor:div}=Math, ss=(s)=>s[0].split(" "), asig=Object.assign, dict=()=>Object.create(null)
+const doc=this.document,cmd=globalThis.process, el=(e,k)=>e.appendChild(doc.createElement(k)), {random,floor:div}=Math, ss=(s)=>s[0].split(" ")
 var 阵,n,m, e阵,l,//瓷块宽
 模式=0,updL, 重阵=console.trace,绘者=()=> ()=>{},绘=绘者(),步=绘,
 g,hcon, 配={$:ss`v sty styc css`, oldM:0,ch:"",nCh:0,//画布,文本输出; 高格高速也=平滑 但比例不对
-  set 击键(f){
-    cmd?require("repl").start().input._events.keypress=(k,o)=>{o.key=k;let d1=f(o), kc=dirs.分(o); if(d1+(dirs.局[kc]||0) )dirs.push([kc,d1]) } : window.onkeydown=f
-  }
-},dirs=asig([],{分:k=>0, 局:dict()}),C;//win,的字符终端ioctl接口; 反正getch==-1 也是队列,分派吧
+  键向(f,防反,isQue=1){
+    let g=ev=>{let d1=f(ev), [kc,d]=防反(ev); if(d1+d) isQue?配.kdir.push(kc,d1):步(kc,d1) }
+    cmd?require("repl").start().input._events.keypress=(k,o)=>{o.key=k;g(o)} : window.onkeydown=g
+  },kdir:[]
+},C;//win,的字符终端ioctl接口; 反正getch==-1 也是队列,分派吧,键能找到自己的蛇
 
 let pYX=(y,x)=>y*m+x, yxP=p=>[div(p/m), p%m],//2D数组铺平m
 isZ=(i,N)=>i==0||i==N, orBoth=(a,b, v,vnot, f)=>a&&b? f() : (a||b?v:vnot),
@@ -17,7 +18,7 @@ setParm=s=>{ let $=配.$, k,v, id=cmd?{}:doc.all,e
   for([k,v]of new URLSearchParams(s)) { if(e=id[k])e.value=v
     if(k==$[1]||k==$[2]){if(-1!=(配.nCh=v.indexOf(";")) )v=v.split(";");else 配.nCh=1; }  配[k]=v}
 },
-绘_素画文=(e,g,b)=> ()=>[e,g,b,e][模式], 清空=(a,f)=>a.splice(0,a.length).forEach(f)
+绘_素画文=(e,g,b)=> ()=>[e,g,b,e][模式], 清空=(a,f)=>{ let i=0,N=a.length,nF=f.length; a=a.splice(0,N);for(;i<N;i+=nF)f(...a.slice(i,i+nF)) }
 
 if(cmd){ fs=require("fs"); prompt=s=>{console.warn(s); return fs.readFileSync(0/*stdin,Ctrl-D*/).toString()} //全局属性,不是var 噢
   setParm(cmd.argv[2 +0])
@@ -61,7 +62,7 @@ if(s=配.css)el(doc.head,"style").innerText=s
   let i,j, p=0, ae, q=isZ(模式,3),i角=0;
   阵=Array(N); if(q){e阵.innerText=""; ae=e阵.a=Array(N)}
   for(i=0;i<n;i++)for(j=0;j<m;j++,p++){ 阵[p]=orBoth(isZ(i,n-1),isZ(j,m-1),1,0, ()=>角[i角++] ); if(q)ae[p]=el(e阵,"hr").style }
-  if(!cmd)e阵.addEventListener("click", 游戏, {once:1})
+  if(!cmd) e阵.addEventListener("click", (gid==0)?游戏:配.初, {once:1})//在跑则点击重开
 }
 
 function cmdNM(){return [21,31]}

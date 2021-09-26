@@ -29,9 +29,9 @@ let p, dir=1,  que;
 配.初=()=>{p=pYX(div(n/2),div(m/2)); que=[p]; 新点(3);绘()}
 
 新点=k=>{let p; do{p=div(random()*n*m)}while(阵[p]!=0); 阵[p]=k }
-配.击键=cmd? ev=>{let c;return (c=ev.code)? [-m,+m,+1,-1] [c.charCodeAt(1)-0x41] :0} : ev=>[-1,-m,+1,+m] [ev.keyCode-37] //TODO 应用到蛇0/ 蛇按键绑定
+配.键向(cmd? ev=>{let c;return (c=ev.code)? [-m,+m,+1,-1] [c.charCodeAt(1)-0x41] :0} : ev=>[-1,-m,+1,+m] [ev.keyCode-37], _=>[0,dir])
 步=()=>{
-  清空(dirs,([i,d])=> dir=d)
+  清空(配.kdir,(i,d)=> dir=d)
   p=p+dir; if((c= 阵[p])!=0&&c<3) (c=prompt("死了啦"))==null?游戏(): c||(游戏()&游戏()); else { que.push(p);阵[p]=2; c==3/*苹果*/? 新点(3) : 阵[que.shift()]=0 }
   绘()
 }
