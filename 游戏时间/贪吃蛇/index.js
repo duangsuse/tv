@@ -19,10 +19,10 @@ setParm=s=>{ let $=配.$, k,v, id=cmd?{}:doc.all,e
 绘_素画文=(e,g,b)=> ()=>[e,g,b,e][模式], 清空=(a,f)=>{ let i=0,N=a.length,nF=f.length; a=a.splice(0,N);for(;i<N;i+=nF)f(...a.slice(i,i+nF)) },
 pSwap=(a,p,f)=>{let r=p.map(f);r.forEach((v,i)=>{r[i]=a[p[i]];a[p[i]]=v}); return()=>r.forEach((v0,i)=>a[p[i]]=v0) }
 
-if(cmd){ fs=require("fs"); prompt=s=>{console.warn(s); return 配.css} //全局属性,不是var 噢; 实现还有 readable/end, /dev/stdin.. 让你ask怎么那么难呢？
+if(cmd){ fs=require("fs"); prompt=s=>{console.warn(s); return 配.css} //全局属性,不是var 噢; 实现还有 readable/end, /dev/stdin.. repl.prompt无效，让你ask怎么那么难呢？
   setParm(cmd.argv[2 +0])
   let o=cmd.stdout, lno=0,q
-  try{setC(q= cmd.platform!="win32")}catch{prompt("export NODE_PATH=`npm -g root`; npm -g i ffi-napi")} //妈Lua都有 #io.read() ,Node竟需readline({input})...
+  try{setC(q= cmd.platform!="win32")}catch{prompt("export NODE_PATH=`npm -g root`; npm -g i ffi-napi");fs.readFileSync(0)} //妈Lua都有 #io.read() ,Node竟需readline({input})...
   [n,m]=cmdNM();n--,m--; // l,e,g 不会用到,无 resize 无初始sel; 亦可 o.columns rows
 
   模式=2; hcon=q? {w(s){o.write(s)}, wLn(){o.write("\n")}, clear(){o.write("\x1b[H")}} : {

@@ -1,0 +1,11 @@
+c=repl.start()
+c.context;c.eval("1")
+
+//history size,dup
+c.input._ev.keypress
+c.output.rows
+
+c.completer("c.")
+c.write(c.writer(1))//writer.colors
+
+Object.entries(a).filter(([k,v])=>typeof v=="boolean")
