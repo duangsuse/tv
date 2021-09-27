@@ -32,7 +32,14 @@
 let p, dir=1,  que=[0];
 配.初=()=>{p=pYX(div(n/2),div(m/2)); que=[p]; 新点(3);绘()}
 
-const geta=(a,f,...arg)=>a[f(a,...arg)], maxBy=(a,f)=>{let x=a[0],ix=0, i=1,N=a.length; for(;i<N;i++)if(f(a[i])>f(x))x=a[i],ix=i;  return ix}, rget=(a,i)=>a[a.length-1-i],
+const geta=(a,f,...arg)=>a[f(a,...arg)], maxBy=(a,f)=>{let x=a[0],ix=0, i=1,N=a.length; for(;i<N;i++)if(f(a[i])>f(x))x=a[i],ix=i;  return ix}, rget=(a,i)=>a[a.length-1-i], {sin,cos,PI}=Math,
+plusRL=(x,y)=>(r,l)=>[x+l*sin(r),y+l*cos(r)],//直左三角 倒
+圆点=(x,y,l, f)=>{for(let p=plusRL(x,y), r=0,r1=2*PI, dr=r1/(l*PI*globalThis.l);r<r1;r+=dr)f(...p(r,l)) },
+烟花=(x,y,v, a=[])=>l=>{
+  清空(a, (p,v0)=>阵[p]=v0); let p0=-1//v (/l*3.99)的浮点小误差免覆盖, 于旧公式 r1/l/globalThis.l/2
+  if(l)圆点(x,y, l,(x,y)=>{let p=pYX(div(y),div(x)); if(p0!=p)a.push(p,阵[p]);阵[p]=v; p0=p});绘()
+},时差数=(a,b,step,f,dt,tend=0)=>{let id=setInterval(()=>{f(a);a+=step; if(a>b){clearInterval(id);f(tend*a)}},dt)},
+
 触向=(e,k,f)=>{ let x0,y0; //^ geta([-5,3],maxBy,Math.abs)
   e[`on${k}down`]=ev=>{x0=ev.x;y0=ev.y}; e[`on${k}up`]=ev=>f(x0,y0,ev.x,ev.y)
 },

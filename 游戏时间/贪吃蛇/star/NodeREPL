@@ -1,11 +1,12 @@
-c=repl.start()
+c=repl.start()//close
 c.context;c.eval("1")
 
 //history size,dup
 c.input._ev.keypress
 c.output.rows
 
-c.completer("c.")
+c.completer("c.", (_,[rs,s])=>rs[0] ) //editorMode fnwrap?
 c.write(c.writer(1))//writer.colors
+c.clearLine()
 
 Object.entries(a).filter(([k,v])=>typeof v=="boolean")
