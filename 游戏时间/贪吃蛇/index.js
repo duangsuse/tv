@@ -2,9 +2,9 @@ const doc=this.document,cmd=globalThis.process, el=(e,k)=>e.appendChild(doc.crea
 var 阵,n,m, e阵,l,//瓷块宽
 模式=0,updL, 重阵=console.trace,绘者=()=> ()=>{},绘=绘者(),步=绘,
 g,hcon, 配={$:ss`v sty styc css`, oldM:0,ch:"",nCh:0,//画布,文本输出; 高格高速也=平滑 但比例不对
-  set 按键(f){cmd?require("repl").start().input._events.keypress=(k,o)=>{o.key=k;f(o)} : window.onkeydown=f},
+  set 按键(f){cmd?(repl=require("repl").start()).input._events.keypress=(k,o)=>{o.key=k;f(o)} : window.onkeydown=f},
   kquee:(a,防反)=>(id,d1)=>{if(防反(id)+d1/*!0,NaN*/) a?a.push(id,d1):步(id,d1)}
-},C;//win,的字符终端ioctl接口; 反正getch==-1 也是队列,分派吧,键能找到自己的蛇
+},C,repl;//win,的字符终端ioctl接口; 反正getch==-1 也是队列,分派吧,键能找到自己的蛇
 
 let pYX=(y,x)=>y*m+x, yxP=p=>[div(p/m), p%m],//2D数组铺平m
 isZ=(i,N)=>i==0||i==N, orBoth=(a,b, v,vnot, f)=>a&&b? f() : (a||b?v:vnot),
@@ -19,7 +19,7 @@ setParm=s=>{ let $=配.$, k,v, id=cmd?{}:doc.all,e
 绘_素画文=(e,g,b)=> ()=>[e,g,b,e][模式], 清空=(a,f)=>{ let i=0,N=a.length,nF=f.length; a=a.splice(0,N);for(;i<N;i+=nF)f(...a.slice(i,i+nF)) },
 pSwap=(a,p,f)=>{let r=p.map(f);r.forEach((v,i)=>{r[i]=a[p[i]];a[p[i]]=v}); return()=>r.forEach((v0,i)=>a[p[i]]=v0) }
 
-if(cmd){ fs=require("fs"); prompt=s=>{console.warn(s); return fs.readFileSync(0/*stdin,Ctrl-D*/).toString()} //全局属性,不是var 噢
+if(cmd){ fs=require("fs"); prompt=s=>{console.warn(s); return 配.css} //全局属性,不是var 噢; 实现还有 readable/end, /dev/stdin.. 让你ask怎么那么难呢？
   setParm(cmd.argv[2 +0])
   let o=cmd.stdout, lno=0,q
   try{setC(q= cmd.platform!="win32")}catch{prompt("export NODE_PATH=`npm -g root`; npm -g i ffi-napi")} //妈Lua都有 #io.read() ,Node竟需readline({input})...
@@ -67,7 +67,7 @@ if(s=配.css)el(doc.head,"style").innerText=s
 function cmdNM(){return [21,31]}
 gid=0
 function 游戏(){
-  if(gid){clearInterval(gid);gid=0;return}
+  if(gid){clearInterval(gid);gid=0;if(repl)repl.close();return}
   配.初()
   let dt=div(1000/(配.cps||7))
   console.trace(dt,配)
