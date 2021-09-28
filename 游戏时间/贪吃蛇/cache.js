@@ -4,11 +4,9 @@ var VERSION = 'v1';
 self.addEventListener('install', function(event) {
   event.waitUntil(
     caches.open(VERSION).then(function(cache) {
-      return cache.addAll([
-        '','./index.html','pwa.json',
-        './index.js',
-        './0.js'
-      ]);
+      return cache.addAll(
+        " pwa.json ./index.html ./index.js ./0.js icon/128x128.png icon/192x192.png icon/512x512.png icon/144x144.png icon/256x256.png".split(" ")
+      );
     })
   );
 });
