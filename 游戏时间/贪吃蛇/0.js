@@ -40,8 +40,9 @@ plusRL=(x,y)=>(r,l)=>[x+l*sin(r),y+l*cos(r)],//直左三角 倒
   if(l)圆点(x,y, l,(x,y)=>{let p=pYX(div(y),div(x)); if(p0!=p)a.push(p,阵[p]);阵[p]=v; p0=p});绘()
 },时差数=(a,b,step,f,dt,tend=0)=>{let id=setInterval(()=>{f(a);a+=step; if(a>b){clearInterval(id);f(tend*a)}},dt)},
 
-触向=(e,k,f)=>{ let x0,y0; //^ geta([-5,3],maxBy,Math.abs)
-  e[`on${k}down`]=ev=>{x0=ev.x;y0=ev.y}; e[`on${k}up`]=ev=>f(x0,y0,ev.x,ev.y)
+触向=(e,k,f)=>{ let x0,y0, q=(k!="touch"),on; //^ geta([-5,3],maxBy,Math.abs)
+  on=(k1,f)=>e["on"+k+k1]=q?f: ev=>{let p=ev.changedTouches[0]||ev.touches[0]; f({x:p.clientX,y:p.clientY})}
+  on((q?"down":"start"),ev=>{x0=ev.x;y0=ev.y}); on((q?"up":"end"),ev=>f(x0,y0,ev.x,ev.y) )
 },
 新点=k=>{let p; do{p=div(random()*n*m)}while(阵[p]!=0); 阵[p]=k }
 { let a=[], f=配.kquee(a, _=>dir)
@@ -54,4 +55,4 @@ plusRL=(x,y)=>(r,l)=>[x+l*sin(r),y+l*cos(r)],//直左三角 倒
   绘()
 } }
 
-e阵.style.r=0
+//e阵.style.r=0 //FxA 68 Observer 不正常

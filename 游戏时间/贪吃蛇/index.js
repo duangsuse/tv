@@ -52,7 +52,7 @@ sel("mode",ss`grid canv doc gridv`,i=>{配.oldM=模式; 模式=i;//1x 不重阵.
   }
   updL()
 })
-if(s=配.v)el(doc.head,"script").src=s//加载.js
+if(s=配.v){let e=el(doc.head,"script"); e.src=s;e.onload=fm}//加载.js
 if(s=配.css)el(doc.head,"style").innerText=s
 }//DOM
 
