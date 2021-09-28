@@ -43,11 +43,11 @@ plusRL=(x,y)=>(r,l)=>[x+l*sin(r),y+l*cos(r)],//直左三角 倒
 触向=(e,k,f)=>{ let x0,y0, q=(k!="touch"),on; //^ geta([-5,3],maxBy,Math.abs)
   on=(k1,f)=>e.addEventListener(k+k1,q?f: ev=>{let p=ev.changedTouches[0]||ev.touches[0]; ev.x=p.clientX,ev.y=p.clientY;f(ev)}, {passive:false})
   on((q?"down":"start"),ev=>{x0=ev.x;y0=ev.y}); on((q?"up":"end"),ev=>f(x0,y0,ev.x,ev.y,ev) )//给f机会自己判断是点击滑移还是游戏内.
-},
-新点=k=>{let p; do{p=div(random()*n*m)}while(阵[p]!=0); 阵[p]=k }
+}
+
 { let a=[], f=配.kquee(a, _=>dir)
   配.按键=cmd? ev=>{let c,r= (c=ev.code)? [-m,+m,+1,-1] [c.charCodeAt(1)-0x41] :0; f(0,r)} : ev=>f(0, [-1,-m,+1,+m] [ev.keyCode-37])
-  for(let kev of ss`mouse touch`)cmd?0: 触向(window,kev,(x0,y0,x,y,ev)=>{ x-=x0;y-=y0; let a=[y,x],i=maxBy(a,Math.abs), v=i==0? m:1; if(a[i]>5)ev.preventDefault(); f(0, a[i]<0? -v:v) }) //TODO 划分x或y 除蛇数 看id; 风格： 空 蛇 墙:横竖斜反白 苹果 (资源>)四向:蛇头,蛇尾
+  for(let kev of ss`mouse touch`)cmd?0: 触向(window,kev,(x0,y0,x,y,ev)=>{ x-=x0;y-=y0; let a=[y,x],i=maxBy(a,Math.abs), v=i==0? m:1; if(a[i]>2)ev.preventDefault(); f(0, a[i]<0? -v:v) }) //TODO 划分x或y 除蛇数 看id; 风格： 空 蛇 墙:横竖斜反白 苹果 (资源>)四向:蛇头,蛇尾
     //还以为 pointer 是统一 API 呢，没想到支持的那么少 也难怪暴露的数据好长,本该浏览器兼容
 步=()=>{
   清空(a,(i,d)=> dir=d)
