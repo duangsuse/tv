@@ -1,0 +1,73 @@
+流行[Java]呦,服务框架.自写依赖注入器
+
+你觉得 Spring 的核心是什么？ Mapper,Repository,或 Service,HTMLTemplate,RESTController ？还是 pom,JUnit 和 selemium ？其实是 @Autowired 和 @XXScan
+
+初入Java开发无论MVC还是Android都可能被这货弄迷糊，依赖注入，DI啊控制反转IoC啊 听起来好高大上，但用它的人根本不明白它执行的入口在哪，又为何是必要的。
+
+Android应该用过ButterKnife，它自动把findViewById写到属性，实际就是一种依赖注入，毕竟我们必须在 onCreate 后而不是 new Activity 时执行find ，不能直接把那些属性=初始化。
+
+假如对一些数字实现 CRUD 操作， Math.random, i=>a[i] , (i,v)={a[i]=v}, a.splice(i,1) ，就是把 Number 和索引号关联吧，我们需要执行SQL得到数据cursor 的方法(数据库连接)、需要Table(i int,v number) 的名字 ，从而知道 `select (v) from tableName where i=$0` 的完整信息
+
+CUD 三操作时是有数据对象(DAO)的，但 R 时我们就没途径知道数据库的表名，是不是要靠 `new Repo(daoType, tableName)` 可是你需要手动创建这个东西、提供构造器参数吗？实际它是基于你的 `@Repository class X {}` 或 Mapper 的URL路径拿到的，这种隐式性方便了 Java 这种静态语言的设计，因为 JavaScript 里一个 `router.path("/num",{_i: o=>db.get("v","i=$0",o.i), put_i,del_i,make })` 已经能提供足够的信息量，不需要分那么多层的 class 还得去默认0参构造器啊 Scan 啊
+
+interface W{Integer w;}
+class User implements W{}
+foo(User u){inject(List.of(1),u); return u.w}
+inject(List<Integer> vals, W... objs){forIndexed(vals, (x,i)->{objs[i].w=x})}
+
+我让 u.w=1 了，而且你会很蒙B。
+
+我举了个不太直观的例子，但注入大多是基于全局默认(单)实例的 Map<Class<T>, T> 进行的，如果把 foo(User u) 变成 class Foo{@隐式 User u;} ，你会发现欸它也应该被注入
+
+只不过我们自动处理new Foo()的所有 @隐式 annotation 标记的属性，利用 java.lang.reflect 而不是死板的 W 接口 + Map 提供值，哇，我好牛B 啊。但也就是实现了JS等动态语言里的普通元编程
+
+依赖注入就是把某个值通过构造器或 set方法，提供给对象，无论是在源码里o.x= 或反射。
+
+如果我靠 inject(Foo.class) 就能拿到 Foo 的实例，相当于基于Map自动填充 Python 里默认的构造器参数，以及属性，给热爱过度设计的 Java 框架提供了更多动态性
+
+interface Injector{
+  Map<Class,Object> inst;
+  init(Obj o){/*对所有 @隐式 属性设置 inst.get(prop.type) 值*/}
+  init(Class<?> type, Obj... args){o=type.newInstance(填好默认参数); init(o); return o }
+  scan(Class provides); //绑定 @提供 单实例/创建方法
+}
+
+你可能说，这么简单，那我手动提供不好吗
+
+真不太好。依据现在 class 泛滥的 JavaEE 界风气，能用 String+Function 注册到路由表的，你非要靠 @Mapper class 和反射getName ，甚至XML和注解codegen，意味有无数 class 创建后要提供 repo 参数，而这些 repo 又依赖当前应用的 sql 连接对象，甚至更多 service 啦，超大型缝合怪，单是new 关键字你都数不清
+
+db=new MariaDB("127.0.0.1","who","toor")
+s1=new S1(db)
+s2=new S2(db)//不会告诉我再 new MariaDB 一次吧？
+svc.put("s1",s1)
+
+那它的入口呢？ Spring 遍历类路径下所有类名，过滤出 Controller,Repositry,DAO Entity 这些东西，是组件的单实例创建一个就行了，像 Repository 之类可以在 Service/Controller 的注入里被new的，看 inst.getOrCompute ，第一次才创建；然后帮你把这团乱麻按@Path之类，挂到 URL路由器，该用 Proxy 实现(下期讲)的interface 给new一下，监听HTTP
+
+有些依赖注入器还能加载配置文件呢，假如连接数据库需要用户名和密码，我 @隐式 Database db; 不传递 env.get("SQL_USER"), argv[1] 之类的的可以吗？只需让默认实例支持类名，当 Java 首次访问到C的 static INSTANCE 成员时 C的 static{} 代码块才会自动计算，这时候读取就OK了嘛
+
+但是啊，我这里有个 class Add{Integer a,b} ，如果我只让 b 默认为1 ，且默认值可配置，加个 @隐式 就好；但 a 呢，它的类型也是 Integer 分不清啊
+
+如果我再有 class Mul{a,b} ，我怎么给它指定默认 Integer 依赖？
+
+于是就有了上下文依赖注入，你觉得 Repo 拿到创建自己的 Controller 容易吗？太简单了，首先可以扫描 repo名-controller包名 的xml对应表，按类型拿实例，然后可以给 inject(o, parent=null) 这个参数，o属性 inject(o.foo, o) 完事
+
+刚才的问题称为 作用域 Scope ， @隐式("mul.a") Mul.a; @隐式("add.a") Mul.a; 然后加一层 Map<String,全局单实例表>，实际点就自动添加 .a 这种属性名或 mul 域名，无非是查表的文字游戏罢了
+
+那它实用吗？Add被写成函数甚至class已经够傻了，已经是很蠢的过度设计了(1+2 可表达,1+(2*3) 呢?)，没有应用会依赖一个 Integer ，如果是测试的话数据源会不同，但就是改配置文件。如果测试利用了 Mock object ，例如假装发送邮件，就可以有 @隐式域('test")class{@隐式 MailSender} 和 @提供("test") MailSender create(){}
+
+本质上我推荐 class TestMailSender{} 一个，不要重用一个类型名，大不了每个scope创建个子类，反正成员终究是要改写的，啊
+
+打咩！问题到这里就终止了，不要为一个错误的选择，去解决更多问题；其实 CDI 上下文依赖注入，不过是 DI 的一种更牛X的说法，别说下文，它连创建上文都不支持。
+
+元编程是为热爱简洁代码的必备流程思考者，而不是为崇拜『设计模式』的起名专家准备；只想着让花里胡哨的「可扩展软件架构」执行想要的功能的人，是get不到“为啥必须这么做”“最简单怎么写”这些本质问题的；因为他们的目的根本不是「程序的结果」，而是执迷于代码的写法上了
+
+我可以说依赖注入的本质是：构造器参数的默认值，是全局变量的当前值；不过也能是在构造后，先默认化再使用
+
+在 Java 只要是能 new 且不是 new A().new W() 的 class{class} ；有0参构造器或 @Inject 构造器就能被注入，例如 Session,Queue,JPA Repository
+
+@Autowired=Inject
+Bean @Quantifier=Named
+@Singleton 只创建一次
+@Any Instance<T> 能注入多个T
+
+JavaEE 领域知名的「常见情况必须显式写出」「能用语序必换多个名字」，常见必写长、语序必无义、语言和OOP设计必然倒贴CS,Producer-Consumer 架构所谓的优雅性，懂的都懂，我就不吐槽了
