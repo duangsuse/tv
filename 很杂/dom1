@@ -1,0 +1,274 @@
+tagName .className [attr(^$)="value"] #id ::nth(0) * :disa :not, xul MOA cpmanager QR max((240px / (nCell+4fr*2)),2)
+calignN4
+标签、类、ID、伪项/态、全选择器 (标类名伪全 层父交并选)
+a.class a#id 指定标签名交集选择器
+a,b a b+a>b 同性质(即并集)、层次、直接父项选择器并列法
+calc( var(name,deft) rgba( linear-graident(
+media,font-face,keyframes,
+px,pt,em,sp,dp,in,ft, deg; s,ms
+link(with href.):visited,hover,active,focus-
+padding,margin,border,offset/z-index, top/left/bottom/right TLBR auto
+font,border,background,padding
+如果想让边框大小合适，调 margin
+事件与曲线、持续更新、混成渲染，圆到方填充
+logo设计：替换、添加、色彩层次、氛围空间(曲粗折 线 聚散曲直)、拼凑
+transform: rotate() inherit 单个可叠加属性值动画
+
+大于空格的, 和 deinterleave par,child；JSON substr->res&i1 进退重试 替换规避特殊符
+
+float:LR,display:blk; :after div,hr clear:both,overflow:none
+ul li 的左右浮动无高化影响横顺序
+DevTools 的 sources 面板可以编辑本地文件夹, Element.style 和 cssRule.style 是类似的
+
+Ctrl-Shift-C/M, Properties, Computed, DOM Breakpoint grouping, used-Covge, Performance Monitor, Sensors
+
+Ps 技巧: 右上调面板工作布局、快速样式，左侧右键展开工具组单选，菜单栏视图-标尺 和-显示-网格 很常用，拖拽标尺创建辅助线吸附，直线工具在矢量图层里绘制，可以应用变形和多选对齐/界内分布
+
+r.stepCount(nStep).zipWithNext().reduceWithLeft(y) { (acc,x,yL)
+  Rect(x,0,x+r.step,avg(yL,y(x))).area
+}
+$.extend(Object,{
+  let:function(o,op){},
+  get_wtf:(o)=>
+}, newArrayIndex(3,$.extend.flags(f=>~f.enum|f.write) ) ).usePatch()
+EAry($.func,$.ui).each(_.func.usePatch.omitArg(2,""))
+copy/introduce&alsoPush, concat
+
+myQ() queue.load Grouping.keyOf
+underscore
+randPick,randFilled,randInt,coerceIn,cyclicIn,range,rangeFrom(upto,tillSize,regionSize,stepCount), extFun, let/also;run/apply, swap,copyProp(func),clone,clear, cached (session/local), omitArg, chain, bound ref, partialArgs, operator, only(1), inverse, cached(createExpression,evalute) needEvTarget,debounce,checkRateEvent
+empty/all/any/none, map_/filter/find/not/add/nextAll  /first/last/takeWhile;sortBy/reversed/zip(withNext)/reduceFrom/reduce/reduceOnto/reduceN/groupBy/associate/join, each/ary
+sortInsert(bisect), shuffle, interleave, accumulate, newArray
+is,bindKey,timer once/rate: Timeout/Interval/Animation/Idle,message,dragMove,rowsOpto; navigator.userAgent ,trustedTypes: empty HTML/Script; URLSearchParams,Headers,CustomEvent,location reload/replace=assign/ancestorOrigin
+BarcodeDetector, Battery,Payment,MIDIPort,AccelerateSensor,Intl, CSS.px,matchMedia, Image/Font,
+CompressionStream,FileSystemHandle,Crypto, Convolver/oscill/pan/delay Node AudioCtx
+Path2D
+
+JSON,Math,Inf/NaN
+alert/confirm/prompt
+request, doc. exit/onfullscreen change/error,full/docE
+
+==
+selection.type: None,Caret,Range
+win/dom getSelection rangeAt(0): anchor/focus-start/end; base为anchor.prev; Node-Container/Offset; set Start End Before After;delete/surround仅同text/extract Content;insertNode, collapse(toStart); selectNode Contents?: commonAncestor,viewRect,findText,insetAdjacentElement("beforeBegin",e), exeCommand Back Fore Color/Indent/MultipleSelection/Bold/CreateLink/Paste Copy Cut
+
+remove All/add Range;set Base Extent;collapse(body,0)/extend/modify("move/extend","f/w l/r","word")/contains selectAllChild Node, removeFrom Doc
+activeElement, setSelectionRange Start/End
+TreeWalker: SHOW_X, parent;first/last Child;prev/next Sibling/Node
+https://www.cnblogs.com/strangerqt/p/3745426.html
+https://blog.csdn.net/qq_38604499/article/details/81453706 选放测试
+
+e,ev,evn/evt,ex
+EList,EOne(selector,HElem,point/xpath,wait) parents=ancestors
+attr(ns,list,node,hass,del,toggle)/attrData/val,css,cssClass("a","b"),cssPrefix,text,on,onWithCall,onOnce,listen cancel/run,wrapFunc/N, wrapAry,fireEvent,click ready, each.wtf, child[i], ("")/first/last/html, .head/tail .pop(()=>.pos fst/last Filter.prev/next, show()  .ins.before/after=, insAdjHTML .p0/p1, toggle("active"), computedCSS
+html/tagName/nodeType
+replaceChilds([]), page/view/parent Point; view Rect/Child? Area s?
+
+H/TPIP
+pos.ref.prev.chainNth(2).e
+ins.before
+pop.prev
+EAry(1,2).childs[0].pos.next.pop.self.v
+tree.child("blk").childs.size
+
+ajax,href(style/script/text, ":code"),clipboardCopy,loadImg,selection find?,canvasSized(r),canvasFullpage,idAlloc,hooky,hookyEv (Event.copyAssign .noDefault .turnOff), serviceworker,history,indexedDB PortService,PromiseResolver
+ref("viewPoint").addRel(e1, Equiv.notdiff), wbShowIf(a.ref()),
+b(ary,"select",wNone,[
+  elBind(perItem,"option",wbText("$it"))
+e.relAdd.value({init:0},Equiv.fmt("${it0}"))
+
+Equiv: pipe(fmt("a$it"), fmt("$it a"))
+a1={1}=1 a
+
+hSymbols, wSym(cls,id,attr("ckbox")), wAttrs,wSet; select,selectAll, def, emmet
+Predicate, Setter -Like, Chain
+Equiv, MayNull Functor(map,flatMap, #of(1) )
+px,color,json/xml/base64/escape=escapeHTML/URI/URIComp/CSS /intStr(10)/numStr/digits([2,3,5])
+.ratio/plus/strcat/strfmt
+percent=Equiv.seq(ratio(100), strcat("%"))
+percent.of("50%") .swap() .lift(op)
+.from("50%") .into(0.5)
+rev? big? camel/snake
+
+obj.isOk=eChk.ref("checked")
+obj.onselstart=this.ref("enable").cond2(null,Ev.turnOff)
+bindy(obj)
+text/objKeys_("a -wtf -emm b c") bireplace
+DOM bind&diff value+onchange "k:v"="meta name= content="
+
+letter/word spacing, line-height
+text transform/decoration,align/indent , vertical-align:middle,white-space(pre,no-wrap)
+display: inline/block/ inline-block
+font size/family
+cursor,decoration,outline,drop-shadow
+writingMode/measureText
+内嵌/单行块/内嵌块
+position absolute/relative, top/left
+只有带 border 元素能使用 padding/margin
+img 不能， background-img(anchor,offset) 默认是切边的
+call/apply/bind 都带 thisArg 但 call 不用参数数组
+width/height align
+css除了能实现渐变动画，并集/层叠 复用规则集也十分容易
+设计某塔表达原则、大距近原则、7±2 记忆量原则
+
+box,gravity(anchor) 和 width, inherit height
+w,h  50% - self 50%
+
+ul,ol,dl dt dd
+table tr td[col/row span, bgcolor,valign] left/top-th thead,tfoot caption tbody
+figure figcap. figsource map area
+details summary
+progress meter[optimistic]
+article aside
+meta name-value
+alt rel href src target
+div.row label span checkbox
+a[role=button]
+item-decoration, list-style position/(type=,start,value) 常用bgimg:替换, counter
+border-collapse:separate, cell-spacing; reversed
+border+color/bg 做指示器
+
+form name action method=get
+input type passwd submit/reset image radio 存储上个写入者； <els-inp-radio 某> ； radio checked/select,number/slider
+Option optgroup label, syms symsArg wText
+最常见： input,select,check,radio,textarea
+
+Textarea col/row tarea-c_6 size value multiple selected 
+file multiple ,checked/step/date,readOnly/required
+max/min length,accept,pattern
+validity
+incre/indeter
+
+window.document, contentWindow, open("url","title","wh left"), focus/blur/stop/close(), parent/top, outer WH/screen LT=XY
+External,InstallTrigger,menu/tool/personal/scroll/status bar,screen,screenArea,outer/pageY,move/resize/scroll by/to, scrollBy line/page s
+open Database?,opener,parent,top, status/stop
+Data/Clipboard Item
+
+Event: phase=0/at/bubble/cap
+.flags=isBubble,canCancel,composed,noBubble,noDefault
+path,time,type, srcE/target/rel E, retVal, stop/stopNow
+
+MouseEv: key=alt/ctrl/shift/meta, btn, client/layer/movement Point
+
+label/tabIndex,draggable/drop,copy/paste,contextmenu,pjax,bindKey
+navigator,location iframe, cloneTemplate
+auto complete/caps/focus,spellcheck
+
+about/chrome: about,chrome-urls,flags,gpu,accessability,net-export,prefs/process/media-internals,omnibox,media-engagement,interstatial,network-errors
+settings,version,history,downloads,bookmarks,extensions,plugins,print,inspect
+histograms,discards,predictors
+
+navigator: credentials/storage/cache,wake/ptLock,vibrate,keyboard,usb,geolocation,locks,permission,speechSynth,showXXXPicker
+clipboard,connection,languages
+.flags: cookie,java,doNotTrack,online,rtl,secureCtx
+media device/session,presentation,userActivation,mimeType/plugin s
+appVer,product Sub?,deviceMem,hwConcurrency,maxTouchPoints
+
+
+font-style,font-variant, animation, transition(属性值渐变), transform
+document.styleSheets .rules .cssRules
+.type==CSSRule.KEYFRAMES_RULE
+.cssRule .style .cssText .keyText
+貌似没有办法直接从 string 解析出 keyframes
+JS 的 array-like 真是和 Lua 一样啊……
+
+client,page,screen,parent; layer, noPrefix
+Atttr,CharacterData,owner,baseURI
+
+SQL CRUD create table; insert,select,update,drop
+
+https://www.w3schools.com/jquery/jquery_animate.asp
+https://developer.mozilla.org/en-US/docs/Web/API/Web_Animations_API/Keyframe_Formats
+
+属性集(拖放,并集;字体、渐变图像 文字切边、9patch、位置)、属性渐变(固定模式)、动画自时间线抽提模型(T,p1,wh,transMat)、应用至每个对象/起始事件
+
+面板布局、filer对应与选中预览、自定义补间、自定义图层、特定图层对象动画时间线、动画预设其时参、静音独奏 剪刀与粘合快捷键 选区与共同移动/遮盖、骨架
+
+节点编辑器 底层can+hover list, in/out, 单三角/多 DOM树 ee>e 与 e.next .child
+
+B站收藏组：av列表渲染、av/bv挂件、加标题并组合、重复！get到预览、添加av号(option map[0]或keys, regex)与删除、允用分享数据、webext化与添加ui的抽离
+2：列表编辑拖放与右上菜单ui、pwa化、Grouping<Str,Url>本质与知乎兼容、组合 Map 数据以丰富视图
+复用的代码越多，你之前的每一行代码就越有价值。
+
+animate.style sequencejs.com animejs.com  airbnb/lottie
+等效: plusXY pos,pad,pado,transform
+mode: norm,back,roll,back-roll
+sets: first,last,both
+Infinite
+svg: animVal access, runSvg
+from,to,by, 01,0+, 1,+, vals
+begin,end,dur
+offset,id.end+syncbase,id.onclick,id.repeat(n, accK,wallclk, indefinite
+discrete,paced,linear,spline key Times/Spline(css:n1)
+rep Count/dur;
+remove/freeze, sum
+canRestart=0/1, 2 active
+beginElement()
+
+"more easing curve, more animate func, less code" foldAnim(0..360 stepN 10, plusDL(5,it)
+useCSSVar
+0%{top: y0;opa:inherit} 100%(randYN()? yUp:yLow) opa:0
+50% top:inherit, opa:20 = mod("opa",50,20)
+只需insort而各 frame 间平滑函数与位置自对应
+
+等价: [kfs], reqFrame, CSSRule
+支持 canvas rt 和 gre bezier
+方法2: animComb all/comp(kfss,c={ease:}) back rolling(delay?) join("/"
+on anim/trans start 允许 bgimg 补间
+- 正常情况 plusXY 是{x,y}的简写pos自动展开为 transform；js 情况是按 p 移动 style[k] 的函数便于再组合，在 pad 前自动变为 abs pos 
+- calcDL(d,l,x,y) 是 turtle 公式，配合
+split animSeqE(es, 
+animOnCopy(e,kfs_set,c.fwd,dt_drop/negn_cnt) 可制作粒子动画
+
+randPick(ease-out) 0% opa:orig 100% opa:0
+
+anim.inoutPair(e,c) then stop seek/rate recfg({})
+anim.onModify($(".title"), "text" ":hover", anim("opacity","",0, "left","","-it.width").mod("opa",50,20).cfg(".5s .2s infinite roll"))
+anim(".textContext", (e,v,p)=>v0.slice(v0.length*p), setAttr) 与e.plusXY, x:,y: 展为 pos 仅js
+aZoomUp aBounce LURD
+animSpline(p1,ease,is_horz)
+animPath(p,e)
+makeSparse
+animImport("kf").run(e)
+animXY(e, (p0,p1)/ animAll Seq x y, )
+splitAnimLine
+补间(颜色,xy)即为 (s0,s1)=>p ，如粒子中里散点的就是随机对应 p randComb(ps0,ps1).map(point).each(it(p))
+
+Promise.chain(op_next, init)
+.repeat(op, get_item, n)
+.ping(op_next, get_item1, item0)
+
+equery.rect.js split("lr") "l"边线 "lrtb"四切lr大
+.offsetPage/Client
+forRanges( forExcept([9]
+
+eTpl/css  a{it:before} @def k(m:1px)=10px m;
+@def kf(x0) @keyframes name
+animation: @kf(5) =name
+
+asPoint, borderArea
+
+BV1fK411A7Rp:3:06
+BV1La4y1Y7a6:7:54
+BV1v54y1Q7JF:5:47
+
+rtranslate/float txt, graident动画增删左右补间 和 tweenjs,keybase,圆点跟随鼠标,滑条时钟,守望先锋、随机上下淡化字特效、九九八十一 居中线取镜 字内峰 evT比较淡化、清理100MB、彩色混排字 boxes、字跳音符p0,1、horz twitch、路径p1,2粒子、渐变字圆扩散、zip()动画、JB动画
+位置(吸附)、时间轴出场 重复fill、历史栈 值编辑宏 相对定位与拖放，面板签页与树、富文本编辑、时间差录制速度、按行编辑与HTML挂件foreach模板 Promise下载、文字设计精灵图宏；seqAcc,seqMake(y-rects, dt), vid(xywh,oxy=nH-w) 与单剪切优化
+黄金童装随机序、form1、彼岸花ul,gallery, 问答精灵红包
+
+临时
+元编程可以学习到给接口实现有趣的语法结构、几行代码修改整体API
+支付宝二维码可以 time-OTP 啊，我还以为每个都是服务器 issue 的有效期长
+LemBox 流水线 zip() column 不撤回
+
+JQ waterfall: 无论是 flex,div,abspos 首先是配置 cyclic wCols ，构造结果是 add() 操作， sizemod 可重排或在 lines 上重序列、转移动画
+
+输入/重录 区间操作(倒放)* 播放输出
+
+已经解决了 gui/图形绘制 和 fs,数位的一大堆头疼事，希望新年能进军 build/pkg automation 和编译原理，实现夙愿并能养活自己
+职责单一：转移到食堂与吃饭
+
+select/chkbox, 其它
+区间 select(好不好/)  避免零食、倾向性
+
+pacman -Ss -Qh Ql Qo 

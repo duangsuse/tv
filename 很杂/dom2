@@ -1,0 +1,61 @@
+tagName#2
+devtools?type=window,
+turn,url attr()vh svg mask=bgimg/clip backdrop-filter
+@font-face{family;src local()}, 
+linear/repeat/radical/conic-gradient stop px/% image() #xywh=pixel:, cross-fade
+toBlob(tabs.capture()), require(shared/qrcode)
+Grouping(xs, target, key)
+pre在外, marquee
+meter min low high max optimium, horz(drawRects) 指向区间在 左右/中
+animjs tween: linear-graident no-repeat fixed size:cover
+animate(1.2, {left:"+=120px"/plus},"swing").then
+all,clear
+CSS 方便性：复用加classList或并集逗号、修改利用层叠优先级或交集标签名
+border-radius,box-shadow inset
+overflow:auto,zoom
+flex-wrap:wrap
+grid-row-tpl: repeat(3,30px)
+gap: r c;
+margin: 纵 height 横;
+transform;transition;animation;filter
+css 横纵分(多列) 浮动+% 行内+% tabel+cell flex+flex:1 col-md-3
+column- count gap break-inside:avoid rule:0 outset
+
+捕获(true参数)、目标、冒泡(下一函)；委托 e.target
+
+eeach,emet/tepl,equery:ealg,eread/bin,ebind; g(svg/f(vfs,zip
+svgcan(path,bezier), dataUrl, dataUrlCode, cssUrl
+Trie.compress
+cg.ENABLED, map? consts, _folded[sloc,res] eeach2HTML,tepl,emet,eq(html/clone)
+dse,norm,iframe,form1,channel,expandFmt
+汪汪队[0]大[1]， insAdgE 与 selection,split 的不可代替性
+EQ: select/map Keys, mixin/proxy-delegate
+DOM with correct API name/order-ing, and some silly tricks
+implict this Chain is an identical feature in jQuery, it makes set&query and multi-setup codes easy to write&read, but great ideas can cause big problems too -- misusing "prettifing tricks" is quiet simple in js-frontend nowdays
+why not use e.attr({k:v,k1:v1}) ? it's also simpler to use shorthands merge()
+a.op(b) == a so longExpr.op(v1).op(v2) equivalent. var a=longExpr; a.op(v1); a.op(v2);
+if op(k,v)={this[k]=v} (op=assign) the real func is just ;return this
+in functional we use a.also(op)={op(a);return a} and easy to wrap it on member(with this arg): also.apply(this,ref(op))
+But in Kotlin - a language with implicit this we use longExpr.apply{op(v1);op(v2)}
+
+in this lib "framework" we use eachChain(forEach(op)&ret this) and cg static codegen tool (at-compile/cached code generation), emet and eeach can also adopt this technology.
+el&cg,ref&func,bind,timer.etc,DOM abbr,config var
+
+<pre emet>
+pad:inout(),pado,border,rect, Talign, font: 29pt italic bold +"Source Code", Bcolor
+color: white on black
+<ui> tabs,table,tree
+input: num(ZN/P-) str(long) yesno(switch) range choice(multi,radio) image...
+history hierarchy-select
+progress meter
+
+alg:Trie,Ring,Seq,Fold,Mat2D,OrdSeq,DiGraph.weigh();digiSelect,digiCat,tailcall,heaprec,dynprog, diff,editdist,simhash,bloom
+ordSeqLPops("first.linked .ring",23)
+tail pop|at(i)|head add
+
+.clicked.op=
+SPRD.js: swipe(overscroll?),pinch(dbltap?),rotate,dbltap, shake
+
+https://www.w3school.com.cn/css/css_pseudo_classes.asp
+tabindex,doc.activeE, evListener capture/once,fieldset legend,textarea[cols]
+

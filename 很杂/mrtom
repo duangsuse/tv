@@ -1,0 +1,35 @@
+Mr.Tomatos
+s[i].highlight pls. help me
+windings ascii[indexOf(ocr)]
+chunked(2).map(pipe(int16,plus,chr))
+pipe(ord,plus-,hex).join %20
+
+pipe=fn-editor, s.substr((t=dT/dur)*n)
+https://github.com/gre/bezier-easing/blob/master/src/index.js
+svg canvas https://www.zhangxinxu.com/wordpress/2013/08/%e8%b4%9d%e5%a1%9e%e5%b0%94%e6%9b%b2%e7%ba%bf-cubic-bezier-css3%e5%8a%a8%e7%94%bb-svg-canvas/
+ruNoob js.info
+https://zhuanlan.zhihu.com/p/60193908
+https://zhuanlan.zhihu.com/p/20939640
+https://github.com/GoogleChromeLabs/css-paint-polyfill/blob/master/src/index.js#L770
+houdini
+https://www.w3cplus.com/css/css-houdini.html "CLSPC"
+https://cloud.tencent.com/developer/article/1410194
+https://www.cnblogs.com/xdoudou/p/4262318.html
+https://blog.csdn.net/iteye_4865/article/details/82453197
+https://github.com/liolok/liolok.github.io-hexo-archive/blob/d858b4836fc5712177251204ae672c4aadd5e9d2/source/_posts/2018-04/Bezier-Curve-and-De-Casteljau-Algorithm.md
+https://www.zhangxinxu.com/wordpress/2018/03/background-gradient-transtion/ 首先想到当然是 bg-offset ，然后基于 alpha,绝位满覆伪元素opacity 混成的两种，最后靠 CSS.registerProp @property 自定义属性也能实现渐变！但兼容不佳，而用 graident alpha 似乎性能不好
+https://www.w3cplus.com/css/the-state-of-changing-gradients-with-css-transitions-and-animations.html
+
+bezier3(p1,p2, numceil=1.0)
+    ease：cubic-bezier(.25, .1, .25, 1)
+    liner：cubic-bezier(0, 0, 1, 1) / cubic-bezier(1, 1, 0, 0)
+    ease-in：cubic-bezier(.42, 0, 1, 1)
+    ease-out：cubic-bezier(0, 0, .58, 1)
+
+resolution
+screen,w,h
+save
+anger,points,level,sond
+close,restart,noaccess,access_code
+scissors,flashlight,candy,antidote
+ending 1/2,gameend

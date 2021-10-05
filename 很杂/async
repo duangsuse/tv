@@ -1,0 +1,94 @@
+单线程就是同一时间只对一个人下命令，让他做计算和输出，这样就没有协调和执行结果的归纳收并问题了，其实只靠单线程和任务回调队列也能完成看起来只有多线程才能做到的软件。
+线程做消息队列的意义是它的任务不能被打断，能对任务复用线程的唯一方法就是监听-执行任务。
+UI 就是根据用户输入事件改变的绘图。对于 UI 的重绘，最适合用单线程处理，而整个线程的任务安排队列一般由 UI 框架自己处理，可能会暴露定时器等惯常接口；队列里的任务可能一个只花1ms，但先后顺序是不会乱的。
+await/async 可以不用回调函数写异步。
+发展的过程是单应用-单线程多进程-多线程-单线程多任务，线程间复用内存而无需封送共通的数据对象、父子进程间共享文件和网络通信的系统资源。
+
+
+跳转回填 backfill.blog
+duangsuse，[不懂]就[问]
+
+提问页面：search-chat 形式，实时分词高亮
+灰化：请问 问一?下 你 您
+有用 流行 厉害 有价值 有趣
+啊 吗
+
+tkgui,parserkt
+tokenizer,lpy,xy,templator
+equery,animjs
+
+alldreamwall,bigora,cooltok
+
+
+
+在加入 web 研习前我常用 Py,Kt,Java ，也领教过 Hs, 及各种模板/自写语言
+
+如果那算“人工智能”的话，CSS 也真可以称为『智能』了，只需要几行代码就能定义其它平台几个类才写的完的界面与动画， selector 的语法层次优雅、简单易懂，而 CSS 值表示法严谨又灵活，层叠性与缩写使得预处理器显得多么鸡肋；它的智能，但这一点却常常被忽略，初学者武断地执着于『web性能不好』
+DOM 做到了两个世界间的一个等号，在 JS 里操纵什么，都能反应到 HTML 文本上、页面的外联组件列表上
+我一直以为 ES6 对 let 解构的“跟随潮流”是件不好的事，盲目复制特性对语言协调性有负面影响，而且容易令初学者混乱；但用多了 (...a)=> 这种语法来进行元编程，我发现尽管容易混乱，在总体上定义式的风格也会比既有 apply() 易读很多，只需简单加以解释初学者也能理解这些新变化，
+
+webext equaleye
+年龄、括号、【注释】abbr、数/量词、时间轴
+收集定类元素列、groupBy; table2view
+ruby, #66ccff, px, deg, highlight""
+interleave
+
+重复十遍，慢慢我便不是在费心构筑调整那程序，而是在向计算设备暴露的变量与基元、流控制，诉说着最简单有效的方法，去实现【不管哪样都好】的算法背后最重要的目的，舌头不打结；重复中仍在闪光的片段，终会淹没造神者随意丢弃的最初灵感。
+
+即便能默写、即便能赏析高大上算法的片段，很聪明，又怎样？加以解释，但那仍然不是你自己的，不曾自由拥有。不如在一遍遍重复中观察着数据流，思考怎样让其更明显与子程序协调。
+
+把这个简单幼稚的模型那“微弱”的可能性发挥到 1000% ，我一点也不觉得这愚钝，反而敢争在“胜券在握”的聪慧者前出场。
+不再藏在黑漆漆的命令台后面，自豪地说，我在这个世界上存在过，并且帮助很多人寻找过他们的灵感
+
+
+
+编程是为了让同行看的舒服，其次是让普通人能看懂。听起来这有些奇怪，我应该是个孤独的人吧？小时候确实，但是后来其实是更乐于分享，和那些用知识筑象牙塔，用经验造神的人不同。我觉得知识就是一个自己有生命的东西，一个很可爱的活物，各方的人出于这种心情把它传给我，它在我的脑海里修补修补误解和漏洞，就又要去别的地方，我不能拦着它。虽然它走了，但温暖留下来了。
+
+在某个系统环境下预某事件条件执行动作，区别只是它暴露的 API 集，所以语言要做的就是把 API 与下层被提供的接口对应，是不是有点像用户自定义函数本身啊。
+
+
+未既遂 小障碍(可为不为,企图,非即时后果)中止 直间接 主客观统一
+故意 过失
+高低概率
+a||b 关系故意杀人既遂
+行为人 正犯 共犯 教唆 帮助
+部分行为整体责任
+犯：行为 结果 危险 不能 
+抽象 客观 具体危险
+买/卖假币
+伪证/妨碍作证
+
+
+No PE Polyfill scale-speed, keepRatio, ctor(elem).cfg
+Learn doc: anim enable-state timeout-check requestAnination
+g.rotate , deg2rad, tmpGroup
+aXY, aLine, aPointWH, aXYWH, coerceToScreen
+grouped in UI, ($x,y) , external cfg{a,b}
+
+c=editor.get("color", c)
+ta=editor.create("textarea,{})
+
+scale, drag-stop improve.
+_equations, scope, animatedNames, assignEq("y", "0"), onChange() resetAnim
+name/color/step
+&js&css&safe-mode
+elemNameBind({create, from, saveTo})
+showDialog(el(""))
+
+Quart name prog, animation snapshot prog
+loadSound() / loadImg() / loadMidi() lyrics
+hachi play/select-tool
+camera 静止scan挑战
+
+svg 拼合缓存图像，closest 扩充渲染区(矩形)
+
+Xycmd:
+  y,x, xy (x,y), abs(x)=abs(y), def(name,) draw() rect(xywh), sRect() W*H, SW/SH
+  main() code
+  parameter color=red, x=0 in (1..5 step 3) once
+  slider name ..
+Navi: PJAX scale, (Info) move/inspect/point/line/rect (Enter) frameTime, N(fn)
+  see (xywh) or x..x1 rect
+URL param style/script load
+latex-import,fn-unwrap
+IdJS: comma layout, brace, when() {}, for in

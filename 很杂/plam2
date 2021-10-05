@@ -1,0 +1,176 @@
+eq.js: extfn.a e o; phy.
+a: [...x e o], (n,op)
+b q z
+c: opts(f,e); o; char, doc.loc
+d: +n ,Map/(ks,vs) , (a,b),, zipAccum(min
+e: ev,img,a'v, html, #cmt..., "same/copy/deep"
+f: file(s) text,data:
+g: canvas(ctx), e mask e
+w h: offset/rect
+i: a lastIdx, (a,i) cyclic
+j: deep i
+k: (nmax,n) 100%, a[0]
+l: ctx-based w/h, area
+m: deep n
+n: len a/e/u, int
+o: map/a, pojo, jsobj
+p: predicate/css
+r: res,row e
+s: str o a
+t: type,i18n,tree
+T:time
+u: blob,url
+v: notnull, a[1]||a[0]
+x y: left top e "client"
+
+a b : paired item
+c: char
+d: step/dict
+e: element; ev: event; ex: exception
+f: math func
+g: graphics
+h: height
+i: index
+j: 2nd dim index
+k: ratio
+l: distance
+m: 2nd dim size
+n: dim size/count
+o: simple object; op: subroutine closure
+p: predicate
+q: 
+r: degree
+s: str/stream
+t: target/text
+u v:
+w: width
+x y z: left top pos/list item
+0: base or elder element
+1: new or stop value
+
+SMVU: M=update(st),ui=render(st)
+persist,undo/macro  ref(app).count.bind mod/set
+vnr 与 oMeta("pull_chg_succ/fail", op.set(_,"type",a.n_v.encaseCamel)
+
+xs fs: more.x
+read/write/append + b
+open W? .create .readText
+fp. join split dir_base ext=srng_ref
+it.eq(0)
+ee: deep.e
+x1=x+w
+get. i(cyclic) j(path)
+evt, evtT, ex(op, op_ex)
+op(_0,_1) .opAndAlso((r,a),
+rec(self), recPZero(01op), trec, addMy
+_0("x",x); _0()
+scope({x:e}), ary, wrap, overloads
+sym.with(ev, x,y,T)
+el(tag,q_op, ...ees)
+set href=obj("style script", cfun).run("decanon del")
+bind(cfg.good, link href
+
+propCall(op,"set?"/{toS:..})
+wID.selAbc
+qs.ref("#a").let(it.p(1))
+o.ref.a.also(it)
+ref("add",2)
+ref("a b c")
+validate({rules,msgs})
+o("rule msg",joinObjKeys)
+
+canvas anchor=lt,
+path:fill/stroke style
+cls rect(p,wh); line(p0?,p1); arc(p,r, rn_strok, is_transp)
+text(s,padLT)strokw shadow offsetXY,blur,color
+linear(p0,p1)radial(p0,r0,p1,r1) add(p,style)
+bgimg,mask,filter
+
+$.help($.meta.propCall)
+Make fn=op(k) callable by fn[k]
+propCall(fn, flg/*cache*/)
+{"it(\k\o o[k]).log(con)": run, path,grp:fn "meta" desc}
+doc.head.tail: body/actE .tail= foo/bar
+orig(dom.doc/root) getset(Map
+
+logs,op.lg("grp"), op.lgC(fnarg/0, grp)
+operator("call/apply0")
+矩阵是二维数组的特例
+
+el/wProp(storage,timers) Equiv/bind Fold
+sym MetaUtil(lib,ctor wrap eachArg,flag,mapIf,capsRef,argAsOpt,dbg breakIf..) CG
+$,sym,el/wAttr,Equiv/Fold
+
+别再靠 HTML “简写”文档 el
+原来每种“处理”，都可是双向编辑
+如诗一般的代码 evPair(sym.with(evt,T,T0
+元编程，遮蔽普通编程
+能定义渲染的等价关系与变动事件
+你的代码亦是框架(扩展方法.use 等)
+
+动作、值、闭包仅三元素的编程
+和繁琐空洞的甲者乙器说拜拜
+Scratch:事件 图形对象 变量程序逻辑
+&$. |> .> <&$> x>$>f >>= >>> >=> point-free pure/transp
+
+Equiv op clock? units keyRow
+anim onchange, randpick
+
+ev(timer,debounce,drop,fire,paired) func(lazy,cache,let..) ary(reduce,scanLinked,range)
+url(pjax,blob) util(drag,clipboard,port) selection(walker,window,idb/worker...)
+
+nav hover:slide move:hl leave
+table bg even,first.css / .setStyle
+template-web
+
+$.cg
+.app("hello","example site",{ogX:emm,lang,dir,icon})
+.pwApp(mf)
+-执行 script[src]{} 静态标签、展开 const 标记的调用与调用到有 constMarker 标记的函数 repeat(n,op), each(xs,op), did(op), action(k,op) 等
+-外提 file= 属性资源/code，自动加后缀名
+-内联 inline 属性 img svg iframe,hashtag url() 的资源，移动其它；equerycg group 可以分类
+
+
+nextN,layout,eval, refChg&copy&mapKV/let/el,onmod0, digcat
+check,trace
+
+leftWs, peekWs与粘连
+
+
+tag.class#id[attr, attr1=v]
+
+flatMap reduce[e0, e] appendChild
+splitCond?YY N
+
+a=a
+a b c=[a,c]
+a b c,e f g=[a,c,e,g]
+a+c,d+e f=[a,d,f]
+
+ul>li.item$*5>a{Item$}
+
+ul for 1..5(li.item$ a[text=Item$])
+
+opChain(",| |>|+"tagDef, (id,a,b)=> )
+delimP("#.["+">",(s,k, e)=>{return squares. pairedIndex(s, i) s. parsed(e||(e=), k.length)
+
+pairedP squares, joinP (strP( s).splitCond not,] k=v)?
+subsEndP(JSON parse,'"'
+set (e) ; lastProp-className
+k=null: set le)
+k=ws: set le) also i1=i
+
+s str.i. i1 .tokNo .slice(1)("[","]") . parsed=res error isEnd
+
+Atom=word:tagName {#.  word|Attrs}?
+Attrs=[{word:k(=word|jsonStr:v)?}:join(,)]
+opChain(",>+",Atom)
+
+      ,a.push b
+      alappendChildb;a
+     +  a.parentNode. appendChild(b)
+      
+use(id items)=yF>xs.flatten
+redue(oppendchild); [e0, e]
+e. parentNodeiappendChild(el)
+

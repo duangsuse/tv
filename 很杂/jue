@@ -1,0 +1,96 @@
+绝句的面向对象架构现在已经和 Java 面向对象，乃至 Kotlin 的正统 OOP 都有点差异了
+
+真假空 数字文 值断止 函数错误
+若判对重复 组行表集合
+映过排组归 钮栏条框屉
+储例况标内 事回抛断略
+表达引用求值
+语法树(语句表达式)、中缀及访问链、类型自动转换及数值提升、函数调用及作用域
+
+和/积 类型、排列组合
+
+Ord: Max/Min First; Ord.Cmp: LT/EQ/GT
+compare: sign(a-b), -1: less
++>&
+combination: 滑移, reverse
+ECC: Except,Closure,Continuation
+
+首页banner：鸟与梅岭、peace&clock、FlappyUBird、贪吃蛇，
+《绝句五字纲》
+量常变、物类例、同别名。（表达多态法）
+若判对重复，数文真假空。（过程式编程）
+储例况标内，组行表集合。（数据其结构）
+事回抛断过，映滤排组归。（函数式编程）
+
+此为值，抛为断止，属异常，可谓错误。
+行三句序可换。
+
+量 矩阵.秩 取者=全行去计数，〖行〗
+  试(行)不皆「是0」
+Anm=n!/(n-m)!
+all,any,none,single 皆,存,无,单
+行的首项 /或空
+首项们 /去首项们
+
+为什么不能是 造于(a：T)：造于(a.x)
+
+AST,算符优先级,调用和作用域,数据类型,控制流语义
+
+不能叫等式组，叫等式系统？一般来说组是指 表<K,行<V>> 吧，那么方程组是什么？集还是行？（但是那个是 分组<K,V> 吧
+
+visibility/可见性:
+公开 族内 私下 内部
+public protected private internal
+
+rewritability/确定性:
+待定 再定 终定 实现
+abstract open final override
+
+construct/构件:
+类型别名 类 物 例 造于 事 恒事 常T 量/变参
+typealias interface class object constructor fun const-fun const-T val/var
+typealias const class thing insta constructor fun val/var
+
+变T，a初0、b初1。
+
+类支持被多继承，类里的成员自动加待定/再定。
+
+affairs/杂件:
+包 引 引全(除) 引记法
+初 取者 置者 代者 同名例 恒事 性质推导
+对何 其中
+package import import.* 
+init get set by companion-object(samename-object)
+
+in-T out-T notype (任意型)
+
+class kinds/类定义的种类:
+储 例 况 标 内
+data enum sealed(cased) annotation inner
+
+partial=unfinished
+
+multitarget/多平台:
+待例 实际
+expect actual
+
+others/其它:
+晚成 尾递归 断续 隐式(况物造于/参数列表) 不定长 记法
+lateinit tailrec suspend implicit vararg notation
+内联 不联 算符
+inline noinline operator
+
+numeric/数值区间:
++-*/负+ ..
+加减乘除 取负 取正 取至
+
+boolean/逻辑:
+且或非 大小是不
+
+access/访问:
+(o的n) (o去v) (o[k]) (k存于o)
+(o.n) o.v() o[k] (k in o)
+
+type RHS/类型:
+属于 作成 试作
+is as as?

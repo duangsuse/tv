@@ -1,0 +1,66 @@
+## 修饰原子表达式 左递归链
+ab aab->报警
+## 函数与闭包、动态与词法作用域
+
+## 立即、惰性与每次求值、闭包
+
+据说 C 时代就开始有“计算机科学家”争论这个选择了，应该说传名(by-name) 或许能节约计算量，而传值(int,void* 等)对『子程序』这个名字更协调，比如 istream.read(new byte[4]) ，如果咱通过某种改写顺便拿到此数组的引用，传名的话看起来有些奇怪，而且 C 没有传名必要的闭包支持。
+
+术语是 call-by- value/need/name ，其3 也即 by-expr ，传表达式调用。
+
+知道 && 和 & 有什么区别吗？一些人说 (0b1&&0b0) 是无效的、(p&q) 里参数只能是 int，其实并不！二者的区别在于“短路性”—— (a&&b) 里 b 可能是不计算的，而 (a&b) 是完整计算的；许多语言如 Kotlin 已经禁用了这种不该由程序员判断的区别。
+
+如果你写过 bash ，会发现很多人用 [ test ] && a 取代 if ， [ test ] || b 取代 if not
+而 if(a&&b) 也就相当于 if(a)if(b) 、if(a||b) 大致是 if(a);if(!a&&b) 当然别学脚本者写 a||b() ，惰性的计算有时被用作 if ，这在一定程度和『调用策略』相关
+
+略：如果你喜欢 js ，会经常看到 a=a||b(); 这种表达式，有时被称为“保护初始化”，能避免冲突和支持热补丁重载，但 a 可能是 0,false 时不能用。
+
+在 C 语言初期时就有人争论是该在 调用方(caller) 计算参数还是由 被调方(callee) 计算，看起来不可理喻——被调方怎么可能拥有调用方可见的所有信息？
+
+C 最后是用了前者，传值(即传结果)调用，但后者，传名调用，在函数式 闭包(closure) 的支持下也是可能的。退一万步说，C 预处理宏也是一种“传名调用”呢，只不过缺乏作用域，变量集的便利性。
+
+闭包是程序与其必要变量的融合；对应到子程序语法上的嵌套关系，就是『词法作用域(lexical scoping)』，支持它的语言可以让一段小代码片段带着它包住的『外部函数』的外部变量(即 upvalue) 在任意地方执行、求值，无论其外部函数是否正在执行，当然也能实现传名调用与 by-need 的仅首次求值。
+
+## 控制流的铺平、跳转目标的回填
+
+我们常用 if, for, while 控制结构，下为对应汇编模式
+
+if(p){a;} b;
+if(p)a; else {b;} c;
+
+br.not @end; a; @end: b;
+br.not @else; a; jmp @end; @else: b; @end: c;
+
+for(i=0;i<n;i+=1) op()
+
+SOMe PJOIT
+Seq One More, elemIn/elemThat is/isnt/any
+Paired Join OpChain Indented Tries
+
+feed(s,,i0) feedi(fold_sloc=noOp)
+StrPoint:peek(vp),sloc,err;
+Fold: operateOn,modify
+
+if(!c.o(r=>)) read(s)
+c.n(sz=> c.of(x))
+return c.o(r)
+run(p, sIn/o, {sOut: "",n: 0})
+特殊o(r,s),of (oop, v1)
+
+NoWhite:sIn,s,beforeWhites,spans;  NumUnit,LexScope; JoinEnd
+
+行列号、空格、注释 /*、容错部分解析、完整空白词条解析、增量解析
+RangeMap 支持覆盖set、 feed 支持 ctx.marks[spans[i]].i=iBegin
+
+P. readGreedy slicedTry map(bid_map) withReverse(p,": ") seeLeft
+POf. opNot opSub let let(Equiv) also orJust calm merge/getNth(1,op) follows
+read show rebuild
+P.Deferred(p=>{  }).provide(atom)
+本质是delegate,不可能在provide再 assign 本身
+
+P. concat, chain(Name,Paren|Dot, { v -> i }).reduce(left,v->)
+repeatTillConcats(asList, asString, "-", item("*"))
+
+leftRec { lr -> One(e.is('!') after lr, digit) }
+peek(1) { if (it.isNotEmpty() && it[0] in octals) -1 else 0 }
+0x b 0f... More1st(dig.also(it!in 0..8),asNum,dig)

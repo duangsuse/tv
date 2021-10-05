@@ -1,0 +1,99 @@
+anim
+spline editor inf/1/n y-flip svg?
+x-line(x)
+snapE, snapHorz(y-val)
+
+创建 httpd get put /clip 难但易用 JNI app(port)
+- +n:buf =f 模式 =- rev-pull
+-+路径:n:buf
+
+clipChg=revPu; +=read(mode,s, setClip,wFile)
+f=选路径; -=send(m, getClip, buf(path:n:read))
+
+evalFree(gval, 
+eval:op([], exp e0:poly(s:30.tail=e(img,s), f:e(img,f(fp,"durl"))&
+op(i), F.apIt
+withobjUR
+bind("*", op,o1?)
+ts=asT.grab
+
+insSubs,sloc pairs
+依赖变量obj
+绑定优雅缓存,url
+
+styleSheet,rules,style dfs !product
+012, isMap开销, .s catch
+dimpx
+
+
+属性集(拖放,并集;字体、渐变图像 文字切边、9patch、位置)、属性渐变(固定模式)、动画自时间线抽提模型(T,p1,wh,transMat)、应用至每个对象/起始事件
+
+面板布局、filer对应与选中预览、自定义补间、自定义图层、特定图层对象动画时间线、动画预设其时参、静音独奏 剪刀与粘合快捷键 选区与共同移动/遮盖、骨架
+
+节点编辑器 底层can+hover list, in/out, 单三角/多 DOM树 ee>e 与 e.next .child
+
+B站收藏组：av列表渲染、av/bv挂件、加标题并组合、重复！get到预览、添加av号(option map[0]或keys, regex)与删除、允用分享数据、webext化与添加ui的抽离
+2：列表编辑拖放与右上菜单ui、pwa化、Grouping<Str,Url>本质与知乎兼容、组合 Map 数据以丰富视图
+复用的代码越多，你之前的每一行代码就越有价值。
+
+animate.style sequencejs.com animejs.com  airbnb/lottie
+等效: plusXY pos,pad,pado,transform
+mode: norm,back,roll,back-roll
+sets: first,last,both
+Infinite
+svg: animVal access, runSvg
+from,to,by, 01,0+, 1,+, vals
+begin,end,dur
+offset,id.end+syncbase,id.onclick,id.repeat(n, accK,wallclk, indefinite
+discrete,paced,linear,spline key Times/Spline(css:n1)
+rep Count/dur;
+remove/freeze, sum
+canRestart=0/1, 2 active
+beginElement()
+
+"more easing curve, more animate func, less code" foldAnim(0..360 stepN 10, plusDL(5,it)
+useCSSVar
+0%{top: y0;opa:inherit} 100%(randYN()? yUp:yLow) opa:0
+50% top:inherit, opa:20 = mod("opa",50,20)
+只需insort而各 frame 间平滑函数与位置自对应
+
+等价: [kfs], reqFrame, CSSRule
+支持 canvas rt 和 gre bezier
+方法2: animComb all/comp(kfss,c={ease:}) back rolling(delay?) join("/"
+on anim/trans start 允许 bgimg 补间
+- 正常情况 plusXY 是{x,y}的简写pos自动展开为 transform；js 情况是按 p 移动 style[k] 的函数便于再组合，在 pad 前自动变为 abs pos 
+- calcDL(d,l,x,y) 是 turtle 公式，配合
+split animSeqE(es, 
+animOnCopy(e,kfs_set,c.fwd,dt_drop/negn_cnt) 可制作粒子动画
+
+randPick(ease-out) 0% opa:orig 100% opa:0
+
+anim.inoutPair(e,c) then stop seek/rate recfg({})
+anim.onModify($(".title"), "text" ":hover", anim("opacity","",0, "left","","-it.width").mod("opa",50,20).cfg(".5s .2s infinite roll"))
+anim(".textContext", (e,v,p)=>v0.slice(v0.length*p), setAttr) 与e.plusXY, x:,y: 展为 pos 仅js
+aZoomUp aBounce LURD
+animSpline(p1,ease,is_horz)
+animPath(p,e)
+makeSparse
+animImport("kf").run(e)
+animXY(e, (p0,p1)/ animAll Seq x y, )
+splitAnimLine
+补间(颜色,xy)即为 (s0,s1)=>p ，如粒子中里散点的就是随机对应 p randComb(ps0,ps1).map(point).each(it(p))
+
+Promise.chain(op_next, init)
+.repeat(op, get_item, n)
+.ping(op_next, get_item1, item0)
+
+equery.rect.js split("lr") "l"边线 "lrtb"四切lr大
+.offsetPage/Client
+forRanges( forExcept([9]
+
+eTpl/css  a{it:before} @def k(m:1px)=10px m;
+@def kf(x0) @keyframes name
+animation: @kf(5) =name
+
+asPoint, borderArea
+
+BV1fK411A7Rp:3:06
+BV1La4y1Y7a6:7:54
+BV1v54y1Q7JF:5:47

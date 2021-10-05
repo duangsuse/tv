@@ -1,0 +1,49 @@
+cd,dir,set local?,start,type,more,fordir,attrib,copy,move,find str?,where,run as/once/dll32
+sort,comp,fc; call,shift,for/if/goto,pause,waitfor,@
+md,rd,ren,del,tree,date/time/tzutil,robo/x copy
+chcp/graftabl,chkdsk,mode,systeminfo,dx cpl/diag,sfc, task list/kill,tskill,sc,shutdown,ipconfig,powercfg,net sh?,doskey,choice,msg
+w/c script,reg, assoc/ftype, title/prompt
+comp/dev/wmi mgmt,gp/reg/sys edit,mmc,at,timeout
+task mgr/sched,perf/res mon, pskill,svchost,spy++
+finger,ftp
+bcd boot/sys? edit,bootcfg,chkdsk,sfc,sig/app verif,msconfig,mem,append
+mblctr,magnify,osk,psr,pkgmgr,wusa,xwizard,makecab,takeown,tskill, Utilman,win load/init/logon/ver
+command/win/graphics,loadfix
+bubbles,mystify,ribbons,ssText3d,fliqlo,scrnsave/PhotoScreensaver
+write,notepad,calc,edit
+windows/ diagnostics/system assembly font cursors branding ime partner
+
+Direct 3D/Draw/Input/Show/Music/Play
+iexpress,nsis,rar/cab
+
+pecmd,qq机器人; Greasyfork,frida
+
+If Then; For To Next; Do While Loop; Sub End
+WScript.Arguments/StdIn/Out Count-1,Item(i), UBound, C Chr/Lng; Set
+Selection.Move Left:=1
+
+get-ChildItem/Content/process/date/Member/command Verb-Noun/alias
+gm,gcm
+get-Service|format-list -property name
+ipconfig|select-string -pattern *.255
+$env:path+=";$(pwd)"
+@%comSpec% %* %currDir %~dp0 /f0
+PARAM
+if exist fp ()
+for /f "eol=;" %x in (a b) do
+:label goto
+set /p ask=
+
+Get-WmiObject -query ("select * from WIn32-logicaldisk where mtype=12 and name='"+${env:systemdrive}+"'"
+New-Object -TypeName/ComObject TimeSpan(0,0,0,5,0)
+(Add-Type -TypeDef @""@)[0]
+[string]([Math]::round(1kb/mb/gb, 3))
+where/sort/foreach/select-object -filterScript
+for($i=0;$i -lt 10; $i++){write-host $i}
+function isDigit($s){switch -regex($s){"[\d]+"{return $true}default{return $false}}}
+dir|where-object{isDigit($_.Name[0])}
+$c=dir; c[0]
+foreach($x in $a){tree $x|out-file a.txt}
+
+scripty y/n retry
+infsw
