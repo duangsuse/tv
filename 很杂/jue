@@ -94,3 +94,7 @@ access/访问:
 type RHS/类型:
 属于 作成 试作
 is as as?
+
+引 using
+
+console.log‘{1}’

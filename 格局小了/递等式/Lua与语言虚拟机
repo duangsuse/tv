@@ -1,0 +1,85 @@
+Lua 的虚拟机是 struct State 和 luaV_execute() 的组合，它执行的指令序列、常量表都在 Proto{insn, G} 里；其架构是寄存器取参，内核比栈取参的JVM更复杂
+
+今天只谈三件事，这是我看《Lua设计与实现》后少数几个问号；老规矩入门难度
+
+首先谈谈 GC ，我们知道计算机的内存类似定长 byte[] 数组，C语言仅提供 malloc(nByte) 得到这地址空间内的一个编号，即指针，
+struct [] union; int long 什么的全都是读写(指针+成员位)下以几字节定的一个数，没有 new 关键字
+
+听起来这很难，但这次我们只谈如何在 Obj* {refs} 图上广度优先搜索(BFS)，只涉及 malloc/free 的问题。
+
+a=[]; 重复(5, _=>a.push(new Object) )
+a[0] //此对象存活
+a.pop() //第5项痛失a的引用, 随时被free
+
+C++ 有 new ，但也要 delete ，而 Java,JS,Py 等语言里是不需要 delete 的，null 赋值也不必要，无法被访问到的 Object 会定期 free() 撤销其独占内存片，即清除分配
+
+它有啥好处呢，就是你能随意操纵对象图、增删引用，做 json.loads 这样的事，C/C++ 里也行，但框架难写。我很少见过C程序不倾向全局变量的，比如列表吧很难维护；C++ 有构造器和 shared_ptr 但也没好到哪去
+
+不管怎么说，无需管理所用数据的解分配、无需冗杂的 stl 实践是许多人需要的东西
+
+
+在早期Ruby MRI 里，采用 Mark&sweep 标记清除法进行 GC ，即批量 free() ，参考经典 BFS ，代码会是:  live=[stack.flat(), globalObjs]; while(o=live.pop()) for(x of o.refs)if(!live.has(x)) {live.push(x);x.mark=1}
+
+然后 sweep 是 for(o of all)o.mark? (o.mark=0) : free(o) ；而 栈,全局globals 当然是默认标记(pin)的 ；执行可以是定期，也可以是 new 发现空间不足时
+
+这个 BFS 广度搜索，用队列穷尽每个连接，利用 o.mark 属性而不是更常见的 Set 集合，来遍历删无用指针，对性能有利，啊包含那个 live.has(x) 。其实 MRI 真正的实现是 Obj 链表和 GC 二进制位压缩数组，也差不多。
+
+那 Lua 呢，自5.0 它比 M&S 的改进就是 sweep 过程是可暂停的(增量式GC)，就是说可以有 mark=0 的 Obj 暂时没删，混在一块；那咋区分呢，能不能 mark=1 留着代表下次删除？那你觉得如果我不 sweep，而是再 GC 一次，这些垃圾反变成宝贵数据了，资源再利用啊我的天
+
+Lua5 的情况非常复杂，因为它不是支持惰性 sweep ，而是绝大部分 GC 过程都能被打断，都可以设时限；这也解释了为什么在脚本语言里，只有 Lua 在游戏领域和其它一大堆应用插件上有市场(Nginx,WRT,Ps)，而 Py Ruby 这些流行语言都被淘汰了——不仅2M多，而且不重视性能；要知道 Lua 可是以 5% 的体积完整实现了它们的GC,metafunc,compile,thread(yield),except(pcall) 等功能，这些对游戏脚本及易写性都是不可或缺的
+
+Lua 可以骄傲地说，尽管它很学院派很迂腐，96年它就有的许多功能，是 2015 的 JS ES6 才引入的，而且它比最小的JS引擎更小(谁叫JS有RegExp呢
+
+我真的佩服死这个 Figueiredo,Luiz 和 Celes 了，什么龙书虎书啊，对编译技术和二进制的理解也没 Lua 深刻，Lua 有各种语法结构优化(如全局命名Map)，也有传统编译优化，而且作为认真的工业语言它真的比 Py Rb 这些短太多了，1万7千行
+
+它的 mark 有4种，黑白灰。如果 GC 中断在 o.refs 还没去 push 时，它的 mark=灰 ；而黑白的语义相同
+
+不过，白色会因新引用变灰，对应黑色也因新字段变灰；只要还有灰Obj ，标记就会一直进行下去，直到确信白是真的白
+
+那黑白灰也是三色啊。如果有对象在标记完没 sweep 前被创建，它应该是白色，至少是在灰队列上(当然了灰不转白)；可按现在它被一起 sweep 掉，所以有两个白色交替使用，只回收当前的白标。
+
+于是GC状态可以是：空、标记传播、清除/字符串、终止
+
+标记传播就是把灰变黑
+
+对内部数据的特殊处理，UpVal 是词法作用域对象，就是嵌套func 外层的局部变量 内层引用啊，如果外层已经 return 那就是 closed ，不可能有另引用了，直接涂黑
+userdata 要标记对应的 mtable 和 env表
+
+它集灰直到全部变黑, 中间也收集一部分 grayagain ，有 reallyMarkObj 浅地把o白转灰，而 propagateMark 把o和子树 灰转黑
+
+刚才说白会因新引用变灰，那对多个 kv, o[k]=v 你觉得白是啥？是v ，我们可以选择让它们灰；或者让已黑的 o 变灰，直接加入 grayagain 单次就扫描完，这样更快
+
+在真正 sweep 前，要标记完 grayagain 、切换白色，避免新对象被清除；当然 upval,当前线程,mtable,weak 也要标记
+
+它的实现，和刚才的 MRI Ruby 差不多了，只是分割出专清 g->strt 字符串池的部分。完成后进入终止阶段调用 udata finailizer ，回到空态。
+
+当然，终止阶段也可以限制批量，Lua 的高明之处。
+
+
+
+再来谈谈编译时的跳转链表，luaY_parse 输出的结果是 Proto ，直接跳过AST从源码变成机器码，就造成了阅读困难
+
+要生成 if(q) a; else b 这种指令序列，是 q; br.not B; a; br O; B:b; O:
+
+当然 br O 的时候你不知道 O 在你几条指令后，br.not B 你也不知道 B 啊
+
+那 break continue return throw 啊不只有 break 你也不知道 while{} O: 这个 O 在哪啊，可是你想想，是不是只能跳出当前 while ，那我把这些 break 语句的地址记住，生成完 while 再回填就成了
+
+那 if 也一样，有 cont 和 else ，最后 merg ，即 ABO ；其实是 BO, cont else 生成结束位置,两个链表
+
+跳转链表，听起来是不是指 A:jmp B; B:jmp C 两个都 jmp C (目标下也是jmp)的情况？毫无关联，就是跳转指令的列表，Lua 极骚的把 sBx 参数当作 int32* 指针，省内存缝合出这么一个链表，就只是为遍历
+
+比如 if(q||q1)a; else b 其实是 if(q)a; else if(q1)a; else b ，那第一个的 A: 其实等于没跳转啊，也加到 cont 里， goiftrue 里有个常量折叠
+
+luaK 每生成一指令 pc++ 后 dischargeJPC 都会进行可能的回填
+
+然后 LuaVM 的设计是过于富经验的， x=q? a:b testset、forprep, forloop 和 tailrec 都是很麻烦的指令，但就类似拿 test jmp 这样的去拼 if()goto ，怎么拆都是选择，我不多讲
+
+
+最后谈谈 Lua 协程，就是它基于 LState 实现的内部线程，当然是非抢占式调度，无yield上下级协程(=对称协程)
+
+它对 async 至关重要，因为能主动暂停，把resume自己变成回调，对单线程应用，啊主循环，是比回调地狱 嵌套闭包优雅的
+
+
+然后 Lua 也是可以 setmetatable( {__newindex,__index}) 实现JS原型链 OOP 模式的，也有 func o:method(){} 赋值语法。它是一门非常重视原理的语言，喜欢的人可以去看 codedump 在 GitHub 的代码库，另外中国的 Lemon 和 Latte 也不错。
+

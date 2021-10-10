@@ -21,10 +21,16 @@ C花括号嵌套作用域 不统一
 HTML:HNFSAA
 某语言代码只是程序的形式,你要记的是遍历判定的这些结构; 体系化,算法仅记细节,实用只记名字
 
+流行[Java]类加载器，构成的树和类名副本
 随写[selemium]
+随写[表情包]撤销与拖放,对齐;画布多图拖拽
 随写[linux]入门笔记
 随口[比特币]
-你能知道[kNN]与最近点算法
+随写[py]简单的“临时密码”：Time-OTP与token,扫码登录,CGI,session
+随写[Java]Maven与Gradle 插件配置,依赖,子项目 源集,发布
+随写[DOM]前端router 与 history.push onpop State 浏览栈
+你能知道[kNN]与最近点算法kD
+你能知道[DOS]手写能打字的系统级应用 80x86, real/virt 寻址,BIOS IVT, io vga
 
 参动之画[时轴点TTS+srt]营销号一键生成！竟有多个文本模板可选？
 参动之画[纵柱图重排序]up主粉丝排名可视化？怎么做的
@@ -55,6 +61,11 @@ HTML:HNFSAA
 断续协程与炒菜空闲厨师分派器 厨师状态、协程文件化
 依赖注入(隐式参数 曝作属性),软组件对象,ORM,注解代码生成
 把你对代码的每个修改保存到 GitHub 与 coding 吧~ *门后见:ssh-keygen -t ed25519 -C email&&config:Host-IdentityFile& ssh-add -K &git remote set-url origin git@github.com:repo.git
+
+类加载器,闭包 多态 回调 协程/钟 异常 事件 代理 关系 等价
+scall 流扫描器 wait/ehc/jsxJ/.name 前缀,蓝线
+load,id/all, forms,data,edit,attr于xml, .out, let a of,定函, pub overr/mX final/new T, parents; 冒泡,四则,规则和ary/map,do,func,if; jq html anim时间函, fetch, dbgr/Mobile
+localStorage,search, objNul, cssVar
 
 visualalgo,~galles/visuaz, cxyxiaowu
 
@@ -104,7 +115,7 @@ s[::-1], title, deepflat /2 for, strip split int, set counter判计数, ''*n, fo
 录音 width增长,键按下 right:T px, 存dt
 录音 h模式:SA D, 重叠项; ~导出 交替时间线
 单轨播放: <项计数设时,末项重块,暂停清除
-scroll/divmod 时差翻页模式
+scroll/divmod 时差翻页模式：翻页 跟随 固定
 
 Ctrl粘合起止、软副本调速、影子音符与模式(dt,N项再重隔dt)
 

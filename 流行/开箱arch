@@ -1,0 +1,43 @@
+什么时候这些大佬才明白编程语言不是由『关键字』char构成的，它最需要接受的是惯用法优化，是句子
+甲方乙方
+64+4g
+嵌入式单片
+盗版win 预装.恢复win
+粒子动画
+
+访问键都没绑，esc不能用
+
+先zip一下再发送呢、中断位置
+.助手 播放键read主被动
+.3s瞬时速度
+哔哔里里
+
+fennix,swap,grub-inst ,20G
+root uuid,lab,/dev; resume
+sys dev:pm proc runtmp
+
+winsxs,woW64
+msHta,
+Shift-F10 cd oobe; msoobe
+删除所有 windows/wuapi
+ntldr不支持ssd 255的磁头数，不安装？
+sys32/pecmd.ini ,winPEshl ,wpeutil ，是bcd配置的掉电丢失内存C=X盘ramdisk
+Winboot利用sys32/drivers/wof遮罩文件系统 *在VolInfo/_.dat可查，没有改的从wim懒解压，官文：先conv再extract 可压缩安装保留修改，理论上改盘标都行，但 dism 会校验来源wim支持wimboot的标
+这个每次 reg add HKLM/..NT/CurrentVersion/AutoLogonSID 和其 .WinPE_001 domain ，用户配置 分辨率啊都变，因为system账户explorer微软在8pe版加限制了，想不重复创建，组策略啥常用ui都删了，net user /add,netplwiz 也没用（毕竟是pe），奈何我不是系管，搜到些链接最后也只能放弃
+我才注意到wbmgr 配置好后根本不需要 wimboot,compact,vhd 等方式安装winpe
+
+于是我很普通7z解压了wim，结合原本的bcd引导windir ，没有压缩,ramdisk 现在pe的更改也能保存了，默认system账户，改掉原本的pecmd.ini里创建图标链接、自启动、网络配置.加行disp，然后弄个好看的主题保存了 删掉自带的，AppData/R_/MS/Win/Start 删掉多余链接，看起来就像真的安装了一样，其实只是带ux外壳的硬盘预安装环境，不支持msi只能上绿色版，兼容性比wine好
+非标准的做法，但灵活 不需要下4G的镜像，相当于linux squashfs，如果结合wim还能实现btrfs快照功能
+随便找个，老毛桃大白菜的国内下载，和ghost一样不用担心安不上无限重启的问题，它们也都带utraliso,wimtool,bcdtool这些图形化工具，利用官方bootmgr/efi在ntfs上引导 非常方便，适合哪种只要办公软件(ff,wps亲测能用)的需求
+启动的东西太少了，感觉回到win98时代，不过在盛行混合睡眠的几天开机快没啥意义。
+
+winpe的wimboot和windows是可以共存，甚至用同一个windir的，只要解压了bcd加项引导，软件都能共享，比较类似带窗口外壳的winre ，re是只能脚本诊断或启动cmd的，现在win10都有 可以自动还原(我估计还是从winsxs或wusa联网装
+
+win的设计其实很巧妙，但也比linux更作些，比如grub就适配了很多系统依然是基于文本，bcd是用途极少但基于注册表，软件也没有包管理器 基于nsis而且爱重启，它的iis和domain网络服务我也是觉得就它家用了
+posix在内核上我觉得比dos分盘的做法优雅，从文件系统和嵌入式支持上也可以看出这比win利于配置，但各种rc文件弄的也烦，而win就很有潜质，powershell 的设计延续了win的非文本之路，这挺好的，就像诊断工具本身也是脚本，加个界面不比纯命令行更有价值、更考验复用？可是linux界面有特色的除了kde,yast,compiz ，真的不多
+这次了解了win自vista以来的部署映像技术，填补了之前靠 SysmanTec Ghost 的空缺，和livecd的squashfs一样成熟，颠覆了我对微软只想赚钱的看法，其实微软也发布了很多免费工具和开源软件，比如 VSCode Monaco ，真的不该叫Windows公司
+随身听等广泛应用FAT文件系统，wav声音 bmp,ico图像，这些最通用的无压缩格式都是MS的作品
+rndis驱动可能是版本老 设备ID不对，也没有32位win8的inf，注册了不会默认对它启用
+输入法用rime,qq17版是不行的，击键根本注册不上，各种五笔和 unispIM,rrpy 等个人制老API输入，当然微软智能拼音也行
+注册表读写有问题，安装.ime文件后还要开机在ctfmon.exe启动前用注册程序,regsvr32的，总之深刻让我认识到技术的无力，运维系统定制水也深呐……
+最理想的其实是用按键精灵或者 regscan、procmon检查，重新执行命令，但那很折腾

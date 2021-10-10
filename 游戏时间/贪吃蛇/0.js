@@ -39,6 +39,7 @@ plusRL=(x,y)=>(r,l)=>[x+l*sin(r),y+l*cos(r)],//直左三角 倒
   清空(a, (p,v0)=>阵[p]=v0); let p0=-1//v (/l*3.99)的浮点小误差免覆盖, 于旧公式 r1/l/globalThis.l/2
   if(l)圆点(x,y, l,(x,y)=>{let p=pYX(div(y),div(x)); if(p0!=p)a.push(p,阵[p]);阵[p]=v; p0=p});绘()
 },时差数=(a,b,step,f,dt,tend=0)=>{let id=setInterval(()=>{f(a);a+=step; if(a>b){clearInterval(id);f(tend*a)}},dt)},
+//可以选择 CAS并发 冲突解决，不锁格子，如果恢复时格子不是被遮盖的白色，不恢复
 
 触向=(e,k,f)=>{ let x0,y0, q=(k!="touch"),on; //^ geta([-5,3],maxBy,Math.abs)
   on=(k1,f)=>e.addEventListener(k+k1,q?f: ev=>{let p=ev.changedTouches[0]||ev.touches[0]; ev.x=p.clientX,ev.y=p.clientY;f(ev)}, {passive:false})

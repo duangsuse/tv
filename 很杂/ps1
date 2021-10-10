@@ -17,6 +17,7 @@ Direct 3D/Draw/Input/Show/Music/Play
 iexpress,nsis,rar/cab
 
 pecmd,qq机器人; Greasyfork,frida
+PrimoCache
 
 If Then; For To Next; Do While Loop; Sub End
 WScript.Arguments/StdIn/Out Count-1,Item(i), UBound, C Chr/Lng; Set
