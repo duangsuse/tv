@@ -1,0 +1,24 @@
+在绝句前，我做两个小的代码工具以确保有能力完成初版语法：C fmtstr&缩进: 即{}翻译、 支持变量表达式的JSON 与高亮草稿纸+REPL
+
+## C缩进
+
+单单完成 if:增缩进... 到{}转化可完整处理每行，但我们只检查 :\n\s* 与其后 \s* 数相同的行(检查><报错/结尾情况)，递归取判更深缩进，结尾添加 "\n现缩进数}\n"
+>每缩排层有尾步骤，并非读内项列表需级联返回
+
+我们照索引 split&join 源码叠加修改 :为{ 与添加 }，可提升性能
+
+也将字串内插 `printf(f"hel{1}o {name}")` 变(PRI=_Generic({int:"%d"}) ) `printf("hel" PRI(1)"o " PRI(name),1,name)` 且支持跨行。
+
+## JSON语
+
+解析有2通用结构(pattern)， `a b c` 组合和 `a|b` 分支代表着 struct/union，但AST并不等同代码文本的树，比如 `val a="a\n"` 里 val 就只是其后语法的标签而\n只是单字符、`(1+2)*3` 的括号在后序栈也不存在；解析器该负责数据管理的
+
+JSON入选 One(ps) Paired(ab,p) ifCat(p,p1,op_both) 三项，以及 `[1, wtf??, "2" ]` 的Join(sep,p)容错、递归 `refP() (self=>join","One(Int, pair"()"self)) "1,(2,3),3"`、`Feed(text) (peekN)=="前缀"` 上的空格 filter 和高亮 spanMap
+
+`!o.x[k] &&1` 以 1+(2*3) ..+4 深层先(止于无尾+-*/)与 `.x [k] () ..` 后缀链化作列表，语法树的每节点包括末端 `1 true` 都是带 tag 的，会被 `[1].seen(f)=f["Val"](...this)` 遍历到如 `v=t=>t.seen(Eval); Eval={Add:(a,b)=>v(a)+v(b), Val:n=>n} `，几项 Seq(T,ps) 的结果就是可 seen 到被重写的树组
+
+如CSS选择器 rot>x,a+b ,号收列表可判左项是否[], 若是则push&return it 继续链式下去 否则初建[]，__解析器主要考验你对程序与数值结构对应性的理解__。
+
+One(a|b)的回显可用 `assign("strkind",{tag:1})` 标签支持( p -> 读+tag <- ps[it.tag] )，我们此次( T -> 读T.p <- it.constructor.p )直接用类型将值和 pat 关联，如 `ifCatTag(Tries({val:,fun:}) )`
+
+示例/草稿纸和REPL的高亮靠 fed.spans 用 background-clip:text 靠 canvas绘 Selection clientRects 做，行号同理
