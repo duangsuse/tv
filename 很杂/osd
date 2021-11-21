@@ -1,0 +1,175 @@
+org 0x7c00; use16
+ax=0; move=ax ds ss es //x86 segment regs
+sp=0x7bfe
+
+ah=2;hx=0x7e00;al=24 //read 12K
+ch=0;dh=0;cl=2 //diskpos CHS
+int 13h;jc err //by BIOS, 10h=0x10=16
+
+cli;lidt noIDT;lgdt pGDT
+eax=cr0;or eax,1;cr0=eax //PE=1
+jmp 8h:vmemMode
+
+err:
+si=msg
+.lop:
+lodsb //*si++
+or al,al;jz .die
+ah=0xe;int 10h
+.die:
+jmp $
+msg db "no disk read\0"
+
+vmemMode:
+use32
+eax=0x10
+move=eax ds ss es fs gs ; graph
+esp=0x7bfc
+call 0x7e00 //gcc -nostdlib -static -m32 krn.c -T pure.x -fno-asynchronous-unwind-tables
+
+(.*?)=(.*?)[;\n]
+'\n'.join(f"mov {r},{a[0]}"for r in a[1:]) if k=="move" else f"mov {k},{a[1]}"
+
+noIDT:dw 0;dd 0
+pGDT:dw (gdt1-gdt)+1; dd gdt
+%macro Segmt 1 //desc: ptrBase,n,flgAttr
+dw 0xFFFF
+dw 0;db 0 //base 3b
+db %1
+db 0x4f //al 4bits~ flg
+db 0 //base :4b
+%endmacro
+
+as -o
+nasm -felf -o
+ld -o myprog
+ld –-dynamic-linker /lib/ld-linux.so.6 –lc
+
+.intel_syntax noprefix ;GAS, Intel asm no %$ and movl movq-like robotic mnemonic & assign-to-right, far-ptr longjmp are diff
+.globl _start #wtf //wtf /*hee*/
+global _start ;wtf NASM
+_start: ;libc_start_main
+
+var dd 0 ;32b, dw db..
+var: .long 0 //32b
+BSS stands for “block storage segment”
+NASM: varname resb size
+GAS: .lcomm varname, size
+
+times 3 mov eax, 2
+%rep 3 mov eax, 2 %endrep
+.rept 3 movl $2, %eax .endr
+.irp a v1 v2 .endr
+.long 0
+dd 0
+
+NASM provides a special variable (the $ and $$ variables) to manipulate the location counter. In GAS, there is no method to manipulate the location counter and you have to use labels
+section .data array db 89, 10, 67, 1, 4, 27, 12, 34, 86, 3
+ARRAY_SIZE equ $ - array array_fmt db " %d", 0
+.section .data array: .byte 89, 10, 67, 1, 4, 27, 12, 34, 86, 3
+array_end: .equ/*.set*/ ARRAY_SIZE, array_end - array array_fmt: .asciz " %d"
+
+NASM uses the byte[] operator to tell the assembler that a byte of data is to be moved. In GAS is the movb, w, or l suffix
+CFI: [esp]=old_bp, [esp + 4] = return address; [esp + 8] = arg1, vararg va_begin is implemented like this. [ebp-4] = localint1..
+call-stack sp is for -=size alloca. bpsp're equal entered CFI, but bp is saved sp, constant
+Segment:[ADDRESS or offset + index * sizeof] ;Xs: 8086 offset regs now obsoleted.
+
+
+In NASM, any label in linker marked as extern.
+
+.macro macroname arg1, arg2 movl \arg1, %eax movl \arg2, %ebx .endm
+
+%beginmacro macroname 2 mov eax, %1 mov ebx, %2 %endmacro
+
+gdt:
+dq 0
+Segmt 0b10011010 // left:al 4bits, lim 2b:+3, ah=flg1
+Segmt 0b10010010
+gdt1: ;;OS期可重设
+times 510-($-$$) db 0
+dd 0xAA55 //512: bootable
+
+bk汇编器在负责转化各条指令格式 的同时也可输出小字节结构，汇编期计算：
+
+.def 宏 参,.. { 参 $+ }
+.let v1 1; v2 2.
+.forN 数{ b1 0 }
+.for a v1 v2{ }
+.B#字节数组 应由编译器生成
+b1,b2,b4,b8,bs 等于 byte word int qword asciz
+k10 等于 int 0x10
+
+$ 是当前字节位置(即 rip-orig)
+所有非.开头标签: 默认是导出的，其大小也默认；除非用 .sym 重配置链接导出
+.asarg org=7c
+.use16
+..text
+
+尽管不是寻常字节，我会分类opcode 支持反汇编；且可利用字节宏和标签对结果匹配、修正
+
+比如，验证 forN 5 b1 0 是否和输出位置$ 的字节一样；mov ax,v 里v是啥值；是利用量值归一 for值集合检查做的
+
+movzx -zero widen
+jnc - j no Carry
+;;https://blog.csdn.net/zhangking/article/details/6501384 EMS 和 XMS(保护模式) V86支持实应用
+Make4GBSegment MACRO _seg ;;11年前技术文章 https://blog.csdn.net/favory/article/details/3618387 (地址线20 https://wiki.osdev.org/A20_Line , https://www.zhihu.com/question/32050389 8086, 80286(i286) ISA 和x86等CPU微架构实现不等价、段寻址被抛弃
+local MyGdt,PM_Service,Old_GDTR,GDTR,Real_Service,MyGdt
+local _Exit
+Push DS
+Push ES
+Pushad
+Pushfd ;保护现场
+Sub EBX,EBX
+Mov BX,CS
+Mov DS,BX
+Shl EBX,4
+Push EBX
+Rol EBX,8
+Mov BYTE Ptr MyGdt[8+7],BL
+Mov BL,BYTE Ptr MyGdt[8+5]
+Ror EBX,8
+Mov Dword Ptr MyGdt[8+2],EBX
+Pop EBX
+lea EBX,[EBX+MyGdt]
+Mov DWORD Ptr [GDTR+2],EBX
+Mov WORD Ptr [GDTR],31 ;建立新的GDTR
+Cli
+Sgdt FWORD Ptr [Old_GDTR] ;保存旧的GDTR
+Lgdt FWORD Ptr [GDTR] ;设置新的GDTR
+Mov EBX,CR0
+Or BL,1
+Mov CR0,EBX ;进入保护模式
+db 0eah
+DW PM_Service
+DW 8 ;跳转到保护模式代码执行
+
+
+PM_Service:
+ Mov AX,16
+ Mov _seg,AX
+ Mov EBX,CR0
+ And EBX,0fffffffeh
+ Mov CR0,EBX
+ DB 0eah
+ DW Real_Service
+ DW seg Real_Service
+
+
+Real_Service:
+ Lgdt FWORD Ptr [Old_GDTR]
+ Popfd ;恢复现场
+ Popad
+ Pop ES
+ Pop DS
+ Jmp _Exit
+ MyGdt DQ 0
+ DW -1,0,9a00h,0
+ DW -1,0,9200h,0cfh
+ DQ 0
+ Old_GDTR DW 0,0,0
+ GDTR DW 0,0,0
+
+
+_Exit:
+ Endm
+

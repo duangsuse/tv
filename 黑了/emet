@@ -1,0 +1,49 @@
+wOp("once -deft -next", {css:"child", dbtap:, })
+.tap().ptrOver().ptrOut()
+{ONCE,DEFT,read}=eq.flag("once deft") 0b11
+
+.pause=1  .drop .fire
+
+wCls("btn", "-btn",wSty("bg:blue on red","bgImg",url, "width",50, "-cust",1)).css("body>span") .pause=1
+
+el.div(
+wA({title:1})
+.op({tap:})
+.cls().sty() )
+el.img=["alt:src",wCls.ok/*废*/]
+el("img", "Mk","http:", wCls.btn_hl, "append",el.hr())
+
+.tail=<flat> .prev .next .at.alt
+.find(".active",1) .ee[0] .e0 .e0s
+
+timer Rate,Limit,sec, stop=wait("idle",f),anim
+stoer fcache, local/cache, cmd("copy/dl/quitmsg"), eachNext
+
+el.eqv=Eqv.each(int)
+el.bind("ab", (_0,_1)=> el.span(_0,":",_1) ) //文本的部分提出来增量改，wA 直接记录，变成增量函数
+el.bindList([], "ul",(name,boy)=> el.p(wA({ContentEditable:$Y}),name, el.b(boy.cond("boy","girl")) ) )
+el.bind(doc.tail=el.input(), v=>el.i(v%2==0? "even":"odd"))
+el.bind(tapXY(can,cfg.ref.mdraw ), (x,y,btn)=>drawEllipse clip)
+el.eqv=Eqv.int;el.bind(el.input(), el.input("number")) //2单向 2双向
+
+//同时把el 替换，将参数号与 #text XPath 对应，wA等同样 重复执行.. 只有 el("p" 被编译为重置文本并wA，其它再次？
+wA本来是闭包，只用钩掉参数 o=> ，每层留住Element就好；根本不需从根检查XPath，构建本身就是树遍历
+检查wA({src:Eqv.of(o.lnk, "/pre/%1") })访问哪些量并钩住，利用 cond.tag({user:()=>,app}) 勾住元素/文本 (close旧)子树变更
+
+ref: on:add,del,mod gets sets swap .func .key.v/.onmod; Reflect.set //onmod如果没有on.mod,初始化, 否则以链表方式加入
+let also lets(=map) It
+
+Fold sum num avg
+
+form,table惰性,datefmt, xser/dpar Promise logs, freadr delayRetry, msgport, editv历史保留, canvas
+Only1元素集 当选,解选 事件 旗  按下添选  全/反选
+
+Emet 支持 , >+ ()及 tag[k=v] , [k="abc",k1=$1] 符，逗+ 和空> 仅是层次比 :"zip(a,b)" 大
+
+包括>在内每层有上级元素， ,+ 的语义是将它加至上级，a>b 的语义是将b写入并此层=b ；若最后顶层只单项，就回单项
+
+确实可用+-*/的单步折叠法执行，但导致 a,b,c 依赖项0值构建一个列表(=链式调用)，或利用隐式变量相当浪费，只有 Haskell 的右先链表 1:2:[] 里可这样。Lua中缀链遍历 a ,深 ,c (无逗止) 永远滴神
+
+链设置本身只是扩张this作用域，此外能缩小条件设置等的语法差异，不宜滥用
+
+emet的 `ul li["$0"]:names` 支持元组列表， 单项可用于bind仅文本变化标签及 `b${wCls.wtf}` 配置
