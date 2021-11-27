@@ -1,0 +1,69 @@
+不知从何时起，只用知道函数签名，就能看见用途、频率、相关者
+
+fread
+
+看似重要实无意义的代码从源码中消失不见，细节转变为命名与程序片段思想 融为一体
+
+因为自己相信，并且确实穷尽了『代码』形式的程序、不同语言同样目的的程序；变化中的规律、规律间的等效；已化作心中基石，去发掘最朴实有用的东西。我不再在乎流行或“高难”，不限制最终用法，只观察其目的本质
+
+API或安装环境，代表程序的数据，不再是黑箱子，而清晰认识它们的职责直至系统内核。
+
+从相似的子式 构筑宏大的系统，不同思想间不可缺少之物，我枚举了它的一切；最终却是回到最初，用目的描述程序，证明系统没有自身、系统只为支撑宏大微小、复用特化的应用而生
+
+看过无数不同却相像的软件，原理性，优先简洁和简明，这是我对技术的选择
+
+
+线程(=LWP,轻量进程)可以中断(int)，但其上任务不应该。Py默认在SIGINT时抛出Keybo ardInterrupt
+
+尽管是异步的来由，中断不能实现多线程，它往往能导致内存对象不正确。一般让一个线程负责等待-执行任务(即消息poll,任务队列,主循环)
+
+编译器实现的断续函数(JS,Py的yield)称为用户态线程(协程)，它可以在任何线程/池的队列上调度；async函数当await 回交队列以任务，待其结果才恢复；协程不为并行(同时执行)，但它-线程 类似 线程-CPU
+
+身份验证即ID 与用户金币等状态1:1相关，验证:用户=N:1 ，能指明UID，并验证并非伪造即可；可由cookie持久一个随机key指明uid，也可用签名算法签发key；也有仅靠密码访问的(用户不被引用)系统，总之登录信息必须不易枚举猜测
+
+著名内部共享代码本Jupyter就是api/template模式以cookie令牌验证
+
+Object.assign(f.bind(c),c) 想共享闭包变量可真麻烦
+asg(f.bind(f),c) 那f.this 是无c变量的旧函数； asg().bind 又会整个变函数；幸好 assign 函数貌似不止是赋值,能同步更新内c
+
+now[i]=v0[i]+_dv[i]*t 脑子瓦特了 dt 和 max(_dv) 根本没关系；还写啥  max/(fps*dur) “走完耗多少步” 啥 dur/fps/max “反比”，实只靠 rate/dur 正反比，帧差大dt大
+
+let e=doc.body;a=anim([0],[20],5000,([v])=>e.textContent='hello world'.slice(0,v))
+a.rep(1,()=>{a.dur/=10;a.rep(10)})
+
+Y组合子 rec=f=>(c=>c(c))(c=> x=>f( x=>c(c)(x) )) 和 rec=f=> x=>f( x=>rec(f)(x) ) 相等，除了f是闭包的可无rec名，草。像链表，rec(f)不能保存(Ovf)
+
+function*accum(it,inc){for(;;){yield it;let x=inc(it);yield it=x}} 有更短写法
+id后的 setTimeout(()=>clearInterval(id)|this(n)|ok() ,n*dur) 我给撤了，顾虑性能还是不够,时差大
+
+SVG元素有PointAt/Length和nearest, BBox ，非常适合游戏；路径是多个M..z 线/封填充构成的
+$0.attributes.d.value ，Path2D 貌似既不能解析绘制路径也不能和SVG交互
+offset-path 以 distance 类似，都是据基点xy差, -rotate:0deg 可固定；此法不能访问时xy. 按viewBox细分绘制时自然知道distance的旋转角
+
+
+动画参数太多，想做个节点编辑器——那有几种节点，舞台wh fps算吗，绘制和粒子生成算一个节点吗？区间和方向怎么连接 到随机生成？其实粒子绘制和数据点应该是独立的，这样切分x等常量、区间频次也可建模；但没有示例的话节点编辑器易用提升也有限，单向绑定难度也不小
+
+gt(){ tail $1 -n+`nl -ba -nln $1|grep $2|cut -f 1` ;}
+alias exit=echo;. /bin/screenfetch
+gt /usr/bin/screenfetch '"ALDOS")'|grep -E '^\s+"(.+?)"\)'|sed -E 's/"([^"]+).*/\1/' >x
+asc(){ while read asc_distro; do asciiText ;done; }
+
+for asc_distro in diso;do asciiText;done
+Linux Hurd UNIX not via asc_distro
+
+${a:-b}意味a||b ,IFS切词(man bash) 也可 while read ln ; tr -d '\t'|xargs -L1 -d "\n" <x
+pr -t -9 x -s#可惜只把几行合并1行. asc <x >xx 保存AA
+awk '/^[A-Za-z]/{system("sleep 1")} /.*/{print($0)}' xx
+亦可 mapfile -t ;"${MAPFILE[@]}" 。双引号始终是参数化. 见 /bin/electron
+
+DevTools 是孤立网页。在首次启动时创建 devtools: 域，用 /devtools/bundled/devtools_app.html 访问，真内容和翻译在usr/lib/下.pak里(大量无压缩), chromedriver仅提供一个CDP端口供调试; -sandbox是sudo 它至少会chroot,反调试
+Webkit的每页面都有pid. 通过/proc stat statm status和shm交互。本地状态=注册表, ~/.config/ 内
+chrome的技术很像Android(渲染面板
+Object.entries(this.localizedMessages).filter(([k,v])=>k.startsWith("panels/lighthouse/LighthouseStatusView.ts | ")).map(([k,v])=>v.message) //i18n.js
+
+
+NFA->DFA ，和通用CPU间的区别是没有变量、程序固定 其指针用『状态号』。如 \uXXXX (其中X=0-9a-f) \u匹配后 实际相当于循环展开后的结果 if(c~=X)pc++ else back(c) *4
+
+NFA是不一定转移的DFA. 类似Trie和AC机，它没有定义失败后跳转；DFA可以minize和保存生成结果，有些还支持push/pop以支撑 /* /**/*/ 等语法；现代语言里分词与解析实际不宜过度划分
+
+但尽管跳转地址固定，我不会选择模拟自动机来切割文本。上\uXXXX已经是少数情况，多数\d+ 的考虑解释开销 并不比递归下降-双层级 的while循环快(相反while通过n*10+能避免二次遍历,状态动作则只能拿文本片)；scan目前利用Tries的跳字解析、增量解析、二分树区间表(类似Linux的mm_rb) 降低开销，它们都比自动机易懂

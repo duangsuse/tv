@@ -1,0 +1,37 @@
+a -b pair俩项配对
+b
+c config配置,字符
+d delta步长精,distance距 (Float)
+e 元素,(强调)项 (Element,Entrie)
+ev 事件 (Event)
+ex 错误 (Error,Exception)
+f 函数,文件 (Function|File)
+g 画布 (Graphics,CanvasRenderingContext2D)
+h -g wh 宽高 (Cnt)
+i -n 项编号,止限 -n m i j 第1、2D的索引编号,止限 (Cnt)
+j
+k 比率,各类ID -v 键值
+l (图形横/纵向)长度 (Float)
+m
+n 计数
+o (kv数据)对象 -k 属性引用
+p 命题 (...o=>q) -g p 2D点
+q (Bool)
+r 半径 (Float)
+s 字符串、流、收发线 (String|Iterable|List|Socket)
+t i18n文本、翻译表 (String|Map)
+u 二进制对象 (ByteArray|Blob)
+v (强调)值
+w
+x 单项 -g xy 2D座标 -g xywh 2D矩区
+y
+z 流、复数:4项元组 (Iterator|Complex)
+
+重点前置： nUser, wBox 在不能用函参数抽提 的前提下类型在前，注意 boxW 可指内宽，和 wBox 不同
+
+后字修饰
+
+- 列表 `xs, es`
+- 嵌套 `ee, aa`
+- 编号或时序 0或单独1 是特殊的，代表 0父项/先前值 ，1 代表新项/新值
+- 物理性质量大写 除字面常量外， L,R,N 等位置性变量可无视可变性大写。现代编程语言严格限制量可变性，小范围牺牲规则带来易读性是可选的。

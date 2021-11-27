@@ -14,12 +14,14 @@ el.img=["alt:src",wCls.ok/*废*/]
 el("img", "Mk","http:", wCls.btn_hl, "append",el.hr())
 
 .tail=<flat> .prev .next .at.alt
+.area .xywh
 .find(".active",1) .ee[0] .e0 .e0s
 
 timer Rate,Limit,sec, stop=wait("idle",f),anim
 stoer fcache, local/cache, cmd("copy/dl/quitmsg"), eachNext
 
 el.eqv=Eqv.each(int)
+el.clspre='mdui-'
 el.bind("ab", (_0,_1)=> el.span(_0,":",_1) ) //文本的部分提出来增量改，wA 直接记录，变成增量函数
 el.bindList([], "ul",(name,boy)=> el.p(wA({ContentEditable:$Y}),name, el.b(boy.cond("boy","girl")) ) )
 el.bind(doc.tail=el.input(), v=>el.i(v%2==0? "even":"odd"))
@@ -37,6 +39,11 @@ Fold sum num avg
 
 form,table惰性,datefmt, xser/dpar Promise logs, freadr delayRetry, msgport, editv历史保留, canvas
 Only1元素集 当选,解选 事件 旗  按下添选  全/反选
+
+浮选书：初态宽均分 互盖，选中宽变
+
+qs.a.let=wOp({css:"child", click: Only1(e=>e.next, Eqv.save("hidden",$N) , "mouse") })
+wOp({css:"li", tap_tap1:Only1(Eqv.save(1,0), e=>e.cssCls.hl ) })
 
 Emet 支持 , >+ ()及 tag[k=v] , [k="abc",k1=$1] 符，逗+ 和空> 仅是层次比 :"zip(a,b)" 大
 
