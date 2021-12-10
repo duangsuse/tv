@@ -22,3 +22,12 @@ JSON入选 One(ps) Paired(ab,p) ifCat(p,p1,op_both) 三项，以及 `[1, wtf??, 
 One(a|b)的回显可用 `assign("strkind",{tag:1})` 标签支持( p -> 读+tag <- ps[it.tag] )，我们此次( T -> 读T.p <- it.constructor.p )直接用类型将值和 pat 关联，如 `ifCatTag(Tries({val:,fun:}) )`
 
 示例/草稿纸和REPL的高亮靠 fed.spans 用 background-clip:text 靠 canvas绘 Selection clientRects 做，行号同理
+
+
+1,2,myvar 等言项 若无+-计算 可由tvr模型直接内联在参数列表/forin 等位置
+
+这能减少Node数量，好比tag预判 type Val=ValNode|string|num 与只 type ValNode=string|num|null .. 合并文本和变量名情况
+
+q?a:b ?是低优先级后缀
+
+见 Others/c/BPUcal ,格局小了

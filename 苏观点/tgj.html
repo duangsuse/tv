@@ -1,0 +1,34 @@
+<style>*{margin:0;font:12pt sans}
+nav{
+    background-color: #455a64;
+    padding: 1.2em;
+    box-shadow: 0px 0.1px 16px 0px black;
+    color: #ddd2d2;
+    height: 3.8em;box-sizing: border-box;
+}
+#txta{width:100%; height:calc(100% - 3.8em);}
+td{vertical-align:top;white-space:pre}
+</style>
+<nav>漂亮JSON</nav>
+<table id=txta><tr><td ContentEditable style="overflow-y:scroll;resize:both">In<td>Out</table>
+<script>
+doc=document, el=(e,k,...ee)=>{e=e.appendChild(doc.createElement(k));ee.forEach(x=>e.append(x)); return e},n=o=>o.length
+
+let [eA,eB]=txta.rows[0].children
+eA.onblur=()=>{//or MutationObserver(CharDatMod)
+  let o;try{o=JSON.parse(eA.innerText);}catch(ex){el(eB,"p",ex);return}
+  eB.innerHTML=''; hlObj(eB,o,0)
+}
+hlObj=(e,o,nPad)=>{
+  let pad='  '.repeat(nPad),  tok=s=>el(e,'b',s), rec=o=>hlObj(e,o,nPad+1);
+  el(e,'i',pad); if(typeof o!='object'){ el(e,'span',o).className=typeof o; return}
+  e=el(e,"details"); let k,v, hdr=(s,rep)=>{tok(s[0]); let e1;rep(()=>e1=tok(',\n')); e1.remove();el(e,'i',pad+s[1])}
+  n(o)==null? hdr("{}",c=>{ for(k in o){rec(o[k]); tok(':');/*其实:*/el(e,'mark',k);c()} }) //rec 缩进+1 或这里添缩进一样，避免} 是 nPad-1 了 (但其实
+  :hdr("[]",c=>{ for(v of o){rec(v); c()} })
+}//{"ab":[23,1,"x"],"cd":"hel"} 内是深，}]是前深；若项就有深 k:"v" 的k怎么深 (配置 中间折,首尾折?
+
+//自定义支持变量的JSON, 再加 k=""; a={k:1} 赋值；tvr模型显示步骤从 Ary "",1,Var(a) | Obj ["k",1] 的语法树到含缩进+树路径JSON
+
+elPart=o=>{}
+
+</script>

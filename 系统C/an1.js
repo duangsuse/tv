@@ -83,3 +83,34 @@ objPuts=f=>o=>new Proxy(o,{get:(o,k)=>(...a)=>f(o,k,...a)});
 态0式${P.s0(s=>eval(`i=>${s}`))}每隔${P.s0r(0,9)}1次
 定制式${P.cod(eval)}`
 })(1000,...[c,Parti,anim].map(objPuts((...a)=>a) ))
+//3
+{
+const{assign, defineProperty:defP}=Object,
+addHook=(o,k,f)=>{let v=o[k];defP(o,k,{get:()=>v,set:v1=>{v=f(v1) } })},
+keyCall=f=>o=>new Proxy(o,{get:(o,k)=>(...a)=>f.call(o,k,...a)});
+
+doc=document
+ss=s=>s.split(" "),n=o=>o.length,also=(x,f)=>{f(x);return x}
+el=(e,...ee)=>{if('string'==typeof e)e=doc.createElement(e);while('function'==typeof ee[0])ee.shift()();for(let x of ee)e.append(x); return e}
+//createElement根本不支持{attributes} ，谁在造谣啊/而且如无优化好像比.k=更慢吧；el(e0,"p")==p 删了倒是解决了乱append的问题/可el(e0也乱啊
+
+
+eDetail=(ee,s)=>e.replaceWith(el("details",el("summary",s),ee))
+letAt=(o,k,op)=>o.setAttribute(k,f(o.getAttribute(k)))
+
+econf=(labl,...vd)=>el("form",...ss("submit reset button").map(t=>el("input",{type:t})), el("pre",e=>{
+    let i=0,N=n(vd);for(;i<N;i++){let v=vd[i],[o,k]=v;
+    el("label",pre[i],el("input",e=>{e.placeholder=e.name=k;e.defaultValue=o[k];} ))
+
+        if(typeof v[2]=='number'){let[a,b]=v.slice(2); ee.type='number',ee.min=a,ee.max=b;
+          read=parseInt//eflip.push(ee), iDefts=4;opt
+        } else { addHook(o,k, v=>{e.value=v; return f(v) }); read=noOp }
+        e.onchange=()=>o[k]=read(e.value);
+    }
+    //load, value=c.get(k); ok=f?v NO.
+    ePan.children[2].onclick=()=>{let e,A="number",B="range"; if(1==letAt(ePan,"st",i=>(i+1)%3 ))for(e of eflip)e.type=(e.type==A)?B:A }
+
+}))
+
+anim//rep(-1, t0=stop())
+}

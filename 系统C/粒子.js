@@ -1,4 +1,3 @@
-
 let doc=document,
 aobj=(c,f)=>Object.assign(f.bind(c),c), n=o=>o.length, noOp=()=>{},just=k=>()=>k, also=(o,f)=>{f(o);return o}
 

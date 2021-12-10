@@ -7,8 +7,9 @@ wOp("once -deft -next", {css:"child", dbtap:, })
 wCls("btn", "-btn",wSty("bg:blue on red","bgImg",url, "width",50, "-cust",1)).css("body>span") .pause=1
 
 el.div(
-wA({title:1})
+wA({title:1, $show,$edit})
 .op({tap:})
+.hover(a,b)
 .cls().sty() )
 el.img=["alt:src",wCls.ok/*废*/]
 el("img", "Mk","http:", wCls.btn_hl, "append",el.hr())
@@ -19,6 +20,29 @@ el("img", "Mk","http:", wCls.btn_hl, "append",el.hr())
 
 timer Rate,Limit,sec, stop=wait("idle",f),anim
 stoer fcache, local/cache, cmd("copy/dl/quitmsg"), eachNext
+anim只是计算核心。不支持动画队列，框架层也仅允许已在播忽视动画，动画序列应由专门程序完成
+
+timer(1.2, sec, N|1) .acty=0
+timer.ms(1200,
+timer.rateLim(/*0 no, throttle debounce: 1 2  newest, 3 4 oldest, 5 throttle old&new */)
+.delay .wait .unit=1000
+
+rng(, Eqv.datesec) rngLT rngLen
+
+href(CDN源,NPM js css库名), hrefJS`mod; export`
+qs.H.get("baidu.com")
+qs.Stor(obj={},"loc+")
+qs.I18n `txt`, ["a b"], {fail:"txt",ok:""}
+
+shufMerg answer first=4
+Only1.tog("click blur", show|Eq(show,hide))
+
+tool deep deepBi wcase.camel strPre gfindObj gfindLink
+
+el/emet prop/row ref qs Eqv timer
+
+el.img="img alt src"
+el.imga=[el.a(el.img()),"href","img alt src"]
 
 el.eqv=Eqv.each(int)
 el.clspre='mdui-'
@@ -27,6 +51,7 @@ el.bindList([], "ul",(name,boy)=> el.p(wA({ContentEditable:$Y}),name, el.b(boy.c
 el.bind(doc.tail=el.input(), v=>el.i(v%2==0? "even":"odd"))
 el.bind(tapXY(can,cfg.ref.mdraw ), (x,y,btn)=>drawEllipse clip)
 el.eqv=Eqv.int;el.bind(el.input(), el.input("number")) //2单向 2双向
+Eqv.urlkv form
 
 //同时把el 替换，将参数号与 #text XPath 对应，wA等同样 重复执行.. 只有 el("p" 被编译为重置文本并wA，其它再次？
 wA本来是闭包，只用钩掉参数 o=> ，每层留住Element就好；根本不需从根检查XPath，构建本身就是树遍历

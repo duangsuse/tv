@@ -1,0 +1,133 @@
+<style>*{padding:0;margin:0} details{position:fixed;right:0;top:0}summary{text-align:end}</style><style>partic{}</style>
+<br><script>
+const NO=null,noOp=(x=>x)
+aobj=(c,f)=>Object.assign(f.bind(c),c),only1=o=>!Array.isArray(o)
+anim=aobj({rate:16,ease:t=>t%1.1 }, (v0,v1,dur, f)=>aobj({
+  _dv:only1(v0)?v1-v0: v1.map((v,i)=>v-v0[i]), dur, _v:only1(v0)?NO: Array(n(v0)),t0:0,
+rep(n=1,ok=noOp,stopr=NO){let {ease,rate}=anim,{dur,t0}=this,q=n>0
+dt=rate/dur*(q?1:-1), t=t0,
+id=setInterval(()=>{this(ease(t));t+=dt}, rate),
+ed=()=>{let R=st!=2; //supports user-stop&reverse
+  if(R&&(q? t<n:t>n))setTimeout(ed,st?Math.min(dur/10,200):dur*n);else{clearInterval(id); if(R&&(n==0?t0!=0:true))this(n)|ok()}
+},st=0;ed();st=1; if(stopr)stopr(this,()=>{st=2;ed();return t}) }
+},only1(v0)?function v(t){f(v0+this._dv*t)}:
+function frame(t){let{_v:now,_dv}=this;
+  for(let i=0,N=n(v0);i<N;i++)now[i]=v0[i]+_dv[i]*t
+  f(now)} )
+)
+let wL=console.log,F=0
+F&&anim(0,1,500,wL).rep(-1,()=>wL(233),(c,r)=>setTimeout(()=>{ wL`now back`;c.t0=r();c.rep(1) },400))
+
+const n=o=>o.length,ss=s=>s.split(" "),isa=(k,o)=>k==typeof o,
+newA=(n,f)=>{let a=Array(n),i=0;for(;i<n;i++)a[i]=f(i); return a}
+el=(e,...ee)=>{if(isa('string',e))e=doc.createElement(e); while(isa('function',ee[0]))ee.shift()(e); for(let x of ee)e.append(x);return e}
+
+doc=document,chunks=(nC,f)=>a=>{if(nC==1)return a.forEach((x,i)=>f(i,x)); for(let i=0,N=n(a),i0=0,no=0; (i+=nC)<=N; no++,i0=i)f(no,...a.slice(i0,i))},
+keyHook=(o,k,f)=>{let v=o[k];Object.defineProperty(o,k, {get:()=>v,set:v1=>v=f(v1)})},
+keyCall=(f,o={})=>new Proxy(o,{get:(o,k)=>(...a)=>f.call(o,k,...a)})
+F&&chunks(2,wL)(newA(10,i=>i*2))
+
+el=keyCall(el,el)
+eDet=(su,ee)=>{let e=el.details(el.summary(su)); ee.replaceWith(e); return el(e,ee)}
+F&&el(doc.body,xx=el.p("Heaven"))&eDet("天堂",xx)
+
+econf=(labl,...vd)=>el(el.form(
+  ...ss("submit reset button").map(k=>el.input(e=>e.type=k)),
+  el.pre(e0=>{
+    const 变=[],K='onchange', A='number',B='range'
+    vd.forEach((v,i)=>{let[o,k]=v, eIn,iE=0,chg=(e,f)=>{e[K]=()=>{o[k]=f(e.value)}}; el(e0,
+      el.label(labl[i], eIn=el.input(e=>{ e.placeholder=e.name=k;e.defaultValue=o[k]
+        if(isa(A,v[2])){let[a,b]=v.slice(2);e.type=A,e.min=a,e.max=b; chg(e,Number);iE=5;变.push(e)}
+        else{let f=v[2]; keyHook(o,k,v=>{e.value=v; return f(v)}); chg(e,noOp);iE=3}
+      })),
+      (a=>n(a)==0?el.b(): el.select(e=>{let eLeft=eIn;
+        e[K]=()=>{eLeft.value=a[e.selectedIndex];eLeft[K]()}
+      }, ...a.map(k=>el.option(k))
+      ))(v.slice(iE))
+    )})
+    e0.re=()=>变.forEach(e=>{e.type=e.type==A?B:A})
+  })
+), e=>{ e.children[2].onclick=e.lastChild.re  })
+
+c={rep:1,repX:0,aid:"blok",cod:()=>0,keep:false,
+run(){if(c.q)return; if(!c.keep)Partic.e0.innerHTML=''; let x=c[c.aid],an=Partic(...x.slice(1)), re=()=>an().rep(c.rep,re); Partic.e0.className=c.aid; re()},
+stop(){if(c.q++)return;let v=c.rep;c.rep=0; setTimeout(()=>{c.rep=v;c.q=0}, Partic.dt)},q:0//started
+}
+Partic=aobj({n:50,dt:1000, s0:()=>[], s0r:0, _css:doc.styleSheets[1].ownerNode/*不劳烦cssText CSSOM了*/,css:"",e0:el.div()},
+function(pos,drawe, fixedpos=noOp){let{n,dt,s0,s0r,e0}=Partic,
+  ce=newA(n,()=>e0.appendChild(el.hr())),i=0,
+  a=NO,g=()=>( s0r&&0==(i=(i+1)%s0r)?s0(): newA(n,pos(a))).flat()
+  a=g();return ()=>anim(a,a=g(),dt, drawe(ce,fixedpos()))
+})
+
+c.blok=[`hr{background:red;display:inline-block; width:5em;height:5em;border-radius:50%}`,
+()=>i=>Math.random(),
+e=>chunks(1,(i,v)=>{ e[i].style.opacity=v })
+]
+c.bloky=[`hr{background:green;display:inline-block; width:5em;height:5em}`,
+a=>a? i=>(a[i]+Math.random())%.6:_=>Math.random(), //支持亮暗补间
+e=>chunks(1,(i,v)=>{ e[i].style.opacity=v })
+]
+rk=k=>Math.random()*k
+c.dot=[`hr{background:green; width:1em;height:1em; position:absolute;border-radius:50%}`,
+()=>[rk(innerWidth),rk(innerHeight)],
+e=>chunks(2,(i,x,y)=>{let c=e[i].style; c.left=x,c.top=y; if(i<20)g.lineTo(x,y);g.moveTo(x,y)} )
+]
+c.d4=[`hr{background:red;position:absolute}`,//椭圆?N边?
+()=>[rk(innerWidth-w),rk(innerHeight-h),rk(w)+3,rk(h)+3],
+e=>chunks(4,(i,...p)=>{let c=e[i].style; [c.left,c.top,c.width,c.height]=p  } )
+]
+//money雨(x固定 yr动)x[i],y,r%1
+
+
+
+el(doc.body, Partic.e0,
+((k,C,P,A)=>econf`粒子${P.n(10,900, 10,50,200,450,600)} fps?${A.rate(x=>1000/x)}
+态间隔${P.dt(100,10*k, 500,k,3*k,5*k,7*k)}
+重复${C.rep(1,9, 1,2,5)}遍或时隔${C.repX(-1,1, 0.5, -0.3,-0.5,-1)}新态
+缓动${A.ease(s=>{with(Math){return eval(`t=>${s}`)} }, "t%1","sin(t*PI/2)","t")}
+主题CSS${P.css(s=>Partic._css.innerHTML=s)}
+动画${C.aid(k=>{Partic.css=c[k][0];;return k}, ...ss("blok bloky dot d4 circ fall morph"))}
+态0式${P.s0(s=>eval(`i=>${s}`))}每隔${P.s0r(0,9)}1次
+定制式${C.cod(eval)}
+不清空${C.keep(Boolean)} `
+)(1000,...[c,Partic,anim].map(o=>keyCall(function(...a){return[this,...a]},o) ))
+);
+
+(c=>{for(let k in c)Object.assign(globalThis[k].prototype,c[k])})({
+  Object:{also(f){f(this);return this},let(f){return f(this)} }
+})//for(k in "")wL(k)
+
+eDet("动画配置",doc.forms[0]).also(e=>{ e.open=1; e.firstChild.onclick=()=>e.open?c.run():c.stop() })
+
+function*circ(x,y,l, N){
+  const{sin,cos,PI}=Math, r1=2*PI, dt=r1/N;
+  for(let r=0;r<r1;r+=dt)yield[x+l*sin(r),y+l*cos(r)]
+}
+dista=(x,y)=>Math.sqrt(x*x+y*y)
+//SVG path(可CSS-offset 仅动画)
+function*pathPs(e,N){
+  let n=e.getTotalLength(), i=0,dt=n/N,p;
+  for(;i<n;i+=dt){p=e.getPointAtLength(i); yield[p.x,p.y]}
+}
+gp=s=>{let e=doc.createElementNS('http://www.w3.org/2000/svg',"svg");e.innerHTML=`<path d="${s}">`;return e.children[0]}
+
+触向=(e,k,f,fmov)=>{ let x0,y0, q=(k=="touch"),on,tap;
+  on=(PC,M,f)=>e.addEventListener(k+(q?M:PC),q?tap(f):f, {passive:false})
+  tap=f=>ev=>{let p=ev.changedTouches[0]||ev.touches[0]; ev.x=p.clientX,ev.y=p.clientY;f(ev)}
+  on("down","start",ev=>{x0=ev.x;y0=ev.y;q=1}); on("up","end",ev=>{f(x0,y0,ev.x,ev.y,ev);q=0})
+  if(fmov)on("move","move",q? ev=>{fmov(x0,y0,x0=ev.x,y0=ev.y)}:ev=>{if(q)fmov(x0,y0,x0=ev.x,y0=ev.y)})
+}
+布=e=>{e.width=e.offsetWidth;e.height=e.offsetHeight;return e.getContext("2d")}
+paths={
+  star:`M12.672.668a.75.75 0 00-1.345 0L8.27 6.865l-6.838.994a.75.75 0 00-.416 1.279l4.948 4.823-1.168 6.811a.75.75 0 001.088.791L12 18.347l6.117 3.216a.75.75 0 001.088-.79l-1.168-6.812 4.948-4.823a.75.75 0 00-.416-1.28l-6.838-.993L12.672.668z`,
+  book:`M0 3.75A.75.75 0 01.75 3h7.497c1.566 0 2.945.8 3.751 2.014A4.496 4.496 0 0115.75 3h7.5a.75.75 0 01.75.75v15.063a.75.75 0 01-.755.75l-7.682-.052a3 3 0 00-2.142.878l-.89.891a.75.75 0 01-1.061 0l-.902-.901a3 3 0 00-2.121-.879H.75a.75.75 0 01-.75-.75v-15zm11.247 3.747a3 3 0 00-3-2.997H1.5V18h6.947a4.5 4.5 0 012.803.98l-.003-11.483zm1.503 11.485V7.5a3 3 0 013-3h6.75v13.558l-6.927-.047a4.5 4.5 0 00-2.823.971z`,
+  msg:`M176 203h-24c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4v7l7-7h13c1.1 0 2-.9 2-2v-16c0-1.1-.9-2-2-2zm0 18h-14l-4 4v-4h-6v-16h24v16z`,
+  vid:`M897.2 114.0912l-5.2 3.63v-2.72c0-.55-.45-1-1-1h-8c-.55 0-1 .45-1 1v9c0 .55.45 1 1 1h8c.55 0 1-.45 1-1v-2.72l5.2 3.63c.33.23.8 0 .8-.41v-10c0-.41-.47-.64-.8-.41z`,
+  srch:`M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z`
+}
+//涟漪 贝兹次3 画线
+doc.body.prepend(el.canvas(e=>{ e.style.cssText=`width:100vw;height:100vh;position:absolute;top:0`; eC=e }))
+g=布(eC)
+{let 线=(x0,y0,x,y)=>g.moveTo(x0,y0)&g.lineTo(x,y)&g.stroke(),k; for(k of["touch","mouse"])触向(g.canvas,k,线,线)}
+</script>
