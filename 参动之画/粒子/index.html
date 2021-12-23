@@ -1,4 +1,4 @@
-<style>*{padding:0;margin:0} details{position:fixed;right:0;top:0}summary{text-align:end}</style><style>partic{}</style>
+<style>*{padding:0;margin:0} details{position:fixed;right:0;top:0}summary{text-align:end} body{overflow:hidden}</style><style>partic{}</style>
 <br><script>
 const NO=null,noOp=(x=>x)
 aobj=(c,f)=>Object.assign(f.bind(c),c),only1=o=>!Array.isArray(o)
@@ -31,12 +31,13 @@ el=keyCall(el,el)
 eDet=(su,ee)=>{let e=el.details(el.summary(su)); ee.replaceWith(e); return el(e,ee)}
 F&&el(doc.body,xx=el.p("Heaven"))&eDet("天堂",xx)
 
+cDoc=new URLSearchParams(location.search)
 econf=(labl,...vd)=>el(el.form(
   ...ss("submit reset button").map(k=>el.input(e=>e.type=k)),
   el.pre(e0=>{
     const 变=[],K='onchange', A='number',B='range'
-    vd.forEach((v,i)=>{let[o,k]=v, eIn,iE=0,chg=(e,f)=>{e[K]=()=>{o[k]=f(e.value)}}; el(e0,
-      el.label(labl[i], eIn=el.input(e=>{ e.placeholder=e.name=k;e.defaultValue=o[k]
+    vd.forEach((v,i)=>{let[o,k]=v, eIn,iE=0,vu=cDoc.get(k),chg=(e,f)=>{let up=e[K]=()=>{o[k]=f(e.value)}; if(vu!=NO)up() }; el(e0,
+      el.label(labl[i], eIn=el.input(e=>{ e.placeholder=e.name=k;e.defaultValue=vu!=NO?vu: o[k]//支持URL
         if(isa(A,v[2])){let[a,b]=v.slice(2);e.type=A,e.min=a,e.max=b; chg(e,Number);iE=5;变.push(e)}
         else{let f=v[2]; keyHook(o,k,v=>{e.value=v; return f(v)}); chg(e,noOp);iE=3}
       })),
@@ -49,15 +50,15 @@ econf=(labl,...vd)=>el(el.form(
   })
 ), e=>{ e.children[2].onclick=e.lastChild.re  })
 
-c={rep:1,repX:0,aid:"blok",cod:()=>0,keep:false,
+c={rep:1,repX:0,aid:"blok",cod:()=>[],cods:{},keep:false,
 run(){if(c.q)return; if(!c.keep)Partic.e0.innerHTML=''; let x=c[c.aid],an=Partic(...x.slice(1)), re=()=>an().rep(c.rep,re); Partic.e0.className=c.aid; re()},
 stop(){if(c.q++)return;let v=c.rep;c.rep=0; setTimeout(()=>{c.rep=v;c.q=0}, Partic.dt)},q:0//started
 }
 Partic=aobj({n:50,dt:1000, s0:()=>[], s0r:0, _css:doc.styleSheets[1].ownerNode/*不劳烦cssText CSSOM了*/,css:"",e0:el.div()},
 function(pos,drawe, fixedpos=noOp){let{n,dt,s0,s0r,e0}=Partic,
   ce=newA(n,()=>e0.appendChild(el.hr())),i=0,
-  a=NO,g=()=>( s0r&&0==(i=(i+1)%s0r)?s0(): newA(n,pos(a))).flat()
-  a=g();return ()=>anim(a,a=g(),dt, drawe(ce,fixedpos()))
+  a=NO,g=()=>( s0r&&0==(i=(i+1)%s0r)?s0(): newA(n,pos(a,fval(c.cod) ))).flat()
+  a=g();return ()=>anim(a,a=g(),dt, drawe(ce,fixedpos(ce)))
 })
 
 c.blok=[`hr{background:red;display:inline-block; width:5em;height:5em;border-radius:50%}`,
@@ -68,31 +69,64 @@ c.bloky=[`hr{background:green;display:inline-block; width:5em;height:5em}`,
 a=>a? i=>(a[i]+Math.random())%.6:_=>Math.random(), //支持亮暗补间
 e=>chunks(1,(i,v)=>{ e[i].style.opacity=v })
 ]
+fval=v=>typeof v=='function'? v():v
 rk=k=>Math.random()*k
-c.dot=[`hr{background:green; width:1em;height:1em; position:absolute;border-radius:50%}`,
-()=>[rk(innerWidth),rk(innerHeight)],
-e=>chunks(2,(i,x,y)=>{let c=e[i].style; c.left=x,c.top=y; if(i<20)g.lineTo(x,y);g.moveTo(x,y)} )
+chunksG=(nC,f)=>a=>{g.clearRect(0,0,innerWidth,innerHeight); g.beginPath();for(let i=0,N=n(a),i0=0,no=0; (i+=nC)<=N; no++,i0=i)f(no,...a.slice(i0,i));  g.closePath();g.stroke()}
+c.dot=[(CS_DOT=`hr{background:green; width:1em;height:1em; position:absolute;border-radius:50%}`),
+()=>i=>[rk(innerWidth),rk(innerHeight)], //cod(i) 从直接内嵌变用于生成参数们!@
+(e,n)=>chunksG(2,(i,x,y)=>{let c=e[i].style; c.left=x,c.top=y; if(i<n)g.lineTo(x,y);g.moveTo(x,y)} ),
+()=>fval(c.cod)//每轮粒子外不会动的参
 ]
+c.cods.dot=`10`
 c.d4=[`hr{background:red;position:absolute}`,//椭圆?N边?
-()=>[rk(innerWidth-w),rk(innerHeight-h),rk(w)+3,rk(h)+3],
+(a,[w,h])=>i=>[rk(innerWidth-w),rk(innerHeight-h),rk(w)+3,rk(h)+3], //定制式:生成参数
 e=>chunks(4,(i,...p)=>{let c=e[i].style; [c.left,c.top,c.width,c.height]=p  } )
 ]
+c.cods.d4=`[30,30]`
 //money雨(x固定 yr动)x[i],y,r%1
 
+aryGet=a=>i=>a[i]
+c.circ=[CS_DOT,
+(a,xyr)=>aryGet([...circ(...xyr) ]),
+e=>chunks(2,(i,x,y)=>{let c=e[i].style; c.left=x,c.top=y} ),
+]
+c.cods.circ=`步((r,x,kn)=> [300+x,400,r,Partic.n], [50,220,5],[30,120,2],[0,1,2])` //生成关键帧和几anim组合无关..
+步=(f,...a)=>{
+  let N=0,v0=a.map(x=>x[0]),d=a.map(([a,b,n])=>{ if(n>N)N=n ;return(b-a)/n}),i=0,v=[...v0]
+  return()=>{
+    if(i==N){i=0;v=[...v0]} i++
+    v.forEach((x,i)=> v[i]=x+d[i] )
+    return f(...v)
+  }
+}
 
+c.fall=[`hr{width:5em;height:2em;background:radial-gradient(3em,cyan,#0000);position:absolute}`,
+(a,ys)=>aryGet(ys),
+e=>chunks(1,(i,v)=>e[i].style.top=v),
+ce=>ce.forEach((e,i)=>{ e.style.left=i* innerWidth/n(ce) })
+]
+c.cods.fall=`步((k,m)=>newA(Partic.n, i=>15*Math.abs(i-Partic.n/m)*Math.random()+30*k), [1,20,7],[1.2,4,7])`
+
+c.morph=[`hr{display:none}`,
+(a,ps)=>aryGet(ps),
+e=>chunksG(2,(i,x,y)=>{ g.lineTo(x,y);g.moveTo(x,y) })
+]
+c.cods.morph=`允画(步集(k=>[...pathPs(gp(paths[k]),Partic.n,5)], pathKeys))`
+pathKeys=[]
+步集=(f,a,i=0)=>()=>f(a[ i=(i+1)%n(a) ])
 
 el(doc.body, Partic.e0,
 ((k,C,P,A)=>econf`粒子${P.n(10,900, 10,50,200,450,600)} fps?${A.rate(x=>1000/x)}
 态间隔${P.dt(100,10*k, 500,k,3*k,5*k,7*k)}
 重复${C.rep(1,9, 1,2,5)}遍或时隔${C.repX(-1,1, 0.5, -0.3,-0.5,-1)}新态
-缓动${A.ease(s=>{with(Math){return eval(`t=>${s}`)} }, "t%1","sin(t*PI/2)","t")}
+缓动${A.ease(s=>{with(Math){return eval(`t=>${s}`)} }, "t%1","sin(t*PI/2)","t","t==1")}
 主题CSS${P.css(s=>Partic._css.innerHTML=s)}
-动画${C.aid(k=>{Partic.css=c[k][0];;return k}, ...ss("blok bloky dot d4 circ fall morph"))}
+动画${C.aid(k=>{Partic.css=c[k][0];c.cod=c.cods[k]||c.cod;return k}, ...ss("blok bloky dot d4 circ fall morph"))}
 态0式${P.s0(s=>eval(`i=>${s}`))}每隔${P.s0r(0,9)}1次
 定制式${C.cod(eval)}
 不清空${C.keep(Boolean)} `
 )(1000,...[c,Partic,anim].map(o=>keyCall(function(...a){return[this,...a]},o) ))
-);
+);//可考虑 sin(t)*t 速率曲线组合?
 
 (c=>{for(let k in c)Object.assign(globalThis[k].prototype,c[k])})({
   Object:{also(f){f(this);return this},let(f){return f(this)} }
@@ -105,29 +139,91 @@ function*circ(x,y,l, N){
   for(let r=0;r<r1;r+=dt)yield[x+l*sin(r),y+l*cos(r)]
 }
 dista=(x,y)=>Math.sqrt(x*x+y*y)
-//SVG path(可CSS-offset 仅动画)
-function*pathPs(e,N){
+//SVG path(可CSS-offset 仅动画) 当然啦,SVG2 还能取PathSeg(Mx y 指令..)
+function*pathPs(e,N,k){
   let n=e.getTotalLength(), i=0,dt=n/N,p;
-  for(;i<n;i+=dt){p=e.getPointAtLength(i); yield[p.x,p.y]}
+  for(;i<n;i+=dt){p=e.getPointAtLength(i); yield[p.x*k,p.y*k]}
 }
-gp=s=>{let e=doc.createElementNS('http://www.w3.org/2000/svg',"svg");e.innerHTML=`<path d="${s}">`;return e.children[0]}
+gp=s=>{let e=doc.createElementNS('http://www.w3.org/2000/svg',"svg");e.innerHTML=isa("string",s)? `<path d="${s}">`:`<polyline points="${ [].also(a=>{chunks(2,(i,...b)=>a.push(b.join(',')) )(s); el(doc.body,e)}).join(' ') }">`;return e.children[0]}
+//join2D=>(f,s0,s1,a=[])=>{ f((i,...b)=>a.push(b.join(s1)) ); return a.join(s0) }
+//当然SVG也有 Animated和FE滤镜，及G,Mask等基础矢量软件概念喽，图形学之一
 
 触向=(e,k,f,fmov)=>{ let x0,y0, q=(k=="touch"),on,tap;
   on=(PC,M,f)=>e.addEventListener(k+(q?M:PC),q?tap(f):f, {passive:false})
   tap=f=>ev=>{let p=ev.changedTouches[0]||ev.touches[0]; ev.x=p.clientX,ev.y=p.clientY;f(ev)}
   on("down","start",ev=>{x0=ev.x;y0=ev.y;q=1}); on("up","end",ev=>{f(x0,y0,ev.x,ev.y,ev);q=0})
-  if(fmov)on("move","move",q? ev=>{fmov(x0,y0,x0=ev.x,y0=ev.y)}:ev=>{if(q)fmov(x0,y0,x0=ev.x,y0=ev.y)})
+  if(fmov)on("move","move",q? ev=>{fmov(x0,y0,x0=ev.x,y0=ev.y)}:ev=>{if(q/*^*/)fmov(x0,y0,x0=ev.x,y0=ev.y)})
 }
 布=e=>{e.width=e.offsetWidth;e.height=e.offsetHeight;return e.getContext("2d")}
 paths={
   star:`M12.672.668a.75.75 0 00-1.345 0L8.27 6.865l-6.838.994a.75.75 0 00-.416 1.279l4.948 4.823-1.168 6.811a.75.75 0 001.088.791L12 18.347l6.117 3.216a.75.75 0 001.088-.79l-1.168-6.812 4.948-4.823a.75.75 0 00-.416-1.28l-6.838-.993L12.672.668z`,
   book:`M0 3.75A.75.75 0 01.75 3h7.497c1.566 0 2.945.8 3.751 2.014A4.496 4.496 0 0115.75 3h7.5a.75.75 0 01.75.75v15.063a.75.75 0 01-.755.75l-7.682-.052a3 3 0 00-2.142.878l-.89.891a.75.75 0 01-1.061 0l-.902-.901a3 3 0 00-2.121-.879H.75a.75.75 0 01-.75-.75v-15zm11.247 3.747a3 3 0 00-3-2.997H1.5V18h6.947a4.5 4.5 0 012.803.98l-.003-11.483zm1.503 11.485V7.5a3 3 0 013-3h6.75v13.558l-6.927-.047a4.5 4.5 0 00-2.823.971z`,
-  msg:`M176 203h-24c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4v7l7-7h13c1.1 0 2-.9 2-2v-16c0-1.1-.9-2-2-2zm0 18h-14l-4 4v-4h-6v-16h24v16z`,
-  vid:`M897.2 114.0912l-5.2 3.63v-2.72c0-.55-.45-1-1-1h-8c-.55 0-1 .45-1 1v9c0 .55.45 1 1 1h8c.55 0 1-.45 1-1v-2.72l5.2 3.63c.33.23.8 0 .8-.41v-10c0-.41-.47-.64-.8-.41z`,
+  msg:`M100 100h-24c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4v7l7-7h13c1.1 0 2-.9 2-2v-16c0-1.1-.9-2-2-2zm0 18h-14l-4 4v-4h-6v-16h24v16z`,
+  vid:`M100 100l-5.2 3.63v-2.72c0-.55-.45-1-1-1h-8c-.55 0-1 .45-1 1v9c0 .55.45 1 1 1h8c.55 0 1-.45 1-1v-2.72l5.2 3.63c.33.23.8 0 .8-.41v-10c0-.41-.47-.64-.8-.41z`,
   srch:`M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z`
 }
+pathKeys=Object.keys(paths)
 //涟漪 贝兹次3 画线
 doc.body.prepend(el.canvas(e=>{ e.style.cssText=`width:100vw;height:100vh;position:absolute;top:0`; eC=e }))
 g=布(eC)
-{let 线=(x0,y0,x,y)=>g.moveTo(x0,y0)&g.lineTo(x,y)&g.stroke(),k; for(k of["touch","mouse"])触向(g.canvas,k,线,线)}
+{let 线=(x0,y0,x,y)=>g.moveTo(x0,y0)&g.lineTo(x,y)&pt.push(x,y)&g.stroke(),pt=[],a=[],k; for(k of["touch","mouse"])触向(g.canvas,k,(x,y,...p)=>{线(x,y,...p);a.push(pt.splice(0,n(pt)) ) } ,线)
+  允画=f=>{ eC.onclick=NO; return ()=>n(a)?gp(a.shift()).let(e=>[...pathPs(e,Partic.n,1)].also(_=>e.parentNode.remove()) ):f() } //允许用户中途手绘路径点集，如圆->用户->星
+  window.P=a
+}
+
+clearArc=(x,y,r)=>{let d=2*r;g.clearRect(x-r,y-r,d,d); g.beginPath()}
+{let e,an=anim(0,100, 2000, r=>{clearArc(e.x,e.y,110);g.arc(e.x,e.y, r, 0,2*Math.PI);g.closePath();g.fill() }),stopf;
+eC.onclick=ev=>{
+  if(stopf){ an.dur/=2;an.t0=stopf(); an.rep(0, ()=>{an.t0=stopf=0;an.dur=2000} ); return }
+  e=ev;an.rep(1, ()=>stopf=0,(_,f)=>stopf=f) //涟漪改速立刻放完
+}}
+
+fplot=(dt,x1,f)=>{
+  for(let x=0,dX=dt*innerWidth/x1,X=0;x<x1;x+=dt,X+=dX)g.fillRect(X,innerHeight-f(x)*innerHeight,2,2)
+}
+F&&fplot(1/100, Math.PI*2 *4, x=>Math.cos(x)/2+0.5) //sin在+-1 的区间，再上移动到左上座标系-y>0, 即 JQ-anim.swing
+
+//eC.style.zIndex=-1
+玩它=(N,f,...a)=>{let m=/\((.*?)\)(.*?)$/.exec(String(f)),参=m[1].split(','),eA,e=el.div(m[2],eA=el.p()),v,up; 参.forEach((k,i)=>el(e, k,el.input(e=>{e.type="range";v=e.value=a[i]; e.min=v/N;e.max=v*N; if(e.min<1)e.step=e.min; e.onchange=()=>{a[i]=e.valueAsNumber;up()} })) ) ;up=()=>{if(!c.keep)g.clearRect(0,0,innerWidth,innerHeight);f(...a);eA.innerText=a.join(', ')}; up();return e}
+
+F&&el(doc.body,玩它(4,(细,周期, k,sy)=>{fplot(1/细,2*Math.PI*周期, x=>Math.sin(x)/k+sy )},//周期x,ky 大皆是视口增大
+100,1,2,0.5))
+
+cubicBezier=(x1,y1, x2,y2)=>function*(dt){//P0=0,0 P3=1,1 三次方贝塞尔. 其中 J=lerp. 即线性插值 B t=p0+t(p1-p0)  =(1-t)p0+tp1
+  let J=(a,b,_p=NO,_a=anim(a,b,0,p=>_p=p))=>t=>{_a(t);return _p},  p01=J([0,0],[x1,y1]), p12=J([x1,y1],[x2,y2]), p23=J([x2,y2],[1,1]), t=0
+  for(;t<1;t+=dt)yield J(J(p01(t),[x2,y2])(t), p23(t) )(t) //J(J(p01(t),p12(t) )(t), J(p12(t),p23(t))(t) )(t)
+}
+bzr=(ps,t)=>{let T=([x,y],[x1,y1])=>[x+t*(x1-x),y+t*(y1-y)]//繁==[(1-t)*x+t*x1,(1-t)*y+t*y1] // N次方. de Casteljau 法
+  return n(ps)==1?ps[0] : bzr(ps.slice(0,-1).map((x,i)=> T(x,ps[i+1])  ), t) //没错，所有之前的P都*t 至Plast
+}//示例见 https://javascript.info/bezier-curve#de-casteljau-s-algorithm , DEMO https://pomax.github.io/bezierjs/
+tblMathFn=(dt,f)=>{
+  let c=new Map,x,y, k=x=>Math.floor(x/dt); for([x,y] of f(dt))c.set(k(x), y) //实际函数有连续性 用数组百分比更好
+  return x=>c.get(k(x))
+}
+
+bez=tblMathFn(.001, cubicBezier(0.22, 0.61, 0.36, 1))//(0.68, -0.55, 0.27, 1.55))//(0.4, 0, 0.2, 1))
+fplot(.001,2,bez)
+bez1=tblMathFn(.001, function*(dt){ for(let t=0;t<1;t+=dt)yield bzr([[0,0], [0.22, 0.61], [0.36, 1], [1,1]], t) })
+fplot(.001,2,bez1)
+/*顺便: anim.rep 外可支持 .sameDt(dt,nextr?) 的等时差动画应用于列表，nextr(+-1) 手动播放(-t0回放)； Partic 支持矩区随机，比如跟随鼠标: area.at(mouseP).pos('center') 还有边缘羽化啥的 */
+/* 拟JQ 可有 e.hov= anim.on(e, {width:50}) 等基于 Eqv(into,from) 的状态，如视频进度条显隐、暂停徽标等 ， from 是自旧态(如播放 加暂停标), into 是回旧态 */
+
+/*关于贝兹曲线递推绘制：其实不必 J(a,b)(t) 那么麻烦(效仿数学公式)，图形学上1行的解法我也是才了解
+
+2次贝兹有3点，3条补间线 a:P01 b:P12 Pab
+固定两端 T(ab)=J(ab)(t) 即 T(T(0,p) , T(p,1)) ，请想象为形状^ ，3点P0,1,2
+会发现最大的T() 是之间的线段,同比距离。用递推法先连 P02, P12 成形状 > 再中线插 P0' P1' 的线段，它的t% 就是平滑的曲线点
+anim 3次方贝兹看起来很复杂，因为2次贝兹更适合举例，3次都是6条线，2次是3条，(3次=2次+3条线，本身是两点间补间演化来的)
+至于 ab(t) 是 =a+t(b-a) 或 =(1-t)a+tb ，有语序/低计算还是前者更好，b-a可以负数。 t=0.5 时Tab相差 b-a的一半。
+*/
+
+//彩字爆炸Vec2、背景mask渐变擦除、鼠悬 等时差飘起、kNN 粒子飘动连线，隔.1秒检查角度速度，按ϕ状力权重mask 施以推力即可
+/*白度遮罩透明:CSS技术 ,mask一般仅支持png/alpha 且可composite混合
+https://www.cnblogs.com/cangqinglang/p/12461271.html
+https://www.cnblogs.com/thinline/p/8051534.html SVG <foreignObject>
+https://developer.mozilla.org/en-US/docs/Web/CSS/clip-path 类似bg-clip剪裁 https://smohan.net/blog/6gr77h
+http://www.qiutianaimeili.com/html/page/2017/11/0kjjhqh8wk1a.html
+
+radial-gradient(1px,black, 100%,transparent) no-repeat border-box -size:10em
+*/
 </script>

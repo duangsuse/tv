@@ -83,3 +83,9 @@ JS a.push(项) 索引的方向是向右，i++ ；那么蛇头就是 `a[a.length-
 
 这里感谢下 [Milo Yip](https://www.zhihu.com/question/360814879/answer/1013986215) ，虽然二维数组本质，是普通数组 以列长m分块，是C语言结构与指针入门内容；但他很好的混合了单格子索引与 RingBuffer 环形空索引复用队列，我也是在阅读他的回答后，写了我的第一个贪吃蛇程序，那时也是仔细一行行抄的，不过我第二遍就已经外提出许多函数。你打不打算立刻动工自己的第一次呢？
 
+
+12.22 笔记 C语言
+
+int n,m, *a,N; int *que,iH,iT//inc(iH)=shift ..push 队列
+init:iH=iT=0; inc(iT) //注意iH是落后1格的，每轮公式是 push(shift()白+d)黑 吗?是 push(R(1)+d)黑==苹果?无: shift()白  这样！
+小心别把iHT的语义搞混。可以让 p 始终==que[iT] ，每轮增它 相当于直接持有蛇头 inc(iT)=p+d 再=p即可

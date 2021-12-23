@@ -1,0 +1,124 @@
+<style>
+hr{width: 3em;height: 5em; display:inline-block;
+    background: radial-gradient(#dedee7, cyan);
+    clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+    text-align:center;line-height:5
+}hr:nth-child(4n+0) {margin-left: 1.5em;}
+/*
+用尽 box,composite,paint,mask,clip 的知识也没法在无dom2png 前提弄bg-repeat 六角形效果…必须靠多元素
+没有靠 Safari CSSCanvas, moz-element, Houdini bg:paint() 优化DataURL drawCSS(e,"mask",g=>)
+
+下次做 文字碎<hr>粒子、z座标 2.5D、粒子文本 MM:ss钟(粒子集内随机交换)
+CSS也支持path点补间.. 应该也能做折线动画;反正比 "Mx y"正则改svg靠谱哈
+*/
+@keyframes away{
+0%{transform: scale(1.1)translate(0%, -0%); filter: blur(0px); opacity:100%}
+to{transform: scale(2)translate(var(--a1),var(--a2)); filter: blur(10px); opacity:0%}
+}
+.Raway{display:inline-block;animation:.2s away forwards}/*留末帧, both有delay 时直接放初帧*/
+/*.rev *{animation-direction:normal;animation-fill-mode:backwards}*/
+.rev *:nth-child(-n+0){animation-direction:normal}/*只反向不能默认从0开始?? opacity:0也不成*/
+.revx{animation-direction:reverse;opacity:0}
+big{font-size:21em}
+</style><script>
+doc=document,NO=null;L=location.hash[1];
+doc.write(`<canvas id=eC style="width:100%;height:100%">`);布=e=>{e.width=e.offsetWidth;e.height=e.offsetHeight;return e.getContext("2d")},setAry=(a,...v)=>{for(let i=0;i<a.length;i++)a[i]=v[i]};
+rate=(dt,f,id=setInterval(f,dt))=>()=>clearInterval(id); var w,h
+onload=()=>{ p=[0,0],g=布(eC);w=eC.width,h=eC.height;eC.onmousemove=ev=>setAry(p,ev.x,ev.y); g.fillStyle="#0001"; g.beginPath();ok=(L>0)?NO:rate(1000/30,()=>{g.arc(...p,10, 0,2*Math.PI); g.fill()});g.closePath() ;初()} //淡涂，要反过来(bg透-fg黑)就是拖影
+onclick=()=>{ok(); doc.body.style.webkitMask=`url(${eC.toDataURL()})`; eC.remove();  for(let i=0;i<500;i++)doc.body.append(el("hr",i)) }
+
+/*
+Promise((ok,err)=> 用于通知任务结果，当“承诺”new 的时候开始，何时then/catch 都能捕获其status 变动
+承诺对标 Future,Completeable,Task ，且 Promise.all 会比Future一词更自然
+它没有任务的进度和撤销，如果有就是 (ok,err,status,onstop)=> 的形式，可 stop()，想下文件移动进度框 stop=fout.delete()&无视异常
+承诺与任务例：用户点击100次(或放弃)、点击100次(在10s内)带进度 stop=err('任务失败')
+避免了 Composite 等一大堆名词； status 可以流形式提供forEach 来更新，即AsyncGenerator 可zipWithNext 判断 例如实现速率预计eta
+实际 {while()yield next()} 也能组合异步流处理，总之要在map,filter这些里可每项暂停
+
+可以用 anim start/end 事件，但可组合力不大，顺便一提 e.animate() 也是基于 Promise的
+话说DOM真实时..删style规则立刻作废
+另有 school/js/dfs 与涟漪。
+*/
+Promise.oneAct=(f,r=NO)=>(...a)=>r?r:  r=f(...a).finally(()=>{r=NO})
+
+aline=(ak,e,i0=0)=>Promise.oneAct(i=>{
+  let q=e.classList.toggle("rev",i<i0),d=q?-1:1, c=i=>{let x=e.children[i].classList;x.toggle("revx",q); return x}, qF=ak[0]!='R'//turn-off old
+  return new Promise(ok=>{e.onanimationend=()=>{if(i0==i)return ok(); if(qF||q)c(i0).remove(ak,"revx"); qF?c(i0+=d).add(ak):clsRun(ak,c(i0+=d))};  i0==i?ok(): clsRun(ak,c(i0)) })
+  //qF?; if(qF) => //if(qF||q); if(!qF); if(qF)
+})
+clsRun=(k,c)=>!c.contains(k)?c.add(k): c.remove(k)&setTimeout(()=>c.add(k),1)//idle 没有用!
+rk=(a,b)=>Math.random()*(b-a)+a
+cssProp=(e,u,c)=>{for(let k in c)e.style.setProperty("--"+k,c[k]+u) }
+el=(k,...e)=>{let r=doc.createElement(k);e.forEach(x=>r.append(x));  return r}
+
+chardiv=e0=>{
+  let e=[...e0.innerText].map(s=>el("span",s) )
+  e0.innerText="";e.forEach(x=>{cssProp(x,"%", {a1:rk(-40,110),a2:-rk(30,90)}); e0.append(x) })
+}
+
+if(L==1){
+eC.replaceWith(et=el("big","hello世界"))
+chardiv(et);f=aline("Raway",et)
+f(6).then(_=>f(0))
+}
+/*sqrt(1-t^2) https://github.com/zhangxinxu/Tween/blob/master/tween.js 这就是前端眼里的补间？好吧，比x=0~1数值稳定
+还煞有介事的弄了 easeIn,easeOut 的 J r 形曲线区别.. xy都翻转下1-f(1-x)不就好
+*/
+ss=s=>s.split(' ')
+fthis=f=>function(...a){return f(this,...a)}
+DType=(ks,c)=>{
+  let P=Tup.prototype; ks=ss(ks)
+  function Tup(...v){ks.forEach((k,i)=>this[k]=v[i])}
+  let k,i;for(k in c){i=k.lastIndexOf('$')+1; Object.defineProperty(P, k.slice(i),{[ss("value set get")[i] ]: i==0?c[k]:fthis(c[k]) } ) }
+  return Tup
+}
+
+Vec2=DType("x y r", {$l:(o,l)=>{let{r}=o; o.x=l*Math.sin(r),o.y=l*Math.cos(r) } , p(v){this.x+=v.x;this.y+=v.y }, p0(v){this.x-=v.x;this.y-=v.y;return this }, $$dup:o=>new Vec2(o.x,o.y,o.r) }) //向量不可以同时保存位置和方向，但可以计算00~点的角度,来增长。
+//顺便，xy变更时lr才应从勾股atan2重计算. 可用<0 标记缓存失效,在m(neg)和xy() 时。常用相加平移及重设xy，故正负位缓存比不更新好
+//Vec2(xylr) dup norm(xy<1) p(+) pp(*) p0(-) pk(*val)
+生=f=> N=>Array(N).fill(0).map(_=>{let v=f();if(v.x==1)v.l=rk(3,9) ;return v})
+
+粒子浮=生(()=>new Vec2(1,1,rk(0,Math.PI*2) ))
+粒子落=生((k=Math.PI/3)=>new Vec2(1,1,rk(0+k,Math.PI+k) )) //r0=正上. y负点高
+随机粒子=生(()=>new Vec2(rk(0,w),rk(0,h),0) )
+
+动画=()=>{let p=随机粒子(100),vs=粒子浮(100), gg,arc=(x,y)=>gg.moveTo(x,y)&gg.arc(x,y,5,0,Math.PI*2), t0=performance.now(),T; g.fillStyle="red"
+  setInterval(()=>{gg=new Path2D;p.forEach((x,i)=>{x.p(vs[i]); 巡(x); arc(x.x,x.y) }); 连线(gg,p,10); g.clearRect(0,0,w,h);g.fill(gg);g.stroke(gg) }, 1000/50)
+  //setInterval(()=>{T=performance.now(),dt=(T-t0)/100;t0=T; gg=new Path2D;p.forEach((x,i)=>{let v=vs[i].dup; v.x*=dt,v.y*=dt; x.p(v); 巡(x); arc(x.x,x.y) }); g.clearRect(0,0,w,h);g.fill(gg) }, 1000/50)
+}
+巡=v=>{(v.x<0)?v.x=w :(v.x>w)?v.x=0 :0;  (v.y<0)?v.y=h :(v.y>h)?v.y=0 :0}
+连线=(g,p,l)=>{let N=p.length,iM=0, s=new Set;
+  p.forEach((x,i0)=>{for(let i=i0+1, dM=100,di;i<N;i++)if(dM> (di=dist(x.dup.p0(p[i])) ) )iM=i,dM=di; if(!s.has(iM))g.moveTo(x.x,x.y)&g.lineTo(p[iM].x,p[iM].y); s.add(iM); })
+  //p.forEach((x,i0)=>{for(let i=i0;i!=0;i--)if(dist(x.dup.p0(p[i]))<l){g.moveTo(x.x,x.y);g.lineTo(p[iM].x,p[iM].y); break} }) //第[0] 会和所有项关联.. 没做去重
+}//懒得想topk 连线了，但去重好像是必须的..除非动态重排(能弄固定联系喽)。 因为连两点所以单靠子列不行，当然啦 q[i]=true 可代Set
+//最好是选点迭代n每点k(i)个最近喽，就是集合自由remove
+dist=v=>Math.sqrt(v.x**2+v.y**2)
+
+
+function*爆炸(gIn,[w,h,dx,dy],fBg){ //像素图转彩粒子。低开销应g.drawImage 平滑缩小；但透明部分不排粒子，因此靠网格细化,选色,NO=无粒子
+  let r,f=fBg(gIn,dx,dy)
+  let y,x;for(y=0;y<h;y+=dy)for(x=0;x<w;x+=dx){r=f(x,y)
+    if(r!=NO)yield[new Vec2(x,y,0),r]
+  }
+}
+分列=(n,az)=>{let r=Array(n).fill(NO).map(_=>[]),a;for(a of az)a.forEach((x,i)=>r[i].push(x) ) ;return r}
+
+爆字=(s,d=3)=>{
+  g.textBaseline='top';g.fillText(s,0,0)
+  let hh=parseInt(g.font), ww=g.measureText(s).width,
+  [点,色]=分列(2,爆炸(g, [ww,hh,d,d], (g)=>(x,y)=>g.getImageData(x,y,1,1).data[3]==0?NO:pick(彩虹) ) ), //rgba(...g.getImageData(x,y,1,1).data)
+  G=new Vec2(0,10),//10牛/kg (确信
+  炸=粒子落(点.length)
+  //debugger
+  setInterval(()=>{g.clearRect(0,0,w,h);
+    点.forEach((p,i)=>{ let gg=new Path2D;g.fillStyle=色[i];gg.rect(p.x,p.y,d,d); p.p(G);p.p(炸[i]);G.x+=.0003 ;g.fill(gg) })
+  }, 1000/30)
+}
+pick=a=>a[Math.floor( a.length*Math.random())]
+彩虹=ss("red orange yellow green blue cyan purple")
+
+初=()=>{
+  if(L==2)动画()
+  if(L==3){g.fillStyle="black";g.font="120pt sans";爆字("ABC") }
+}
+</script>

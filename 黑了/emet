@@ -14,7 +14,7 @@ wA({title:1, $show,$edit})
 el.img=["alt:src",wCls.ok/*废*/]
 el("img", "Mk","http:", wCls.btn_hl, "append",el.hr())
 
-.tail=<flat> .prev .next .at.alt
+.tail=<flat> .prev .next .flag .at.alt
 .area .xywh
 .find(".active",1) .ee[0] .e0 .e0s
 
@@ -27,7 +27,8 @@ timer.ms(1200,
 timer.rateLim(/*0 no, throttle debounce: 1 2  newest, 3 4 oldest, 5 throttle old&new */)
 .delay .wait .unit=1000
 
-rng(, Eqv.datesec) rngLT rngLen
+rng(, Eqv.datesec) rngLT rngLen: in,iter pick(30,a, 70,b,)
+rng(0,9) (9) (9,str|ary| i=>) first|= 1 ;last=fst+N
 
 href(CDN源,NPM js css库名), hrefJS`mod; export`
 qs.H.get("baidu.com")
@@ -69,6 +70,16 @@ Only1元素集 当选,解选 事件 旗  按下添选  全/反选
 
 qs.a.let=wOp({css:"child", click: Only1(e=>e.next, Eqv.save("hidden",$N) , "mouse") })
 wOp({css:"li", tap_tap1:Only1(Eqv.save(1,0), e=>e.cssCls.hl ) })
+html.cn/tool/css-clip-path/ 支持 hover:(ev,i)=> wOp("hover")(e1).fire.hover(ev,{i})
+
+val prop=ref.key(v).k1(v)
+ref.key(v=>更新(v) ) V=>
+
+outerW
+:last head tail append prepend
+on  click li
+contains val data empty
+cls disp
 
 Emet 支持 , >+ ()及 tag[k=v] , [k="abc",k1=$1] 符，逗+ 和空> 仅是层次比 :"zip(a,b)" 大
 
