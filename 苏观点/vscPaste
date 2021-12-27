@@ -1,0 +1,7 @@
+首先有运行和暂停/停止，只有在执行到断点时中断计算，暂停是下个setTimeout触发时 因为死循环偶尔会卡死DevTools 呃
+步过、步入、步出 都是针对所有函数头尾的临时停止，基于调用栈的，步过是跳过1次调用，步入在调用头尾暂停、步出在调用尾，单步是对循环的；此外断点也可以执行代码，或条件性中断
+
+dom StandardKeyboardEvent，检测CtrlV然后 textAreaInput"paste" 事件fire 内部队列的 _onPaste,到 -AreaHandler ,靠fire event队列再到 vs/editor/browser/view/viewController 命令delegate,再到 codeEditor ；或者是虚拟DOM也依赖了event bubble 呢，因为handler=kbd,view 调用了两次
+
+最后 vs/editor/browser/services/abstractCodeEditorService getFocusedCodeEditor()._paste(1,) 可插入文本
+$('.original.editor').onclick=()=>temp1._activeEditor._paste(1,'\n')

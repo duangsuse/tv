@@ -32,7 +32,7 @@ Promise((ok,err)=> 用于通知任务结果，当“承诺”new 的时候开始
 承诺对标 Future,Completeable,Task ，且 Promise.all 会比Future一词更自然
 它没有任务的进度和撤销，如果有就是 (ok,err,status,onstop)=> 的形式，可 stop()，想下文件移动进度框 stop=fout.delete()&无视异常
 承诺与任务例：用户点击100次(或放弃)、点击100次(在10s内)带进度 stop=err('任务失败')
-避免了 Composite 等一大堆名词； status 可以流形式提供forEach 来更新，即AsyncGenerator 可zipWithNext 判断 例如实现速率预计eta
+避免了 Composite 等一大堆名词； status 可以流形式提供forEach 来更新，即AsyncGenerator (=Observer-able,可throw的)可zipWithNext 判断 例如实现速率预计eta
 实际 {while()yield next()} 也能组合异步流处理，总之要在map,filter这些里可每项暂停
 
 可以用 anim start/end 事件，但可组合力不大，顺便一提 e.animate() 也是基于 Promise的

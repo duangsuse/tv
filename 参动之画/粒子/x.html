@@ -1,0 +1,31 @@
+<br>
+<script id=demo>
+M=Math;Q=M.random;
+J=[];U=16;T=M.sin;E=M.sqrt;
+for(O=k=0;x=z=j=i=k<200;)with(M[k]=k?c.cloneNode(0):c){width=height=k?32:W=446;with(getContext('2d'))if(k>10|!k)for(font='60px Impact',V='rgba(';I=i*U,fillStyle=k?k==13?V+'205,205,215,.15)':V+(147+I)+','+(k%2?128+I:0)+','+I+',.5)':'#cca',i<7;){beginPath();arc(U-i/3,24-i/2,k==13?4-(i++)/2:8-i++,0,M.PI*2,1);fill()}else for(;x=T(i),y=Q()*2-1,D=x*x+y*y,B=E(D-x/.9-1.5*y+1),R=67*(B+1)*(L=k/9+.8)>>1,i++<W;)if(D<1)beginPath(strokeStyle=V+R+','+(R+B*L>>0)+',40,.1)'),moveTo(U+x*8,U+y*8),lineTo(U+x*U,U+y*U),stroke(); for(y=H=k+E(k++)*25,R=Q()*W;P=3,j<H;)J[O++]=[x+=T(R)*P+Q()*6-3,y+=Q()*U-8,z+=T(R-11)*P+Q()*6-3,j/H*20+((j+=U)>H&Q()>.8?Q(P=9)*4:0)>>1]}
+g=a; //注意他为z-index 副本了画布
+setInterval(function G(m,l){A=T(D-11);if(l)return(m[2]-l[2])*A+(l[0]-m[0])*T(D);g.clearRect(0,0,W,W);J.sort(G);for(i=0;L=J[i++];g.drawImage(M[L[3]+1],207+L[0]*A+L[2]*T(D)>>0,L[1]>>1)){if(i==2e3)g.fillText('Merry Christmas!',U,345);if(!(i%7))g.drawImage(M[13],((157*(i*i)+T(D*5+i*i)*5)%W)>>0,((113*i+(D*i)/60)%(290+i/99))>>0);}D+=.02},1)
+</script>
+<script>
+      (function(){var doc=document;var iframe=doc.createElement("iframe");doc.body.appendChild(iframe);var iwin=iframe.contentWindow;var idoc=iframe.contentDocument;idoc.open();idoc.close();idoc.write('<!doctype html><head><meta charset="utf-8"><body>');idoc.head.innerHTML="<style>\n"+"html, body { margin: 0; padding: 0; border: 0; width: 100%; height: 100%; }\n"+"</style>\n";idoc.body.innerHTML="\n\t\t"+"<canvas"+' id="c"'+''+"></canvas>\n"+
+      (true?"<script>\x3c/script>\n":"")+"";var Audio=iwin.Audio;iwin.Audio=function(x){return new Audio(x)};if(true){var canvas=idoc.getElementsByTagName("canvas")[0];iwin.a=canvas.getContext("2d");iwin.b=idoc.body;iwin.c=canvas;var p2d=iwin.Path2D;function wrap(ctx){var fill=ctx.fill,clip=ctx.clip,stroke=ctx.stroke;ctx.scale=ctx.scale;ctx.drawFocusIfNeeded=ctx.drawFocusIfNeeded;ctx.ellipse=ctx.ellipse;ctx.fill=function(r){fill.call(ctx,r==="evenodd"?"evenodd":"nonzero")};ctx.stroke=
+        function(p){if(p&&p2d&&p instanceof p2d)stroke.call(ctx,p);else stroke.call(ctx)};ctx.clip=function(p){if(p&&p2d&&p instanceof p2d)clip.call(ctx,p);else clip.call(ctx)};return ctx}
+    if(true){var cvs=iwin.c;var cNode=cvs.cloneNode;cvs.cloneNode=function(){var clone=cNode.apply(cvs,arguments);var cloneGet=clone.getContext;clone.getContext=function(){return wrap(cloneGet.call(clone,"2d"))};return clone};var get=cvs.getContext;cvs.getContext=function(){return wrap(get.call(cvs,"2d"))}}if(false)wrap(iwin.a)}idoc.body.clientWidth;//wrap?"2d"
+        var demo=idoc.createElement("script");if(1){var scrpt=doc.querySelector('script#demo').textContent.replace(/m.location=m.location;/,"top.reload();");demo.textContent=scrpt;idoc.body.appendChild(demo);}idoc.close();iframe.contentWindow.focus()  })();
+
+document.write`<canvas id=C>`
+let {sin: R,cos:Ry} = Math, DEG=2*Math.PI;
+gCache=(f,d=100,t=new Map)=>x=>{let k=d*x>>0,r;if(r=t.get(k)){g.putImageData(r,0,0);return} f(x);t.set(k,g.getImageData(0,0,w,h) )}
+
+手旋=(f,vGo=1/60, FR=requestAnimationFrame)=>{let r=0, v=vGo, x0=0, drawF=()=>{
+    f(r+=v); v+=(vGo-v)/(v<0?160:60)
+  FR(drawF)};FR(drawF)
+  addDrag(g.canvas,({x,y})=>{if(x0)v+=(x-x0)/w*DEG/40;x0=x})
+}
+addDrag=(e,f)=>{let q=0, m=(k,c)=>e["onmouse"+k]=c.call?x=>{if(q)c(x)}: ()=>{q=c}; m("down",1);m("up",0);m("out",0); m("move",f)}
+
+with(C){width=height=w=h=500; with(g=getContext("2d"))textBaseline='top',font='40px sans',手旋(gCache(r=>{
+  clearRect(0,0,w,h);fillText(r.toFixed(2),0,0); beginPath();arc(200,200,100, 0,DEG*r%DEG);stroke();closePath();
+}))}
+</script>
+<style>iframe{width:80vw;height:90vh}</style>

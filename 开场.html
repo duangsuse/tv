@@ -1,7 +1,6 @@
-<style>*{margin:0;padding:0} body{height:100vh;background:grey}  </style>
+<style>*{margin:0;padding:0} body{height:100vh;background:grey}  p:hover{-webkit-mask: radial-gradient(black, 70%,#0000);}</style>
 <script>
 //横条等时差动画
-{
 const doc=document,
 逐个=(dt,fs)=>fs.forEach((f,i)=>setTimeout(f,i*dt)),//new Promise(res=>{; setTimeout(res,dt*fs.length)}) //没意义不知单项时长
 anim=(s,c0="")=>(it,c="")=>{
@@ -33,16 +32,19 @@ elm.e=doc.createElement("div");
 N=8, s="游戏时间到！", 色="red orange yellow green blue cyan purple".split(" ")
 
 消除=anim(`to{height:0}`, ".5s forwards")
-
+变色=anim(`0%{backdrop-filter:null}to{backdrop-filter:"hue-rotate(1turn)"}`, "1s ease-in infinite")
+点字=()=>变色(doc.body.appendChild(elm`<p style="position: absolute;top: 20%;left: 20%;
+font: 22em comic;color: white;
+filter: drop-shadow(2px 4px 6px);
+">咱动苏</p>`))
 onload=()=>{
 let s;if((s=doc.location.hash))doc.head.appendChild(doc.createElement("script")).src=s.slice(1);
   let h=doc.body.offsetHeight, w=doc.body.offsetWidth, hh=h/N,
-  点后=逐个过(200, newA(N, i=>色条(w,hh, 色[i%色.length] )), 变宽, 消除, (i,es)=>{es.reverse();if(0)点()}),
-  点字=()=>alert("是字")
+  点后=逐个过(200, newA(N, i=>色条(w,hh, 色[i%色.length] )), 变宽, 消除, (i,es)=>{es.reverse();if(0)点()})
   onclick=计数过([1,点后, 1,点字,  1,点后])
 }
 /*
 希有动画框架 animjs, 提供等时差、子项切分、随机 等单项辅助, 支持有 click/反向动画, 位置等即时录制 的时间线, 有 xy+xy0, 1wh 速率曲线选择器 调整重复或连接, 右击带缩放xy区间
 */
-}//不用window变量，也不用全局变量域
+//不用window变量，也不用全局变量域
 </script>
