@@ -38,6 +38,8 @@ Promise((ok,err)=> 用于通知任务结果，当“承诺”new 的时候开始
 可以用 anim start/end 事件，但可组合力不大，顺便一提 e.animate() 也是基于 Promise的
 话说DOM真实时..删style规则立刻作废
 另有 school/js/dfs 与涟漪。
+
+粒子动画还应有 分块-等时差动画(中心发牌)、粒子是单项重复(text,circle..) 的概念 和 twitch,bloom filter
 */
 Promise.oneAct=(f,r=NO)=>(...a)=>r?r:  r=f(...a).finally(()=>{r=NO})
 

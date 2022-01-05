@@ -5,3 +5,72 @@ dom StandardKeyboardEvent，检测CtrlV然后 textAreaInput"paste" 事件fire �
 
 最后 vs/editor/browser/services/abstractCodeEditorService getFocusedCodeEditor()._paste(1,) 可插入文本
 $('.original.editor').onclick=()=>temp1._activeEditor._paste(1,'\n')
+context.subscriptions.push()=>
+t=getText();  insertTextIntoDoc(t,getAsyncApi(t)
+vscode.window.showInformationMessage
+
+edit(op, {undoStop?})//editor.selections
+vscode.commands.registerCommand
+edt.repace(rn,doc.getText(rn=document.getWordRangeAtPosition(sel.start)
+.replace(activeEditor.selection,
+
+vscode.WorkspaceEdit()alsoIt{set(document.uri, [TextEdit.insert]);  }
+vscode.workspace.applyEdit(workEdits)
+
+原来字幕工具是 make graph 的实例--启动时检测每项依赖，且每项可重做
+ab srt 通过录音和 .16 最大距离，可预览
+预览可统计字长，左右N个词、按原版x切分一行, srt2tag,diff对应 即时更新
+还可考虑内录+文本窗
+
+
+这个『大学』，我的想法是作为PlayClass 的较软核、较实用、略低质版，博客和培训班仍是做不到这种质量和实用性的，其受众就有一定基数；一些标题党内容我也有经验，比如 H5排版和数据图、排序算法、Python 语音识别字幕生成/TTS、字符画/视频、心形函数图和烟花web特效，虽然不如基本操作的流程系统但肯定是「证明质量」的
+
+在知识展现的「通用模式」上，我决定扩展 这个原义为“用鲜活的侧面化解释 取代列举几种情况式教学”的词
+它们肯定比大量2D/webgl 可视化低费，只针对目的程序化的交互(比如BFS走迷宫)，做2D可视化 目的是提醒用户理解问题模型（比如迷宫,试上下左右4点），美工利用 DevTools 调-甚至干脆统一配色,手建元素集和事件-就好了
+
+「补角」-别被知识的锋利面扎到！
+显示级别  “兔子<a l=0>其emoji| 繁衍`飞快！..</a>是典型的哺乳动物<a l=1>和草食动物</a><a l=2>常被用作操作实验，与白鼠的区别是…</a> ” l=0 可以抄 diygod.com 的粒子特效，反正整个页面要优雅而灵动。我们可以做成 **链接-文章集形式** ，先静态 以后支持editor UGC化
+当然，也可以试试 Live2D 小挂件(参考 paugram.com pio.js): sevencho.github.io 的淡化很合适, summerscar.me , haybin.cn 的指针特效可选
+
+此设计是要鼓励用户，适量重读 加深理解；默认简写的tips(类似脚注)则可提醒知识上的缺漏
+这也要支持同类tip 间的跳转，总之必须有平铺直叙外的框架 比如小结
+
+名词字典 - 每课程都可以有 k=v 字典，允许划词或整页注释，允许评论区提供词集，高亮|跳转到正文内 ；还要支持学院级的词典-允许跳转
+脚注引用表 - 和wiki一样
+ 时间线、  可过滤/sort 数据表,年注释 啥的，总之少量单项的交互性 比wiki牛
+代码zip下载&区间预折叠 - 允许列表查看、把每个(带文件名的)代码块合并复制，或者打包下载方便；我觉得有必要讲解项目实例
+支持夜间配色。 其他配色和字体可作为社区声望奖励——当然都是前端检查、君子协议
+
+我设想的社区是，不必太高门槛匿名注册，然后每种「学院」需要问卷加入(后端没啥可鉴权的,仅作为身份标识)，老师只是贡献者的标牌 鼓励加入、据课程问答，搞些排行榜啥的
+和知乎不同的是，讨论是针对课程的，和基本操作一样，但不提供碎碎念。
+
+我会负责列表分类、过滤设计和单页PJAX分页，PV计数等「基本操作」包含的前端；后端评论数据可变，鉴权Session-Cookie 由名密登录、问卷注册，可以先考虑 Ruby-基本1:N数据查询层，必须方便移植到 CF Workers 等低费云平台
+
+传智黑马教育的课，包括 jQ轮播图、分tab、Bootstrap分栏 …我不是很会但会为之考虑最优科普方式，至于C语言（大量内容要被标补角了...）都是JS也能做的死计算.. 还有fwrite 这些，可以emoji示意。
+PHP,虚拟机 等操作性质的.. 可以更多GNOME 式窗口动画，我会想办法让文字变窗口动起来
+
+<body><div style="
+    text-align: right;
+    padding: 1em;
+"><h2>Franz</h2><img style="
+    background: red;
+    width: 50px;
+    height: 1;
+    float: left;
+"><dl style="
+    border: 1px solid;
+    width: 70%;
+    position: absolute;
+    right: 0;
+    padding: 0px;
+    border-top: dashed gray;
+"><dt style="
+    /* border-bottom: dashed gray; */
+    width: 60px;
+    /* padding: 0; */
+    /* border-left: 2px ridge red; */
+    box-shadow: -11px -4px 0px -1px;
+">Stud of</dt><dd style="
+    /* border-bottom: 1px dashed gray; */
+">Kolegioxsxs</dd><dt>Stud ID</dt><dd>Kolegio</dd><dt>Issue date</dt><dd>2017/02/22</dd></dl></div></body>
+

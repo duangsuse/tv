@@ -191,3 +191,190 @@ v=getEnv("wtf")?:return null
 它长得太快了，以至于尚细的树干承担着 颜色繁乱的果子，语言与其用户仍把浅薄的牙慧当成程序的意义，没有聆听程序流的呼唤；许多果实下被迫摆出丑陋惹眼的人工架子，正是因为这树干的孱弱和对API统一的不信、对数量和真实质量的无视、对描述「实用性」的轻视，才使过度设计成为主流
 
 基础是构造系统理解的根本，未必都是领域里知识树的叶子
+
+
+tg侧边栏的落雪特效: 每.5s/100 移动 P=随机点 随机(雪花,白球) .5s P+随机xy
+前几天做的粒子动画实验，隔2状态随机1次 就很合适，可惜点赞不够 我懒得做 [xy,+-雪/白球 透明]；而且雪花咋画呢.. 但tg客户端代码质量真不行，我估计它为这写了一个文件，但其实客户端交互动画挺多的。
+
+Win32 窗口置顶zIndex问题.任务栏开始菜单 都是窗口
+Win8+的Band层z序最大，如果想在任务栏上显示UIAccess或注入CreateWInBand /SetWBand (shell32常规是注入?..
+ysc发现有key EnableAMAccess (w32kfull.sys活动管理) 后可以使用后者自由提升窗口，key限取一次，SetShellWindow 登录时 pcshell.dll 管理，只能重启explorer.exe hook NtUserAcquirel 获取key ；好奇怪的私有API
+
+窗口置底问题.Win8+ 桌面图标可独立窗口,只要 SendMessage 0x52C 给某窗口，它变成最底；再将 shelldll_DefView 图标下方 WorkerW 隐藏，ffplay --noborder xy=00wh=屏幕宽高 这样的播放器就是动态桌面
+ShowWin(,SW_) SetParent(w,w0)
+EnumWindows(f(w,argv)) FindWindow(k,fl=0) -Ex(in_w?,next?,k,fl)
+SendMessageTimeout(w,k, 3x, dt, fl)
+
+100粉的头图黏合Py PIL生成。为啥不是canvas或OCV或Java? Pillow Image.open/new/resize 和 getpix, Draw(im) 的API想必是熟悉了，这次我们要用100张图片 拼出小宽高的灰度图，流程是：mask.png w h *.png
+若mask不存在，求得(x,y,cp) 网格排布 绘制。输出 mask 再编辑
+否则，对 a=mask (x,y,resize(1,1)lum亮度) 和 b=cycle(im list) 共同 sort， imOut.paste(bim,axy) 后高亮图肯定在高亮mask点
+
+这个Parser还挺经典的， next=> s=> regex.exec(s) ret={next:s.slice(N), result: } 就是函数式后缀回溯parser, 用CPS也是
+genXX 就是暴露全局变量(如createElm/SVG)为参数. genMonad=(z,b,a=NO)=>{ f=z.next(a);b,a=f(b) } ；其中 a=next,b=res ,!next返回f; 然后 func* parseElm() 来实现顺序，真·经典Monad Parser Combinator.. 只是照我的讲法没有Mon内味了，只像在缩短f(b) 变量，因为(a,b)是无关mon的; 不过也体现纯函数不能改变量，只能缩小参数，靠z.next提供do(>>=) 的限制
+
+的确是很大的约束，函数的值仅据no-mut参数确定，后缀需要靠yield tail=> 来提供变参,执行，不然就不纯(打散循环,隐式上次结果已经够好了，CPS都不会返回)
+yield相当于 f(tail=>) 吗？这里f实际上也是不纯的(含b变量)，mon的妙处在于时间和变量上，RealWorld和表达式是没有交集的，所以可以用休眠循环替代伪(尾)递归；对我而言这类是意义全无的，但作为文字游戏仍有趣
+
+render就是加个dataset["data-x-y".replace(/-(\w)/,(_,k)=>k.toUpperCase())]=xY
+
+genStr`a${1}b` =push(str,param),join 是什么鬼.. 一般
+f=(s,...v)=>s.slice(1).reduce((ac,x,i)=>ac+v[i]+x,s[0])//首(次v末x)* 项
+
+我已经物理命名法化了…明明之前说要慎用的，笑死
+
+它是以单字符用途不假思索起名变量的方法，如 ab kv 意味配对，xywh 是矩点宽高，ijnm 是2D数组纵横i<n，c配置 e元素 f函数|文件 g图形Ctx
+x 也是单项、xs xz 列表和休眠列表next()，ww 意为“w内的w”，w0 意味外层的w或之前的w，1~inf 只是编号，以此类推
+o对象 p命题|点|指针 q真假 r结果|弧度 s字串|流  t时点 d翻译表|正负距离|细度 l长度 u链接|blob z休眠中
+
+用途无关平台-View或Widget就该命名为eXX,配置状态只叫c, unord_map就是d或kVs的长名, 无所谓其实现细节，
+如果它不兼容标准操作 就用语言让它兼容！如果它有多余功能，无视就好——因为标准操作就那几个
+k是广义的键-有v配对就算-i18n resID 都算；如果量有限制(计算量的)意义，可以像i<N这样大写
+dt时差 dur时长，cp bg/fg 是单双颜色，ev ex 事件异常，fp路径 im图片 ，
+反正能少写就少——但是语义优先，所以它和 ijkplayer 的OI风格命名、匈牙利/魔术风格命名 简繁两个极端是本质不同的
+
+程序是由「统一」和「领域」两部分API组成的，领域名词只有互相联系才有意义，而统一名词没有意义-只有动词能赋予它们意义；越广泛的概念，命名就越该简略-除了是这还能怎样呢？ 我们用它的名词是有目的，还是只增加了理解难度呢？
+getUnreadBlogs() 就应该写成 blogs.filter{it.unread} 的样子
+名字是依附上下文而有意义的，因冗长或太杂脱离了表达目的，程序不过是看起来不可或缺的一堆废纸。再详细的重复名字，在不想看代码的人前都是对牛弹琴-为啥要在代码片段里管中窥豹呢，我一开始就知道要干什么，就自然知道什么变量是必须的，这种篇幅分配 不香吗？
+因此我只适当地用介词，重点在前、易改点在后给函数起名，我从不给变量起名——它不值得专有名字；如果写软件，我会先确定有多少「领域」名词，之后代码便不会多加3字以上的变量；把舞台留给函数签名和//注释，这才是最好的文档。
+
+
+试想你「最开始」接触编程时是为了软件设计？是为了mod闭源的程序？ 编程都有目的，但忽视代码的结构 就会失去发展的可能。
+代码怎样对大家都是一样的，但当你慢慢入行，必须通过更多的工具与语言，重新认识「编程」二字
+
+入门时，要么是照着示例分析作用、拆拼，要么是强记空泛的体系理论和单项；其实这些不完全适合「编程」
+理论需和实例配合着用，实例若缺乏更大视角与归类，也很难将功能点建立联系
+
+「编程」是从脱离编程语言开始的，精炼自己的语言来取代C,Java 函数的语义，尝试让不同API实现相同功能——这就是「不用代码」的编程
+计算机能做的千千万，排版/自动化、绘制统计、分析转化、机器人嵌入式，它们最统一的就是『程序语言』的定义结构和流程结构，只会按既定流程做「通信 鉴权 排版交互」，用几个社区库，太少了
+实质性、独特的东西太少了；许多平台10行就能描述完，许多工作一个sh脚本+配置文件就可完成，它的难度只在于理解含糊冗杂的文档、堆砌定义、不直观的调试
+我们需要理解语言的用法、摆脱既有代码的束缚，这就需要对程序动名词定义的结构有好的「语感」、对软件有涉及的领域概念有「代码外的理解」，除了这么写 你还有很多方法能表达——即元编程，这样你习得的才叫『编程语言』——通过思想而非文本编、有概念而非执行效果的程，最后映射到OOP,FP 的定义体或状态注册,API操作上
+
+语感或「代码外的理解」，都不是示例或理论、一两张图能教给你的，儿童编程IDE也不行，需要自己动手、脑中模拟执行，这需要时间和精选的示例
+
+作为优秀的程序员，每行代码为何存在 你都很清楚，而且会以val和fun 避免啰嗦的重复代码、重复行出现，对一个有语感的人而言就会讨厌重复；我想，没有真正的「脚本语言」或「编程范式」——汇编没有离去 但无结构编程消失了；只有把代码写得像面条流水帐一样的人。语言不应分领域，但分文化，更分人。请用有序柔和的语言对待编程，任何人都能成为「代码设计师」和「软件工艺师」，而不是只可孤芳自赏的「魔法师」
+
+那么优秀和称职又有何区别呢？这就需要我们自己寻找了，在社会上，并不是所有事都能用科学、或技术解释，我只能告诉你我理解的编程是怎么样。表达自己，也是语言最重要的目的啊
+
+
+引入了一些问题，如果一个平台定期清退不活跃(now-atime>6mo)用户，或者禁用“旧版本”用户，能用协程定义禁用规则吗？await corn(6mo);u.acty=false; waitUpgrade(u) ，当然可以，甚至能避免在各种事件里写复杂的逻辑 就能规则扩展，但未必使流程简单了。闭包dump&load——这是元编程，但看似更连贯的事里也可能藏有阴影，如果有更高层的建模方式，就别用语言特性
+
+问题不止是流程，还有交互-并没定义用户禁用缘由和其界面，或者req是如何被阻止的。函数协程能编码流程，在任何地方复苏，可如果它不能完美地把零碎的层次对上号，就不如手动安排；这可以是一种未来，可惜现在的语言实现者连闭包序列化都不把它当API看
+
+
+ksp诞生后的快速进化引人深思，或许一个新/或你新发现的语言特性或简化手段很牛逼，但它也不过是一种途径，有时明明有更好更直接的做法，比如 a by lazy{e} 就相当于 a get(){if(!init$a)a=e,; return a} var init$a:Bool ，只是根本没法直接用这种简单解法，在静态语言里。许多人只是一遍又一遍，或者仰仗于「不得了」的魔法框架-的一部分鸡肋元编程
+
+自C时代 name "str" 词条层的宏展开用法就很多(C++template匹配解构/rust!宏就更多..)，只是因为预处理器功能限制和相关难度(template<typename> 外的 enable_if<is_same<true_type> struct又type又value的这些谁会用..)，代码生成被“垄断”甚至掩藏了
+
+语言当然应该满足框架的要求，比如系统构造Activity对象 onCreate()后才能查某些信息，语言的 val init 就没用了，Kt版重写的 ButterKnife 像
+val x by findView() 也即 by object { operator fun getValue(self,p)=notYet; var notYet:View }.also{onCreateInject.add(it to id)}
+
+使得kt的改良仍有不少重复名字，
+
+当然在bind之外，我们仍可以 class XXPage(Context) { val eA=find(name),eB=find(age)  fun onCreated(b)=super(b)&args.get(DATA_ID).let(kvDB::find).letIt{eA.text=name;eB.text=age} } 这样利用 val init ，(许多脚本2app 的选择)可是不优雅
+
+话说《Kotlin极简教程》的示例真的好多水分啊，为方便不是安卓的朋友了解我就贴整个的代码了
+class TodoEdit Fragment{lateinit var Todo
+  val db=Realm.defaultInst
+  constructor(id:Str):this(){arguments=Bundle().alsoIt{putString("id_key",id)} }
+  impl fun onCreateView(inflate:Any?, e0:ViewGroup?, b:Bundle?)=UI{
+    verticalLayout{pdding=dip(30)
+      title=editText{id=R.id.; hintResource=R.str.xx}
+      //content height=400 其他一致
+      button{onClick{_->add(title.text,content.text) }}//white on dkgray
+    }
+  }
+  fun onActi_Created(b){superb//懒得写,反正固定call-super序就有问题，至少该靠 open fun 封装掉(){}
+    val id=arg?.letIt{getStr("id_key")} ?:return
+    todo=realm.where<Todo>().equalTo("id",id).findFirst()
+    //上面的databind
+    find<Button>(R.todo_add).let{it.text="保存"}
+  }
+  fun add(ti:Str,body:Str)=realm.useTx{
+    (todo?:createObject<Todo>()).letIt
+    {id=id?:"${UUID.randomUUID()}"; title=ti; content=body }
+  }.also{ activity.supportFragmentMan.popBackStack() }
+}
+class TodoApp Application {
+  impl fun onCreate(){super.onCreate()
+    Realm.defaultConfig=RealmConfiguration.Builder().apply{
+      name("todos");schemaVersion(1);encryptionKey(byteArrayOf(64))
+    }.deleteRealmIfMigrationNeeded().build()
+  }
+fab.click={
+  +Snackbar(elist, "不需要写默认参数或.show，谢谢！")
+  TodoEditFrag().let{e->val k=e.javaClass.simpleName
+    supportFragmentMan.beginTx() //呃，他写法应该不常规
+    .replace(R.content_main, e,k).addToBackStack(k).commit()
+  }
+  it.visible=false
+}
+}//App
+@RealmClass class Todo:RealmObject(){//all-open
+  @PrimaryKey var id="-1";  var title="日程";var content="事项"
+}
+
+class TodoA:RealmBaseRecyclerViewAdapter()
+class Todos Fragment,TodoA.Click{ //Adapter.. 要把我气消了,当年可懵的我啊
+  @BindView(R.todos) lateinit var rv:RealmRecyclerView
+
+  inner class ViewHolder(View, val op:(View,Todo)->Unit):RealmVH,View.Click{
+    @Bind var title,content :TextView
+    impl fun onClick(v)=op(v,list[adapterPosition])
+    init{ButterKnife.bind(this,view);view.click=this}
+  }
+
+  impl fun onCreateRealmViewHolder(e0:ViewGroup,et:Int)=inflate(R.layout.item,e0, false).let{ViewHolder(it, {e,todo->
+    (activity.fab).visible=false
+    //和fab.click 一样但有 todo.id
+  })}
+  impl fun onBind__(c:ViewHolder,i:Int)=realmResults[i].letIt{
+    c.title.text=title //content 同样
+    c.title.letIt{fontFeatureSettings="font-size:12px"; textColor=argb(255,69,106,124) }
+  }
+  impl fun onResume(){super
+    realm.where<Todo>.findAll().let{ val Y=true
+    rv.adapter=TodoA(activity,it, Y,Y,this)}
+  }
+}
+
+就这？就这一个构造器能写10行，我真醉了，陈老师编程功底不能算低的,Y组合子(\f. (\c. cc)(\r. f(\x.(rr)x)  ))他写了3门语言，但代码还是这样，估计是挣出版费
+原来就是把 xml 里的 name,name_hit 这些名词挂个钩，词重率高得离谱？这也叫编程？？
+
+哦原来比前端高薪是这么来的，CSS 选择一个元素调style 在DevTools里点几下就行，写死成代码就是含金量了，看来还是Qt QSS靠谱
+妈耶我还没有见过这么有武德的coder，Builder 这样能自动生成的东西，setter里混几个副作用也算写了？纯属时间没处花；我这还是简化，原版不知有多夸张 js写多了不知道OOP有多卷现在
+
+我真的看吐了，那个setText 既.又()的出现那么多次，居然不把它变成 var set ；就是 Java 里没有扩展成员也得用 text(a,"", b,"") 等写法解决啊，这又不是没有this的jq调用链
+
+老实说这些个工程师稍微有点重视代码质量，他照现有框架编程写个应用就一定会顺带弄出一个框架——既有框架毫无优雅性可言，只有机械合规性；我要机械合规干嘛？我会写parser和JSON dump 这些序列变形也懂函数值可配置，codefmt和argparse 我也写过，管它干啥？机器算1s就能把你一辈子出产的代码排版完(还不是0copy的算法)，可是重点在哪里？括号和深浅的要求8bit都能存住，语义才只有人知道
+把空格交给机器涂掉，这是在确信「我没法优雅」而推卸责任吧
+
+其实 R.str. 这些很多是i18n问题，应该说是编译原理人的过失，经典理论里 gettext("保存") 是没法在编译期可知，甚至自动分配 resid 变 noOp(R.str.x/*="..."*/) 的，因为编译期只有结构变换，JS上实际也没有好的「缓存」方案(语言不会给你常量外提-编号化的机会,我们知道aapt 的主要工作就是汇总生成Java resid和ARSC,AXML..文本格式化的xml框架)，总之就是生成的套版码靠name等对应，必须在val get等可注入位置或每次查表；
+但是现在有了KSP，一切就都不同了，尽管Kt在国内的一些人眼里还是透明的，它是未来啊
+
+
+安卓framework API啊，老可配置了，web 的 contextmenu 让js自己看事件冒泡创建UI；咱专门给设置了从 XML inflate “工具栏”按钮，而且仍能 override fun，fun inflate 两开花，ItemSelected 三开花，真是大手笔啊，我的应用每页面都会有三四个非纯文本、需XML描述的..右上角菜单！而且每项的函数都值得有ID，就是说它还能关联函数外的东西..比如hide,accesskey？！说出去多自豪啊，可比web牛逼了，把 Android Java社区牛逼坏了——除了这种屑技巧有没有带表达效率的
+
+列表Adapter 创建 ViewHolder 啊，类型老严谨了！onClick 添上去加 result[i] 参数，再由List加点击事件！反正得把对单项的操作集结对吧
+我们都是成功案例上架app，我们做得都对！最佳实践！你甭管 content,title 二词重复了多少遍，大不了多花点时间
+VH(View.inflate&@Bind) onBind(VH,i),adapterPosition 《三位一体》
+一个渐进加载列表弄成这样，我就解释下吧
+
+显示X数据的XView 称为ViewHolder ，没错不能和系统TextView,WebView用同种起名，只因是绑定a[i] 的列表项- i很重要吗？forEach MutableRef<X> 就不能重设内容/bind，所以每种List都得定义Adapter？
+X数据的<ul> 可能有些fab的小挂件，做成浏览栈(fragMan,比活动栈轻量)分页(Fragment,arguments Bundle=TypedMap)，列表是拉环视图
+其单项和[i]靠 ViewHolder onBind填写，onCreate 只注册了click事件-完全用不到 list 层的this ，而且VH本身是inner class ，暴露 var fClick 没意义
+VH 本质上就是 list索引上的i(views,i) 对应，内容由bind赋值， results[adapterPos] 表明这点
+Adapter(=Model->View, 把数据立刻/晚点再写到<li>上)如 SimpleAdapter(a,b=view,ka=String[],kb=resid) 本来可以只惰性创建 getCount()&getView(i,eExist?,e0) 来填满列表，用 VH 后方便重设内容
+但 list.click 其实是只关于位置i(的数据)的，如果必须参考 VH.adapterPos，就隐含它可以改变，比如删除后移到列表尾
+要么 onBind(VH,i) 变成 (VH,obj) ，要么由 onBind(elms:VH,i) 注册 onclick 不给View集加多余序号，实在不懂渲染个列表哪来数据交叉，挖的坑又多，又不隐藏名词细节
+
+VH不负责创建视图——好理解，列表外的View 也能Hold 嘛，可我真想不到解耦还有如此教科书级，毫不顾虑理解难度歧义，难怪Android上不同UX的控件用户群迥然不同，你想用 SwipeRefresh 啥的 十几行代码就能绘制的动画 还有门槛了，不就是因为一些人 Java 都不会就学 Android，入门就该先拿 DOM/events 写http一言,播放列表啥的，让他们明白 e.textContent= 两次在回交webkit前是显示不出的。哦等到他们厉害了就搞出各种魔法和 Builder 化的函数“回馈社区”了，先学主消息重绘循环，才能看清一些学术不学术、工程不工程的人 在弄啥it works and code NB 的幺蛾子
+就比如说 shields.io 那种 badges 吧，就是SVG里一个 width 有变，我见过个rust 程序拿ft字渲库 算近100行，它偏不告诉你我在做啥，非得说些听起来有道理但没暖用的比喻，一个名字念到忘记实质 绕来绕去，你还以为它在用厉害的FreeType技巧，认真你就输了。
+
+我觉得Java最邪恶的其实是没法阻止重复名词复合-好像都有道理，其实不用Lambda也可以用 inner class 隐前缀之类避免
+
+obj:Adapter{ val count get()=10; fun getView(i,eOld?,e0)=eOld?: inflate().alsoIt { tag=tag?:Holder() ; tag.img.bgRes=背图(i); tag.summary.text="项$i" } }
+
+rv.render<Todo>(bind { title,content-> byOrder },
+base(R.layout.item) { @Bind title,content; click={fab.hide; nav.go(TodoFragment(it.id))}  })
+
+它大概就把 makeView 和 fillText 分开了，@BindView 只是简写findById的(明明可以据成员名做更多)，但 List,Grid 这些集视图很多，如果每个都专有 Adapter ，怎么可能发挥增量更新的实力呢——而如果这功能不明确，切割 View-Data 意义就不大，假设我在做『软件管家』吧，点击看细节、长按卸载，是不需要 view-即data的摘要 外的信息的，Adapter 顾名思义是提供统一的列表API并给视图单项赋值，那么 VH.<init> 和 vh.init(o) 就不该隔开，除非你会复用 VH 单项内组；即便如此 title,content 都是String，只是显示方式有区别(height:400)，直接用元组编号，渲染时才提及名字最好

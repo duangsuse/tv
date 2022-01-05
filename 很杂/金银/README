@@ -1,0 +1,10 @@
+我是编程科普爱好者，很少发这些无关乐子、利用旧技术(对自己而言)的视频。
+
+其实这段时间吧，我一句话不说，也不好
+
+其实我不认为有后序的，我想我懂，但是呢… 但是 少雨吧
+
+见extract-subtitles 。 a.srt ./arecog 0
+
+感谢 BV1Kb4y1e7YD 的字幕时间线,BV1sY411a7gt 的剪辑 和我之前的extract-subtitles,MontagePY 代码
+ffmpeg -i a.mp4 -i a_mon.avi -map 0:a:0 -map 1:v:0 b.mp4
