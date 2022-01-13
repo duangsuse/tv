@@ -35,3 +35,31 @@ t=0;setInterval(()=>{t+=.05
 }, 1000/60)
 
 
+document.write`<canvas id=eC>`
+hsl=(h,k,v)=>`hsl(${h/100}turn ${k}%${v}%)`
+c={leaf:[25,45].map(h=>hsl(h,100,20)), ball:[hsl(94,83,66), hsl(25,50,67)] }
+布=e=>{e.width=e.offsetWidth;e.height=e.offsetHeight;return e.getContext("2d")}
+with(Math){转=(r,f)=>f(cos(r),sin(r));DEG=2*PI}
+
+P=[]
+gtree=(h,k,l)=>{let j,r,y,x,Y;
+for(y=0,r=0;y<h;y+=L)for(j=0;j<k;j++,r+=Ql(1))转(r,(A,B)=>{
+for(x=0;x<l;)P.push(A*x,Y+=Q(L),B*x, (x+=Q(lZ)>l)?Qa(c.ball): Qa(c.leaf))
+})
+}
+draw=t=>转(t,(A,B)=>
+  P.sort((a,b)=> A*(a[0]-b[0]) - B*(a[2]-b[2]) )
+  .forEach(([x,y,z,n])=>{}))
+gtree(); g=布(eC);draw(0)
+
+/*"辐射对称"的圣诞树可以按 层枝点=yrx 三层来随机累加y,x生成
+原版只用两个for 就实现包含贴图生成的工作(不含光球和树叶贴图内)，叶图也是D<1 模拟W点l不同画圆，它的第一层是 i<10 的树叶和以上皆彩球，
+y 是靠i/N 比率计算；然后枝条 j<H 也是转随机r=sin(i) 每枝不同
+咱可直接迭代y,xw随y增长,r随sin(n枝层)选
+
+y随圆球贴图一起, r随m*y个枝条粒子一起, 圆球高光靠yx下降速率,树叶靠r累加l随机圆上点~*2, 枝最后一段若彩球,4倍震幅
+旋转公式 x=xA+zB, z序公式 zA-xB
+雪(i**2 + R(t+i) *7*7) %W, (i+i* t/60) %W-L
+
+H=lz* y=.4kl, r=Q(D),j=x=0//j步长可=1
+*/
