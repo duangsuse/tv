@@ -18,4 +18,5 @@ draw=t=>转(t,(A,B)=>{ //面向y Ax+Bz,左侧 Az-Bx. 面向x Az+By 左  Ay-Bz. �
   for(let[x,y,z,n]of P.sort((a,b)=>1?A*(a[2]-b[2])-B*(a[0]-b[0]) : A*(a[1]-b[1])-B*(a[0]-b[0]) ))
   g.drawImage(bg[1+n], 90+A*x+B*z,y>>1) })
 
+//骗我的。 a[2]-b[0] 是-zx平面(y深度)，-zy才是z深
 t=0;setInterval(()=>{g.clearRect(0,0,500,500); draw(t+=.1)}, 100)

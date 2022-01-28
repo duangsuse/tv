@@ -1,0 +1,48 @@
+<div id=talk class=talk></div>
+<script>doc=document, also=(x,f)=>{f(x);return x},
+el=(e,k,c)=>also(e.appendChild(doc.createElement(k)), e1=>{if(c){if(c.C)e1.className=c.C;for(let k in c)e1.setAttribute(k,c[k])  }})
+
+布=(e,w,h)=>{e.width=w||e.offsetWidth,e.height=h||e.offsetHeight; let g=e.arc?e:e.getContext("2d");g.resetTransform(); return g}
+绘=(g,f)=>{let p;f(p=new Path2D); g.fill(p); return g.canvas.toDataURL()}
+g=布(el(doc.body, "canvas"), 40,50);g.fillStyle="green"
+
+ref=(o,k)=>o[k].bind(o)
+bmp=绘(g, g=>{
+  let l=ref(g,'quadraticCurveTo'), x=20,x1=2.5*x
+  g.moveTo(x, x);
+  l(x, 2*x, 0, x1);
+  l(2*x, x1, 2*x, 2*x)
+});
+
+let gs="man dog shep".split(' ').map(x=>el(doc.body,"img",{src:x+".svg",C:"ava"}));
+
+`对不起，老师昨天晚上写代码写高了，没有控制住
+这个duangsuse真是辣鸡，自己的问题为什么怪到其他人身上，就是没有用功编程啦
+还有程序没写完呢！下次我一定会好好改进，保持正能量。 `.split("\n").forEach(x=>el(talk,"p").innerText=x)
+
+el(doc.body,"style").innerText=`
+.ava{width:60px;height:60px;  border:4px double black}
+.talk {
+    border: 3px solid black;
+    border-radius: 11px;
+    color: #faebd7;
+    --fg:indianred;
+    position:relative
+}
+
+.talk>p {
+    padding: 11px 1.1em;
+    margin: 1em 26px;
+    font: 15pt sans;
+    background: green;
+    border-radius: 19px;
+}
+.ava.L+p{border-left: 4px solid var(--fg);}
+.ava.R+p::before {content:'';width: 40px;height: 50px;position: absolute;left: 7px; z-index:-1}
+.talk .ava{background: #78cdb947;}
+.ava.L{float: left; transform: translate(-2em,10px)}
+.ava.R{float: right; transform: translate(2em,10px)}
+`
+setTimeout(()=>doc.styleSheets[0].rules[4].
+style.backgroundImage=`url(${bmp})`)
+</script>

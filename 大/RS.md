@@ -57,3 +57,14 @@ RS只是学Lua支持了词法作用域，允许闭包和插件函数两种调用
 通过Eqv(into,from) 解构转化 `tup.into(obj)`
 
 那调用能否 lazy(call-byName)？`(f v)` getV 惰性就够，如果要内联也行。
+
+
+
+Granda
+1. JS Java 需独立 ClassLoader加载所有.java 代码，用完扔掉(不然会 class redefined)，且支持仅修改重编译；但是 cjRun 好像就相当 `$ java mainCls` 的，而且可tools.jar编译完内存内加载，无需交换 /str/*.class 文件
+2. 聊天气泡的边角不会做，其实设 border-left:img 左角就行，反之 -right:x翻转 ；可能要把它放 .avatar border
+3. page`/user/${Str}${page}${preview?}` 最初设计为 loc.hash!=url 则返回 preview 否则 page ，意思是列表里点开了，它就展开。 可何时刷新、哪里有列表视图的链接？  其实是注册为 `/user/`(s:Str) 的调用=链接，onload/popstate 解析渲染、点击 `push(url#s, now);now=[path,s]` 遮住now. 可pop及分享。  此外 `/user/` 里点 `user/say/1` 前缀也不合并
+
+BPU 是使用buf绑定而非R/Wer 流做二进制读取，它在增删时移动 .p 加绑，并知道该重write重后方哪些符号,+偏移
+
+(1 (2 3)) 的遍历是深先的，对首项是\ 需先加 栈帧(参数,0,... ) 后遇(=) 则分配 帧[i][+1] ，也不能利用调用栈存、或需 unpack([a b], args)；而单项除了变量也可是 *单项

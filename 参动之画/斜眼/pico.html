@@ -1,0 +1,705 @@
+<base href="https://alemangui.github.io/pizzicato/">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pizzicato/0.6.4/Pizzicato.js"></script>
+<script>
+// Dolby format detection - taken from https://s3-us-west-1.amazonaws.com/dolbydeveloper/1.1.0/js/dolby.min.js
+var Dolby = Dolby || {}; !function () { "use strict"; Dolby.supportDDPlus = !1; var e = new Audio; "" != e.canPlayType('audio/mp4;codecs="ec-3"') && (-1 == navigator.userAgent.indexOf("CPU iPhone OS 9_3") && -1 == navigator.userAgent.indexOf("CPU OS 9_3") || -1 == navigator.userAgent.indexOf("Safari") || -1 == navigator.userAgent.indexOf("Version/9") || (Dolby.supportDDPlus = !0), -1 != navigator.userAgent.indexOf("Mac OS X 10_1") && -1 != navigator.userAgent.indexOf("Safari") && -1 != navigator.userAgent.indexOf("Version/9") && (Dolby.supportDDPlus = !0), -1 != navigator.userAgent.indexOf("Edge") && (Dolby.supportDDPlus = !0), -1 != navigator.userAgent.indexOf("Windows Phone 10") && (Dolby.supportDDPlus = !1)), Dolby.checkDDPlus = function () { return Dolby.supportDDPlus } }();
+
+ss=s=>s.split(' ')
+ext=(T,k,f)=> T.prototype[k]=function(...a){return f(this,...a)}
+ext(String,'caps',s=>s[0].toUpperCase()+s.slice(1))
+ext(String,'maySplit', (s,sep,f)=>!s.includes(sep)? null : f(...s.split(sep)))
+ext(Array,'zip',(a,b)=>a.map((x,i)=>[x,b[i]]) )
+
+E=new Proxy({}, {
+  set:(o,k,v)=>{ o[k]=new Pizzicato.Effects[k.caps()](v)  },
+  get:(o,k)=>o[k]|| (o[k]=new Pizzicato.Effects[k.caps()])
+})
+
+// Effects
+E.delay=E.pingPongDelay={
+  feedback: 0.6,
+  time: 0.4,
+  mix: 0.5
+}
+E.dubDelay={
+  feedback: 0.6,
+  time: 0.7,
+  mix: 0.5,
+  cutoff: 700
+}
+
+E.compressor={
+  threshold: -24,
+  ratio: 12
+}
+E.lowPassFilter={
+  frequency: 400,
+  peak: 10
+}
+E.highPassFilter={
+  frequency: 10,
+  peak: 10
+}
+E.distortion={
+  gain: 0.4
+}
+"quadrafuzz flanger stereoPanner reverb"
+E.convolver={ impulse: './audio/scala-milan.wav' }
+E.tremolo={
+  speed: 7,
+  mix: 0.8,
+  depth: 0.8
+}
+E.ringModulator={
+  speed: 30,
+  distortion: 1,
+  mix: 0.5
+}
+
+// Sounds
+let hasDolby = Dolby.checkDDPlus();
+lop=k=>({
+  path: `./audio/${hasDolby?k.replace(".","_Dolby."): k}.mp3`,
+  loop: true
+})
+
+Sn=(c,src="file")=>typeof c=="function"? new Pz.Sound(c) :
+  typeof src=="function"?new Pz.Sound({source:"file", options:c},src) :
+  new Pz.Sound({source:src, options:c})
+
+snd={
+  sineWave: new Pz.Sound,
+  sineWaveRelease: Sn({ frequency: 220, release: 1, attack: 0.5 }, 'wave'),
+  acoustic: Sn(lop('acoustic'))
+}
+
+defs=a=>a.forEach(([k,v])=>{let sn=
+  snd[k.maySplit('-',(a,b)=>a+b.caps())||k]=snd[k]= Sn(lop(k), //caps
+    function load(err) {sn.addEffect(E[v]); });
+})
+
+defs(ss("timba electro synth synth2 guitar uttl electric-guitar").zip(ss("delay compressor lowPassFilter highPassFilter distortion quadrafuzz flanger")))
+snd.walkGuitar = snd.uttl;
+
+lop=k=>({
+  path: `./audio/${k}.mp3` ,
+  loop: true
+})
+defs(ss("wah chop stance-bass cavaquinho drums tremolo-guitar countdown").zip(ss("pingPongDelay dubDelay stereoPanner reverb convolver tremolo ringModulator")))
+
+let ordEff=ss("delay pingPongDelay debDelay stereoPanner reverb convolver tremolo compressor lowPassFilter highPassFilter distortion quadrafuzz flanger ringmod")
+
+snd.whiteNoise = Sn(e=>{
+  let output = e.outputBuffer.getChannelData(0),i;
+  for (i = 0; i < e.outputBuffer.length; i++)output[i] = Math.random();
+})
+
+snd.voice = Sn(err=>{
+  if (!err) return;
+  snd.voice.stop();
+  ss('play-voice stop-voice volume-voice').forEach(k=>doc.getElementById(k).setAttribute('disabled', 'disabled'))
+  doc.getElementById('microphone-error').style.display = 'block';
+},'input')
+
+snd.group = new Pz.Group(ss("guitar drums bass").map(k=>Sn(lop(`${k}-group`))) );
+
+snd.white=snd.whiteNoise
+snd.wave=snd.sineWave
+snd.release=snd.sineWaveRelease
+snd["group-1"]=snd.group
+snd["drum-fill"]=snd.drums
+snd["recorded-voice"]=snd.voice
+</script>
+
+<script type=example>var sineWave = new Pizzicato.Sound({
+    source: 'wave', 
+    options: {
+        frequency: 440
+    }
+});
+
+sineWave.play();
+                
+var acousticGuitar = new Pizzicato.Sound('./audio/acoustic.wav', function() {
+    // Sound loaded!
+    acousticGuitar.play();
+});
+                
+var voice = new Pizzicato.Sound({ source: 'input' });
+                
+var whiteNoise = new Pizzicato.Sound(function(e) {
+
+    var output = e.outputBuffer.getChannelData(0);
+    for (var i = 0; i < e.outputBuffer.length; i++)
+        output[i] = Math.random();
+});
+                
+var drums = new Pz.Sound('./audio/drums.mp3');
+var guitar = new Pz.Sound('./audio/guitar.mp3');
+var bass = new Pz.Sound('./audio/bass.mp3');
+
+var group = new Pizzicato.Group([drums, guitar]);
+
+group.addSound(bass);
+group.addEffect(reverb);
+group.play();
+                
+var sineWave = new Pizzicato.Sound({ 
+    source: 'wave'
+});
+
+sineWave.attack = 0.5;
+sineWave.release = 1;
+sound.play();
+                
+var delay = new Pizzicato.Effects.Delay({
+    feedback: 0.6,
+    time: 0.4,
+    mix: 0.5
+});
+
+sound.addEffect(delay);
+sound.play();
+                
+var pingPongDelay = new Pizzicato.Effects.PingPongDelay({
+    feedback: 0.6,
+    time: 0.4,
+    mix: 0.5
+});
+
+sound.addEffect(pingPongDelay);
+sound.play();
+                
+var dubDelay = new Pizzicato.Effects.DubDelay({
+    feedback: 0.6,
+    time: 0.7,
+    mix: 0.5,
+    cutoff: 700
+});
+
+sound.addEffect(dubDelay);
+sound.play();
+                
+var distortion = new Pizzicato.Effects.Distortion({
+    gain: 0.4
+});
+
+sound.addEffect(distortion);
+sound.play();
+                
+var quadrafuzz = new Pizzicato.Effects.Quadrafuzz({
+    lowGain: 0.6,
+    midLowGain: 0.8,
+    midHighGain: 0.5,
+    highGain: 0.6,
+    mix: 1.0
+});
+
+sound.addEffect(quadrafuzz);
+sound.play();
+                
+var flanger = new Pizzicato.Effects.Flanger({
+    time: 0.45,
+    speed: 0.2,
+    depth: 0.1,
+    feedback: 0.1,
+    mix: 0.5
+});
+
+sound.addEffect(flanger);
+sound.play();
+                
+var reverb = new Pizzicato.Effects.Reverb({
+    time: 0.01,
+    decay: 0.01,
+    reverse: false,
+    mix: 0.5
+});
+
+sound.addEffect(reverb);
+sound.play();
+                
+var convolver = new Pizzicato.Effects.Convolver({
+    impulse: './audio/scala-milan.wav'
+    mix: 0.5
+}, function(error) {
+    sound.addEffect(convolver);
+    sound.play();
+});
+                
+var tremolo = new Pizzicato.Effects.Tremolo({
+    speed: 7,
+    depth: 0.8,
+    mix: 0.8
+});
+
+sound.addEffect(tremolo);
+sound.play();
+            
+var stereoPanner = new Pizzicato.Effects.StereoPanner({
+    pan: 0.0
+});
+
+sound.addEffect(stereoPanner);
+sound.play();
+                
+var compressor = new Pizzicato.Effects.Compressor({
+    threshold: -24,
+    ratio: 12
+});
+
+sound.addEffect(compressor);
+sound.play();
+                
+var lowPassFilter = new Pizzicato.Effects.LowPassFilter({
+    frequency: 400,
+    peak: 10
+});
+
+sound.addEffect(lowPassFilter);
+sound.play();
+                
+var highPassFilter = new Pizzicato.Effects.HighPassFilter({
+    frequency: 10,
+    peak: 10
+});
+
+sound.addEffect(highPassFilter);
+sound.play();
+                
+var ringModulator = new Pizzicato.Effects.RingModulator({
+    speed: 30,
+    distortion: 1,
+    mix: 0.5
+});
+
+sound.addEffect(ringModulator);
+sound.play();
+</script>
+<script>
+doc=document,
+qs=s=>doc.querySelectorAll(s),
+el=(e0,k,s)=>{let c/*cls*/,e=e0.appendChild(doc.createElement(k.maySplit('.',(a,b)=>{c=b;return a})||k));e.innerText=s; if(c)e.className=c; return e}
+
+let sliders=ss('volume-wave volume-acoustic volume-voice volume-white volume-group-1 volume-release value-attack value-release volume-timba delay-feedback delay-time delay-mix volume-wah ping-pong-delay-feedback ping-pong-delay-time ping-pong-delay-mix volume-chop dub-delay-feedback dub-delay-time dub-delay-cutoff dub-delay-mix volume-guitar distortion-gain volume-drum-fill quadrafuzz-low quadrafuzz-mid-low quadrafuzz-mid-high quadrafuzz-high volume-electric-guitar flanger-time flanger-speed flanger-depth flanger-feedback flanger-mix volume-cavaquinho reverb-time reverb-decay reverb-mix volume-drums convolver-mix volume-tremolo-guitar tremolo-speed tremolo-depth tremolo-mix volume-stance-bass stereo-panner-pan volume-electro compressor-threshold compressor-knee compressor-attack compressor-release compressor-ratio volume-synth low-pass-filter-frequency low-pass-filter-peak volume-synth2 high-pass-filter-frequency high-pass-filter-peak volume-recorded-voice ringmod-speed ringmod-distortion ringmod-mix'),
+sliderConf=JSON.parse( //but why.. cannot persist config as JSON?
+  '{"dub-delay-cutoff":[0,4000,100,700],"stereo-panner-pan":[-1,1,0.01,0],"compressor-threshold":[-100,0,1,-24],"compressor-knee":[0,40,1,30],"compressor-ratio":[1,20,1,12],"reverb-time":[0.01,3,0.01,0.01],"reverb-decay":[0,3,0.01,0.01],"tremolo-speed":[0,20,0.01,7]}'),
+sliderkv=Object.fromEntries(sliders.filter(s=> !(s.includes('ringmod')||s.includes('pass-filter')|| s in sliderConf ) ).zip([1,1,1,1,1,1,0.5,1,1,0.6,0.3,0.5,1,0.6,0.3,0.5,1,0.6,0.7,0.5,1,0.4,1,0.6,0.8,0.5,0.6,1,0.01,0.25,.002,0.6,0.5,1,0.5,1,0.5,1,0.8,0.8,1,1,0.003,0.25,1,1,1]) ),
+codeExamp=qs("script[type=example]")[0].innerText.split("var")
+/*ks.map(k=>document.getElementById(k).valueAsNumber)
+sliders.map((k,i)=>{let[a,b,d,v]=sliderRndv(k); return`${i}: "${a}\" max=\"${b}\" step=\"${d}\" value=\"${v}\" id=\"${k}\">"` }).join('\n')
+$$(".slider-group").flatMap(e=>[...e.querySelectorAll("input")].map(e=>e.outerHTML.slice(25)) ) //diff origin
+*/
+
+sliderRndv=s=>{
+  let r=[0,1,0.01,1], re=o=>o.exec(s) //a~b step d default v. Rules
+  let m,cfg=sliderConf
+  for(m in cfg)if(m==s)return cfg[m];
+  if(m=re(/delay-(time|mix)$/)){r[2]=0.001;if(m[1]=="time")r[1]=5} else if(re(/-mix$/))r[2]=.01;
+  if(m=re(/([a-z]+)-pass-filter-(.+)$/) ){
+    cfg={low:{frequency:[10,22050,1,400],peak:[.0001,20,.0001,10]},
+     high:{frequency:[10,22050,1,10/*diff*/],peak:[.0001,20,.0001,10]}}
+    return cfg[m[1]][m[2]]
+  }
+  if(m=re(/ringmod-(.*)$/)){
+    cfg={speed:[0,2000,1,30],distortion:[.2,50,.0001,1],mix:[0,1,.01,.5]}
+    return cfg[m[1]]
+  }
+  if(re(/compressor-.*$/) )r[2]=.001;
+  if(re(/value-(attack|release)$/))r[1]=3;
+  r[3]=sliderkv[s];
+  return r
+}
+sliderc=sliders.map(k=>sliderRndv(k).concat(k))
+
+let tplMenu=`Create a sound=From a ?#sound-from-?, waveform file microphone function
+Group sounds=? a group#?-group, Create
+Add effects=?#?, Attack-release Delay Ping-pong_delay Dub-delay Distortion Quadrafuzz Flanger Reverb Convolver Tremolo Stereo-Panner Compressor Low-pass_filter High-pass_filter Ring-modulator
+`, //h3=h4#id,suffix-item with special _-
+tplExamp=`
+<pre><code class="language-javascript"></code></pre>
+<div class="slider-group">
+<div class="slider">
+<label>Volume <input type="range" min="0" max="1" step="0.01" value="1"></label>
+<div class="slider-value">1</div>
+</div>
+</div><div class="controls">
+<button class="stop action"></button>
+<button class="play action"></button>
+</div>`,
+segEff=JSON.parse(`[["wave"],["acoustic"],["voice"],["white"],["release"],["group-1"],["timba","delay-feedback","delay-time","delay-mix"],["wah","ping-pong-delay-feedback","ping-pong-delay-time","ping-pong-delay-mix"],["chop","dub-delay-feedback","dub-delay-time","dub-delay-mix","dub-delay-cutoff"],["stance-bass","stereo-panner-pan"],["cavaquinho","reverb-time","reverb-decay","reverb-mix"],["drums","convolver-mix"],["tremolo-guitar","tremolo-speed","tremolo-mix","tremolo-depth"],["electro","compressor-threshold","compressor-knee","compressor-attack","compressor-release","compressor-ratio"],["synth","low-pass-filter-frequency","low-pass-filter-peak"],["synth2","high-pass-filter-frequency","high-pass-filter-peak"],["guitar","distortion-gain"],["drum-fill","quadrafuzz-low","quadrafuzz-mid-low","quadrafuzz-mid-high","quadrafuzz-high"],["electric-guitar","flanger-time","flanger-depth","flanger-speed","flanger-mix","flanger-feedback"],["recorded-voice","ringmod-speed","ringmod-mix","ringmod-distortion"]]`)
+// f=x=>x? one(x[0].parameters).id :0, one=o=>o[Object.keys(o)[0]]; segments.map(x=> [x.playButton.id.slice(5), f(x.effects)] )
+//f=x=>x? Object.values(x[0].parameters).map(x=>x.id):[]; segments.map(x=> [x.playButton.id.slice(5), ...f(x.effects)] )
+
+fillMenu=(e0,s)=>{
+  let re=/(.*?)=(.*?)#(.*?),\s*(.*?)\n/g,m, e, S=(s,b,a='?')=>s.replace(a,b);
+  for(;m=re.exec(s);){e=el(e0,"div.menu-subtitle",m[1]);
+    ss(m[4]).forEach(x=>{ let e=el(e0,"a.menu-item",S(m[2],S(x,' ','_')) ); e.href='#'+(e.title=S(m[3],S(x,'-','_')) ) })
+  }
+}
+fillExamp=(e0,cod,kparam)=>{
+  let cv=kparam.slice(1).map(k=>sliderc[k]), E=k=>e.querySelector(k)
+  let e=el(e0,"div.eg",'');e.innerHTML=tplExamp; //or cloneNode(1)
+  E('pre>code').innerText=cod
+
+  let c=snd[kparam[0]]/*e.audio*/, cl=E('.play').classList//e.playButton.classList
+
+  c.on('play', ()=>cl.add('pause'))
+  ss('stop pause').forEach(k=>c.on(k, ()=>cl.remove('pause')) )
+
+  E('.play')/*e.playButton*/.onclick=()=>cl.contains('pause')?c.pause():c.play();
+  E('.stop')/*e.stopButton*/.onclick=()=>c.stop();
+  return e;
+
+  ss('label>input').forEach(k=>(!e[k])?0: //volumeSlider releaseSlider attackSlider. volume must here.
+    e[k].addEventListener('input', function() {
+      let disp = this.parentNode.getElementsByClassName('slider-value')[0];
+      disp.innerText = e.audio[k.slice(0,-6)] =  this.valueAsNumber;
+    }))
+
+  if (!e.effects || !e.effects.length)return;
+
+  //for (var i = 0; i < segment.effects.length; i++) {var effect = segment.effects[i];
+  let ef,key, v,disp
+  for(ef of e.effects){
+  for (key in effect.parameters) {v=effect.parameters[key] //create!
+    disp = v.parentNode.getElementsByClassName('slider-value')[0];
+
+    v.addEventListener('input', function(e) {
+      disp.innerText = ef.instance[key] = e.target.valueAsNumber;
+    });
+  }}
+}
+
+//{audio,playButton,stopButton,volumeSlider, effects:[]}//instance,parameters:bindTo(sliderc.groupBy{})
+onload=()=>{
+  fillMenu(doc.body,tplMenu)
+  let e0=qs('body')[0];
+  [...qs(".menu-item")].forEach((e,i)=>{el(e0,"h3",e.innerText); fillExamp(e0,codeExamp[i],segEff[i]).id=e.title })
+}
+</script>
+<script type=plain>
+`Create a sound=From a x#sound-from-x, waveform file microphone function
+Group sounds=x a group#x-group, Create
+Add effects, Attack-release Delay Ping-pong_delay Dub-delay Distortion Quadrafuzz Flanger Reverb Convolver Tremolo Stereo-Panner Compressor Low-pass_filter High-pass_filter Ring-modulator`,
+add("h3"), code("h4")
+
+`<h3 id></h3>
+<pre><code class="language-javascript"></code></pre>
+<div class="slider-group">
+<div class="slider">
+<label>Volume <input id="volume-${}" type="range" min="0" max="1" step="0.01" value="1"></label>
+<div class="slider-value">1</div>
+</div>
+</div><div class="controls">
+<button id="play-${}" class="stop action"></button>
+<button id="stop-${}" class="play action"></button>
+</div>
+`
+mstep="delay-time delay-mix"?0.001 "peak"min~20 "dis"?0.0001 "cutoff" 100 "compressor！atk" "speed freq"~20 ~22050?1
+{reverb:[.01,3], panner:[-1,1], compressor:{threshold:[-100,0], ratio:[1,20]}, ringmod:{[.2,50, .0001]} }
+"min="0" max="1" step="0.001" value="0.5" id="delay-mix">"
+
+
+
+$$(".slider-group").map(e=>[...e.querySelectorAll("input")].map(e=>e.outerHTML.slice(25)) )
+
+<div class="error" id="microphone-error">Oops! We didn't get your permission to access the microphone.</div>
+
+var segments = [
+	{
+		audio: sineWave,
+		playButton: document.getElementById('play-wave'),
+		stopButton: document.getElementById('stop-wave'),
+		volumeSlider: document.getElementById('volume-wave')
+	},
+	{
+		audio: acoustic,
+		playButton: document.getElementById('play-acoustic'),
+		stopButton: document.getElementById('stop-acoustic'),
+		volumeSlider: document.getElementById('volume-acoustic')
+	},
+	{
+		audio: voice,
+		playButton: document.getElementById('play-voice'),
+		stopButton: document.getElementById('stop-voice'),
+		volumeSlider: document.getElementById('volume-voice')
+	},
+	{
+		audio: whiteNoise,
+		playButton: document.getElementById('play-white'),
+		stopButton: document.getElementById('stop-white'),
+		volumeSlider: document.getElementById('volume-white')
+	},
+	{
+		audio: sineWaveRelease,
+		playButton: document.getElementById('play-release'),
+		stopButton: document.getElementById('stop-release'),
+		volumeSlider: document.getElementById('volume-release'),
+		releaseSlider: document.getElementById('value-release'),
+		attackSlider: document.getElementById('value-attack')
+	},
+	{
+		audio: group,
+		playButton: document.getElementById('play-group-1'),
+		stopButton: document.getElementById('stop-group-1'),
+		volumeSlider: document.getElementById('volume-group-1')
+	},
+	{
+		audio: timba,
+		playButton: document.getElementById('play-timba'),
+		stopButton: document.getElementById('stop-timba'),
+		volumeSlider: document.getElementById('volume-timba'),
+		effects: [
+			{
+				instance: delay,
+				parameters: {
+					feedback: document.getElementById('delay-feedback'),
+					time: document.getElementById('delay-time'),
+					mix: document.getElementById('delay-mix')
+				}
+			}
+		]
+	},
+	{
+		audio: wah,
+		playButton: document.getElementById('play-wah'),
+		stopButton: document.getElementById('stop-wah'),
+		volumeSlider: document.getElementById('volume-wah'),
+		effects: [
+			{
+				instance: pingPongDelay,
+				parameters: {
+					feedback: document.getElementById('ping-pong-delay-feedback'),
+					time: document.getElementById('ping-pong-delay-time'),
+					mix: document.getElementById('ping-pong-delay-mix')
+				}
+			}
+		]
+	},
+	{
+		audio: chop,
+		playButton: document.getElementById('play-chop'),
+		stopButton: document.getElementById('stop-chop'),
+		volumeSlider: document.getElementById('volume-chop'),
+		effects: [
+			{
+				instance: dubDelay,
+				parameters: {
+					feedback: document.getElementById('dub-delay-feedback'),
+					time: document.getElementById('dub-delay-time'),
+					mix: document.getElementById('dub-delay-mix'),
+					cutoff: document.getElementById('dub-delay-cutoff')
+				}
+			}
+		]
+	},
+	{
+		audio: stanceBass,
+		playButton: document.getElementById('play-stance-bass'),
+		stopButton: document.getElementById('stop-stance-bass'),
+		volumeSlider: document.getElementById('volume-stance-bass'),
+		effects: [
+			{
+				instance: stereoPanner,
+				parameters: {
+					pan: document.getElementById('stereo-panner-pan')
+				}
+			}
+		]
+	},
+	{
+		audio: cavaquinho,
+		playButton: document.getElementById('play-cavaquinho'),
+		stopButton: document.getElementById('stop-cavaquinho'),
+		volumeSlider: document.getElementById('volume-cavaquinho'),
+		effects: [
+			{
+				instance: reverb,
+				parameters: {
+					time: document.getElementById('reverb-time'),
+					decay: document.getElementById('reverb-decay'),
+					mix: document.getElementById('reverb-mix')
+				}
+			}
+		]
+	},
+	{
+		audio: drums,
+		playButton: document.getElementById('play-drums'),
+		stopButton: document.getElementById('stop-drums'),
+		volumeSlider: document.getElementById('volume-drums'),
+		effects: [
+			{
+				instance: convolver,
+				parameters: {
+					mix: document.getElementById('convolver-mix')
+				}
+			}
+		]
+	},
+
+	{
+		audio: tremoloGuitar,
+		playButton: document.getElementById('play-tremolo-guitar'),
+		stopButton: document.getElementById('stop-tremolo-guitar'),
+		volumeSlider: document.getElementById('volume-tremolo-guitar'),
+		effects: [
+			{
+				instance: tremolo,
+				parameters: {
+					speed: document.getElementById('tremolo-speed'),
+					mix: document.getElementById('tremolo-mix'),
+					depth: document.getElementById('tremolo-depth')
+				}
+			}
+		]
+	},
+
+	{
+		audio: electro,
+		playButton: document.getElementById('play-electro'),
+		stopButton: document.getElementById('stop-electro'),
+		volumeSlider: document.getElementById('volume-electro'),
+		effects: [
+			{
+				instance: compressor,
+				parameters: {
+					threshold: document.getElementById('compressor-threshold'),
+					knee: document.getElementById('compressor-knee'),
+					attack: document.getElementById('compressor-attack'),
+					release: document.getElementById('compressor-release'),
+					ratio: document.getElementById('compressor-ratio')
+				}
+			}
+		]
+	},
+	{
+		audio: synth,
+		playButton: document.getElementById('play-synth'),
+		stopButton: document.getElementById('stop-synth'),
+		volumeSlider: document.getElementById('volume-synth'),
+		effects: [
+			{
+				instance: lowPassFilter,
+				parameters: {
+					frequency: document.getElementById('low-pass-filter-frequency'),
+					peak: document.getElementById('low-pass-filter-peak')
+				}
+			}
+		]
+	},
+	{
+		audio: synth2,
+		playButton: document.getElementById('play-synth2'),
+		stopButton: document.getElementById('stop-synth2'),
+		volumeSlider: document.getElementById('volume-synth2'),
+		effects: [
+			{
+				instance: highPassFilter,
+				parameters: {
+					frequency: document.getElementById('high-pass-filter-frequency'),
+					peak: document.getElementById('high-pass-filter-peak')
+				}
+			}
+		]
+	},
+	{
+		audio: guitar,
+		playButton: document.getElementById('play-guitar'),
+		stopButton: document.getElementById('stop-guitar'),
+		volumeSlider: document.getElementById('volume-guitar'),
+		effects: [
+			{
+				instance: distortion,
+				parameters: {
+					gain: document.getElementById('distortion-gain')
+				}
+			}
+		]
+	},
+	{
+		audio: walkGuitar,
+		playButton: document.getElementById('play-drum-fill'),
+		stopButton: document.getElementById('stop-drum-fill'),
+		volumeSlider: document.getElementById('volume-drum-fill'),
+		effects: [
+			{
+				instance: quadrafuzz,
+				parameters: {
+					lowGain: document.getElementById('quadrafuzz-low'),
+					midLowGain: document.getElementById('quadrafuzz-mid-low'),
+					midHighGain: document.getElementById('quadrafuzz-mid-high'),
+					highGain: document.getElementById('quadrafuzz-high'),
+				}
+			}
+		]
+	},
+	{
+		audio: electricGuitar,
+		playButton: document.getElementById('play-electric-guitar'),
+		stopButton: document.getElementById('stop-electric-guitar'),
+		volumeSlider: document.getElementById('volume-electric-guitar'),
+		effects: [
+			{
+				instance: flanger,
+				parameters: {
+					time: document.getElementById('flanger-time'),
+					depth: document.getElementById('flanger-depth'),
+					speed: document.getElementById('flanger-speed'),
+					mix: document.getElementById('flanger-mix'),
+					feedback: document.getElementById('flanger-feedback')
+				}
+			}
+		]
+	},
+	{
+		audio: countdown,
+		playButton: document.getElementById('play-recorded-voice'),
+		stopButton: document.getElementById('stop-recorded-voice'),
+		volumeSlider: document.getElementById('volume-recorded-voice'),
+		effects: [
+			{
+				instance: ringModulator,
+				parameters: {
+					speed: document.getElementById('ringmod-speed'),
+					mix: document.getElementById('ringmod-mix'),
+					distortion: document.getElementById('ringmod-distortion')
+					}
+				}
+		]
+	}
+]
+
+//for (var i = 0; i < segments.length; i++) { (function(segment) )(segments[i]); }
+for(let e of segments){
+let c=e.audio, cl=e.playButton.classList
+
+c.on('play', ()=>cl.add('pause'))
+ss('stop pause').forEach(k=>c.on(k, ()=>cl.remove('pause')) )
+
+e.playButton.onclick=()=>cl.contains('pause')?c.pause():c.play();
+e.stopButton.onclick=()=>c.stop();
+
+ss('volumeSlider releaseSlider attackSlider').forEach(k=>(!e[k])?0: //volume must here.
+  e[k].addEventListener('input', function() {
+    let disp = this.parentNode.getElementsByClassName('slider-value')[0];
+    disp.innerText = e.audio[k.slice(0,-6)] =  this.valueAsNumber;
+  }))
+
+if (!e.effects || !e.effects.length)break;
+
+//for (var i = 0; i < segment.effects.length; i++) {var effect = segment.effects[i];
+let ef,key, v,disp
+for(ef of e.effects){
+  for (key in effect.parameters) {v=effect.parameters[key] //create!
+    disp = v.parentNode.getElementsByClassName('slider-value')[0];
+
+    v.addEventListener('input', function(e) {
+      disp.innerText = ef.instance[key] = e.target.valueAsNumber;
+    });
+  }
+}
+
+}//for segments
+</script>
