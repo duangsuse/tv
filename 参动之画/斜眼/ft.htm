@@ -1,0 +1,44 @@
+<canvas id=eG><script>
+c={dt:.001,N:600, wImg:.6}
+with(Math){DEG=2*PI,转=(r,f)=>f(cos(r),sin(r))} //xy=sin,cos 俩箭头r=0=上,顺时针想段弧。xy=cos,sin 时对下sin增长箭头上指，r0=右,逆时针
+//路径t%的所有分圆(震幅)xy动量(频率)，动量之和即原点。 频率-震幅(频谱图:频段震幅之和)和震幅-频率是一回事，从大到小圆的xy更好图示
+movFT=f=>{
+  let i,{N,dt}=c, exp=t=>转(t*DEG,Vec2),Cs=[] //v C_i=dt*Sum[t] f(t)e^it .e^i't=cost+i'sint (虚数1i=sqrt-1的物理意义是旋转90)  //转(r)是周期函数，e^it i=2时t1等位t2,也描述复平面上圆周运动上升点. e^ipi+1=0
+  for(i=0;i<=2*N;i++)Cs[i]=foldRng(0,1,dt, (x,t)=>x.p(exp((i-N)*t).pC(f(t)) ) ,Vec2(0) ).pk(dt) //二维一维连续离散同公式.傅里叶级数将t周期函数转为频域离散函数
+  return t=>{let i,vs=[],v=i=>[exp(-i*t).pC(Cs[i+N]),i] //^ 右移负i 在[]=上加，在编号上减
+    for(i=1;i<=N;i++)vs.push(v(i),v(-i))
+    return vs.sort((a,b)=>b[0].l-a[0].l)//[0]=max
+  }
+}
+foldRng=(a,b,step,f,zero)=>{let ac=zero,i; for(i=a;i<=b;i+=step)ac=f(ac,i);  return ac}
+data=(T,f)=>{this[T.name]=(...a)=>new T(...a);f(T.prototype)}
+data(class Vec2{
+  constructor(x,y){this.x=x,this.y=y==null?x:y}
+  get dup(){return new Vec2(this.x,this.y)}
+  get l(){let{x,y}=this;return Math.sqrt(x*x+y*y)}
+  pk(k){this.x*=k,this.y*=k; return this}
+  pC(cx){let{x:X,y:Y}=this,{x,y}=cx; this.x=X*x-Y*y,this.y=X*y+Y*x; return this}
+  static wh(o){
+    let f=o=>Vec2(o.width,o.height)
+    return o.width?f(o):f(o.getClientRects()[0])
+  }
+},T=>{"+ * - / p pp m mm".split(' ').forEach((k,i,ks)=>eval(`T.${ks[i+4]}=function op(p){this.x${k}=p.x,this.y${k}=p.y; return this}`));delete T[undefined]})
+
+//3D座标xyt深 从右ty平面看，空心越大低频震幅越大、运动越毛刺(需小圆累积)高频成分越大
+//追踪t=0~1端点并FIFO记录点集，各震幅的xy动量圆形另作绘制
+
+data(class GCan{
+  constructor(e){this.g=e.getContext("2d"); this.L=Vec2.wh(e)}
+  ok(){clearRect(0,0,L.x,L.y)}
+  dot(p){g.arc(p.x,p.y, strokeWidth,0,DEG);fill(g)}
+  line(p,p1){g.moveTo(p.x,p.y);g.lineTo(p1.x,p1.y);stroke(g)}
+  circle(p,l){g.arc(p.x,p.y, l,0,DEG);stroke(g)}
+  set p0(p){this.g.translate(p.x,p.y)}
+},T=>{for(let k in T)eval(`T.${k}=function ${String(T[k]).replace('{','{with(this){').replace('g','let g=new Path2D;g')}}`)})
+svgPoints=e=>{
+  let t=0,l=e.getTotalLength(),d=c.N/c.dt, p,a=[],L=Vec2.wh(e).pk(1/2)//center to (0,0),norm to +-1
+  for(;t<l;t+=d)a.push(Vec2( (p=e.getPointAtLength(t)).x,p.y).m(L).mm(L) .pk(c.wImg))
+  return a//path got, no require spaceScale. x/w*2wImg-1
+}
+
+</script>

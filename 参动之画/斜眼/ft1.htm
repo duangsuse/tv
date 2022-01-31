@@ -1,0 +1,68 @@
+<style>canvas{width:100%;height:100%} svg{position:fixed;right:0; border:1px dotted}</style>
+<canvas id=eG><script>doc=document
+just=k=>()=>k,n=o=>o.length; 布=e=>{e.width=e.offsetWidth;e.height=e.offsetHeight;return e.getContext("2d")}
+c={dt:.005,nK:5,wImg:.5}
+
+with(Math){DEG=2*PI,转=(r,f)=>f(cos(r),sin(r))}
+律=(k,f)=>{let cx=0,yi=0,d=c.dt, t='y'in f?(f=just(f),d= 1):0;for(;t<=1;t+=d)
+  转(k*t*DEG,(X,Y)=>{let{x,y}=f(t); cx+=x*X-y*Y;yi+=x*Y+y*X} )
+  return Vec2(d*cx,d*yi)//k 标明频率+正负:及'y'反向 --因f(t)g(t)距大积才大
+}
+简画=ps=>{
+  let i,N=c.nK,谱=Array(2*N), /*内俩频*/动量,a,b,和, P=录点();
+  for(i=0;i<2*N;i++)谱[i]=律(-i+N,ps)
+  return t=>{
+    let v=i=>律(-i*t,谱[i+N])
+    for(i=1,动量=[];i<N;i++)动量.push(v(i),v(-i)) //这里必须记i号
+    动量.sort((a,b)=>a.l-b.l )
+    a=Vec2(W,H).pk(.5); 和=Vec2(0)
+    for(i=n(动量)-1;i!=1;i--){b=和.p(动量[i]) .dup.p(_5).pk(H*H/W); 连线(a,b);a=b} P(a)
+  }
+}
+g=布(eG)
+录点=(a=[])=>p=>{a.push(p); a.forEach(p=>g.fillRect(p.x,p.y,3,3))}
+连线=(a,b)=>画(a,2,0,DEG,'Farc', b,'Sline', a.dup.m(b).l,0,DEG,'Sarc')
+清屏=()=>g.clearRect(0,0,W,H)
+
+Path2D.prototype.line=function(x,y,p){this.moveTo(x,y);this.lineTo(p.x,p.y)}
+
+svgPoints=e=>{
+  let l=e.getTotalLength(),L=Vec2.wh(e)//center to (0,0),norm to +-1
+  return t=>Vec2( (p=e.getPointAtLength(t*l)).x,p.y).mm(L).m(_5).pk(c.wImg)
+}
+svgLoad=u=>eAdd(`<svg><path>`,e=>{
+  u[0]=='<'? e('svg').outerHTML=u : e('path').setAttribute('d',u)
+  return e('path')//好像 embed.getSVGDoc/fetch 常CORSerr,又懒读dataURL，只能d=/DOM
+})
+eAdd=(e0=> (s,op)=>{e0.innerHTML=s;let e=doc.body.appendChild(e0.firstChild); return op(css=>e.querySelector(css))} )(doc.createElement('eloader'));
+
+data=(T,f)=>{(this[T.name]=(...a)=>new T(...a)).__proto__=T;f(T.prototype)}
+data(class Vec2{
+  constructor(x,y){this.x=x,this.y=y==null?x:y}
+  get dup(){return new Vec2(this.x,this.y)}
+  get l(){let{x,y}=this;return Math.sqrt(x*x+y*y)}//圆半径
+  pk(k){this.x*=k,this.y*=k; return this}//居中
+  static wh(o){
+    let f=o=>new Vec2(o.width,o.height)
+    return o.width?f(o):f(o.getClientRects()[0])
+  }
+},T=>{"+ * - / p pp m mm".split(' ').forEach((k,i,ks)=>
+eval(`T.${ks[i+4]}=function op(p){this.x${k}=p.x,this.y${k}=p.y; return this}`));delete T[undefined]})
+
+画=(p,...cmd)=>{let G,a=[], x,k,cd;
+  for(x of cmd)if(typeof x!='string')a.push(x);else{[x,cd,k]=/(.)(.+)/.exec(x);
+    G=new Path2D;G[k].call(G,p.x,p.y,...a.splice(0,n(a)));画风[cd](g,G) }
+}
+画风={S:(g,G)=>g.stroke(G), F:(g,G)=>g.fill(G)}
+
+let{x:W,y:H}=Vec2.wh(eG)
+_5=Vec2(.5)
+
+p=svgLoad(`M12.672.668a.75.75 0 00-1.345 0L8.27 6.865l-6.838.994a.75.75 0 00-.416 1.279l4.948 4.823-1.168 6.811a.75.75 0 001.088.791L12 18.347l6.117 3.216a.75.75 0 001.088-.79l-1.168-6.812 4.948-4.823a.75.75 0 00-.416-1.28l-6.838-.993L12.672.668z`);a=svgPoints(p)
+for(let t=0,v;t<1;t+=c.dt){v=a(t).dup.p(_5).pk(H*H/W);g.fillRect(v.x,v.y,2,2)}
+g.strokeStyle="#888"
+{f=简画(a),t=0
+setInterval(()=>{
+  清屏();f(t+=c.dt)
+}, 1000/10)}
+</script>
