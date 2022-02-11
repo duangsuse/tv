@@ -54,6 +54,10 @@ eval(`T.${ks[i+4]}=function op(p){this.x${k}=p.x,this.y${k}=p.y; return this}`))
     G=new Path2D;G[k].call(G,p.x,p.y,...a.splice(0,n(a)));画风[cd](g,G) }
 }
 画风={S:(g,G)=>g.stroke(G), F:(g,G)=>g.fill(G)}
+//ratio=([w,h])=>w<h? w*w/h : h*h/w
+chunk=N=>(f,a)=>{for(let i=0,i1;i<n(a);i=i1)f(a.slice(i,i1=i+N))}
+fold=(f,acc)=>fr=>{fr(x=>{acc=f(acc,x)});return acc}
+list=(A,...f)=>f.reduce((a,f)=>n(f)==2?x=>f(x,A) : f(a), 0)
 
 let{x:W,y:H}=Vec2.wh(eG)
 _5=Vec2(.5)

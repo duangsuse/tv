@@ -1,0 +1,32 @@
+<script src="https://cdn.jsdelivr.net/npm/@vladmandic/face-api@1.6.3/dist/face-api.js"></script>
+<video id=vid autoplay style="transform:rotateY(180deg)">
+<script>D=document,F=faceapi
+navigator.getUserMedia({video:1,audio:0},s=>vid.srcObject=s, alert)
+vid.onloadedmetadata=()=>{
+  D.body.append(eC=F.createCanvasFromMedia(vid)), {width:W,height:H}=eC,g=eC.getContext("2d")
+}
+
+with(Math){ pol=([x,y])=>[atan2(y,x),sqrt(x*x+y*y)] }
+重区=(g,[x,y], a)=>{
+  let {w,h}=a,im=g.getImageData(x,y,w,h),i,iB,N=n(im)
+  im=new Uint8ClampedArray(im, 0,2*N); im.copyWithin(N,0,N)//双倍.避免已覆盖像素被引用
+  for(i in a)iB=N+a[i],im.copyWithin(i,iB,iB+4) //im[i]=im[N+a[i]]
+  g.putImageData(new ImageData(im,w,2*h),x,y, 0,0,w,h)
+}
+
+扭力=x=>(1-x)**.3
+涡=(r,l)=>{let N=2*l,gu=Grp(), idx=([x,y])=>(y+l)*N+x+l, arc=
+  rep(N,i=>rep(N,j=>{let p=[i-l,j-l], [R,L]=pol(p)
+    if(L<l)gu(L,[R, idx(p)])//相同圆环 不同弧度,像素号
+  })), a=Array(N*N);a.w=a.h=N
+  rep(l,i=>{let c=序i(0,gu(i)), c1=c.map(x=>x[1])
+    c.push(...c.splice(0, r*扭力(i/l)))
+    c.forEach((x,i)=> a[x[1]]=c1[i])
+  })
+  return a
+}
+序i=(i,a)=>a.sort((a,b)=>a[i]-b[i])
+rep=(N,f)=>{while(N-->0)f(N)}, Grp=(d=new Map)=>(k,v)=>null==v?d.get(k): (d.get(k)||d.set(k,k=[])&&k).push(v)
+rep=(N,f)=>{for(let i=0;i<N;i++)f(i)}
+</script>
+

@@ -14,7 +14,7 @@ vid.onloadedmetadata=()=>{D.body.append(
   F.nets[k].load("https://cdn.jsdelivr.net/npm/@vladmandic/face-api@1.6.3/model/") )).then(()=>q=0)
   五官=newA(3,i=>g展示())
 }
-画=det=>{
+画=det=>{//眼口
   P=det[0].landmarks;
   [P.getLeftEye(),P.getRightEye(),P.getMouth()].forEach((p,i)=>{
     let[r,gg]=外包围(p)
@@ -58,6 +58,8 @@ M=Math,xy=({x,y})=>[x,y]
 
 不过计算机和数学毕竟有别，几何上没有真正的整数，如果 t=0~2pi 就能画圆，圆有几个点组成？无数个。那就永远画不完了，要算出t的步长dt 比较麻烦，因此用圆心距离<l 看某像素是不是在圆内；如果< ，就按距离分组，稍后一组个一扭力
 
+说句题外话，直角和圆坐标系的点是能互相转化的，你能指定圆心重描述所有坐标，因此重映射圆心距<的内距离，还能实现哈哈镜 Popo猫？
+
 欸bug，不过图形咋变这样？别忘了xy列表是要回转的，它的顺序很重要，只有按画圆的顺序来才正确，而我们收集时用的是y++ x++划到右下角，而圆是按顺时针转的，因此要以圆心角再次sort() xy列表
 
 圆(x,y,l)=(x+l sint,y+l cost)for t=0~2pi
@@ -87,6 +89,8 @@ x切分(...矩形) 获得它们的外包围矩形(BBox)，呃这里暂定只取y
 白拼接(向,...图) 在方向上递增，绘制图片或空白；在双眼不在同一水平面时，它也能缩小距离
 
 可嘴就没有那么容易了，别忘了我们是在拼凑人脸，嘴的xy需要据两眼间角度和左眼xy旋转出来，至于嘴原来在哪… 哈，其实不重要；现在五官已经不成比例了
+
+
 
 https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API/Tutorial/Drawing_shapes
 */

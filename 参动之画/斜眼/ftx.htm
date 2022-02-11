@@ -1,0 +1,55 @@
+<canvas id=eG><script>doc=document;c={dt:.001,nK:30}
+with(Math){DEG=2*PI,转=(r,f)=>f(sin(r),cos(r))}
+律=(k,f)=>{let cx=0,yi=0,d=c.dt, t=f.pop?(f=just(f),d= 1):0;for(;t<=1;t+=d)
+  转(k*t*DEG,(X,Y)=>{let[x,y]=f(t); yi+=x*X+y*Y ;cx+=x*Y-y*X}) //可缓存k*t个数据
+  return[d*cx,d*yi]//k 也标明震幅+-和正统计/反还原
+}
+n=o=>o.length, newA=(n,f)=>{let a=Array(n),i=0;for(;i<n;i++)a[i]=f(i) ;return a}, just=k=>()=>k
+//^律(k,[x,y]) 能还原波形  ^待会用于填充频谱
+
+//DFT:把 转(ktDEG,(X,Y)=>.. 变多项式，即可乘 f[i],k转[i], k转=newA(nK* 1/dt,(i,r=i/nK*DEG )=>[cos,sin])，+-k 也可变为仅-k，另一半是反向量 。
+简画=ps=>{
+let N=c.nK,谱=newA(2*N,i=>律(i-N,ps)), /*内俩频动量*/a0,a, P=录点(),/*序*/f=([k,p])=>pLen(律(k,p))
+谱=谱.map((p,i)=>[i-N,p]).sort((b,a)=> f(a)-f(b))
+return t=>{
+  a=L.map(v=>v/2);let l=Math.min(...L)*c.wImg, k,p;
+  for([k,p]of 谱){a0=[...a];J(a,律(k*-t,p),(a,b)=>(a+b*l)); 连线(a0,a);a0=a} P(a)
+}}
+
+录点=(a=[])=>p=>{a.push(p); a.forEach(p=>g.fillRect(...p,3,3))}
+连线=(a,b)=>g.fillRect(...a,3,3)
+
+J=(a,b,op)=>{for(let i=0;i<2;i++)a[i]=op(a[i],b[i]) ;return a}, pLen=([x,y])=>Math.sqrt(x*x+y*y)
+for(let k of"+-*/")J[k]=eval(`(a,b,op)=>a.map((x,i)=>x${k}b[i])`)
+
+eAdd=(e0=> (s,op)=>{e0.innerHTML=s;let e=doc.body.appendChild(e0.firstChild); return op(c=>e.querySelector(c))}
+)(doc.createElement('eloader'))
+布=e=>{e.width=e.offsetWidth;e.height=e.offsetHeight;return e.getContext("2d")}
+
+svgPoints=(u,q=u[0]=='<')=>eAdd(q?u: `<svg><path>`,e=>{e=e('path');if(!q)e.setAttribute('d',u)
+  let l=e.getTotalLength(),L=pWH(e),p//center to (0,0),norm to +-1
+  return 切分(t=> J([(p=e.getPointAtLength(t*l)).x,p.y],L, (a,b)=>a/b*2-1))
+})
+
+/*2D“画圆时手抖”折线->频幅谱->动画t:各频分量t%的0点差->累积在屏心,幅wImg*whMin 连线不同频圆圈:以len降序
+(nK个频,1/dt次割圆)*/切分=(f, N=1/c.dt>>0)=>newA(N, i=>f(i/N))
+pWH=o=>{let f=o=>[o.width,o.height]
+  return o.width?f(o):f(o.getClientRects()[0]) }
+
+eG.style.cssText=`width:100%;height:100%`; g=布(eG);L=pWH(eG)
+g.strokeStyle="#888"
+c.wImg=.3
+{
+a=svgPoints(`M84.73,19.64h41.09c-9.82,40.72-16,67.27-16,96.36,0,5.09,0,44.36,14.91,44.36,7.63,0,14.18-6.91,14.18-13.09,0-1.82,0-2.54-2.55-8-9.82-25.09-9.82-56.36-9.82-58.91a283.69,283.69,0,0,1,7.64-60.72h40.73c4.72,0,16.72,0,16.72-11.64,0-8-6.9-8-13.45-8H58.54C50.18,0,37.82,0,21.09,17.82,11.64,28.36,0,47.64,0,49.82s1.82,2.91,4,2.91c2.55,0,2.91-1.09,4.73-3.28C27.64,19.64,46.54,19.64,55.64,19.64H76.36c-8,27.27-17.09,58.9-46.91,122.54-2.9,5.82-2.9,6.55-2.9,8.73,0,7.63,6.54,9.45,9.81,9.45,10.55,0,13.46-9.45,17.82-24.73C60,117.09,60,116.36,63.64,101.82Z`),f=
+简画(t=>a[t*n(a) >>0]),t=0
+setInterval(()=>{g.clearRect(0,0,...L);f(t+=c.dt)}, 1000/30)}
+
+画风={S:'.stroke',F:'.fill'}
+画=(ak,...a)=>Function(ak,fold(chunk(a,2),(s,[a,b])=>s+
+(([_,c,k])=>`G=new Path2D;G.${k}(x,y,${b});g${画风[c]}(G);`)(/(.)(.+)/.exec(a)),'let [x,y]=a,G;'))
+
+fold=(s,f,ac)=>(s(x=>{ac=f(ac,x)}) ,ac)
+chunk=(a,N)=>f=>{for(let i=0,i1;i<n(a);i=i1)f(a.slice(i,i1=i+N))}
+
+连线=画('a,b','Farc','2,0,DEG', 'SmoveTo(...b);G.lineTo','...b','Sarc',"pLen(J['-'](a,b)),0,DEG")
+</script>

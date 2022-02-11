@@ -1,0 +1,109 @@
+<script defer id=esV src="https://unpkg.com/videojs-record/dist/videojs.record.min.js"></script>
+<canvas id=eG><script>doc=document, n=o=>o.length, newA=(n,f)=>{let a=Array(n),i=0;for(;i<n;i++)a[i]=f(i) ;return a}, just=k=>()=>k
+c={dt:.001,nK:50,wImg:.2}
+/*2D“画圆时手抖”折线->频幅谱->动画t:各频分量t%的0点差->累积在屏心,幅wImg*whMin 连线不同频圆圈:以len降序
+(nK个频,1/dt次割圆)*/切分=(f, N=1/c.dt>>0)=>newA(N, i=>f(i/N))
+pWH=o=>{let f=o=>[o.width,o.height]
+  return o.width?f(o):f(o.getClientRects()[0]) }//<v 模拟Vec2
+J=(a,b,op)=>{for(let i=0;i<2;i++)a[i]=op(a[i],b[i]) ;return a}, pLen=([x,y])=>Math.sqrt(x*x+y*y)
+
+doc.title="Fourier变换"
+with(Math){DEG=2*PI,转=(r,f)=>f(cos(r),sin(r))}
+律=(k,f)=>{let cx=0,yi=0,d=c.dt, t=f.pop?(f=just(f),d= 1):0;for(;t<=1;t+=d)
+  转(k*t*DEG,(X,Y)=>{let[x,y]=f(t); cx+=x*X-y*Y;yi+=x*Y+y*X} ) //可于 k,t 缓存XYd 若有多图要处理
+  return[d*cx,d*yi]//k 标明频率+正负: 而反向-deg 因f(t)g(t)距大积大
+}
+
+svgPoints=(u,q=u[0]=='<')=>eAdd(q?u: `<svg><path>`,e=>{e=e('path');if(!q)e.setAttribute('d',u)
+  let l=e.getTotalLength(),L=pWH(e),p//center to (0,0),norm to +-1
+  return 切分(t=> J([(p=e.getPointAtLength(t*l)).x,p.y],L, (a,b)=>(a/b*2-1)*c.wImg))
+})
+
+sortByIdx=(a,f)=>a.map((x,i)=>[x,i]).sort(f).map(x=>x[0])
+简画=ps=>{
+let N=c.nK,谱=newA(2*N,i=>律(-i+N,ps)), /*内俩频*/动量,a0,a, P=录点();//^动画t
+let f=([k,p])=>pLen(律(k,p))//pLen(律(-(i-N)*1,谱[i]))
+  //谱=sortByIdx(谱 ,(a,b)=> f(a)-f(b))
+//debugger 呃i=频率其实也是数据,要独立出..
+谱=谱.map((p,i)=>[(i-N),p]).sort((b,a)=>f(a)-f(b))
+return t=>{let v=i=>  律(-i*t,谱[i+N]), i,l
+  //for(动量=[],i=1;i<N;i++)动量.push(v(i),v(-i))
+  动量=谱.map(([k,p])=>律(k*t,p)) //.sort((b,a)=>pLen(a)-pLen(b)) //newA(2*N, i=>律(-(i-N)*t,谱[i]))
+  a=L.map(v=>v/2),l=Math.min(...a)*4;for(i of 动量)//检讨
+  {a0=[...a];J(a,i,(a,b)=>(a+b*l)); 连线(a0,a);a0=a} P(a)
+}}
+
+录点=(a=[])=>p=>{a.push(p); a.forEach(p=>g.fillRect(...p,3,3))}
+连线=(a,b)=>g.fillRect(...a,3,3)
+for(let k of"-")J[k]=eval(`(a,b,op)=>a.map((x,i)=>x${k}b[i])`)
+
+eAdd=(e0=> (s,op)=>{e0.innerHTML=s;let e=doc.body.appendChild(e0.firstChild); return op(c=>e.querySelector(c))}
+)(doc.createElement('eloader'))
+
+布=e=>{e.width=e.offsetWidth;e.height=e.offsetHeight;return e.getContext("2d")}
+eG.style.cssText=`width:100%;height:100%`;g=布(eG)
+g.strokeStyle="#888"
+
+{let a=svgPoints(`M84.73,19.64h41.09c-9.82,40.72-16,67.27-16,96.36,0,5.09,0,44.36,14.91,44.36,7.63,0,14.18-6.91,14.18-13.09,0-1.82,0-2.54-2.55-8-9.82-25.09-9.82-56.36-9.82-58.91a283.69,283.69,0,0,1,7.64-60.72h40.73c4.72,0,16.72,0,16.72-11.64,0-8-6.9-8-13.45-8H58.54C50.18,0,37.82,0,21.09,17.82,11.64,28.36,0,47.64,0,49.82s1.82,2.91,4,2.91c2.55,0,2.91-1.09,4.73-3.28C27.64,19.64,46.54,19.64,55.64,19.64H76.36c-8,27.27-17.09,58.9-46.91,122.54-2.9,5.82-2.9,6.55-2.9,8.73,0,7.63,6.54,9.45,9.81,9.45,10.55,0,13.46-9.45,17.82-24.73C60,117.09,60,116.36,63.64,101.82Z`),f=
+简画(t=>a[t*n(a) >>0]),t=0; L=pWH(eG)
+setInterval(()=>{g.clearRect(0,0,...L);f(t+=c.dt)}, 1000/30) //可拓展信号IO?
+}
+
+画风={S:'.stroke',F:'.fill'}
+画=(ak,...a)=>Function(ak,fold(chunk(a,2),(s,[a,b])=>s+
+(([_,c,k])=>`G=new Path2D;G.${k}(x,y,${b});g${画风[c]}(G);`)(/(.)(.+)/.exec(a)),'let [x,y]=a,G;'))
+
+fold=(fr,f,ac)=>(fr(x=>{ac=f(ac,x)}) ,ac)
+chunk=(a,N)=>f=>{for(let i=0,i1;i<n(a);i=i1)f(a.slice(i,i1=i+N))}
+
+连线=画('a,b','Farc','2,0,DEG', 'SmoveTo(...b);G.lineTo','...b','Sarc',"pLen(J['-'](a,b)),0,DEG")
+
+eAdd(`<audio id=eRec class="video-js vjs-default-skin">`,e=>{})
+esV.onload=()=>{
+cV.plugins.wavesurfer.plugins=[WaveSurfer.microphone.create({
+    bufferSize: 4096,
+    numberOfInputChannels: 1,numberOfOutputChannels: 1,
+    constraints: {audio: true,video: false}
+}) ]
+player=videojs('eRec',cV) //deviceErr? finishRec.
+}
+cV={width: 600,height: 300,
+  controls: true,bigPlayButton: false,
+  plugins: {
+    wavesurfer: {backend: 'WebAudio',
+      waveColor: '#49a2dd',progressColor: 'yellowgreen',cursorWidth: 1,
+      displayMilliseconds: true,
+
+      hideScrollbar: true,
+      debug: true,
+    },
+    record: {
+      audio: true,video: false,
+      maxLength: 20,
+      displayMilliseconds: true,
+      debug: true
+    }
+  }
+}
+/*
+fn=()=>{C=player.wavesurfer().surfer; b=C.backend.buffer;u=b.getChannelData(0); let N=1000
+谱=newA(2*N,i=>律(-i+N,t=>[u[t*n(b)>>0] ,0] ))
+B=newA(n(b), i=>谱.map((p,k)=>律(-(i/n(b))*(k-N), p)).reduce((a,x)=>a+x[0],0) )
+B=new Float32Array(B);b.copyToChannel(B,0);C.drawBuffer() }*/
+/*可以弄个 c={upd, rn:[[min,max,val,fn?:upd]] } 按引用顺序创建fn滑条，配置面板只有 input+textarea(绘制,upd=)
+input提供信号/声音预处理，Enter预览, 分别有: Down下项/Ctrl-Enter改A波形
+
+录音A-副本B 是2s长度C 生成来源，可选.2s采样量往返生成吉他拨弦，+音高
+其他可调DFT的N,nK,wImg 和滤波 rn 参数、频谱滑移参数， Ctrl 仅正负频,Shift 对齐到0/1点
+*/
+</script>
+  <link href="https://unpkg.com/video.js@7.14.3/dist/video-js.min.css" rel="stylesheet">
+  <link href="https://unpkg.com/videojs-wavesurfer/dist/css/videojs.wavesurfer.min.css" rel="stylesheet">
+  <link href="https://unpkg.com/videojs-record/dist/css/videojs.record.min.css" rel="stylesheet">
+
+  <script src="https://unpkg.com/video.js@7.14.3/dist/video.min.js"></script>
+  <script src="https://unpkg.com/recordrtc/RecordRTC.js"></script>
+  <script src="https://unpkg.com/webrtc-adapter/out/adapter.js"></script>
+  <script src="https://unpkg.com/wavesurfer.js/dist/wavesurfer.min.js"></script>
+  <script src="https://unpkg.com/wavesurfer.js/dist/plugin/wavesurfer.microphone.min.js"></script>
+  <script src="https://unpkg.com/videojs-wavesurfer/dist/videojs.wavesurfer.min.js"></script>

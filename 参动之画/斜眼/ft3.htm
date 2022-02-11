@@ -1,0 +1,32 @@
+<script>
+n=o=>o.length, newA=(N,f)=>{let a=[],i=0;for(;i<N;i++)a[i]=f(i) ;return a},
+newA2=(n,m,f)=>newA(n,i=>newA(m,j=>f(i,j))).flat().also(a=>a.m=m),
+dot2=(a,b)=>{//阵a(n行m列)最右维度变动:列*振幅角=列 vs. 列*波形=单
+  let c, i,j, na=n(a)/a.m, mk=N=>Array(N).fill(0),ac=cx.Z
+  if(b.m==1){c=mk(n(a))
+    for(i=0;i<n(b);i++)for(j=a.m*i;j<a.m*(i+1);j++)c[j]=cx.mul(a[j],b[i])
+    c.m=a.m;return c//行已乘
+  }
+  for(c=mk(na),i=0; i<na;i++,c[i-1]=ac,ac=cx.Z)for(j=0;j<a.m;j++)cx.add(ac, cx.mul(a[a.m*i+j],b[j]))
+  c.m=1;return c
+}
+
+ext=(T,k,f)=>T.prototype[k]=function(...a){return f(this,...a)}
+ext(Object,'also',(o,f)=>(f(o),o) )
+cx={point:Array,get Z(){return[0,0]}, mul:([x,y],[X,Y])=>[x*X-y*Y,x*Y+y*X]}
+cx.add=(a,b)=>{a[0]+=b[0];a[1]+=b[1]}
+with(Math){DEG=2*PI,转=(r,f)=>f(cos(r),sin(r))}
+pLen=([x,y])=>Math.sqrt(x*x+y*y)
+
+//a=newA(4,i=>i+1);a.m=2
+a=newA2(3,4,(i,j)=>[1,2]); a.dtype=cx
+N=50;nK=50
+x=newA(N,i=>[Math.sin(i/N*DEG),0])
+let[e,eFlip]=[-1,1].map(q=> newA2(nK,N, (k,t)=>转(q*k*t/N *DEG,cx.point)) )
+
+ext(Array,'col',(a,j)=>newA(n(a)/a.m,i=>a[a.m*i+j]))
+X=dot2(e,x)
+xx=dot2(eFlip,X)
+
+same=newA(N,i=> xx.col(i).reduce((n,r)=>n+r[0],0)/N )
+</script>
