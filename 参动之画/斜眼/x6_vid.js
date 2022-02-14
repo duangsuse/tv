@@ -1,8 +1,26 @@
-document.write`<canvas id=eC style="width:100%;height:100%"><img id=imR crossOrigin src="https://p0.itc.cn/images01/20210113/549ddf9a5b30423f91ea1bfb9d2fd3bc.jpeg"><video id=vid autoplay muted>`
+
 布=e=>{W=e.width=e.offsetWidth;H=e.height=e.offsetHeight;return e.getContext("2d")}
 with(Math){DEG=2*PI; distd=(w,h)=>[sqrt(w*w+h*h),atan2(h,w)] }//圈,距&角
 组=(item=Array,d=new Map)=>k=>{let v=d.get(k); if(!v)d.set(k,v=item()); return v}
 rn=(a,b,f)=>{for(let i=a;i<b;i++)f(i)},rnPN=(a,l,f)=>rn(a-l,a+l,f)
+
+扭力=x=>(1-x)**.3 //2.8
+扭=(X,Y,l,r)=>{
+  let 心距=组(),d,dr ,p
+  rnPN(Y,l, y=>rnPN(X,l,x=>{
+     [d,dr]=distd(x-X,y-Y); if(d<l)心距(d >>0).push(p=[x,y,0]),p[2]=dr
+  }))
+  0&&rn(0,l, i=>{g.fillStyle=`hsl(${i/l}turn 100%50%)`; 心距(i).forEach(([x,y])=>g.fillRect(x,y,1,1) )  })
+  rn(0,l, i=>{let 环=心距(i).sort(比较i(2)),a=环.map(px.v); arot(a,扭力(i/l)*r); 环.forEach((p,i)=>px.vEq(p,a[i]) )  })
+}
+px={v:([x,y])=>g.getImageData(x,y,1,1), vEq:([x,y],v)=>g.putImageData(v,x,y) }
+比较i=i=>(a,b)=>a[i]-b[i]
+arot=(a,n)=>n<0? a.unshift(...a.splice(a.length+n,)) : a.push(...a.splice(0,n))//也可在dr上的
+
+if(!this.vid){document.write`<canvas id=eC style="width:100%;height:100%"><img id=imR crossOrigin src="https://p0.itc.cn/images01/20210113/549ddf9a5b30423f91ea1bfb9d2fd3bc.jpeg"><video id=vid autoplay muted>`
+navigator.mediaDevices.getUserMedia({video:1,audio:0}).then(s=>vid.srcObject=s)
+vid.onplay=()=>setInterval(()=>{g.drawImage(vid,0,0,W,H); 扭(x0,y0,100,r) }, 1000/30)
+oncontextmenu=()=>vid.play()
 
 r=17,x0=0,y0=0
 with(g=布(eC)){
@@ -12,23 +30,9 @@ with(g=布(eC)){
      g.drawImage(imR,0,0,W,H);扭(x0=ev.x,y0=ev.y,100,r)
   }
 }
-扭力=x=>(1-x)**.3 //2.8
-扭=(X,Y,l,r)=>{
-  let 心距=组(),d,dr ,p
-  rnPN(Y,l, y=>rnPN(X,l,x=>{
-     [d,dr]=distd(x-X,y-Y); if(d<l)心距(d >>0).push(p=[x,y,0]),p[2]=dr
-  }))
-  0&&rn(0,l, i=>{g.fillStyle=`hsl(${i/l}turn 100%50%)`; 心距(i).forEach(([x,y])=>g.fillRect(x,y,1,1) )  })
-  rn(0,l, i=>{let 环=心距(i).sort(比较i(2)),a=环.map(px.v); a.push(...a.splice(0,扭力(i/l)*r )); 环.forEach((p,i)=>px.vEq(p,a[i]) )  } )
+
 }
-px={v:([x,y])=>g.getImageData(x,y,1,1), vEq:([x,y],v)=>g.putImageData(v,x,y) }
-比较i=i=>(a,b)=>a[i]-b[i]
-
-navigator.mediaDevices.getUserMedia({video:1,audio:0}).then(s=>vid.srcObject=s)
-vid.onplay=()=>setInterval(()=>{g.drawImage(vid,0,0,W,H); 扭(x0,y0,100,r) }, 1000/30)
-oncontextmenu=()=>vid.play()
-
-//以下均是Face-api 摘抄，含功能名、人名标签、贴眼妆
+//以下均是Face-api 摘抄，含功能名、人名标签、贴眼妆. 性能见bas1.htm
 //绿幕 videoWidth/2 drawImage(this.video, 0, 0, this.width, this.height);
 if(0){
     let frame = g1.getImageData(0, 0, W,H);
@@ -74,8 +78,8 @@ detect=()=>faceapi.detectAllFaces(video, options).withFaceLandmarks();
 // tinyYolov2 识别身体轮廓的算法，不知道怎么用
 //https://www.cnblogs.com/neozhu/p/11771148.html
 
-await faceapi.loadModels(MODEL_URL) //https://github.com/justadudewhohacks/face-api.js/tree/master/weights
-await faceapi.loadFaceDetectionModel(MODEL_URL)
+//await faceapi.loadModels(MODEL_URL) //https://github.com/justadudewhohacks/face-api.js/tree/master/weights
+//await faceapi.loadFaceDetectionModel(MODEL_URL)
 F.allFaces(input, minConfidence=.8).map(fd => fd.forSize(width, height))
 .forEach((fd, i) => {
   F.drawDetection(canvas, fd.detection, { withScore: true })

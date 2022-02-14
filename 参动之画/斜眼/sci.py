@@ -511,6 +511,9 @@ void mainImage(out vec4 O, vec2 I)
     O = vec4(10,0,2.5,9)/length(c);
 }
 
+vec3 hsv2rgb (in vec3 hsv) {
+    return hsv.z * (1.0 + 0.5 * hsv.y * (cos (6.2832 * (hsv.x + vec3 (0.0, 0.6667, 0.3333))) - 1.0));
+}
 
 
 if (abs(fragCoord.x) < 0.96) {
