@@ -535,6 +535,7 @@ https://www.shadertoy.com/view/ftVXDD 157 https://www.shadertoy.com/view/Xsd3R2 
 https://www.shadertoy.com/view/wd33zl glass
 https://www.shadertoy.com/view/fslyW4 黄金比例/100
 https://www.shadertoy.com/view/fsXcRS 分形绳子/150
+https://www.shadertoy.com/view/wl2SzR 彩绳子/30
 https://www.shadertoy.com/view/4ljGD1 音乐线
 https://www.shadertoy.com/view/7lKSWW 万花筒/300
 https://www.shadertoy.com/view/lddGWl 海/60

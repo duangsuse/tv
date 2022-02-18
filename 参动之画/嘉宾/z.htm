@@ -1,0 +1,101 @@
+<canvas id=eG></canvas><input type=number id=l><input type=number step=.05 id=r> <input id=tin type=button><input id=tina type=button>
+<script>
+n=o=>o.length,ss=s=>s.split(' ')
+with(Math){DEG=2*PI,转=(r,f)=>f(sin(r),cos(r)), SAW=[floor,round,ceil]}//上右角
+布=e=>{W=e.width=e.offsetWidth;H=e.height=e.offsetHeight;return e.getContext("2d")}
+//dup pk v saw; l r norm
+class VecN{constructor(a,i=0){this.a=a;this.i=i;this.i1=i+this.constructor.nComp}
+  get dup(){let{a,i,i1}=this;return new this.constructor(a.slice(i,i1))}
+  pk(k){for(let{a,i,i1}=this;i<i1;i++)a[i]*=k ;return this}
+  saw(ik){for(let{a,i,i1}=this;i<i1;i++)a[i]=SAW[ik](a[i]) ;return this}
+  v(...b){for(let{a,i}=this,N=i+n(b);i<N;i++)a[i]=b[i] ;return this}
+}
+(T=>{"+ * - / p pp m mm".split(' ').forEach((k,i,ks)=>i<4?eval(`T.${ks[i+4]}=function op(p){for(let{a,i}=this, N=i+this.constructor.nComp;i<N;i++)a[i]${k}=p.a[p.i+i] ;return this}`):0)
+let df=(K,k,f)=>T[`__define${K}ter__`].call(T,k,function(v){return f(this,v)})
+ss("xyzw RGBA").forEach(s=>[...s].forEach((k,i)=>{
+  df("Get",k,o=>o.a[i]);df("Set",k,(o,v)=>{o.a[i]=v})  }))
+})(VecN.prototype)
+
+class Vec2 extends VecN{static nComp=2
+static wh(o){let f=o=>V(o.width,o.height)
+  return o.width?f(o):f(o.getClientRects()[0])
+}
+get l(){let{x,y}=this;return Math.sqrt(x*x+y*y)}
+get r(){let{x,y}=this;return Math.atan2(x,y)}
+set l(v){return this.norm.pk(v)}//v 像座标系右有r正直角三角板，叠R度角，x=下大-上左 异,y=两的对边相加 同
+set r(v){let{x,y}=this;return 转(v,(X,Y)=>this.v(x*X+y*Y,x*Y-y*X))}
+get norm(){return this.pk(1/this.l)}
+}
+V=(x,y)=>new Vec2([x,y])
+
+eG.style.cssText=`width:100%;height:100%`
+a=new Vec2([0,1])
+G=布(eG);L=Vec2.wh(eG)
+
+绘=(f,l)=>{
+  let g=new Path2D,{x,y}=L,w=x,h=y; g.moveTo(0,h);g.lineTo(x,h)//yflip
+  while(x-->0)g.lineTo(x,h- f(x/w*l.x)/l.y*h)
+  G.fill(g)
+}
+G.fillStyle=`#1976d2c2`
+G.strokeStyle=`#fff`
+t=0,vSin=V(13,1+14);setInterval(()=>{t+=.012
+G.clearRect(0,L.y-90,L.x, 90) ;let h=.5+cyc(t/8,.5)
+绘(x=>h*Math.sin(x+t), vSin)
+绘(x=>h*Math.sin(x-11 +t*1.9), vSin)
+},1000/60)
+//sin(x+t)h,sin(x-11+1.7t)h h=.5~1
+pmix=(a,b,t)=>a+t*(b-a)
+cyc=(a,b)=>Math.floor(a/b%2)==0?a%b: (b-a%b)
+mir=f=>x=>Math.max(f(x),f(-x))
+
+eG.onclick=({x,y})=>{
+  G.moveTo(0,L.y);G.lineTo(x,y);G.stroke()
+  let p=V(x,L.y-y), df=(e,k)=>{e.value=p[k]; e.onchange=()=>{p[k]=e.value; G.fillRect(p.x,L.y-p.y ,2,2)} }
+  df(l,'l');df(r,'r')
+}
+newA=(n,f)=>{let a=Array(n);while(n--)a[n]=f(n);return a}
+aLn=(a,b)=>{a.connect(b);a.start()}
+aM=(k,c)=>Object.assign(au["create"+k].call(au,1,c.n*au.sampleRate,au.sampleRate) ,c)
+au=new AudioContext,aO=au.destination
+
+tin.onclick=()=>tinf(440,.15).then(alert)
+tinf=(kFrq,sec)=>{
+let wa=aM("Buffer",{n:1*sec}),w=aM("BufferSource",{n:1,buffer:wa}),b=wa.getChannelData(0), a=newA(kFrq,()=>Math.random()-.5)
+for(let i=0,I=0,k=.97-(n(a)/n(b)) ;i<n(b);i++,I=(I+1)%n(a))b[i]= (a[I]=(a[I]+a[I%n(a)])/2*k )
+aLn(w,aO);return new Promise(ok=> w.onended=()=>{w.disconnect();ok()})
+//https://developer.mozilla.org/zh-CN/docs/Web/API/AudioBufferSourceNode
+}
+
+fetch("res/h1.srt").then(x=>x.text().then(srtCut).then(play))
+
+chunk=(a,nc,f)=>{let N=n(a),I=0,i=nc;if(N>=nc)for(;I<N;I=i,i+=nc)f(a.slice(I,i))}//I:i0.. 能用编号莫物理名
+//chunk([1,2,3,4],2,console.log)
+
+nCat=(a,base)=>{let n=0,di; for(di of a)n=n*base+Number(di); return n}
+
+dtCut=s=>{re=/([\d:]+),(\d+) --> ([\d:]+),(\d+)/,
+a=[];chunk([...re.exec(s)].slice(1),2, ([sec,ms])=>a.push((nCat(sec.split(':'),60)+parseInt(ms)/1000)*1000 >>0) )
+return a
+}
+//dtCut(`00:01:01,000 --> 00:00:00,108`)
+
+srtCut=s=>{let re=/\d+\n(.+?)\n(.*?)\n/g, a=[...re[Symbol.matchAll](s)], t,t0=0,dt=[]
+for([_,t,s]of a){let[a,b]=dtCut(t);dt.push(a-t0,b-a,+s);t0=b}
+
+return dt
+}
+
+play=x=>{midi=x;let fs=[],i=0,next=()=>fs[i++]()
+chunk(midi,3, ([dt,dur,y])=>fs.push(()=>tinf(440*2**((69-y)/12)>>0, dur)&&setTimeout(()=>{next()},dur-200) ) )
+tina.onclick=next
+}
+
+/*
+先由srtCut组织出.txt和.dur的eAnim(e,cKf,{x,y}){c=, res=c1=>列表
+将txt添加、求和dur出带.t 的 词行(,rev_dur) 函数列表，只有i==0 的页位置有dur 、负责换背景，在 dur-.1s 退场
+*/
+</script>
+
+<style>body{margin:0;background:black}
+</style>
