@@ -76,24 +76,26 @@ iEnd=2才始于o=a
 v1 PI=3.14,TURN;
 v1 ply(v1 N,v1 r,vec2 p){v1 d, rg=TURN/N;
 // space to -1~1.
-p = p *2.-1.;void mainImage(out vec4 bg, vec2 P){P/=iResolution.xy; TURN=2.*PI;
-
+p = p *2.-1.;
 // Angle and radius, l*cos(NextRg-r)
 r += atan(p.x,p.y);
 d = cos(round(r/rg)*rg -r)* length(p);
 return 1.0-smoothstep(.0,.5,d);//(d<.5?d/.5:0.)
 }
-vec3[] RBow=vec3[](vec3(0.5,0.5,0.5),vec3(0.5,0.5,0.5),vec3(1.0,1.0,1.0),vec3(0.0,0.33,0.67)),
-BL=vec3[](vec3(0.5,0.5,0.5),vec3(0.5,0.5,0.5),vec3(1.0,1.0,1.0),vec3(0.3,0.20,0.20)),
-YE=vec3[](vec3(0.5,0.5,0.5),vec3(0.5,0.5,0.5),vec3(1.0,1.0,0.5),vec3(0.8,0.90,0.30));
 
 vec3 pal(vec3[4]a, v1 t){
 return a[0] + a[1]*cos((a[2]*t+a[3])*TURN);
 }
+vec3 _5=vec3(0.5),_1=vec3(1.);
+#define G(a)vec3[](_5,_5,_1,a)
+void mainImage(out vec4 bg, vec2 P){TURN=2.*PI;
+vec3[] RB=G(vec3(0.0,0.33,0.67)),
+BL=G(vec3(.3,.2,.2)),
+YE=vec3[](_5,_5,vec3(1.0,1.0,.5),vec3(.8,.9,.1));
 
-void mainImage(out vec4 bg, vec2 P){P/=iResolution.xy; TURN=2.*PI;
-P.x *= iResolution.x/iResolution.y;
-bg=vec4(pal(RBow, ply(5.,PI,P)*1.5), 1.);//左中
+P/=iResolution.xy;P.x *= iResolution.x/iResolution.y;
+bg=vec4(pal(YE, ply(5.,PI,P)*1.), 1.);//左中
+//v1 ir=mod(iTime,7.);bg=vec4(pal(RB, ply(2.+ir,PI-ir,P)*ir), 1.);//左中
 }
 
 (a, xy)=>(e,c1)=>，c1由 que(ao,rev_dur)，后者在f含.dur的队列使用 //aQue就是分配页位置的，所以(e0,onPPT)=>闭包无效

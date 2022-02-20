@@ -1,39 +1,42 @@
-<!doctype html><script>n=o=>o.length,ss=s=>s.split(' '), newA=(N,f)=>{let a=[],i=0;for(;i<N;i++)a[i]=f(i) ;return a}
-with(Math){DEG=2*PI,转=(r,f)=>f(sin(r),cos(r)), SAW=[floor,round,ceil],LUB=[min,max]}//自上向右转
+<!doctype html><script>n=o=>o.length,ss=s=>s.split(' '), newA=(N,f)=>{let a=[],i=0;for(;i<N;i++)a[i]=f(i) ;return a},join=(a,f)=>a.map(f).join("")
+with(Math){DEG=2*PI,转=(r,f)=>f(sin(r),cos(r)), SAW=[floor,round,ceil],LUB=[min,max];Ran=random}//自上向右转
+//终幕落雪『开心』、二分擦拭『钟声』、srt重组队列 txt dur->队进退 仅首t
+Defs=()=>{let vecf=(fstr,a=ss(`+ * - / p pp m mm`))=>join(a,(x,i)=>i<4?"": x+`(v){let{a,i}=this,I=v.i,b=v.a;${fstr(a[i-4])}  ;return this}`),
+df=(_k,cp)=>{let q=!_k.at, k=q?[]:ss(_k),N=q?_k:n(k[0]),
+cg=op=>newA(N,_=>`a[i]${op}=b[I]`).join(';i++;I++;'), //`a[i+${_}]` same speed
+cgP=ch=>newA(ch,(i,s=`o.a[o.i+${i%N}]`)=>[s,s+`=v`])
+; eval(`VecN[${N}]=class Vec${N} extends VecN{${vecf(cg)}
+${jsProp(`let o=this;`,k=k.join(""),cgP(n(k)))}
+${cp?jsProp(...cp):""}}`)
+},/*df*/ ops=vecf(k=>`for(let N=this.i1;i<N;i++,I++)a[i]${k}=b[I]`)//^ boring or slow.?
+JSType(`VecN`,`constructor(a,i,i1){this.a=a,this.i=i,this.i1=i1}get dup(){let{a,i,i1}=this;return new this.constructor(a.slice(i,i1),0,i1-i)} ${ops}`,
+"f(op) pk(k) v(...b) vec(v)",[`op(a[i])`,`k*a[i]`,` b[i-i0]`,` v.a[v.i+i-i0]=a[i]`],//fJ,fj for dot,min? limit
+x=>`{let{a,i,i1}=this${x[0]==' '?',i0=i':""};for(;i<i1;i++)a[i]=${x} ;return this}`)
 
-Defs=()=>{JSType(`VecN`,`constructor(a,i,i1){this.a=a,this.i=i,this.i1=i1}get dup(){let{a,i,i1}=this;return new this.constructor(a.slice(i,i1),0,i1-i)}`,
-"f(op) pk(k) v(b)",[`op(a[i])`,`k*a[i]`,`b[n(b)-(i1-i)]`],//fJ,fj for dot,min? limit
-x=>`{let{a,i,i1}=this;for(;i<i1;i++)a[i]=${x} ;return this}`)
-//^ boring or slow.?
-let kfn=ss(`+ * - / p pp m mm`),
-df=(_k,cp)=>{let k=ss(_k),N=n(k[0]), cg=op=>i=>`a[i+${i}]${op}=b[I+${i}]`,
-cgP=([...ch])=>ch.map((x,i)=>[`o.a[${i}]`,`o.a[${i}]=v`]),
-fn=kfn.map((x,i)=>i<4?"": x+`(v){let{a,i}=this,I=v.i,b=v.a;${newA(N,cg(kfn[i-4])).join()}  ;return this}`).join("")
-; eval(`VecN[${N}]=class Vec${N} extends VecN{${fn}
-${jsProp(`let o=this;`,k.join(""),k.flatMap(cgP))}
-${cp?jsProp(`let o=this,{x,y}=o;`,...cp):""}}`)
-}
-df('x');df('xy',['lr',[[`Math.sqrt(x*x+y*y)`,`o.l_1.pk(v)`],[`Math.atan2(x,y)`,`转(v,(X,Y)=>o.v([x*X+y*Y,x*Y-y*X]))`]] ])
-defGet(VecN[2],{l_1:o=>o.pk(1/o.l)})
+VecN.def=df
+df('x');df('xy',[`let o=this,{x,y}=o;`,'lrU',[[`Math.sqrt(x*x+y*y)`,`o.l_1.pk(v)`],[`Math.atan2(x,y)`,`转(v,(X,Y)=>o.v(x*X+y*Y,x*Y-y*X))`],[`转(x,(X,Y)=>o.v(X,Y))`,`o.v(x*v.x+y*v.y,x*v.y-y*v.x)`]] ])//for FourierT
+defGet(VecN[2],{l_1:o=>o.pk(1/o.l), vRL:o=>(l,r)=>asig(o,{l,r}), movE:o=>(e,u='px')=>asig(e.style,{top:o.y+u,left:o.x+u}) })
 df('xyz RGB');df('RGBA')//Vec1~4
 let f=o=>V(o.width,o.height)
 VecN.wh=o=>o.width?f(o):f(o.getClientRects()[0])
+VecN.mouse=e=>{}
 }
-jsProp=(Pre,[...k],cod)=>k.reduce((c,K,i)=>(([G,S])=>c+`get ${K}(){${Pre}return ${G}}set ${K}(v){${Pre+S}}`)(cod[i]) ,"")
-JSType=(k,cod, kf,s,sf)=>eval(`this.${k}=class ${k}{${cod} ${ss(kf).map((k,i)=>k+sf(s[i])).join("")}}`)
+jsProp=(Pre,[...k],cod)=>join(k,(K,i)=>(([G,S])=>`get ${K}(){${Pre}return ${G}}set ${K}(v){${Pre+S}}`)(cod[i]) )
+JSType=(k,cod, kf,s,sf)=>eval(`this.${k}=class ${k}{${cod} ${join(ss(kf),(k,i)=>k+sf(s[i]))}}`)
 defGet=(T,c)=>{for(let k in c)T.prototype.__defineGetter__(k,function(){return c[k](this)})}
 
 Defs()
-pmix=(a,b,t)=>a.dup.p(b.dup.m(a).pk(t))
+pmix=(a,b,t)=>a.p(b.m(a).pk(t))
+sstep=(a,b)=>x=>x<b?x/b:a //https://zhuanlan.zhihu.com/p/170493708 for k^2 (3-2k) real smooth a~b //clamp((x-a)/(b-a), 0,1)//pmix(s0(t),s1(t),t)
 V=(...a)=>new VecN[n(a)](a,0,n(a))
 Vn=(N,v=1)=>new VecN[N](Array(N).fill(v),0,N)
-Va=dims=>a=>{let N=0,I=[],x;for(x of dims)I.push(N,N+=x)
-  a=a.at?a:Array(N*a);return(id,f)=>chunk(I, (i,i1)=>new VecN[i1-i](a,N*id+i,N*id+i1))
+Va=dims=>a=>{let N=0,I=[],x, q=!dims.at;if(q)N=dims;else for(x of dims)I.push(N,N+=x)
+  a=a.at?a:Array(N*a);return(id,f)=>q?new VecN[N](a,N*id,N*id+N): chunk(I, (i,i1)=>new VecN[i1-i](a,N*id+i,N*id+i1))
 }
 chunk=(a,f)=>{let b=[],i=0,i1;for(;i<n(a);i=i1)b.push(f(...a.slice(i,i1=i+n(f))) ) ;return b}
 
 T1=Va([1,2])(2)
-newA(2,i=>T1(i)[1].v([i,i*2]).pk(3)&T1(i)[0].v([-i]) )
+newA(2,i=>T1(i)[1].v(i,i*2).pk(3)&T1(i)[0].v(-i) )
 
 console.log(T1(0)[0].a)
 </script>
@@ -43,21 +46,60 @@ console.log(T1(0)[0].a)
 eG.style.cssText=`width:100vw;height:100vh`
 G=布(eG);L=VecN.wh(eG)
 
+填描=(g,F,S)=>{g.fillStyle=F,g.strokeStyle=S}
 eG.onclick=({x,y})=>{
   G.moveTo(0,L.y);G.lineTo(x,y);G.stroke()
   let p=V(x,L.y-y), df=(e,k)=>{e.value=p[k]; e.onchange=()=>{p[k]=e.value; G.fillRect(p.x,L.y-p.y ,2,2)} }
   df(l,'l');df(r,'r')
 }
-
-shad=f=>{let{x:w,y:h}=L,A=new Uint8ClampedArray(4*w*h),a=Va([4])(A) ,y,x,P=V(0,0),i=0
-for(y=0;y<h;y++)for(x=0;x<w;x++,i++)f(a(i)[0],P.v([x,y]))
-console.log(A)
-G.putImageData(new ImageData(A,w,h), 0,0)
+const _5=256/2
+shad=(g,fp,f=(b,c,t)=>c.vec(b) ,fpN=3)=>{let{x:w,y:h}=VecN.wh(g.canvas),A=g.getImageData(0,0,w,h),a=Va(4)(A.data),
+y,x,P=V(0,0),i=0,N=w*h, cA=Va(fpN),C=cA(N),c0=C(0).a,c//iter&P-cached
+for(y=0;y<h;y++)for(x=0;x<w;x++,i++)fp(C(i),P.v(x,y)),a(i).A=255
+return t=>{for(i=0,c=cA([...c0]);i<N;i++)f(a(i),c(i),t);g.putImageData(A, 0,0) }
 }
-shad((b,p)=>{p.mm(L);
-b.v(V(p.x,p.y,p.x).p(V(0,2,4)).f(Math.cos).pk(256).p(Vn(3,.5)).a)
+
+colour=shad(G,(b,p)=>{let{x,y}=p.mm(L); b.v(x,y+2,x+4)}, //vec4(cos(uv.xyx+vec3(0,2,4))*.5+.5, 1.)
+(b,c,t)=>{c.f(x=>Math.cos(x+1.2*t)*_5+_5).vec(b); //b.A=255 f.pk(_5).p(Vn(3,_5))
 })
 
+pal=(A,B=Vn(3))=>t=>t<1? B.dup.pk(t).p(A).f(x=>Math.cos(x*DEG)*_5+_5) :Vn(4,0)
+let Cp=Va(3)([0,3.3,6.7, 3,2,2, 8,9,1].map(x=>x/10)),
+[RB,BL]=newA(2,i=>pal(Cp(i))),YE=pal(Cp(2),V(1,1,.5))
 
+shadG=f=>shad(G,(c,p)=>p.mm(L).vec(c), (b,p,t)=>{f(t,p).vec(b)},2)
+cr1=shadG((t,{x,y,r})=>pmix(RB(y),YE(x),r+t%1))
+
+sdPly=(N,r,p)=>{let d, rg=DEG/N, {round,cos}=Math;
+// space to -1~1.
+p.pk(2).m(Vn(2))
+// Angle and radius, l*cos(NextRg-r)
+r+=p.r; d = cos(round(r/rg)*rg -r)* p.l;
+return 1-(d<.5?d/.5:0);
+}
+aloop=(f,t=0,dt=20/1000)=>setInterval(()=>{f(t);t+=dt}, dt)
+//aloop(colour)
+ct=0
+//t=0;fn=()=>{colour(t+=.07);ct++;requestAnimationFrame(fn)};fn()
+setTimeout(()=>console.log(ct),2000)
+//shadG((t,p)=>t(p.y))(YE)
+shadG((t,p)=>YE(sdPly(t,0,p)) )(5)
+G.strokeStyle=`#f5f5f5`
+G.fillStyle=`#2196f3ba`
+//星空 wh,rnR div=2maxWH, p.5 ;居中 .pp(V(.5,1)).m(.pk(.5))
+
+/*
+[f,n,m]=具向行(a.shape,iv) //2048
+for(i=0;i<n;i++)skyFall(f(a,i),f(e,i),m)
+let n=sameCount(a,i+1,v),i1; if(n){i1=i+n, at=i=>move(e(i),e(i1)), pTop=at(i);for(;i<i1;){i++;at(i)}  pTop.then(()=>appear(e(i1)) )}
+
+FourierT: e=newA(k*N, (i/N) (i%N)/N *DEG; pathPnt={dt 1/N}
+dot=(a,b)=>b[0] num? copy.pk : sumv(r.pp(f))
+lazyA(N,t=>newA(k=> fSim[k](t)))
+f0=ftRes.map(sumv)
+
+eanim(e,xy)=>(e,c1) 生成txtElm,dur 队列，待模板编排 重写，累积自退场队tAt 进度条 tAt,Array(n-1).fill(t1);t1-..退
+anim(v01fdur)擦拭pop队列/无dt..立即触发  [dt 队(dt rev_dur)
+*/
 </script>
-<style>*{margin:0}</style>
+<style>*{margin:0} body{background:radial-gradient(#424242,33%, black)}</style>
