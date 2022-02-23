@@ -14,7 +14,7 @@ JSType(`VecN`,`constructor(a,i,i1){this.a=a,this.i=i,this.i1=i1}get dup(){let{a,
 x=>`{let{a,i,i1}=this${x[0]==' '?',i0=i':""};for(;i<i1;i++)a[i]=${x} ;return this}`)
 
 VecN.def=df
-df('x');df('xy',[`let o=this,{x,y}=o;`,'lrU',[[`Math.sqrt(x*x+y*y)`,`o.l_1.pk(v)`],[`Math.atan2(x,y)`,`转(v,(X,Y)=>o.v(x*X+y*Y,x*Y-y*X))`],[`转(x,(X,Y)=>o.v(X,Y))`,`o.v(x*v.x+y*v.y,x*v.y-y*v.x)`]] ])//for FourierT
+df('x');df('xy',[`let o=this,{x,y}=o;`,'lrU',[[`Math.sqrt(x*x+y*y)`,`o.l_1.pk(v)`],[`Math.atan2(x,y)`,`转(v,(X,Y)=>o.v(x*X+y*Y,x*Y-y*X))`],[`转(x,(X,Y)=>o.v(X,Y))`,`o.v(x*v.x+y*v.y,x*v.y-y*v.x)`]] ])//for FourierT. x1=xcosysin(同位量)-..右下向 得 y1=xsinycos- //角增量。无需l=sqrt
 defGet(VecN[2],{l_1:o=>o.pk(1/o.l), vRL:o=>(l,r)=>asig(o,{l,r}), movE:o=>(e,u='px')=>asig(e.style,{top:o.y+u,left:o.x+u}) })
 df('xyz RGB');df('RGBA')//Vec1~4
 let f=o=>V(o.width,o.height)

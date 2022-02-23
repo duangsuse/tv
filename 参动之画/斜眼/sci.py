@@ -541,6 +541,7 @@ https://www.shadertoy.com/view/7lKSWW 万花筒/300
 https://www.shadertoy.com/view/lddGWl 海/60
 https://www.shadertoy.com/view/4dccR4 棱镜光/60
 https://www.shadertoy.com/view/MsVfWy 星辰/120 https://www.shadertoy.com/view/ttlfRM 泡泡/80 彩幕/31 https://www.shadertoy.com/view/lscBRf 雨滴/50 https://www.shadertoy.com/view/MlfBWr 瀑布/10 https://www.shadertoy.com/view/4dXSzB https://www.shadertoy.com/view/4ltSRS 烟雾 雪/10 https://www.shadertoy.com/view/Ml3SRs
+https://www.shadertoy.com/view/3dVXDc 烟雾/100 https://www.shadertoy.com/results?query=Gradient&sort=popular&from=60&num=12
 https://www.shadertoy.com/view/ldd3DB Fish/200
 https://www.shadertoy.com/view/lsXcWn Emoji 圆 doc
 https://www.shadertoy.com/results?query=tag%3Dscreensaver

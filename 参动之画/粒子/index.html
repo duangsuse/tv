@@ -9,7 +9,7 @@ dt=rate/dur*(q?1:-1), t=t0,
 id=setInterval(()=>{this(ease(t));t+=dt}, rate),
 ed=()=>{let R=st!=2; //supports user-stop&reverse
   if(R&&(q? t<n:t>n))setTimeout(ed,st?Math.min(dur/10,200):dur*n);else{clearInterval(id); if(R&&(n==0?t0!=0:true))this(n)|ok()}
-},st=0;ed();st=1; if(stopr)stopr(this,()=>{st=2;ed();return t}) }
+},st=0;ed();st=1; if(stopr)stopr(this,()=>{st=2/*clear*/;ed();return t}) }
 },only1(v0)?function v(t){f(v0+this._dv*t)}:
 function frame(t){let{_v:now,_dv}=this;
   for(let i=0,N=n(v0);i<N;i++)now[i]=v0[i]+_dv[i]*t

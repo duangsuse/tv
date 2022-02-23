@@ -1,0 +1,302 @@
+<script>n=o=>o.length,ss=s=>s.split(' '), newA=(N,f)=>{let a=Array(N),i=0;for(;i<N;i++)a[i]=f(i) ;return a},join=(a,f)=>a.map(f).join(""), noOp=()=>{},also=(f,o)=>{f(o);return o}
+const NO=null,$Y=true,$N=false
+with(Math){DEG=2*PI,转=(r,f)=>f(sin(r),cos(r));随=random}//正上向右角
+
+Defs=()=>{let vecFn=(fstr,a=ss(`+ * - / p pp m mm`))=>join(a,(x,i)=>i<4?"": x+`(v){let{a,i}=this,I=v.i,b=v.a;${fstr(a[i-4])}  ;return this}`),
+df=(_k,cp)=>{let q=!_k.at, k=q?[]:ss(_k),N=q?_k:n(k[0]),//qNoCgForP
+cg=op=>newA(N,_=>`a[i]${op}=b[I]`).join(`;i++,I++;`),
+cgP=ch=>newA(ch,(i,s=`o.a[o.i+${i%N}]`)=>[s,s+`=v`])
+; eval(`VecN[${N}]=class Vec${N} extends VecN{${vecFn(cg)}
+${jsProp(`let o=this;`,k=k.join(""),cgP(n(k)))}
+${cp?jsProp(...cp):""}}`)
+},/*df*/ ops=vecFn(k=>`for(let N=this.i1;i<N;i++,I++)a[i]${k}=b[I]`)//^ 无聊或慢?我全不选
+JSType(`VecN`,`constructor(a,i,i1){this.a=a,this.i=i,this.i1=i1}get dup(){let{a,i,i1}=this;return new this.constructor(a.slice(i,i1),0,i1-i)} ${ops}`,
+"f(op) pk(k) v(...b) vec(v) vecI(id,v)",ss(`op(a[i]) k*a[i] (b[i-i0]) (v.a[v.i+i-i0]=a[i]) (i<id?a[i]:v.a[v.i+(i-i0)-id])`),
+x=>`{let{a,i,i1}=this${x[0]=='('?',i0=i':""};for(;i<i1;i++)a[i]=${x} ;return this}`)
+VecN.def=df; df('x');df('xyz RGB');df('RGBA')
+}
+JSType=(k,Pre, kfn,s,sf)=>eval(`this.${k}=class ${k}{${Pre} ${join(ss(kfn),(k,i)=>k+sf(s[i]))}}`)
+jsProp=(Pre, [...k],s)=>join(k,(K,i)=>(([G,S])=>`get ${K}(){${Pre}return ${G}}set ${K}(v){${Pre+S}}`)(s[i]) )
+defGet=(T,c)=>{for(let k in c)T.prototype.__defineGetter__(k,function(){return c[k](this)})}
+
+Defs()
+pmix=(a,b,t)=>a.vec?a.p(b.m(a).pk(t)): a+t*(b-a)
+{let{assign:set}=Object,fw=o=>V(o.width,o.height); set(VecN,{
+wh:(o,chg=NO)=>{let r=!o.nodeType||/*attr*/chg? fw(o):fw(o.getClientRects()[0]), f=()=>chg(VecN.wh(o).vec(r));if(chg)f(),addEventListener("resize",f); return r},
+mouse(e,fU,fM=fU){let p=Vn(3,0),p0=p.dup, v=(P,f)=>E=>{P.v(E.x,E.y,E.buttons||E.button||E.identifier||0); if(f)f(E)},
+  on,tap,q=0, k;for(k of ss("mouse touch")){//兼容触向距离甚至按键 可即时或抬笔移动/旋转;连线 //fM noOp算速度 NO仅始末
+  on=(PC,M,f)=>e.addEventListener(k+(q?M:PC),q?tap(f):f, {passive:$N})
+  tap=f=>E=>{let p=E.changedTouches[0]||E.touches[0]; E.x=p.clientX,E.y=p.clientY;f(E)}
+  on("down","start",v(p0)); on("up","end",v(p,fU))
+  if(fM)on("move","move",v(p,fM)) ;q++}//qTouch
+  return[p,p0]
+}
+})//Vec工具
+VecN.def('xy',[`let o=this,{x,y}=o;`,'lr',[[`Math.sqrt(x*x+y*y)`,`o.l_1.pk(v)`],[`Math.atan2(x,y)`,`转(v,(X,Y)=>o.v(X*o.l,Y*o.l))`]] ])
+defGet(VecN[2],{l_1:o=>o.pk(1/o.l), vRL:o=>(r,l)=>set(o,{l,r}), movE:o=>(e,k="",u='px')=>set(u?e.style:e,k=="wh"?{height:o.y+u,width:o.x+u} : {top:o.y+u,left:o.x+u}) })
+defGet(VecN[4],{css:({R,G,B,A})=>`rgba(${R},${G},${B},${A/255})`})
+aM=(k,c ,np/*Sec*/=au.sampleRate)=>set(au["create"+k].apply(au, k[1]!='u'?c.arg: [1,c.n*np,np]) ,c) ;aobj=(c,f)=>set(f.bind(c),c)
+}
+V=(...a)=>new VecN[n(a)](a,0,n(a))
+Vn=(N,v=1)=>new VecN[N](Array(N).fill(v),0,N)
+Va=dims=>a=>{let N=0,I=[],x, q=!dims.at;if(q)N=dims;else for(x of dims)I.push(N,N+=x)
+  a=a.at?a:Array(N*a);return(id,f)=>q?new VecN[N](a,N*id,N*id+N):
+    chunk(I, (i,i1)=>new VecN[i1-i](a,N*id+i,N*id+i1))
+} //^向量并列-的组 .Vec固定分量数N 能优化+*计算
+chunk=(a,f)=>{let b=[],i=0,i1;for(;i<n(a);i=i1)b.push(f(...a.slice(i,i1=i+n(f))) ) ;return b}
+</script>
+<main id=Sc><span id=Tick style="bottom: 0;width: 100%"><hr></span></main>
+<script>doc=document,el=(e,k)=>e.appendChild(k.nodeType?k.cloneNode($Y): doc.createElement(k))
+布=(e,l=VecN.wh(e))=>{let K="CANVAS",p
+  if(e.tagName!=K){p=V(e.offsetLeft,e.offsetTop),e=el(e.parentNode,K); p.movE(e);return 布(e,l)}
+  l.movE(e,"wh",'');return[l,e.getContext("2d")]}
+
+画风={S:'.stroke',F:'.fill'}
+画=(k,s)=>Function("g,"+k,`let{x,y}=a,G;`+chunk(s.pop?s:ss(s),(a,b)=>
+(([_,c,k])=>`G=new Path2D;G.${k}(x,y,${b});g${画风[c]}(G);`)(/(.)(.+)/.exec(a))).join(""))
+
+期=(dt,f)=>setInterval(f,dt)
+uiDraw=e=>{let[p]=VecN.mouse(e,noOp),[l,g]=布(e), 点=画('a',`Farc 25,0,DEG`),增=V(0,1)
+  g.fillStyle=`123`;g.fillRect(0,0,l.x,l.y); g.fillStyle=`#1112`; g.globalCompositeOperation ="destination-out"//A涂=B擦拭
+  期(1000/20,()=>newA(5, ()=>{增.vRL(随()*DEG,pmix(1+3,14,随())); 点(g,p.p(增)); }))
+  期(3600,()=>colour(随()*DEG/2))
+  期(300,()=>sky.style.setProperty("--bg",vrgb(G.getImageData(p.x,p.y,1,1).data)))
+}
+vrgb=a=>Va(4)(a)(0).css; //^虹绘和水波v L113
+
+{let M=Math,ln
+mirMx=f=>x=>M.max(f(x),f(-x)),
+cyc=(a,b)=>M.floor(a/b%2)==0?a%b: (b-a%b),
+ln=mirMx(M.sin); 水波=(e,f=函画(布(e),V(5,2),`#1976d2c2`) )=>arun(t=>{
+let h=.5+cyc(t/8,.5)
+f();f(x=>h*ln(x+t));f(x=>h*ln(x-11 +t*1.9)) }, .02)//俩sine
+}
+函画=([L,G],l,bg,_=G.fillStyle=bg)=>f=>{if(!f)return G.clearRect(0,0,L.x,L.y)
+  let g=new Path2D,{x,y}=L,w=x,h=y; g.moveTo(0,h);g.lineTo(x,h)//yflip
+  while(x-->0)g.lineTo(x,h- f(x/w*l.x)/l.y*h)  ;G.fill(g)
+}
+cls=()=>G.clearRect(0,0,L.x,L.y)
+
+天空=e=>{let[m,mx]=VecN.wh(e).a.sort(), 距=()=>pmix(m,mx,随()), N=+e.dataset.n,l=mx/N*12,星0=el(e,"canvas"), k=(e,l)=>Vn(2,l).movE(e,"wh")
+k(e,mx);k(星0,l)
+let ply=shad(布(星0)[1],(c,p)=>p.pk(1/l).vec(c), (b,p,[ik,n,l])=>{b.A=_10;Cp[ik](udPly(n,0,l,p)).vec(b)} ,2)
+while(N-->0){let 星=el(e,"img"); V(0,1).vRL(DEG*随()*2,距()).movE(星); ply([随()*5>>0,pmix(3,7,随())>>0 ,pmix(.4,.58,随())]); 星.src=星0.toDataURL() }
+星0.remove(); V(.5,1).pp(L).m(V(0,mx/2)).movE(e) //^也可用 orun()=ary?map obj?copy f(val) 可配置，且将动画ID存储，但时间紧急
+}
+
+const _10=255,_5=_10/2 //v OpenGL Shader-like
+shad=(g,fP,f ,fpN=3)=>{let{x:w,y:h}=VecN.wh(g.canvas).f(Math.floor),A=g.getImageData(0,0,w,h),a=Va(4)(A.data),
+i=0,N=h*w,y,x,P=V(0,0), cA=Va(fpN),C=cA(N),c0=C(0).a, c//iterP-CAched dup
+for(y=0;y<h;y++)for(x=0;x<w;x++,i++)fP(C(i),P.v(x,y)),a(i).A=_10
+return t=>{for(i=0,c=cA([...c0]);i<N;i++)f(a(i),c(i),t);g.putImageData(A, 0,0) }
+}
+shadG=f=>shad(G,(c,p)=>p.mm(L).vec(c), f,2)//百分比画布
+arun=(f,dt=0,t=0)=>{let id,up=()=>{id=requestAnimationFrame(up);f(t+=dt)};up(); return()=>cancelAnimationFrame(id)}//fps=auto
+
+Sc.innerHTML+=`<div id=sky data-n=49 style="width:43%;height:50%"></div><canvas id=虹 style="width:100%;height:100%"></canvas><canvas id=波 style="width:100%;height:14% ;bottom:0">`;
+[L,G]=布(虹)
+{let{round,cos}=Math, cir=t=>cos(t)*_5+_5, 透明=Vn(4,0)
+colour=shad(G,(b,p)=>{let{x,y}=p.mm(L); b.v(x,y+2,x+4)},
+  (b,c,t)=>c.f(x=>cir(x+1.2*t)).vec(b))
+pale=(A,B)=>t=>t<1? B.dup.pk(t).p(A).f(x=>cir(x*DEG)) :透明
+let _c=Va(3)([0,3.3,6.7, 3,2,2, 0,1,2, 8,9,1, 0,1.5,2].map(x=>x/10)),at=(i,v)=>pale(_c(i),v),自1=Vn(3)
+Cp=[...newA(3,i=>at(i,自1)), at(3,V(1,1,.5)), at(4,V(1,.7,.4))] //RB,BL,BR,GR,PK
+
+udPly=(N,r,l,p)=>{let d, rg=DEG/N; p.pk(2).m(Vn(2))//in +-1
+r+=p.r; d=p.l*cos(round(r/rg)*rg -r)
+return 1-(d<l?d/l :0)//d-l closeTo 0=edge
+} //完成彩虹、渐变色多边形！
+}
+
+历遍=(n,m,f_ij, id=0,N=n*m)=>()=>{id=(id+1)%N; f_ij(id/m>>0,id%m)}
+qT=$N//体验代码?
+if(qT){let[p,p0]=VecN.mouse(doc.body,noOp),an; an=arun(_=>{colour(p.y/L.y*DEG); if(p.B)console.log(p0.B),an() }),
+ply=shadG((b,p,[g,t])=>{b.A=_10;g(udPly(t,0,.6,p)).vec(b)});doc.body.onclick=历遍(5,5, (i,j)=> ply([Cp[i],2+j]) ) }
+
+//else{ also(uiDraw,el(Sc,虹)).id=`虹绘`;colour(1.2);  水波(波);天空(sky) } //虹绘wh相同
+
+界函=(l,况)=>Function("p,v",join([..."yyxx"],(k,i)=>况[i]?`if(p.${k}${i%2==0?"<0":">"+l[k]}){${subst(况[i],{V:`p.`+k,L:l[k]})}}` :"")+`return $N`)
+subst=(s,c)=>{for(let k in c)s=s.replaceAll(k,c[k]) ;return s}
+aprod=(a,f,i=0)=>i<n(a)? a[i].map(x=>aprod(a,(...x1)=>f(x,...x1) ,i+1)):f()
+
+外矩=(a=>(wh,i)=>[a[i].dup.pp(wh),wh] )(//正/偏 上下左右
+  aprod([[0,1],['y','x'],[-1,2]], (q,i,k, v=Vn(2,q))=>(v[i]=k ,v)).flat().flat() )
+矩随=([p,wh])=>wh.dup.f(v=>v*随()).p(p)
+
+VecN[0]=class Unit{}
+粒浮=(N,pc,gf_xy, 重力,挡板)=>{ let f=gf_xy,fv=重力, arg=n(f)-1, 挡=界函(L,挡板)
+pA=Va([2,2,arg]),A=newA(N,i=>pc(i/N).a).flat(),a=pA(A),{x:w,y:h}=L//Vxy,Pxy,color?
+return t=>{G.fillRect(0,0,w,h)
+for(let i=0,v,p,e;i<N;i++){[v,p,e]=a(i); p.p(v);if(fv)fv(v,t,i); if(挡(p,v))continue; if(!arg)f(p);else f(p,...a.slice(e.i,e.i1))}
+}
+} //完成粒子落雪！
+
+
+落雪=(N,px)=>{let 上=外矩(L,0), 点=画('a',`Sarc ${px},0,DEG`),停=`V=V<0?L:0`,cir=mirMx(Math.sin),af=
+粒浮(N,()=>Vn(4).v(pmix(-1.2,1,随()),0).vecI(2,矩随([Vn(2),L])),
+  p=>点(G,p) ,(v,t)=>{v.y=cir(t)*3} ,[0,停,停,0])
+G.fillStyle=`#2331`;G.strokeStyle=`white`
+return arun(af, .021)
+}
+//落雪(10000,2)
+//落雪(1000,5)
+
+srtCut=s=>{let re=/\d+\n(.+?)\n(.*?)\n/g, t,t0=0,dt=[]
+for([_,t,s]of re[Symbol.matchAll](s)){let[a,b]=dtCut(t);dt.push(a-t0,b-a,s);t0=b}
+return dt//dur,txt
+}
+dtCut=(s,re=/([\d:]+),(\d+) --> ([\d:]+),(\d+)/)=>chunk([...re.exec(s)].slice(1), (sec,ms)=>nCat(sec.split(':'),60)*1000+parseInt(ms) )
+nCat=(a,base)=>{let n=0,di;for(di of a)n=n*base+(+di); return n}
+
+au=new AudioContext,aO=au.destination; aLn=(a,b)=>{a.connect(b);a.start()}
+fetch("res/hh.srt").then(x=>x.text()).then(srtCut).then(x=>playMidi(sr=x)) //听歌！！
+
+tinf=(kFrq,sec, ok)=>{
+let w,wa=aM("Buffer",{n:sec}),b=wa.getChannelData(0), a=newA(kFrq,()=>随()-.5)
+for(let i=0,I=0,k=(sec<1?.96:.99)-(n(a)/n(b)) ;i<n(b);i++,I=(I+1)%n(a)) b[i]= (a[I]=a[I]*k)
+aLn(w=aM("BufferSource",{buffer:wa}),aO);w.onended=ok
+}
+//ns=2;doc.body.onclick=E=>{t=()=>new Date().getTime(),t0=t(); tinf(440,ns,()=> console.log(t()-t0))} //那是试出来的
+
+playMidi=x=>滴答(
+next=>chunk(x, (dt,dur,y)=>()=>setTimeout(()=>tinf(440*2**((69-y)/12)>>0, dur/1000,next) ,dt)), // 内存OK, 看来不需cache[frq+sec] 了
+(t0=>chunk(x, (dt,dur,y)=>t0+=dt+dur) )(0)
+)
+
+tickr=(e,f)=>{let l=VecN.wh(e,noOp),red=e.firstChild,seek=f(t=>V(t,2).pp(l).movE(red,"wh")); e.onclick=(E)=>{seek(E.x/l.x);E.stopPropagation()}}
+//onload=()=>tickr(Tick, to=> t=>{console.log(t),to(t)})
+
+滴答=(fs,ts)=>tickr(Tick, to=>{let a,i=0, dur=ts.at(-1),next=()=>{if(i<n(a))to(ts[i]/dur),a[i++]()}
+a=fs(next);doc.body.onclick=next //有时长fn 队列的播放条
+return t=>{i=ts.findIndex(x=>t*dur<x)}
+})
+
+
+anim=aobj({rate:16,ease:{f:x=>x, v(k,mir=0){
+  const /*ease-*/out=f=>t=>1-f(1-t), a=[f=>f,out,f=>t=>t<.5?f(t*2)/2 : 1-f(2-2*t)/2 ,f=>t=>pmix(f(t),out(f)(t),t)]//smoothstep
+  return this.f= a[mir](MF[k])
+}} },
+(v0,v1,dur, f)=>aobj({_dv:v0.vec?v1.m(v0): v1-v0, dur,t0:0,
+rep(n=1,ok=noOp){ let{rate,ease}=anim,{dur,t0}=this,q=n>0,
+  dt=rate/dur*(q?1:-1), t=t0,
+  id=setInterval(()=>{this(ease.f(t));t+=dt ;if(q? t>n:t<n){clearInterval(id); if(n!=0||t0!=0)this(n),ok()} }, rate)
+}},v0.vec?function at(t){f(this._dv.dup.pk(t).p(v0))} : function v(t){f(v0+t*this._dv)}) )
+
+{let{cos,sqrt}=Math, exp=t=>2**(10*(t-1)),
+k=7.5625,kf=[4,8,10].map(x=>x/11),Kf=[6,9,10.5].map(x=>x/11),t0=[.75,.9375,.984375]
+MF={ela:t=>t==1?1:(-cos(t*10 * DEG/3)*exp(t)),
+bou:t=>{let i=kf.findIndex(x=>t<x);if(i==-1)i=3
+  return i--==0?t*t*k: (t-=Kf[i])*t*k+t0[i]
+},
+k:k=>t=>t**k, line:t=>t%1.1, //easings.net
+exp, cir:t=>-sqrt(1-t)+1, sin:t=>(-cos(DEG/2 *t)+1)/2
+}};MF.cub=MF.k(3)
+
+anim.ease.v("cir",2)
+//dx=3,q=$N;anim(0,L.x,2000, x=>G.fillRect(0,0,x,200) ).rep(1,re=()=>{dx+=100;G.fillStyle=Vn(4).f(随).pk(255).css;anim(0,L.y,1000, y=>{q&&cls();G.fillRect(0,0,cyc(dx,L.x),y)}).rep(1,re)} )
+//anim(V(0,0),V(-30,-20).p(L), 3000, p=>{cls();G.fillRect(p.x,p.y,30,20)}).rep()
+</script>
+
+<script>//最后一天..
+//https://two.js.org/examples/ http://paperjs.org/ j/oCanvas
+擦拭=b=>(A,B,dur)=>{let m=gdup(B),l=VecN.wh(b.canvas),oB=gset(gdup(B),B,l), D=(a,b)=>a.drawImage(b.canvas,0,0), {x:w,y:h}=l
+  return anim(0,1,dur, t=>{
+    for(let g of[m,B])g.clearRect(0,0,w,h)
+    m.globalCompositeOperation="source-over"
+    D(m,b);m.globalAlpha=t; m.fillRect(0,0,w,h);m.globalAlpha=1
+    B.globalAlpha=1-t;D(B,oB)
+    B.globalAlpha=1
+    m.globalCompositeOperation="destination-out"
+    D(m,A);D(B,m)
+  })
+}
+gdup=g=>(l=> new OffscreenCanvas(l.x,l.y).getContext("2d"))(VecN.wh(g.canvas||g)) //L50 cloneNode 不会带Data复制 反正
+gset=(g,gSrc,l)=>(g.putImageData(gSrc.getImageData(0,0,l.x,l.y),0,0), g)
+
+/*float at(vec2 p){return p.x<0.?6.2-atan(-p.x,p.y): atan(p.x,p.y); }
+void mainImage( out vec4 bg, in vec2 P)
+{vec2 L=iResolution.xy; P/=L; P-=.5;
+bg=vec4(at(P)/6.2 *length(P) );
+}*/ //in GLSL
+maskG=f=>(shadG((b,p)=>{V(0,0,0,_10*f(p)).vec(b)})(),
+ gset(gdup(G),G,L))
+
+maskRG=f=>maskG(p=>f((p.m(V(.5,.5)).r+DEG/2),p))
+if($Y){
+//maskG(p=>cyc(p.x,.1))
+{let{min,max,abs}=Math; Mgrad=(k,m)=>maskG(p=>(m<0?max:min)(p.x%k/k ,abs(m)*p.y%k/k)) }
+Ms=[maskRG(r=>r/DEG),
+maskRG((r,p)=>1- (1-r/DEG)/p.l * (r/DEG-.1314)/p.l), //rho=(1-sint)
+Mgrad(1/3,-2)]
+//colour(2);擦拭(Ms[0])(Ms[1],G,3000).rep()
+}
+
+ivAnim=(f,dur,iv=-1)=>{ //奇纵偶横,支持 矩.at(n-1)行 ;iv%2==0?horz:verti
+  let q=iv<0; return anim(q,!q,dur, f(iv%2==0 ?0:1))
+}
+
+区渐变=(L,f,f1=NO)=>i=>{ //看画布(A,C,B)=> 填充C吧
+let ra=Va([2,2]), l=[L.x,L.y], v=(p,k,v)=>k?p.y=v:p.x=v
+ar=(f,a,iP)=>{let pl=ra(a)(0),af=t=>{v(pl[iP],i,t*l[i]>>0);f(pl)}; v(pl[iP],!i,l[+!i])
+  pl.at=id=>{let r=[...a],{x,y}=pl[iP],v=(I,v)=>r[2*I+i]=v; v(!iP,id<0?(i?y:x)+id :id);v(iP,Math.abs(id))
+  return ra(r)(0)};pl.isY=i;pl.n=l[i];  ;return af
+}
+let a=ar(f,[0,0,0,0],1);b=f1?ar(f1,[0,0,...l],0):NO
+return t=>{if(b)b(t); a(t)}
+}
+
+//ivAnim(区渐变(L,a=>{let{x,y}=a[1];console.log(x,y,a.at(-1)[1].a)}),100).rep()
+
+//所有基础框架、素材，已生成！
+
+光流=(e,du)=>{
+let[l,g]=布(e),gz=gdup(g); 字(gz,e)(l.dup.pk(.5));e.hidden=$Y
+return ivAnim(区渐变(l,a=>{ //本该让区渐索引增量连续应对无f1:cls 绘制，时间急暂不做
+g.fillStyle=g.createPattern(gget(gz,a.at(-1)), 'repeat-'+(a.isY?'y':'x')); ggf(a,g.clearRect,g);ggf(a,g.fillRect,g) }), du, 2)
+}
+字=(g,e)=>{
+g.font=getComputedStyle(e).font; g.textBaseline='middle';g.textAlign='center';
+return({x,y})=>g.fillText(e.innerText,x,y)
+}
+
+anim.ease.v("sin")
+ggf=([p,l],f,g)=>f.call(g,p.x,p.y,l.x,l.y)
+gget=(g,a)=>{let im=ggf(a,g.getImageData,g),r=gdup(im);r.putImageData(im,0,0);  return r.canvas}
+
+//let xx=also(e=>{e.innerText=`茉莉花`},el(Sc,"h1"))
+//onload=()=>{let e=光流( xx,9000);e.t0=1;e.rep(-1)}
+//xx.className=`bgc fun`
+
+钟声=(p,l)=>anim(0,1,433,t=>{
+  G.lineWidth=MF.sin(1-t)*8
+  cls();G.stroke(also(G=>G.arc(p.x,p.y, t*l ,0,DEG),new Path2D()))
+})
+
+等时差=(f,N)=>{//p=pmix.bind(NO, V(.1,.3).pp(L),V(.7,.9).pp(L))
+let i=0,a=N.at?N.map(x=>({rep:(...a)=>f(x,G,5000).rep(...a)})): newA(N,_=>f(L.dup.f(x=>x*随()),200+50*随()) ),nx=()=>i<N?a[i++].rep(1,nx):0; if(N.at)N=n(N); nx()}
+
+//等时差(钟声,24); 等时差(擦拭(Ms[1]),Ms)
+
+//「钟声」「开心」「光流真情」「图片擦拭」「落雪」 动画已悉数完成，终场落雪也有了
+
+</script>
+<style>*{padding:0;margin:0}
+#Sc{width:100%;height:100%;overflow:hidden; position:relative} #Sc>*{position:absolute}
+#波{z-index:2;pointer-events:none}
+#sky{z-index:1;transform-origin:left top; animation: 160s infinite linear rot} #sky *{position:absolute}
+#sky{filter: opacity(0.6) drop-shadow(-10px 2px 10px var(--bg)) brightness(0.7); pointer-events:none}
+#sky :nth-child(2n+1) {filter: blur(4px) saturate(2.5);}
+
+.snow2{transform: rotate(180deg); filter: invert(1) brightness(0.7);}
+#Tick{z-index:5; height:3px} #Tick:hover{height:7px} #Tick hr{border:0; transition:.1s width;background: red}
+@keyframes rot{0%{transform:rotate(0deg)}to{transform:rotate(1turn)}}
+h1{font-size:20em}
+
+.bgc{color: #0000;background:linear-gradient(90deg, var(--bg1),var(--bg2));-webkit-background-clip: text;}
+.fun{animation: 1s .5s infinite alternate ease-in fun}
+@keyframes fun{0%{--bg1:#79c34a; --bg2:#ffeb3bc7}
+to{--bg1:#4a53c3; --bg2:#ff563bc7} }
+
+@property --bg1 {syntax: '<color>';inherits: true;initial-value:#000}/*CSS Houdini*/
+@property --bg2 {syntax: '<color>';inherits: true;initial-value:#000}
+</style>

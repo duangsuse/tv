@@ -69,8 +69,51 @@ iEnd=2才始于o=a
   on("down","start",ev=>{x0=ev.x;y0=ev.y;q=1}); on("up","end",ev=>{f(x0,y0,ev.x,ev.y,ev);q=0})
   if(fmov)on("move","move",q? ev=>{fmov(x0,y0,x0=ev.x,y0=ev.y)}:ev=>{if(q/*^*/)fmov(x0,y0,x0=ev.x,y0=ev.y)})
 }
-
+mouse=(e,fUM)=>{let p=Vn(3),p0=p.dup, v=(P,i)=>E=>{P.v(E.x,E.y,E.buttons); if(i&&fUM)fUM[i-1](E)},
+  on,tap,q=0, k;for(k of ss("mouse touch")){
+  on=(PC,M,f)=>e.addEventListener(k+(q?M:PC),q?tap(f):f, {passive:false})
+  tap=f=>E=>{let p=E.changedTouches[0]; E.x=p.clientX,E.y=p.clientY;f(E)} //^其实是n(fUM)!=0 ，这有问题.[]时记move [fU]不应需要
+  on("down","start",v(p0)); on("up","end",v(p,1)); if(fUM!=NO){if(n(fUM)==1)fUM[1]=fUM[0]//M=U
+  if(fUM!=null)on("move","move",v(p,2))} ;q++}//qTouch
+  return[p,p0]
+}
+qucall=a=>a.forEach((f,i)=>{try{f()}catch(_){a.splice(i,1)}})
+// data-rn-r="0 6 200" g.clip();g.drawImage(虹,0,0)也是过度设计，未见用处，失虑
+//let[p]=mouse(_=>p)等于啥? // 数组特殊[] 更混淆了noOp和null
+//[aprod,acomb]=$YN(q=>(a,f,i=0)=>i<n(a)? (q?a[i]:a).map(x=>(q?aprod:acomb) (a,x1=>f(x,x1) ,i+1)):f())//链表尾, $YN=f=>[f($Y),f($N)]
 //最后页由波浪 彩手绘、拨弦、(.5,1)wh 旋转星星集。 星迭Vn2,补间Vn3色 输出到Vn4
+
+anim=aobj({rate:16,ease:t=>t%1.1 },
+(v0,v1,dur, f)=>aobj({_dv:v1-v0, dur,t0:0,
+rep(n=1,ok=noOp){let {rate,ease}=anim,{dur,t0}=this,q=n>0,
+  dt=rate/dur*(q?1:-1), t=t0,
+  id=setInterval(()=>{this(ease(t));t+=dt}, rate),
+  ed=()=>{//stop.
+  if(q? t<n:t>n)setTimeout(ed,st==0?dur*n:Math.min(200,dur/10));else{clearInterval(id); if(n!=0||t0!=0)this(n),ok()}
+  },st=0;ed();st=1}
+},function v(t){f(v0+t*this._dv)}) )
+
+mir=f=>t=>1-f(1-t) //OGL clamp. ease-out
+mirs=f=>t=>t<.5?f(t*2)/2 : 1-f(2-2*t)/2
+{let{cos,sqrt}=Math,
+k=7.5625,kf=[4,8,10].map(x=>x/11),Kf=[6,9,10.5].map(x=>x/11),t0=[.75,.9375,.984375]
+
+MF={k:k=>t=>t**k, //不太真诚地“感谢”zhangxinxu的 c * (x /= d) * x * x + b 等pow公式和“优化”
+exp:t=>2**(10*(t-1)), cir:t=>-sqrt(1-t)+1, sin:t=>(-cos(DEG/2 *t)+1)/2,
+ela:t=>2**(10*t - 10) * -cos((t*10) * DEG/3) ,
+bou:t=>{let i=kf.findIndex(x=>t<x);if(i==-1)i=3
+  return i--==0?t*t*k: (t-=Kf[i])*t*k+t0[i]
+}
+}}MF.cub=mirs(MF.k(3))
+
+anim.ease=mir(MF.cir)//easings.net
+return anim(0,1,dur, opac=>{
+  m.globalCompositeOperation="source-over"
+  m.putImageData(b,0,0);m.fillStyle=`rgba(0,0,0,${opac})`; m.fillRect(0,0,w,h)
+  m.globalCompositeOperation="overlay"
+  D(m,oB); D(B,A); D(B,m)//(1-t)a+tb
+})
+//nt=2 if(nt)T=(T/nt>>0)*nt; if(T!=T0) 其实rate/2 就行
 /*
 #define v1 float
 v1 PI=3.14,TURN;
@@ -97,7 +140,7 @@ P/=iResolution.xy;P.x *= iResolution.x/iResolution.y;
 bg=vec4(pal(YE, ply(5.,PI,P)*1.), 1.);//左中
 //v1 ir=mod(iTime,7.);bg=vec4(pal(RB, ply(2.+ir,PI-ir,P)*ir), 1.);//左中
 }
-
+//let m=(f,a,b)=>t=>t<.5?f(2*t)/2 : 1-f(a-b*x)mpow:k=>t=>m(MF.pow(k),1.4,1.4-(k==2?0: ))  //abs(cos(t*4*DEG))*(.2+t),
 (a, xy)=>(e,c1)=>，c1由 que(ao,rev_dur)，后者在f含.dur的队列使用 //aQue就是分配页位置的，所以(e0,onPPT)=>闭包无效
 
 UI:元素树ViewGroup,Form,CSS,SVG,动画
@@ -165,3 +208,5 @@ https://www.bookstack.cn/read/radareorg-radare2-book/85b66f18f8092829.md
 
 px oo+ r- uw we? wxs
 */
+/*srt2mid 的 transfBack read()也需nonlocal t_acc 了，SynthV 更新，.. blank+=track_name lyrics
+ * */
