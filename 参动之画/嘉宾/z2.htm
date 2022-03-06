@@ -1,7 +1,11 @@
-<script>n=o=>o.length,ss=s=>s.split(' '), newA=(N,f)=>{let a=Array(N),i=0;for(;i<N;i++)a[i]=f(i) ;return a},join=(a,f)=>a.map(f).join(""), noOp=()=>{},also=(f,o)=>{f(o);return o}
+<script>n=o=>o.length,ss=s=>s.split(' '), newA=(N,f)=>{let a=Array(N),i=0;for(;i<N;i++)a[i]=f(i) ;return a},join=(a,f)=>a.map(f).join(""), noOp=()=>{},also=(o,f)=>{f(o);return o}
 const NO=null,$Y=true,$N=false
 with(Math){DEG=2*PI,转=(r,f)=>f(sin(r),cos(r));随=random}//正上向右角
 
+//“你就是实现了一个本该简单的事，但附加大堆冗杂概念和可独立讨论的优化。 简单事、名词概念、独立问题，你可以全都要，但不应挤一块”
+//语言人深知语言内构造和数据模型的不同，所以不会沉溺于语法字面和当下问题的一种解法
+//画布上有高低两个点，高者更快，显然你就永远赶不上他了。但其实歪过头来看，横着你的速度更快已更高，这是我的胜负观。 输不丢人、傻不是错，惶恐粉饰才丢人。 永远有比你更高的人自得一隅，问题和解法一样有千万种。不要自傲、不要自卑，成功了没人给你发奖杯，诚恳对待才是该做的。
+//科学和哲学谁重要？别回答这个问题。当你让哲学靠边站，就制造了不必要的对立。对解法提解法，和思考解决并不冲突亦无高下；一切的知识、技术和「科学」互相兼容，它的方法不意味着聪明高人一等，有时只大智若愚
 Defs=()=>{let vecFn=(fstr,a=ss(`+ * - / p pp m mm`))=>join(a,(x,i)=>i<4?"": x+`(v){let{a,i}=this,I=v.i,b=v.a;${fstr(a[i-4])}  ;return this}`),
 df=(_k,cp)=>{let q=!_k.at, k=q?[]:ss(_k),N=q?_k:n(k[0]),//qNoCgForP
 cg=op=>newA(N,_=>`a[i]${op}=b[I]`).join(`;i++,I++;`),
@@ -22,7 +26,7 @@ defGet=(T,c)=>{for(let k in c)T.prototype.__defineGetter__(k,function(){return c
 Defs()
 pmix=(a,b,t)=>a.vec?a.p(b.m(a).pk(t)): a+t*(b-a)
 {let{assign:set}=Object,fw=o=>V(o.width,o.height); set(VecN,{
-wh:(o,chg=NO)=>{let r=!o.nodeType||/*attr*/chg? fw(o):fw(o.getClientRects()[0]), f=()=>chg(VecN.wh(o).vec(r));if(chg)f(),addEventListener("resize",f); return r},
+wh:(o,chg=NO)=>{let r=fw(o.nodeType? o.getClientRects()[0]:o), f=()=>chg(VecN.wh(o).vec(r));if(chg)f(),addEventListener("resize",f); return r},
 mouse(e,fU,fM=fU){let p=Vn(3,0),p0=p.dup, v=(P,f)=>E=>{P.v(E.x,E.y,E.buttons||E.button||E.identifier||0); if(f)f(E)},
   on,tap,q=0, k;for(k of ss("mouse touch")){//兼容触向距离甚至按键 可即时或抬笔移动/旋转;连线 //fM noOp算速度 NO仅始末
   on=(PC,M,f)=>e.addEventListener(k+(q?M:PC),q?tap(f):f, {passive:$N})
@@ -43,17 +47,41 @@ Va=dims=>a=>{let N=0,I=[],x, q=!dims.at;if(q)N=dims;else for(x of dims)I.push(N,
   a=a.at?a:Array(N*a);return(id,f)=>q?new VecN[N](a,N*id,N*id+N):
     chunk(I, (i,i1)=>new VecN[i1-i](a,N*id+i,N*id+i1))
 } //^向量并列-的组 .Vec固定分量数N 能优化+*计算
-chunk=(a,f)=>{let b=[],i=0,i1;for(;i<n(a);i=i1)b.push(f(...a.slice(i,i1=i+n(f))) ) ;return b}
+chunk=(a,f,i=0)=>{let b=[],i1;for(;i<n(a);i=i1)b.push(f(...a.slice(i,i1=i+n(f))) ) ;return b}
+
+arun=(f,dt=0,t=0)=>{let id,up=()=>{id=requestAnimationFrame(up);f(t+=dt)};up(); return()=>cancelAnimationFrame(id)}//fps=auto
+
+anim=aobj({rate:16,ease:{f:x=>x, v(k,mir=0){
+  const /*ease-*/out=f=>t=>1-f(1-t), a=[f=>f,out,f=>t=>t<.5?f(t*2)/2 : 1-f(2-2*t)/2 ,f=>t=>pmix(f(t),out(f)(t),t)]//smoothstep
+  return this.f= a[mir](MF[k])
+}} },
+(v0,v1,dur, f)=>aobj({_dv:v0.vec?v1.m(v0): v1-v0, dur,t0:0, //time-rep pmix
+rep(n=1,ok=noOp,stopr=NO){ let{rate,ease:{f}}=anim,{dur,t0}=this,q=n>0,
+  dt=rate/dur*(q?1:-1), t=t0,
+  id=setInterval(()=>{this( f(t) );t+=dt ;if(q? t>n:t<n)ed()}, rate),ed=()=>{clearInterval(id); if(n!=0||t0!=0)this(n),ok()};if(stopr)stopr(ed,this)
+}},v0.vec?function at(t){f(this._dv.dup.pk(t).p(v0))} : function v(t){f(v0+t*this._dv)}) )
+
+//或许该加 逆/往复/往返N次 的动画线和 dt=NO|0|1 的队列(支持序和%=p,CSS:delay,副本变形[rng] 路径队 dt-du幻灯片队:进退场换)?
+//vrep 0原1反2正反3反正4正反负正反   vtwo("cir sin",.5)  atScroll(e)  画布缓存-rxy圣诞树,人脸
+{let{cos,sqrt}=Math, exp=t=>2**(10*(t-1)),
+k=7.5625,kf=[4,8,10].map(x=>x/11),Kf=[6,9,10.5].map(x=>x/11),t0=[.75,.9375,.984375]
+MF={ela:t=>t==1?1:(-cos(t*10 * DEG/3)*exp(t)),
+bou:t=>{let i=kf.findIndex(x=>t<x);if(i==-1)i=3
+  return i--==0?t*t*k: (t-=Kf[i])*t*k+t0[i]
+},
+k:k=>t=>t**k, line:t=>t%1.1, //easings.net
+exp, cir:t=>-sqrt(1-t)+1, sin:t=>(-cos(DEG/2 *t)+1)/2
+}};ss("quad cub k4 k5").forEach((k,i)=>MF[k]=MF.k(2+i))
 </script>
-<main id=Sc><span id=Tick style="bottom: 0;width: 100%"><hr></span></main>
+<main id=Sc></main><canvas id=虹 style="width:100%;height:100%; position:absolute;top:0"></canvas><span id=Tick style="bottom: 0;width: 100vw"><hr></span>
 <script>doc=document,el=(e,k)=>e.appendChild(k.nodeType?k.cloneNode($Y): doc.createElement(k))
 布=(e,l=VecN.wh(e))=>{let K="CANVAS",p
   if(e.tagName!=K){p=V(e.offsetLeft,e.offsetTop),e=el(e.parentNode,K); p.movE(e);return 布(e,l)}
   l.movE(e,"wh",'');return[l,e.getContext("2d")]}
 
 画风={S:'.stroke',F:'.fill'}
-画=(k,s)=>Function("g,"+k,`let{x,y}=a,G;`+chunk(s.pop?s:ss(s),(a,b)=>
-(([_,c,k])=>`G=new Path2D;G.${k}(x,y,${b});g${画风[c]}(G);`)(/(.)(.+)/.exec(a))).join(""))
+画=(k,s)=>Function("g,"+k,`let{x,y}=a;`+chunk(s.pop?s:ss(s),(a,b)=>
+(([_,c,k])=>`g.beginPath();g.${k}(x,y,${b});g${画风[c]}();g.closePath();`)(/(.)(.+)/.exec(a))).join(""))
 
 期=(dt,f)=>setInterval(f,dt)
 uiDraw=e=>{let[p]=VecN.mouse(e,noOp),[l,g]=布(e), 点=画('a',`Farc 25,0,DEG`),增=V(0,1)
@@ -62,7 +90,7 @@ uiDraw=e=>{let[p]=VecN.mouse(e,noOp),[l,g]=布(e), 点=画('a',`Farc 25,0,DEG`),
   期(3600,()=>colour(随()*DEG/2))
   期(300,()=>sky.style.setProperty("--bg",vrgb(G.getImageData(p.x,p.y,1,1).data)))
 }
-vrgb=a=>Va(4)(a)(0).css; //^虹绘和水波v L113
+vrgb=a=>Va(4)(a)(0).css; //^虹绘和水波v L142
 
 {let M=Math,ln
 mirMx=f=>x=>M.max(f(x),f(-x)),
@@ -91,10 +119,13 @@ for(y=0;y<h;y++)for(x=0;x<w;x++,i++)fP(C(i),P.v(x,y)),a(i).A=_10
 return t=>{for(i=0,c=cA([...c0]);i<N;i++)f(a(i),c(i),t);g.putImageData(A, 0,0) }
 }
 shadG=f=>shad(G,(c,p)=>p.mm(L).vec(c), f,2)//百分比画布
-arun=(f,dt=0,t=0)=>{let id,up=()=>{id=requestAnimationFrame(up);f(t+=dt)};up(); return()=>cancelAnimationFrame(id)}//fps=auto
 
-Sc.innerHTML+=`<div id=sky data-n=49 style="width:43%;height:50%"></div><canvas id=虹 style="width:100%;height:100%"></canvas><canvas id=波 style="width:100%;height:14% ;bottom:0">`;
+eAdd=(e0=>(e,s)=>{e0.innerHTML=s;let x;while(x=e0.firstChild)e.append(x)}
+)(el(doc.body,"eloader"));
+
+//eAdd(Sc,``);Sc.insertAdjacentElement("afterEnd",虹);
 [L,G]=布(虹)
+
 {let{round,cos}=Math, cir=t=>cos(t)*_5+_5, 透明=Vn(4,0)
 colour=shad(G,(b,p)=>{let{x,y}=p.mm(L); b.v(x,y+2,x+4)},
   (b,c,t)=>c.f(x=>cir(x+1.2*t)).vec(b))
@@ -110,10 +141,15 @@ return 1-(d<l?d/l :0)//d-l closeTo 0=edge
 
 历遍=(n,m,f_ij, id=0,N=n*m)=>()=>{id=(id+1)%N; f_ij(id/m>>0,id%m)}
 qT=$N//体验代码?
+终=()=>{
+aloadSrt("hh").then(x=>playMidi(sr=x)) //听歌！！ L210
+
 if(qT){let[p,p0]=VecN.mouse(doc.body,noOp),an; an=arun(_=>{colour(p.y/L.y*DEG); if(p.B)console.log(p0.B),an() }),
 ply=shadG((b,p,[g,t])=>{b.A=_10;g(udPly(t,0,.6,p)).vec(b)});doc.body.onclick=历遍(5,5, (i,j)=> ply([Cp[i],2+j]) ) }
 
-//else{ also(uiDraw,el(Sc,虹)).id=`虹绘`;colour(1.2);  水波(波);天空(sky) } //虹绘wh相同
+else{ also(el(Sc,虹),uiDraw).id=`虹绘`;colour(1.2);  eAdd(Sc,`<div id=sky data-n=49 style="width:43%;height:50%"></div><canvas id=波 style="width:100%;height:14% ;bottom:0">`);水波(波);天空(sky) } //虹,绘wh相同
+}
+
 
 界函=(l,况)=>Function("p,v",join([..."yyxx"],(k,i)=>况[i]?`if(p.${k}${i%2==0?"<0":">"+l[k]}){${subst(况[i],{V:`p.`+k,L:l[k]})}}` :"")+`return $N`)
 subst=(s,c)=>{for(let k in c)s=s.replaceAll(k,c[k]) ;return s}
@@ -149,7 +185,6 @@ dtCut=(s,re=/([\d:]+),(\d+) --> ([\d:]+),(\d+)/)=>chunk([...re.exec(s)].slice(1)
 nCat=(a,base)=>{let n=0,di;for(di of a)n=n*base+(+di); return n}
 
 au=new AudioContext,aO=au.destination; aLn=(a,b)=>{a.connect(b);a.start()}
-fetch("res/hh.srt").then(x=>x.text()).then(srtCut).then(x=>playMidi(sr=x)) //听歌！！
 
 tinf=(kFrq,sec, ok)=>{
 let w,wa=aM("Buffer",{n:sec}),b=wa.getChannelData(0), a=newA(kFrq,()=>随()-.5)
@@ -159,46 +194,31 @@ aLn(w=aM("BufferSource",{buffer:wa}),aO);w.onended=ok
 //ns=2;doc.body.onclick=E=>{t=()=>new Date().getTime(),t0=t(); tinf(440,ns,()=> console.log(t()-t0))} //那是试出来的
 
 playMidi=x=>滴答(
-next=>chunk(x, (dt,dur,y)=>()=>setTimeout(()=>tinf(440*2**((69-y)/12)>>0, dur/1000,next) ,dt)), // 内存OK, 看来不需cache[frq+sec] 了
+chunk(x, (dt,dur,y)=>next=>setTimeout(()=>tinf(440*2**((69-y)/12)>>0, dur/1000,next) ,dt)), // 内存OK, 看来不需cache[frq+sec] 了
 (t0=>chunk(x, (dt,dur,y)=>t0+=dt+dur) )(0)
 )
 
 tickr=(e,f)=>{let l=VecN.wh(e,noOp),red=e.firstChild,seek=f(t=>V(t,2).pp(l).movE(red,"wh")); e.onclick=(E)=>{seek(E.x/l.x);E.stopPropagation()}}
 //onload=()=>tickr(Tick, to=> t=>{console.log(t),to(t)})
 
-滴答=(fs,ts)=>tickr(Tick, to=>{let a,i=0, dur=ts.at(-1),next=()=>{if(i<n(a))to(ts[i]/dur),a[i++]()}
-a=fs(next);doc.body.onclick=next //有时长fn 队列的播放条
-return t=>{i=ts.findIndex(x=>t*dur<x)}
+滴答=(fs,ts)=>tickr(Tick, to=>{let a=fs,i=0, dur=ts.at(-1),next=()=>{if(i<n(a))to(ts[i]/dur),a[i++](next)};doc.body.onclick=next
+return t=>{i=ts.findIndex(x=>t*dur<x)} //有时长fn 队列的播放条
 })
 
+aloadSrt=k=>fetch(`res/${k}.srt`).then(x=>x.text()).then(srtCut)
 
-anim=aobj({rate:16,ease:{f:x=>x, v(k,mir=0){
-  const /*ease-*/out=f=>t=>1-f(1-t), a=[f=>f,out,f=>t=>t<.5?f(t*2)/2 : 1-f(2-2*t)/2 ,f=>t=>pmix(f(t),out(f)(t),t)]//smoothstep
-  return this.f= a[mir](MF[k])
-}} },
-(v0,v1,dur, f)=>aobj({_dv:v0.vec?v1.m(v0): v1-v0, dur,t0:0,
-rep(n=1,ok=noOp){ let{rate,ease}=anim,{dur,t0}=this,q=n>0,
-  dt=rate/dur*(q?1:-1), t=t0,
-  id=setInterval(()=>{this(ease.f(t));t+=dt ;if(q? t>n:t<n){clearInterval(id); if(n!=0||t0!=0)this(n),ok()} }, rate)
-}},v0.vec?function at(t){f(this._dv.dup.pk(t).p(v0))} : function v(t){f(v0+t*this._dv)}) )
+console.c=(ss,...a)=>console.log(join(ss,(x,i)=>i==n(ss)-1?x:x+"%c"),...a.map(x=>/\s/.test(x)?x:'color:'+x ))
 
-{let{cos,sqrt}=Math, exp=t=>2**(10*(t-1)),
-k=7.5625,kf=[4,8,10].map(x=>x/11),Kf=[6,9,10.5].map(x=>x/11),t0=[.75,.9375,.984375]
-MF={ela:t=>t==1?1:(-cos(t*10 * DEG/3)*exp(t)),
-bou:t=>{let i=kf.findIndex(x=>t<x);if(i==-1)i=3
-  return i--==0?t*t*k: (t-=Kf[i])*t*k+t0[i]
-},
-k:k=>t=>t**k, line:t=>t%1.1, //easings.net
-exp, cir:t=>-sqrt(1-t)+1, sin:t=>(-cos(DEG/2 *t)+1)/2
-}};MF.cub=MF.k(3)
+//带着更大体量甚至SVG,GL,所有DOM物理量的愿望，anim 这个小玩意移人上人辣（然而它不会越线搞假大空 。画 函画 界函 滴答~ 粒浮 擦拭 区渐变
+console.c`${'cyan'}Copyleft(C)2022${'green'} duangsuse  ${' '}NotAplayer 版权没有，侵权不究`
 
-anim.ease.v("cir",2)
-//dx=3,q=$N;anim(0,L.x,2000, x=>G.fillRect(0,0,x,200) ).rep(1,re=()=>{dx+=100;G.fillStyle=Vn(4).f(随).pk(255).css;anim(0,L.y,1000, y=>{q&&cls();G.fillRect(0,0,cyc(dx,L.x),y)}).rep(1,re)} )
+//anim.ease.v("bou",1)
+//dx=3,q=$Y;anim(0,L.x,2000, x=>G.fillRect(0,0,x,200) ).rep(1,re=()=>{dx+=100;G.fillStyle=Vn(4).f(随).pk(255).css;anim(0,L.y,1000, y=>{q&&cls();G.fillRect(0,0,cyc(dx,L.x),y)}).rep(1,re)} )
 //anim(V(0,0),V(-30,-20).p(L), 3000, p=>{cls();G.fillRect(p.x,p.y,30,20)}).rep()
 </script>
 
 <script>//最后一天..
-//https://two.js.org/examples/ http://paperjs.org/ j/oCanvas
+//https://animejs.com/ https://two.js.org/examples/ http://paperjs.org/ j/oCanvas vivus svgjs
 擦拭=b=>(A,B,dur)=>{let m=gdup(B),l=VecN.wh(b.canvas),oB=gset(gdup(B),B,l), D=(a,b)=>a.drawImage(b.canvas,0,0), {x:w,y:h}=l
   return anim(0,1,dur, t=>{
     for(let g of[m,B])g.clearRect(0,0,w,h)
@@ -222,13 +242,13 @@ maskG=f=>(shadG((b,p)=>{V(0,0,0,_10*f(p)).vec(b)})(),
  gset(gdup(G),G,L))
 
 maskRG=f=>maskG(p=>f((p.m(V(.5,.5)).r+DEG/2),p))
-if($Y){
+if($N){
 //maskG(p=>cyc(p.x,.1))
 {let{min,max,abs}=Math; Mgrad=(k,m)=>maskG(p=>(m<0?max:min)(p.x%k/k ,abs(m)*p.y%k/k)) }
 Ms=[maskRG(r=>r/DEG),
 maskRG((r,p)=>1- (1-r/DEG)/p.l * (r/DEG-.1314)/p.l), //rho=(1-sint)
 Mgrad(1/3,-2)]
-//colour(2);擦拭(Ms[0])(Ms[1],G,3000).rep()
+//anim.ease.v("bou",2); colour(2);擦拭(Ms[0])(Ms[1],G,3000).rep()
 }
 
 ivAnim=(f,dur,iv=-1)=>{ //奇纵偶横,支持 矩.at(n-1)行 ;iv%2==0?horz:verti
@@ -251,7 +271,7 @@ return t=>{if(b)b(t); a(t)}
 
 光流=(e,du)=>{
 let[l,g]=布(e),gz=gdup(g); 字(gz,e)(l.dup.pk(.5));e.hidden=$Y
-return ivAnim(区渐变(l,a=>{ //本该让区渐索引增量连续应对无f1:cls 绘制，时间急暂不做
+return ivAnim(区渐变(l,a=>{ //本该让区渐索引增量连续 应对无f1:cls 绘制，时间急暂不做
 g.fillStyle=g.createPattern(gget(gz,a.at(-1)), 'repeat-'+(a.isY?'y':'x')); ggf(a,g.clearRect,g);ggf(a,g.fillRect,g) }), du, 2)
 }
 字=(g,e)=>{
@@ -259,17 +279,17 @@ g.font=getComputedStyle(e).font; g.textBaseline='middle';g.textAlign='center';
 return({x,y})=>g.fillText(e.innerText,x,y)
 }
 
-anim.ease.v("sin")
 ggf=([p,l],f,g)=>f.call(g,p.x,p.y,l.x,l.y)
 gget=(g,a)=>{let im=ggf(a,g.getImageData,g),r=gdup(im);r.putImageData(im,0,0);  return r.canvas}
 
-//let xx=also(e=>{e.innerText=`茉莉花`},el(Sc,"h1"))
-//onload=()=>{let e=光流( xx,9000);e.t0=1;e.rep(-1)}
-//xx.className=`bgc fun`
+anim.ease.v("sin")
+let xx=also(el(Sc,"h1"),e=>{e.innerText=`茉莉花`});xx.className=`bgc fun`
+//onload=()=>{let e=光流( xx,5000);e.t0=1;e.rep(-1)}
+
 
 钟声=(p,l)=>anim(0,1,433,t=>{
   G.lineWidth=MF.sin(1-t)*8
-  cls();G.stroke(also(G=>G.arc(p.x,p.y, t*l ,0,DEG),new Path2D()))
+  cls();G.stroke(also(new Path2D(),G=>G.arc(p.x,p.y, t*l ,0,DEG)))
 })
 
 等时差=(f,N)=>{//p=pmix.bind(NO, V(.1,.3).pp(L),V(.7,.9).pp(L))
@@ -277,26 +297,202 @@ let i=0,a=N.at?N.map(x=>({rep:(...a)=>f(x,G,5000).rep(...a)})): newA(N,_=>f(L.du
 
 //等时差(钟声,24); 等时差(擦拭(Ms[1]),Ms)
 
-//「钟声」「开心」「光流真情」「图片擦拭」「落雪」 动画已悉数完成，终场落雪也有了
+//「钟声」「开心」「光流真情」「图片擦拭」「落雪」 动画已悉数完成，终场音乐也有了
 
 </script>
+<script>
+/* srtCut从文本取dt-dur-text 行， 切词(a,f) 将其分为子行(dt自0)，传递[!落] 给f 令其创建单歌词 动画队|元素,时长 (txt,dur) 。只有页里首行有dur,其它是页总时长
+行首是行里调了的动画函。 若无参则无[/闭元素] 仅dt ，否则带dur。 [][/f] 令创建多项元素组，若f返回动画，则替换既有。
+页首行负责setTimeout整页的动画
+
+EQuery: It's just DOM without XML
+
+UI视图树的创建是单向的，编辑由JS和人
+el.bind(o, o=>el.xxx) 负责把o上键引用交给 wA({val:o.fookey,show:$Y}), el.text(o.bar,' ',o.baz), el.cond(o.userType,{[NO]:"u{it.title}", monkey:".zoo{it.age}"})
+若得 [el_cond=""]，设其attr=idx 以便type更新时重替换；若需变更操作， prop({a:1}).ref.a(Eqv(x=>x+1,x=>x-1)) 即可，DOM生而有此功能，多层{k:v}并不特殊
+
+el.map(a, x=>el.item, ul?,li?) 负责处理push(obj={}_or_allPropSame) splice(idx,1)等编辑，以及 .make(a=>a.sort()) 整体替换、事件 .on({click:ev=>log(ev.item,ev.idx) })
+若增长则补齐null，若长度缩短，设置attr [el_make="len"] 。可再添移位检测优化("DOM diff" 编辑距离) 。支持 el.map(,=>el.cond
+
+doc.body.tail=emet`div.${"cls"} hr:4+b:"a b c"` 也是个合适的写法 prop(Object,{let,also,get_ref})
+
+wA.op({tap:,once:$Y}).hover()... 得可 .fire(cfg) / del() / acty=$Y 对象，设置于目标元素
+wA.clsPre("mdui- B=xx").cls("btn Bred") 简写类名。 e.at.attr , e.atD.data 及其 obj.ref.foo(x=>x+1).bar(2).v==2 也是支持的, e.flag.xx 可 toggle CSS类
+
+再说emet，逗号和+ 都是多项并列但层次更小(深)。 .e .a+.b>.b1 和 .e(.a, .b .b1) 是一样的、 ul>li:rep(2) 是 (ul>li),(ul>li) 。单项是 tag#id.cls[k=v,hidden-like-flag] #.[ 多定义 后跟{txt plain}{it.xxx}
+emet_(a,strs) 内部把 a[href=it.1]{it.0 xx}:"chunk(2,each('a 1 b 2'))" 变成 xx=$1 代码=$2 的嵌套模板， el.img="img[src=$2,alt=$1]" 就是如此
+
+细节： a.cls#id[k=v] 被解析为{tag,id,fl,at,txts} 待填充， a>b 和 a,b 则变为append和parent.append ；a:b 负责重复it=$0 解构变量
+ref.k: (val) (letOp) (eqvFn) onmond v=
+Eqv<B,A>(cat:(B)=>A,cut:(A)=>B): flip map fwd bkwd static pipe each noOp fmt join caps caps0 int num opr add mul digi(10) kv json xml b64 url
+wA.sty(`color:red`,`alert button`)
+prop(Element,{tail,head,prev,next})
+prop(Array,{tail:push,head:unshift,at,next(i,n=1){v vs} })
+qs.div_$ui__btn==qs("div .ui-btn",doc.body) ; qs.each = liveSelector
+
+*/
+if(0)newA(9,i=>newA(9,j=>{let A=i+1,B=j+1; return A<B?''/*交换律去重,即newA(i,*/:`${B}*${A}=${A*B}`/*行内的编号在前、纵向它不变*/}))
+//newA(9,i=>[i,i%2]) 里 i%2? 奇:偶 或 i%2==0? 偶0246:奇1357  不能取代 %3,%4==0 ，非0即可和必 ==常数0 是不同的，仅因%2非此即彼可省略==
+//fib=n=>n<0?n:fib(n-1)*fib(n-2) 是O(n)吗？ Shellsort是插入排序
+
+//从线到多行歌词，合并页面 ；每行负责定时外部动画，每页在dur-.2s 反向所有内字
+
+//按距离< 收集且重定位、识别到行首： [f] n(f)!0?[/f-dur] 、传递[!xx] 、 [][/f] N项组-动画替换?
+
+动=(kf,C={})=>(e,dt,dur)=>{c={duration:dur,delay:dt}//orun(c)/*dup*/;c.duration=dur;c.delay=dt;
+  let fs=o=>o.substr?o.split(';'): o.at?orun(o):[o], jk={T:"transform",F:"filter",B:"background"},
+  a=[],k,an; for(k in kf)a.push([k,fs(kf[k]) ])
+  k=C.ease;if(k&&k[0]=='(')c.easing="cubic-bezier"+k
+  an=newA(n(a[0][1]), (i ,c={})=> //化[{a0 b0},{a1..]
+    a.forEach(([k,v])=>{let m;if(m=/^([TFB])(.*)/.exec(k) )c[jk[m[1]]]=`${m[2]}(${v[i]})`; else c[k]=v[i]}) ||c)
+  if(n(an)==1)an.push({})
+  return (ok,c1)=>{c.duration=dur;if(c.duration!=dur)debugger;let o=e.animate(an,Object.assign(orun(c),c1)); o.onfinish=ok;o.play()}
+}
+orun=o=>objWalk(o, x=>typeof x=="function"?x():x)
+objWalk=(o,f,{entries:eo,fromEntries:oe}=Object,i=1)=>typeof o!="object"?f(o): o.at?o.map(x=>objWalk(x,f)) :
+  oe(also(eo(o), e=>{for(let k in e)e[k][i]=objWalk(e[k][1],f) }))
+$YN=f=>[f($Y),f($N)]
+
+随区=f=>()=>f((a,b)=>pmix(a,b,随()))
+if(1){//composite:多动画值叠加或替换  spacing:按值差或均匀分布在时间轴 . queryObjects, dir
+let 旋=动({Trotate:`353deg;1turn`,['Fdrop-shadow']:`-20px -9px 14px white;2px 4px 2px white`,opacity:[0,1]}),
+落=动({TtranslateY:`-.2em`},{ease:`(0.42, 0.09, 0, 1.01)`}),
+显=动({opacity:.2},{ease:`(0.14, 0.91, 0, 1.6)`}),
+飞=动({Ttranslate:[随区(r=>`${r(-.3,.3)}em, ${r(-.4,.2)}em`)],Fblur:`11px`}),
+入=$YN(q=> 动({TtranslateX:q?"2em":"-2em"},{ease:`(0.42, 0.09, 0, 1.01)`}) )
+
+落雪=n=>du=>setTimeout(落雪(n,n>1000?2:5),du),
+类=k=>e=>{e.className=k},
+inv=e=>timedAdd(e.classList,"inv"),
+timedAdd=(o,k)=> d=>{o.add(k);setTimeout(()=>o.remove(k) ,d)}
+
+词动画={bg:[NO,'C','LR','UD'], fg:{旋,落,显,飞},tOut:100,入:落, 落雪,终,光流:e=>()=>{/*anim*/},钟声:()=>{},图片:()=>{},反色:inv(G.canvas),反色全:inv(doc.body),类}
+}
+
+//x=open("k").read().split(' '); y=list(srt.parse(open("h0_.srt").read())) ; for(a,b)in zip(y,x): a.content=b ; srt.compose(y)
+
+_切词=(ln,f_one,dtLT=180)=>{let t=0,f=[],df=[t,0,f], res=[df], a=[],d={}, msg=v=>a.push(0,0,v)
+  chunk(ln, (dt,dur,x)=>{//取dt<, 对前括: 0,0,[!,旋] 传递fg ，添加[dt,0,(ask,..arg)] 若n(ak)入d ，若ak="" a序号入d  ；对闭括：若d.""!空 i:0,0,[#i1,ak] 若d.ak 回填[1]=t
+    let m,s;
+    while(m=/\[(([!/])?.*?)\]/g.exec(x)){} //i0+=n(m[0]); i0!=m.index? 有中间文
+    s=删中(x);
+    if(dt>=dtLT){f_one(a);a.splice(0,n(a))}
+    t+=dt+dur
+  })
+  df[1]=t;return res
+}
+//x[ 或..]x 或 ]x[ 不适合正则取x
+删中=(s,k2="[]")=>{let [k,K]=k2,x,q=0,a=[],i=0;for(;i<n(s);i++){x=s[i];
+  q+=x==k?1:0; if(!q)a.push(x) ;q-=x==K?1:0}return a.join("")}//首[既1尾 ]过后0 .子序列过滤
+
+切词=(ln,dtLT ,re=/\[(([!/])?.*?)\]/g)=>{
+let out=[], c=[],t=0,t0=t,a=[],cmd=指令(c,{/*dt或[/]序号记,待/k或""回填*/}, o=>o?a.push(0,0,o):n(a)),
+条=()=>{c.forEach(a=>{a[0]-=t0});a.unshift(0,t-t0,c.splice(0,n(c)));t0=t; out.push(a.splice(0,n(a)))}
+chunk(ln,(dt,dur,x)=>{if(dt>dtLT)条() ; t=t+(dt+dur)
+let m;while(m=re.exec(x))cmd(m[2]/*[!/xx]*/,m[1], t)
+a.push(dt,dur,删中(x))
+})
+条(); out.shift()//首dt大0
+return out
+}
+
+指令=(c,d,pu)=>(k,cmd,t)=>{
+  if(k=='!')return pu([k,cmd.slice(1)])
+  let a, grp="" //开-闭事件
+  if(k!='/'){
+    if(cmd==grp){a=['#',pu()/*idx*/,NO];pu(d[grp]=a);return}
+    a=[t,0,f=cmdF(cmd)]; c.push(a)
+    if(f.len) d[f.id]=a
+  }else{
+    cmd=cmd.slice(1)
+    if(a=d[grp]){
+      a[1]=(pu()-a[1])/3
+      a[2]=cmdF(cmd)()//直改元素
+    d[grp]=NO}
+    else{ a=d[cmd]; if(a)a[1]=t-a[0] ;else console.warn("no [begin]",cmd,d) }
+  }
+}
+cmdF=s=>{
+let a=s.split(','),k=a[0], f=词动画[k],N; if(!isNaN(k))return 词动画.bg[k];
+N=n(f);f=f.bind(NO,...a); f.len=N;f.id=k; return f
+}
+
+//创建元素组入res[0]：按[!旋]转化为动画函(e,c1=>； 若 0,0,[#,n,f] 则建组n, 那f(e) 是动画则加，是数或[]则替换词行内部dt；仍是创词逻辑
+//dur-.1s 撤回整行，按时滴答
+创字=a=>{
+  let grp=-1,i=3,f, eP=el(doc.body,"p"),ep,e  ,{fg,tOut}=词动画, E=(e0,s)=>{e=el(e0,"span"); e.innerText=s}
+  chunk(a,(dt,dur,x)=>{
+    if(grp!=-1){grp-- ;E(ep,x); if(grp==-1)f(ep); return}//本该是子队列看前[e,0,0].
+    if(dt==0&&dur==0){if(x[0]=='!')词动画.入=fg[x[1]]; else if(x[0]=='#'){grp=x[1],f=x[2],ep=el(eP,"b")} ;return}
+    E(eP,x); a[i++]=词动画.入(e,dt,dur)
+  }, 3)
+  a.length=i
+  a[0]=eP;a[2].push([a[1]-tOut,0, ()=>{for(let f of a.slice(3))f(NO,{direction:'reverse',duration:tOut}) }])
+}
+
+//按模板.text量填充词行，仅其首行有dur，负责整体退场
+
+let et=s=>n(s)==2?et2(s):[also(el(Sc,"div"),e=>e.className=s)], et2=([A,B])=>{let a,b;(a=el(Sc,"div")).className=A;(b=el(Sc,"div")).className=B; return[a,b]}
+
+
+//行首顺便定时。单页创建并填充div，其首得append
+
+//对行fs里[2]是'' 的泡，建新重复背景。 首项顺带所有fs 定时(有dur则以其调)，得函列表。 累计t1:仅首行右移 ，页首行[0]项负责append
+创页=a=>{let out=[],o1=[],t=0, x,k,bg,N,i=0, e,du,fs, ff,  run=([dt,du,f])=>setTimeout(()=>f(du),dt), add=(f,a)=>(ok,c)=>{for(let x of a)run(x); return f(ok,c)},
+  show=e=>()=>{Sc.innerHTML=``; e.forEach(x=>Sc.append(x))}; a.unshift(a[0]),
+  页=()=>{bg=et(k);i=0; t+=du}
+  for([e,du,fs,...ff]of a){
+    if((x=fs[0][2]).substr){fs.shift();k=x;页();N=n(bg); }
+    //if(e.innerText=="感谢你特别邀请")debugger  //v push(ff)  英明半月的我竟把这个基础分别加到俩if 还惋惜改好..面向查错编程害人不浅
+    if(i==N){页()}if(i==0){fs.push([0,0,show(bg)]);if(ff[0])ff[0]=add(ff[0],fs)} out.push(ff); bg[i++].append(e)  ;o1.push(newA(n(ff),_=>t) )
+  }
+  return [out,o1]
+}
+aloadSrt("h0").then(x=>{sr=切词(x,120); sr.forEach(创字); [ar,art]=创页(sr) ;滴答(ar.flat(),art.flat()) })
+</script>
 <style>*{padding:0;margin:0}
-#Sc{width:100%;height:100%;overflow:hidden; position:relative} #Sc>*{position:absolute}
+#Sc{width:100%;height:100%;overflow:hidden; position:relative; z-index:1} #Sc>*{position:absolute}
 #波{z-index:2;pointer-events:none}
 #sky{z-index:1;transform-origin:left top; animation: 160s infinite linear rot} #sky *{position:absolute}
 #sky{filter: opacity(0.6) drop-shadow(-10px 2px 10px var(--bg)) brightness(0.7); pointer-events:none}
 #sky :nth-child(2n+1) {filter: blur(4px) saturate(2.5);}
 
 .snow2{transform: rotate(180deg); filter: invert(1) brightness(0.7);}
-#Tick{z-index:5; height:3px} #Tick:hover{height:7px} #Tick hr{border:0; transition:.1s width;background: red}
+#Tick{z-index:5; height:3px; position:absolute;overflow:hidden} #Tick:hover{height:7px} #Tick hr{border:0; transition:.1s width;background: red}
 @keyframes rot{0%{transform:rotate(0deg)}to{transform:rotate(1turn)}}
-h1{font-size:20em}
+h1{font-size:20rem}
 
-.bgc{color: #0000;background:linear-gradient(90deg, var(--bg1),var(--bg2));-webkit-background-clip: text;}
+.bgc{color: #0000;background:linear-gradient(90deg, var(--bg),var(--bg1));-webkit-background-clip: text;}
 .fun{animation: 1s .5s infinite alternate ease-in fun}
-@keyframes fun{0%{--bg1:#79c34a; --bg2:#ffeb3bc7}
-to{--bg1:#4a53c3; --bg2:#ff563bc7} }
+@keyframes fun{0%{--bg:#79c34a; --bg1:#ffeb3bc7}
+to{--bg:#0049ed; --bg1:#ff563bc7} }
 
-@property --bg1 {syntax: '<color>';inherits: true;initial-value:#000}/*CSS Houdini*/
-@property --bg2 {syntax: '<color>';inherits: true;initial-value:#000}
+@keyframes 旋{
+0%{transform: rotate(353deg); filter: drop-shadow(-20px -9px 14px white)}
+to{transform: rotate(1turn); filter: drop-shadow(2px 4px 2px white)} }
+
+.落{animation: cubic-bezier(0.42, 0.09, 0, 1.01)}
+@keyframes 落{0%{transform:translateY(-.2em)}}
+
+.显{animation:cubic-bezier(0.14, 0.91, 0, 1.6)}/*opacity:.2*/
+
+.飞{transform: translate(0.2em, -0.3em);filter: blur(11px)}
+
+@property --bg {syntax: '<color>';inherits: true;initial-value:#000}/*CSS Houdini*/
+@property --bg1 {syntax: '<color>';inherits: true;initial-value:#000}
+
+.L,.R{height:100%;width:55%; padding:50px; line-height:100vh}
+.L{text-align: center;padding-left: var(--w)}
+.R{left:50%;padding-left: calc(6% - var(--w))}
+#Sc{--w:1em; font:6em sans}
+.L>p{transform:translateY(-1.4em)}
+.C{height: 100%;width: 100%;
+    text-align: center;line-height: 100vh;}
+
+.U,.D{height:50%;width:100%; padding:5em; line-height:25;text-align:center}
+.D{top:50%;}
+span{display:inline-block}
+.L,.R{font-size:5rem}
+body{color: whitesmoke;
+    background: #103d10;}
 </style>

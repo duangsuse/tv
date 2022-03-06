@@ -83,6 +83,8 @@ qucall=a=>a.forEach((f,i)=>{try{f()}catch(_){a.splice(i,1)}})
 //[aprod,acomb]=$YN(q=>(a,f,i=0)=>i<n(a)? (q?a[i]:a).map(x=>(q?aprod:acomb) (a,x1=>f(x,x1) ,i+1)):f())//链表尾, $YN=f=>[f($Y),f($N)]
 //最后页由波浪 彩手绘、拨弦、(.5,1)wh 旋转星星集。 星迭Vn2,补间Vn3色 输出到Vn4
 
+//VecN.wh 用作SVG是好事，但 &&chg&&o.width 的否定传参副作用实属不妥
+
 anim=aobj({rate:16,ease:t=>t%1.1 },
 (v0,v1,dur, f)=>aobj({_dv:v1-v0, dur,t0:0,
 rep(n=1,ok=noOp){let {rate,ease}=anim,{dur,t0}=this,q=n>0,
