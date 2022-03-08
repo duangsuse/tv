@@ -37,3 +37,111 @@ A 库=database 表=table 主键="primary key"
 "((\\["nrtf\\bv])|(\\u[0-9a-zA-Z]{4})|.)*"
 
 https://javascript.info/regexp-unicode
+
+组合器的本质也只是按()=> 的类型执行，依然是靠迭代[]实现语义，还不如直接订好有几种情况
+
+
+词A={库:"database",表:"table"}; 词F={主键:"primary key"}
+词={数4:"int",浮:"decimal",文:"char", 改文:"varchar",数2:"smallint",数1:"tinyint"}
+
+P查询=()=>{
+let 删=q=>[名A, 行(名),拼('drop',q)], 名构=[名,结构],旗=[名,'+',名],译=(k,t)=>t[k]||k,
+拼=(A,B)=>(a,k)=>k.map(x=>A+` ${a} `+k+B), str=JSON.stringify,tup=a=>`(${str(a).slice(1,-1)})`,//不能 新建人 名="某"
+tupU=t=>Object.entries(t).map(([k,v])=>`${k}=${str(v)}`).join()
+替首=(s,pre,s1)=>s.startsWith(pre)?`${s1}(${s.slice(n(pre))})` :s
+译函=(前缀,a)=>J(a, k=> 前缀.reduce((a,[k,v])=>替首(a,k,v), k.trimLeft()) )
+整数=P.f(r(/[+-]?\d+/),x=>+x)
+括=p=>['(',p,')',(_,x,__)=>x]
+c={
+有何:"show ",有用:"use ",
+有:[词A, (x,s)=>行(x=="table"?名构:名) ,拼('create','')],
+有改:[词A, 名,One(结构,旗) ,(a,k,c)=>`alter ${a} ${k} modify ${c}`],//or change
+有删:删(" if not exists"),["有删!"]:删(''),
+f:(p,f0,f=NO)=>{let r,R=s=>P.fed(s,p)
+  return f? s=>{let a=R(s),A=f0,x;if(NO==a)return a; for(x of a)f(A,x) ;return A}//每项前都能有tok空格，即便 `a${ 2}`和{字典:}
+    : s=>NO==( r=R(s))?r: f0(r)//转化字区 ^{}严谨[]次项
+},
+
+
+新:[值,选, (vs,[s,S])=>{if(n(vs)) {
+  let d={};vs.forEach((v,i)=>{if(v)d[词[s][i][0] ]=v}) ;vs=d}
+  return `update ${s} set ${tupU(vs)}`+S
+}],
+新建:[名,行J(值), (k,v)=>`insert into ${k} values `+(n(v)<3?"":"\n")+v.map(tup).join(",\n") ],//新建(名,)人()
+新删:[选, ([s,S])=>`delete from `+s+S],
+取:[One(括原文,just("*")),选, (k,[s,S])=>`select ${k.slice(1,-1)} from `+s+S],
+类型:[名,'=',类型, (k,_,t)=>{词[k]=t()}]
+}
+let k,v;for(k in c){v=c[k]
+  if(v.substr) c[k]=[词A,x=>(v=="use "&&x==词A.表)?`/*${词.表=x}*/`:v+x] }
+return c
+}
+
+P引用=()=>{
+名=pRE(/\w[\d\w]*/); 括原文=pRE(/\(.*?\)/)
+数值=P.f(pRE(/([+-]?\d*)?(.\d+)?/),x=>+x)
+文=P.f(pRE(/"((\\["nrtfbu])|.)*"/),JSON.parse)
+
+选=[One(名, s=>词.表), One(括原文, just("1=1")) ]
+值单=One(数值,文,['?',数值, (_,i)=>i ], P.f("无",_=>NO),名)
+值=One(括(行J(值单)),
+P.f(行([名,'=',值]), {},o=>(k,_,v)=>{o[k]=v}) )
+
+类型=[名,括原文, One('?',just('  not null')),One(["或",值]),
+  (k,arg,nul,dv)=>词[k]+arg+nul.slice(1)+(dv?' default '+dv :'') ]
+结构=括(行([名,类型, 行J(名),
+  (k,t,fl)=>k+译(t,词)+' '+fl.map(x=>译(x,词F)).join("")  ]))
+}
+
+
+n=o=>o.length,ss=s=>s.split(" "),just=k=>()=>k,NO=null
+feed=(s,i=0)=>n=>{let q=n<0,r=s.slice(i,i+(q?-n:n)); if(q)i-=n; return r}
+//flineno()有 .st=0 则不跳空格, pre=[]?存 span=[i末I词] 的 ij=[始,末,i] (通过\n计数-末) 的前空格 和ctx={}作用域等
+//pRE,P.典需控制跳空格以连字 //^不对,tok 字区就够取空白
+
+pRE=o=>{let re=RegExp('^'+o.source.replaceAll(`\w`,`\p{L}`),'u'),d=3
+return s=>{let r,N=0,N0; do{r=re.exec(s(N+d)); N0=N;if(r)N=n(r[0]) }while(N!=N0) ;return s(-N)}
+}//也有兼容 JSON.parse 的，结束条件是异常 从中取末位置
+
+P={//成功则;构更大
+f:(p,f0,f=NO)=>{p=s=>P.fed(s,p) ;let r//读数等字区转化和[]次集{}严谨化
+  return f? s=>{let a=p(s),x,A=f0;if(NO==a)return a; for(x of a)f(A,x) ;return A} : s=>NO==( r=p(s))?r: f0(r)
+},
+//常量:str s=>res, [] 0止最右 2参(前项,流) 最右=转换  {}后缀树-内项也是
+fed:(s,p)=>{let t=typeof p; switch(t){case"function":return p(s);case"object":
+  let i=0,N, a,x;if(N=n(p)){a=[]
+    for(;i<N-1;i++)a[i]=P.fed(s, "function"==typeof(x=p[i])&&2==n(x)? x(a[i-1],s) : x)
+    return p[N-1](...a)
+  }
+  let K="\0",f=p[K]; if(!f)f=p[K]=P.典(p)
+  return P.fed(s,f(s))
+  case"string":return ""==p?p:  p==s(n(p))?s(-n(p)):NO
+  default:return p}
+}
+};One=(...ps)=>s=>{let p,x;for(p of ps)if(NO!=( x=P.fed(s,p)))return x}
+行J=(p,sep='')=>s=>{let r=[],x;do{x=P.fed(s,p);if(NO!=x){r.push(x);x=P.fed(s,sep)}}while(x!=NO); return n(r)?r:NO}
+//其实 o.f(1) 左优先链也是这种分隔符，f(1) 是靠[id,括, ()=>括?]  不需61的自由选择
+
+行=p=>行J(p,',')
+
+//前缀树d内kv k是s[0]位字的所有可能 v是s[1]的 (含在长1结束"\0"的情况) 。压缩的后缀树更配feed些
+trieS=d=>(k,v)=>{
+let pre=(a,b)=>{let i=0,N=Math.min(n(a),n(b));for(;i<N;i++)if(a[i]!==b[i])return i;  return N},
+p=d,K,p1,S//AME
+fndK:for(;;){for([K,p1]of p)if(S=pre(K,k))
+  if(p1.set&&S==n(K) ){p=p1,k=k.slice(S);continue fndK} else {
+      p.set(K.slice(0,S),p.delete(K)&& new Map([[k.slice(S),v],[K.slice(S),p1]]) );return}
+  p.set(k,v);break}
+}
+tadd=(o,T)=>{let d=new Map,f=T(d),k;for(k in o)f(k,o[k]) ;return d}
+
+P.典=(o,t=tadd(o,trieS) )=>s=>{
+  let p=t,k,v;for([k,v]of p.entries()){
+    if(k==s(n(k)) &&s(-n(k))) if(v.set)p=v; else return v;
+  }
+}
+
+ts=trieS(d=new Map)
+ss("pub pri pro").forEach(ts)
+ss("abstract continue for new switch assert default goto package synchronized boolean do if private this break double implements protected throw byte else import public throws case enum instanceof return transient catch extends int short try char final interface static void class finally long strictfp volatile const float native super while true false").forEach(ts)
+
