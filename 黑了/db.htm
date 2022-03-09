@@ -1,60 +1,75 @@
-<input id=eTxt>以<input size=3 id=eK><script>
-词={数4:"int",浮:"decimal",文:"char", 改文:"varchar",长文:"text",数1:"tinyint",数2:"smallint",真假:"bit",日期:"datetime",
-fl:{主键:"primary key",自增:"auto_increment",正:"unsigned"},名:{无:"\0"},表:"有用表xx" ,//页每(limit,offset) 组以键
-fn:{计:"count",不重:"distinct",拼组:"group_concat",求和:"sum",求均:"average",极小:"min",极大:"max"}}
+<input id=eTxt>以<input size=3 id=eK>
+<pre id=SQCo>SQL</pre>
+<textarea id=SQC onblur="SQCo.innerText=P.喂(SQ糖,SQC.value+'\0').join('')" placeholder="SQ糖代码"></textarea>
+<script>
+词={数4:"int",浮:"decimal",文:"char", 改文:"varchar",长文:"text",数1:"tinyint",数2:"smallint",真假:"bit",时间:"datetime",
+fl:{主键:"primary key",自增:"auto_increment",正:"unsigned",唯一:"unique"},名:{无:"\0",空:"\0NULL"},表:"有用表xx" ,//页每(limit,offset) 组以键
+fn:{计:"count",拼组:"group_concat",求和:"sum",求均:"average",极小:"min",极大:"max"}}
 建典=(k,v)=>{let t={};ss(v).forEach((x,i)=>t[k[i]]=x); return t}
 
 P查询=()=>{
 let 查=(k,v,t=建典(k,v))=> s=>s(1) in t? t[s(-1)]:NO,
 词A=查("库表","database table"),词S=查("小大","Asc Desc"),
 
-删=q=>[词A,行(名), (a,k)=>k.map(x=>`drop ${a} `+x+q)],
 有=(a,x)=>P.f(行(x) ,k=>k.map(x=>`create ${a} `+x) ),
+删=q=>[词A,行(名), (a,k)=>k.map(x=>`drop ${a} `+x+q)],
 列域=括原文, 加=(...p)=>_1(p,just('')), 旗=[名,'+',名],
-分页=_1(['页每',值单,_1(值单,just(0)),(_,a,b)=>` limit ${a} offset ${b}`] ,just('')),
 
-str=JSON.stringify,KV=Object.entries,无括=(s,f)=>`(${f(s.slice(1,-1))})`,J=(a,f,sep=", ")=>a.map(f).join(sep),
-tup=a=>无括(str(a),x=>x),//别 新建人 名="某" ;新建(名)人("小明")
+str=JSON.stringify,KV=Object.entries,
+简写=x=>x,
+tup=a=>`(${J(简写(a), v=>typeof v=="symbol"?'?'+v.description : v[0]=="\0"? (n(v)==1?"default":v.slice(1)) : str(v) )})`,//别 新建人 名="某" ;新建(名)人("小明")
 tupU=t=>J(KV(t), ([k,v])=>`${k}=${str(v)}`),
-tupC=a=>J(a, ([k,s])=>k+`  `+s),
+tupC=a=>J(a, ([k,s])=>k+`  `+(s[0]=='$'?词[k]+s.slice(1) :s)),
 fn表=KV(词.fn),
 译函=前缀=>s=>{let 调=前缀.find(e=>s.startsWith(e[0])); return (调==NO)?s: 调[1]+`(${s.slice(n(调[0]))})`},
+f简=o=>a=>{let k;for(k in o)词.名[k](a,o[k]) ;return a},
+
+分页=_1(['页每',值单,_1(值单,just(0)),(_,a,b)=>` limit ${a} offset ${b}`] ,just('')),
 标=(A,f)=>(k,_,v)=>{f(k,v);return `/*${A} ${k}=${v}*/`}
 
 类型=[名,括原文, _1('?',just('  not null')),_1(["或",值单, (_,v)=>` default `+str(v)],just('')), _1(_N(名),just([])),
   (k,arg,nul,dv,fl)=>译(k,词)+arg+nul.slice(1)+dv +' '+J(fl,x=>译(x,词.fl), " ") ]
-结构=括(行([名,类型, Array]))
+结构=括(行([名,_1(类型,just('$')), Array]))
 名构=[名,结构, (k,ty)=>{词[k]=ty; return k+'('+tupC(ty)+')' } ]
 
 语句={
 有库:有("database",名),有表:有("table",名构),
 有删:删(" if not exists"),["有删!"]:删(''),
-有改:[词A, 名,_1(结构,旗) ,(a,k,c)=>`alter ${a} ${k} change ${tupC([c[0]] )}`],
+有改:[词A, 名,_1(结构,旗) ,(a,k,c)=>`alter ${a} ${k} change ${tupC([c[0]] ).replace('__',' ')}`],
 
 新删:[选, ([s,S])=>`delete from `+s+S],
-新建:[列域,名,_N(值), (k,s,v)=>`insert into ${s} ${k}values `+(n(v)<3?"":"\n")+J(v,tup, ",\n") ],
+新建:[列域,名,_N(值), (k,s,v)=>`insert into ${s} ${k}values `+(n(v)<3?"":"\n")+J_if(v,o=>n(o)!=NO?NO:(简写=f简(o)) ,tup, ",\n") ],
 新:[值,选, (vs,[s,S])=>{
   if(n(vs)){let d={};vs.forEach((v,i)=>{if(v!="\0")d[ 词[s] [i][0] ]=v}) ;vs=d}
   return `update ${s} set ${tupU(vs)} `+S
 }],
-取:[列域,选,加('序',词S,名,(_,a,k)=>` sort by ${k} ${a}`),加('分组',名, (_,k)=>` order by `+k),
-  分页, (k,[s,S],ord,grp,pg)=>`select${k?无括(k,x=>J(x.split(',') ,译函(fn表)) ):''} from `+(s[0]=='$'?`(${词.名[s]})`:s) +S +ord+grp+pg],
-类型:[名,'=',类型, 标('有',(k,ty)=>{词[k]=ty})],
+取:[加('不重',_=>` distinct `),列域,选,
+  加('序',词S,名,(_,a,k)=>` order by ${k} ${a}`),加('分组',名, (_,k)=>` group by `+k),
+  分页,加(文,s=>s+`/**/`), (d,k,[s,S],ord,grp,pg,co)=>`select${d}${k?无括(k,x=>J(x.split(',') ,译函(fn表)) ):'*'} from `+(s[0]=='$'?`(${词.名[s]})`:s) +S +ord+grp+pg+co],
+简写:[名,'=',文, 标('有',(k,js)=>{词.名[k]=Function('a,j',js) })],
+类型默认:P.f(结构, ty=>ty.forEach(([k,t])=>{ 词[k]=t } ) ||`/*有类型 ${J(ty,x=>x[0])}*/`),
 $:[名,'=',NO, 标('子查询',(k,sql)=>{词.名['$'+k]=sql})]//勉强支持嵌套呗
 ,['']:just(NO) }
+语句.$[2]=语句
 KV(建典("何用","show use")).forEach(([k,v])=>{v+=' '
   语句['有'+k]=[词A,_1(名,just('')), (a,k)=>(v=="use "&&a=="table")?`/*${词.表=k}*/`:v+a+(k=='s'?k:' '+k)]
 })
-语句.$[2]=语句
 
-SQ糖=_N(_1(语句,s=>{throw `请在 ${Object.keys(语句)} 里选，非`+s(20)}) ,_1(';','；',s=>s(1)!="\0"?'':NO), [Array, (a,A)=>{a.push((typeof A=="string"?A:A.join(';'))+';\n')  }])
+J_if=(v,f,f1,sep)=>{
+let x,a=[]; for(x of v)if(NO==f(x))a.push(f1(x) )
+return a.join(sep)
+}
+
+SQ糖=_N(_1(语句,s=>{if(s(1)=="\0")return[];throw `请在 ${Object.keys(语句)} 里选，非`+s(20)}) ,_1(';','；',s=>s(1)!="\0"?'':NO), [Array, (a,A)=>{a.push((typeof A=="string"?A:A.join(';'))+';\n')  }])
 }
 
 P受用=()=>{
 括=p=>['(',p,')',(_,x,__)=>x]
 行=p=>_N(p,',') ,译=(k,t)=>k in t?t[k]:k
+无括=(s,f)=>`(${f(s.slice(1,-1))})`,J=(a,f,sep=", ")=>a.map(f).join(sep)
+
 let ri=1,r=o=>P.tok(ri++,_RE(o))
-名=r(/[\w$][\d\w]*/); 括原文=_1(r(/\([^)]+\)?/),just(''))
+名=r(/[\w$][\d\w_]*/); 括原文=_1(r(/\([^)]+\)?/),just(''))
 数值=P.f(r(/([+-]?\d*)?(\.\d+)?/),x=>+x)
 文=P.f(r(/"((\\["nrtfbu])|[^"])*"?/),JSON.parse)
 
@@ -63,6 +78,8 @@ let ri=1,r=o=>P.tok(ri++,_RE(o))
 值=_1(括(_N(值单)),
   _N([名,'=',值单, (k,_,v)=>[k,v] ],',',P.asObj) )
 }
+
+//rq=indexedDB.open("xx",5);rq.onupgradeneeded=()=>{tbl=rq.result.createObjectStore("a")}; //tbl.openCursor(IDBKeyRange.only(k)).res.continue() //IDB OS可以键自增.. 没分col NoSQL
 
 onload=()=>{
 试析={有:[_RE(/\d+.\d*/), {数目:_1("奥特光线","奥利奥", ["伽马",_RE(/./),"人",(_,x,__)=>x], _N(_RE(/\d+/),'+') ), 哈巴:_N(_RE(/[啊波吃的]/) ) ,['']:just('_1和{}必须穷举')},Array],
@@ -76,9 +93,6 @@ P受用();P查询()
 n=o=>o.length,ss=s=>s.split(" "),just=k=>()=>k,NO=null
 //[]顺序{}前缀 _1 Or _N 个 _RE 或""词tok(1,p)高亮 构成语法
 feed=(s,i=0)=>n=>{let q=n<0,r=s.slice(i,i+(q?-n:n)); if(q)i-=n; return r}
-lineno=(s,c={st:0}, noWhite=s=>{for(let W=/\s/,x;W.test(x=s(1));)s(-1)})=>n=>{if(n==0)return c;
-  if(0==c.st)noWhite(s); return s(n)
-}
 
 _RE=o=>{let re=RegExp('^'+(o.source||o).replaceAll(`\w`,`\p{L}`),'u'),d=4
 return s=>{let r,N=0,N0; do{r=re.exec(s(N+d)); N0=N;if(r)N=n(r[0]) }while(N!=N0) ;return N?s(-N):NO}
@@ -102,6 +116,12 @@ asAry:[Array,(a,x)=>a.push(x)],asObj:[()=>Object.create(NO),(o,[k,v])=>{o[k]=v}]
 _1=(...ps)=>s=>{let p,x;for(p of ps)if(NO!=( x=P.fed(s,p)))return x}
 _N=(p,sep='',[A,B]=P.asAry)=>s=>{let r=A(),x;do{x=P.fed(s,p);if(NO!=x){B(r,x);x=P.fed(s,sep)}}while(x!=NO); for(x in r)return r;return NO}
 
+lineno=(s,c={st:0}, noWhite=s=>{let [行,列]=[/[^\n]*/,/[^\*]*\*?/].map(o=>P.tok(9,_RE(o))), 注=C=>C=='//'?(s(-2),行(s)) : C=='/*'? (s(-2),列(s)) : NO
+  for(let W=/\s/,x;W.test(x=s(1))|| x=='/'&&注(s(2));)s(-1)
+})=> n=>{if(n==0)return c;
+  if(0==c.st)noWhite(s); return s(n)
+}
+
 trieS=d=>(k,v)=>{
 let pre=(a,b)=>{let i=0,N=Math.min(n(a),n(b));for(;i<N;i++)if(a[i]!==b[i])return i;  return N},
 p=d,K,p1,S//AME
@@ -118,6 +138,5 @@ P.典=(o,t=tadd(o,trieS) )=>P.tok(10,s=>{
     if(k==s(n(k))){s(-n(k)); if(v.set){p=v;continue Fwd} else return v}
   } return NO}
 })
+
 </script>
-<textarea id=SQC onblur="SQCo.innerText=P.喂(SQ糖,SQC.value+'\0').join('')">SQ糖代码</textarea>
-<p id=SQCo>SQL</p>
