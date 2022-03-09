@@ -4,6 +4,7 @@
 <script>
 词={数4:"int",浮:"decimal",文:"char", 改文:"varchar",长文:"text",数1:"tinyint",数2:"smallint",真假:"bit",时间:"datetime",
 fl:{主键:"primary key",自增:"auto_increment",正:"unsigned",唯一:"unique"},名:{无:"\0",空:"\0NULL"},表:"有用表xx" ,//页每(limit,offset) 组以键
+问k:[],事:{},
 fn:{计:"count",拼组:"group_concat",求和:"sum",求均:"average",极小:"min",极大:"max"}}
 建典=(k,v)=>{let t={};ss(v).forEach((x,i)=>t[k[i]]=x); return t}
 
@@ -16,16 +17,18 @@ let 查=(k,v,t=建典(k,v))=> s=>s(1) in t? t[s(-1)]:NO,
 列域=括原文, 加=(...p)=>_1(p,just('')), 旗=[名,'+',名],
 
 str=JSON.stringify,KV=Object.entries,
-简写=x=>x,
-tup=a=>`(${J(简写(a), v=>typeof v=="symbol"?'?'+v.description : v[0]=="\0"? (n(v)==1?"default":v.slice(1)) : str(v) )})`,//别 新建人 名="某" ;新建(名)人("小明")
-tupU=t=>J(KV(t), ([k,v])=>`${k}=${str(v)}`),
+简写=x=>x, qstr=v=>v[0]=="\0"? (n(v)==1?"default":v.slice(1)) : str(v),
+tup=a=>`(${J(简写(a), qstr)})`,//别 新建人 名="某" ;新建(名)人("小明")
+tupU=t=>J(t, ([k,v])=>{填问(v,k); return `${k}=${qstr(v)}`}),
 tupC=a=>J(a, ([k,s])=>k+`  `+(s[0]=='$'?词[k]+s.slice(1) :s)),
+填问=(v,k)=>{if(typeof v=="string"){let m;if(m=/^\0\?(\d+)/.exec(v))词.问k[m[1]]=k }},
 fn表=KV(词.fn),
 译函=前缀=>s=>{let 调=前缀.find(e=>s.startsWith(e[0])); return (调==NO)?s: 调[1]+`(${s.slice(n(调[0]))})`},
-f简=o=>a=>{let k;for(k in o)词.名[k](a,o[k]) ;return a},
+f简=o=>a=>{for(let[k,v]of o)词.名[k](a,v) ;return a},
 
 分页=_1(['页每',值单,_1(值单,just(0)),(_,a,b)=>` limit ${a} offset ${b}`] ,just('')),
-标=(A,f)=>(k,_,v)=>{f(k,v);return `/*${A} ${k}=${v}*/`}
+标=(A,f)=>(k,_,v)=>{f(k,v);return `/*${A} ${k}=${v}*/`},
+为典=o=>Array.isArray(o[0])
 
 类型=[名,括原文, _1('?',just('  not null')),_1(["或",值单, (_,v)=>` default `+str(v)],just('')), _1(_N(名),just([])),
   (k,arg,nul,dv,fl)=>译(k,词)+arg+nul.slice(1)+dv +' '+J(fl,x=>译(x,词.fl), " ") ]
@@ -38,17 +41,19 @@ f简=o=>a=>{let k;for(k in o)词.名[k](a,o[k]) ;return a},
 有改:[词A, 名,_1(结构,旗) ,(a,k,c)=>`alter ${a} ${k} change ${tupC([c[0]] ).replace('__',' ')}`],
 
 新删:[选, ([s,S])=>`delete from `+s+S],
-新建:[列域,名,_N(值), (k,s,v)=>`insert into ${s} ${k}values `+(n(v)<3?"":"\n")+J_if(v,o=>n(o)!=NO?NO:(简写=f简(o)) ,tup, ",\n") ],
+新建:[列域,名,_N(值), (k,s,v)=>{简写=x=>x;return `insert into ${s} ${k}values `+(n(v)<3?"":"\n")+J_if(v,o=>为典(o)?(简写=f简(o)):NO ,tup, ",\n") }],
 新:[值,选, (vs,[s,S])=>{
-  if(n(vs)){let d={};vs.forEach((v,i)=>{if(v!="\0")d[ 词[s] [i][0] ]=v}) ;vs=d}
-  return `update ${s} set ${tupU(vs)} `+S
+  if(!为典(vs)){let k=[];vs.forEach((v,i)=>{if(v!="\0")k.push([ 词[s] [i][0],v ]) }) ;vs=k}
+  if(!S.endsWith("(默认)"))return `update ${s} set ${tupU(vs)} `+S
+  vs.forEach(([k,v])=> 填问(v,k))
+  return `insert into ${s} (${J(vs,x=>x[0])})values (${J(vs,x=>x[1])})`
 }],
 取:[加('不重',_=>` distinct `),列域,选,
   加('序',词S,名,(_,a,k)=>` order by ${k} ${a}`),加('分组',名, (_,k)=>` group by `+k),
   分页,加(文,s=>s+`/**/`), (d,k,[s,S],ord,grp,pg,co)=>`select${d}${k?无括(k,x=>J(x.split(',') ,译函(fn表)) ):'*'} from `+(s[0]=='$'?`(${词.名[s]})`:s) +S +ord+grp+pg+co],
 简写:[名,'=',文, 标('有',(k,js)=>{词.名[k]=Function('a,j',js) })],
 类型默认:P.f(结构, ty=>ty.forEach(([k,t])=>{ 词[k]=t } ) ||`/*有类型 ${J(ty,x=>x[0])}*/`),
-$:[名,'=',NO, 标('子查询',(k,sql)=>{词.名['$'+k]=sql})]//勉强支持嵌套呗
+$:[名,'=',NO, 标('子查询',(k,sql)=>{if(k[0]=='查')词.名['$'+k.slice(1)]=sql; else 词.事[k]=[词.问k.splice(0,n(词.问k)),sql] })]//勉强支持嵌套呗
 ,['']:just(NO) }
 语句.$[2]=语句
 KV(建典("何用","show use")).forEach(([k,v])=>{v+=' '
@@ -73,10 +78,10 @@ let ri=1,r=o=>P.tok(ri++,_RE(o))
 数值=P.f(r(/([+-]?\d*)?(\.\d+)?/),x=>+x)
 文=P.f(r(/"((\\["nrtfbu])|[^"])*"?/),JSON.parse)
 
-选=[_1(名, s=>词.表), 括原文 ,(s,co)=>[s,` where ${co||"1=1"}`] ]
-值单=_1(数值,文,['?',数值, (_,i)=>Symbol(i) ], P.f(名,k=>译(k,词.名) ) )
+选=[_1(名, s=>词.表), 括原文 ,(s,co)=>[s,co?( co.replace(/\?(\d+)/g, (m,i)=>词.问k[i]=`_`+i), ` where ${co}`):''] ]
+值单=_1(数值,文,['?',数值, (_,i)=>"\0?"+i ], P.f(名,k=>译(k,词.名) ) )
 值=_1(括(_N(值单)),
-  _N([名,'=',值单, (k,_,v)=>[k,v] ],',',P.asObj) )
+  _N([名,'=',值单, (k,_,v)=>[k,v] ],',') )
 }
 
 //rq=indexedDB.open("xx",5);rq.onupgradeneeded=()=>{tbl=rq.result.createObjectStore("a")}; //tbl.openCursor(IDBKeyRange.only(k)).res.continue() //IDB OS可以键自增.. 没分col NoSQL
@@ -90,7 +95,7 @@ eTxt.onchange=()=>console.log(P.喂(试析, eTxt.value) )
 P受用();P查询()
 }</script>
 <script>
-n=o=>o.length,ss=s=>s.split(" "),just=k=>()=>k,NO=null
+n=o=>o.length,ss=s=>s.split(" "),just=k=>()=>k,NO=null ,$Y=true,$N=false
 //[]顺序{}前缀 _1 Or _N 个 _RE 或""词tok(1,p)高亮 构成语法
 feed=(s,i=0)=>n=>{let q=n<0,r=s.slice(i,i+(q?-n:n)); if(q)i-=n; return r}
 
@@ -116,7 +121,7 @@ asAry:[Array,(a,x)=>a.push(x)],asObj:[()=>Object.create(NO),(o,[k,v])=>{o[k]=v}]
 _1=(...ps)=>s=>{let p,x;for(p of ps)if(NO!=( x=P.fed(s,p)))return x}
 _N=(p,sep='',[A,B]=P.asAry)=>s=>{let r=A(),x;do{x=P.fed(s,p);if(NO!=x){B(r,x);x=P.fed(s,sep)}}while(x!=NO); for(x in r)return r;return NO}
 
-lineno=(s,c={st:0}, noWhite=s=>{let [行,列]=[/[^\n]*/,/[^\*]*\*?/].map(o=>P.tok(9,_RE(o))), 注=C=>C=='//'?(s(-2),行(s)) : C=='/*'? (s(-2),列(s)) : NO
+lineno=(s,c={st:0,cmt:(k,s)=>$Y }, noWhite=s=>{let f=c.cmt,[行,列]=[/[^\n]*/,/[^\*]*\*?/].map(o=>P.tok(9,_RE(o))), 注=C=>C=='//'?f(s(-2),行(s)) : C=='/*'? f(s(-2),列(s)) : $N
   for(let W=/\s/,x;W.test(x=s(1))|| x=='/'&&注(s(2));)s(-1)
 })=> n=>{if(n==0)return c;
   if(0==c.st)noWhite(s); return s(n)
