@@ -1,10 +1,48 @@
 <input id=eTxt>以<input size=3 id=eK>
+<div class=SQC><table></table>
 <pre id=SQCo>SQL</pre>
-<textarea id=SQC onblur="SQCo.innerText=P.喂(SQ糖,SQC.value+'\0').join('')" placeholder="SQ糖代码"></textarea>
+<textarea id=SQC placeholder="SQ糖代码"></textarea>
+</div>
+<script>doc=document
+dbSql=(k,o=openDatabase(k,0,k,1024*4))=>(s,ok)=>o.transaction(x=> x.executeSql(s,[], (_,r)=>ok(r),(_,ex)=>alert(ex.message) ) )
+eDB=()=>{
+SQC.onchange=()=>set(SQCo,"p", P.喂(SQ糖,SQC.value+'\0') )//emm之前还以为只有blur
+let f=dbSql("a"),e,eC,tbl; on("click","input", eHid(e=SQC.parentNode) )(doc.body)
+on("click","p", ev=>f((eC=ev.target).innerText,tbl) )(e)
+tbl=({rows:a,rowsAffected:num})=>{eC.before(el("span",`*${n(a)}+`,num)); if(n(a)){let k=Object.keys(a[0]),th={},x;for(x of k)th[x]=x;
+  set(e.firstChild,NO, [th,...a].map(r=>set(el("tr"),"td", k.map(k=>r[k] )) ) )}}
+}
+
+el=(k/*tag*/,...fe)=>{if(!k.nodeType)k=doc.createElement(k);  while(typeof fe=="function")fe.shift()(k) ;for(let e of fe)k.append(e) ;return k}
+on=(k,css,f)=>e=>e.addEventListener(k, ev=>{if(ev.target.matches(css))f(ev)})
+
+set=(ul,li,a)=>{if(li)a.forEach((x,i)=>a[i]=el(li,x)); ul.innerHTML=``;return el(ul,...a) }
+eHid=e=>{
+let c=e.style,ct=k=>e.classList.toggle(k);
+ct("gone");e.onblur=()=>{ct("show");e.addEventListener("transitionend",()=>ct("gone"),{once:$Y}) }
+return ev=>{Object.assign(c,{left:ev.clientX,top:ev.clientY}); e.onblur()}
+}
+eDB()
+</script>
+<style>
+.SQC{    border: 2px solid gray; position:absolute;
+    margin: 0.5em; opacity:0;
+    transition: .5s opacity; max-width:120vw; }
+.show{opacity:1}.gone{pointer-events:none}
+#SQC{width:100%}
+#SQCo>p::after{content:';'}
+#SQCo>p:hover{background:yellowgreen}
+.SQC table>tr:first-child {
+    background: yellow;
+    font-size: 1.4em;}
+#SQCo span{float:right;background:skyblue; border-left: 2px solid red;}
+.SQC tr:hover {background: aqua;}
+.SQC td:hover {background: red;}
+</style>
 <script>
-词={数4:"int",浮:"decimal",文:"char", 改文:"varchar",长文:"text",数1:"tinyint",数2:"smallint",真假:"bit",时间:"datetime",
+词={数4:"int",浮:"decimal",文:"char",定:"enum", 改文:"varchar",长文:"text",数1:"tinyint",数2:"smallint",真假:"bit",时间:"datetime",
 fl:{主键:"primary key",自增:"auto_increment",正:"unsigned",唯一:"unique"},名:{无:"\0",空:"\0NULL"},表:"有用表xx" ,//页每(limit,offset) 组以键
-问k:[],事:{},
+问k:[],事:{},//新建(默认),新 和 取某表(x=?0) 参名于$函数=语句
 fn:{计:"count",拼组:"group_concat",求和:"sum",求均:"average",极小:"min",极大:"max"}}
 建典=(k,v)=>{let t={};ss(v).forEach((x,i)=>t[k[i]]=x); return t}
 
@@ -26,7 +64,7 @@ fn表=KV(词.fn),
 译函=前缀=>s=>{let 调=前缀.find(e=>s.startsWith(e[0])); return (调==NO)?s: 调[1]+`(${s.slice(n(调[0]))})`},
 f简=o=>a=>{for(let[k,v]of o)词.名[k](a,v) ;return a},
 
-分页=_1(['页每',值单,_1(值单,just(0)),(_,a,b)=>` limit ${a} offset ${b}`] ,just('')),
+分页=_1(['页每',数值,_1(数值,just(0)),(_,a,b)=>` limit ${a} offset ${b}`] ,just('')),
 标=(A,f)=>(k,_,v)=>{f(k,v);return `/*${A} ${k}=${v}*/`},
 为典=o=>Array.isArray(o[0])
 
@@ -46,18 +84,21 @@ f简=o=>a=>{for(let[k,v]of o)词.名[k](a,v) ;return a},
   if(!为典(vs)){let k=[];vs.forEach((v,i)=>{if(v!="\0")k.push([ 词[s] [i][0],v ]) }) ;vs=k}
   if(!S.endsWith("(默认)"))return `update ${s} set ${tupU(vs)} `+S
   vs.forEach(([k,v])=> 填问(v,k))
-  return `insert into ${s} (${J(vs,x=>x[0])})values (${J(vs,x=>x[1])})`
+  return `insert into ${s} (${J(vs,x=>x[0])})values (${J(vs,x=>qstr(x[1]) )})`
 }],
 取:[加('不重',_=>` distinct `),列域,选,
   加('序',词S,名,(_,a,k)=>` order by ${k} ${a}`),加('分组',名, (_,k)=>` group by `+k),
   分页,加(文,s=>s+`/**/`), (d,k,[s,S],ord,grp,pg,co)=>`select${d}${k?无括(k,x=>J(x.split(',') ,译函(fn表)) ):'*'} from `+(s[0]=='$'?`(${词.名[s]})`:s) +S +ord+grp+pg+co],
 简写:[名,'=',文, 标('有',(k,js)=>{词.名[k]=Function('a,j',js) })],
 类型默认:P.f(结构, ty=>ty.forEach(([k,t])=>{ 词[k]=t } ) ||`/*有类型 ${J(ty,x=>x[0])}*/`),
-$:[名,'=',NO, 标('子查询',(k,sql)=>{if(k[0]=='查')词.名['$'+k.slice(1)]=sql; else 词.事[k]=[词.问k.splice(0,n(词.问k)),sql] })]//勉强支持嵌套呗
+$:[名,'=',NO, 标('子查询',(k,sql)=>{if(k[0]=='查')词.名['$'+k.slice(1)]=sql; else 词.事[k]=[词.问k.splice(0,n(词.问k)),sql] })]//勉强支持嵌套$查=呗
 ,['']:just(NO) }
 语句.$[2]=语句
 KV(建典("何用","show use")).forEach(([k,v])=>{v+=' '
   语句['有'+k]=[词A,_1(名,just('')), (a,k)=>(v=="use "&&a=="table")?`/*${词.表=k}*/`:v+a+(k=='s'?k:' '+k)]
+})
+KV(建典("日钟时","DATE TIME TIMESTAMP")).forEach(([k,v])=>{v='CURRENT_'+v
+  词.名["当前"+k]=(a,j)=>{a[j]="\0"+v}
 })
 
 J_if=(v,f,f1,sep)=>{
@@ -65,7 +106,8 @@ let x,a=[]; for(x of v)if(NO==f(x))a.push(f1(x) )
 return a.join(sep)
 }
 
-SQ糖=_N(_1(语句,s=>{if(s(1)=="\0")return[];throw `请在 ${Object.keys(语句)} 里选，非`+s(20)}) ,_1(';','；',s=>s(1)!="\0"?'':NO), [Array, (a,A)=>{a.push((typeof A=="string"?A:A.join(';'))+';\n')  }])
+SQ糖=_N(_1(语句,s=>{if(s(1)=="\0")return[];throw `请在 ${Object.keys(语句)} 里选，非`+s(20)}) ,_1(';','；',s=>s(1)!="\0"?'':NO),
+  SQ注释=[(s,a=[])=>(s(0).cmt=(_,x)=>a.push(`//`+x), a), (a,A)=>{a.push(typeof A=="string"?A:A.join(';'))  }] )
 }
 
 P受用=()=>{
@@ -74,16 +116,16 @@ P受用=()=>{
 无括=(s,f)=>`(${f(s.slice(1,-1))})`,J=(a,f,sep=", ")=>a.map(f).join(sep)
 
 let ri=1,r=o=>P.tok(ri++,_RE(o))
-名=r(/[\w$][\d\w_]*/); 括原文=_1(r(/\([^)]+\)?/),just(''))
+名=r(/[\w$][\d\w_]*/)
 数值=P.f(r(/([+-]?\d*)?(\.\d+)?/),x=>+x)
-文=P.f(r(/"((\\["nrtfbu])|[^"])*"?/),JSON.parse)
+文=P.f(r(/"((\\["nrtfbu])|[^"])*"?/),JSON.parse); 括原文=_1(r(/\([^)]+\)?/),just(''))//^可复用
 
 选=[_1(名, s=>词.表), 括原文 ,(s,co)=>[s,co?( co.replace(/\?(\d+)/g, (m,i)=>词.问k[i]=`_`+i), ` where ${co}`):''] ]
 值单=_1(数值,文,['?',数值, (_,i)=>"\0?"+i ], P.f(名,k=>译(k,词.名) ) )
 值=_1(括(_N(值单)),
   _N([名,'=',值单, (k,_,v)=>[k,v] ],',') )
 }
-
+//export{SQ糖 词 名,值, 类型 名构 语句 括原文 无括 SQ注释}
 //rq=indexedDB.open("xx",5);rq.onupgradeneeded=()=>{tbl=rq.result.createObjectStore("a")}; //tbl.openCursor(IDBKeyRange.only(k)).res.continue() //IDB OS可以键自增.. 没分col NoSQL
 
 onload=()=>{
@@ -116,10 +158,10 @@ fed:(s,parser)=>{let p=parser;switch(typeof parser){
 default:return p}},
 tok:(kType,p)=>s=>{let r, c=s(0),k0;k0=c.st; if(kType!=9)s(1);c.st=kType; r=P.fed(s,p); c.st=k0;return r},
 
-asAry:[Array,(a,x)=>a.push(x)],asObj:[()=>Object.create(NO),(o,[k,v])=>{o[k]=v}]
+asAry:[()=>[],(a,x)=>a.push(x)],asObj:[()=>Object.create(NO),(o,[k,v])=>{o[k]=v}]
 };P.喂=(p,s)=>P.fed(lineno(feed(s)),p)
 _1=(...ps)=>s=>{let p,x;for(p of ps)if(NO!=( x=P.fed(s,p)))return x}
-_N=(p,sep='',[A,B]=P.asAry)=>s=>{let r=A(),x;do{x=P.fed(s,p);if(NO!=x){B(r,x);x=P.fed(s,sep)}}while(x!=NO); for(x in r)return r;return NO}
+_N=(p,sep='',[A,B]=P.asAry)=>s=>{let r=A(s),x;do{x=P.fed(s,p);if(NO!=x){B(r,x);x=P.fed(s,sep)}}while(x!=NO); for(x in r)return r;return NO}
 
 lineno=(s,c={st:0,cmt:(k,s)=>$Y }, noWhite=s=>{let f=c.cmt,[行,列]=[/[^\n]*/,/[^\*]*\*?/].map(o=>P.tok(9,_RE(o))), 注=C=>C=='//'?f(s(-2),行(s)) : C=='/*'? f(s(-2),列(s)) : $N
   for(let W=/\s/,x;W.test(x=s(1))|| x=='/'&&注(s(2));)s(-1)
