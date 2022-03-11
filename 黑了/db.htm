@@ -64,17 +64,17 @@ pre {
 <script>
 nop=x=>x //(var)char:20,255 ;B/CLOB same to NONE, real/double/numeric alike, Time can be text/int(UNIX)/real
 词={数:"integer",浮顶精:"decimal",文:"char",定:"enum", 改文:"varchar",长文:"text", 数1:"tinyint",数2:"smallint",数4:"int",浮:"real",真假:"bit",时间:"datetime",日期:"date",
-fl:{主键:"primary key",自增:"autoincrement",正:"unsigned",唯一:"unique"},名:{无:"\0",空:"\0NULL",$名:nop,$取:(S,g,c)=>/ join/.test(c)?c+S+g : S+g+c ,$无:nop},
+fl:{主键:"primary key",自增:"autoincrement",正:"unsigned",唯一:"unique",当:"on",删:"delete",新:"update",跟着:"cascade"},名:{无:"\0",空:"\0NULL",$名:nop,$取:(S,g,c)=>/ join/.test(c)?c+S+g : S+g+c ,$无:nop},
 表:"请建表",问k:[],事:{},//新建(默认),新 和 取某表(x=?0) 参名于$函数=语句
 fn:{逗:'+', 计:"count",拼组:"group_concat",拼文:"concat",求和:"sum",求均:"avg",极小:"min",极大:"max", 正:"abs",整低:"floor",整取:"round",整高:"ceil"}}
 建典=(k,v)=>{let t={};ss(v).forEach((x,i)=>t[k[i]]=x); return t}
 
 P查询=()=>{
 let 查=(k,v,t=建典(k,v))=> s=>s(1) in t? t[s(-1)]:NO, 字=(k,v,f)=>KV(建典(k,v)).forEach(f),//L100
-词A=查("库表","database table"),词S=查("小大","Asc Desc"),
+词A=查("库表暂","database table view"),词S=查("小大","Asc Desc"),
 
 有=(a,x)=>P.f(行(x) ,k=>k.map(x=>`create ${a} `+x) ),
-删=q=>[词A,行(名), (a,k)=>k.map(x=>`drop ${a} `+x+q)],
+删=q=>[词A,行(名), (a,k)=>k.map(x=>`DROP ${a} `+x+q)],
 列域=括原文, 加=(...p)=>_1(p,just('')),
 
 str=JSON.stringify,KV=Object.entries, q$=s=>s[0]=='$',尾=s=>s.slice(1),  orLen=(s,i)=>i==-1?n(s):i,
@@ -86,33 +86,36 @@ tupC=a=>J(a, ([k,s])=>k+`  `+(q$(s)?词[k]+尾(s) :s)),
 填问=(v,k)=>{if(typeof v=="string"){let m;if(m=/^\0\?(\d+)/.exec(v))词.问k[m[1]]=k }},
 fn表=KV(词.fn),译函=s=>{let 调=fn表.find(e=>s.startsWith(e[0])),f=([k,v],I)=>v+`(${s.slice(n(k),I).replaceAll(词.fn.逗,',')})`+s.slice(I+1); return (NO==调)?s: f(调,orLen(s,s.lastIndexOf('|')))},
 f简=o=>a=>{for(let[k,v]of o)词.名[k](a,v) ;return a},
+外键=(k,s)=>为典(s)? ` references ${k}(${s.find(([k,v])=>/ primary key/.test(v))[0]})`:s
 
 为典=o=>Array.isArray(o[0]),
 标=(A,f)=>(k,_,v)=>{f(k,v);return `/*${A} ${k}=${v}*/`},
-分页=_1(['页每',数值,_1(数值,just(0)),(_,a,b)=>` limit ${a} offset ${b}`] ,just(''))
+分页=加('页每',数值,_1(数值,just(0)),(_,a,b)=>` limit ${a} offset ${b}`)
 
-类型=[名,括原文, _1('?',just('  not null')),_1(["或",值单, (_,v)=>` default `+str(v)],just('')), _1(_N(名),just([])),
-  (k,arg,nul,dv,fl)=>译(k,词)+arg+尾(nul)+dv +' '+J(fl,x=>译(x,词.fl), " ") ]
+SQ增fn表=o=>{fn表=KV(Object.assign(词.fn,o))}
+
+类型=[名,括原文, _1('?',just('  not null')),加("或",值单, (_,v)=>` default `+str(v)), _1(_N(名),just([])),
+  (k,arg,nul,dv,fl)=>外键(k,译(k,词))+arg+尾(nul)+dv +' '+J(fl,x=>译(x,词.fl), " ") ]
 结构=括(行([名k,_1(类型,just('$')), Array]))
 名构=[名k,结构, (k,ty)=>{词[k]=ty;词.表=k; return k+'('+tupC(ty)+')' } ]
 
 语句={
 有库:有("database",名),有表:有("table",名构),
 有删:删(" if not exists"),["有删!"]:删(''),
-有改:[词A, 名,结构 ,(a,k,c)=>`alter ${a} ${k} change ${tupC([c[0] ]).replace('__',' ')}`],
+有改:[词A, 名,_Q(_RE(/[+-]?/)),_Q(文),结构 ,(a,k,q,co,c)=>`alter ${a} ${k} ${q=='+'?"ADD":q=='-'?"DROP":"change"} ${co} ${tupC([c[0] ]).replace('__',' ')}`],
 
-新删:[选, ([s,S])=>`delete from `+s+S],
+新删:[选, ([s,S])=>`DELETE from `+s+S],
 新建:[列域,名k,_N(值), (k,s,v)=>{简写=nop;return `insert into ${s} ${k}values `+(n(v)<3?"":"\n")+J_if(v,o=>为典(o)?(简写=f简(o)):NO  ,tupV, ",\n") }],
-新:[值,选, (vs,[s,S])=>{
+新:[值,选,_Q(文), (vs,[s,S],co)=>{
   if(!为典(vs)){let k=[];vs.forEach((v,i)=>{if(v!="\0")k.push([ 词[s] [i][0],v ]) }) ;vs=k}
-  if(!S.endsWith("(默认)"))return `update ${s} set ${tupU(vs)} `+S //新建为简写.仅选新有?参 L46
+  if(!S.endsWith("(默认)"))return `update ${s} set ${tupU(vs)} `+S+co //新建为简写.仅选新有?参 L46
   vs.forEach(([k,v])=> 填问(v,k))
-  return `insert into ${s} (${J(vs,x=>x[0])})values (${J(vs,x=>qstr(x[1]) )})`
+  return `insert into ${s} (${J(vs,x=>x[0])})values (${J(vs,x=>qstr(x[1]) )})`+co
 }],
 取:[加('不重',_=>` distinct `),列域,选,
   加('序',词S,名k,(_,a,k)=>` order by ${k} ${a}`),加('分组',名k, (_,k)=>` group by `+k),
-  分页,加(文,s=>`/**/`+s),  (ds,k,[s,S],ord,grp,pg,co)=>`select${ds}${k?' '+J(k.slice(1,-1).split(',') ,译函) :'*'} from `+
-    (q$(s)?词.表:s)+词.名.$取( q$(s)?`${S.slice(0,-1)}(${词.名[s]}))`:S, grp+ord+pg,co)],
+  分页,加(文,s=>`/**/`+s),  (ds,k,[s,S],ord,grp,pg,co)=>`select${ds}${k?' '+J(k.slice(1,-1).split(',') ,译函) :'*'} `+
+    (s=="无"?'':`from ${q$(s)?词.表:s}`) +词.名.$取( q$(s)?`${S.slice(0,-1)}(${词.名[s]}))`:S, grp+ord+pg,co)],
 
 简写:[名,'=',文, 标('有',(k,js)=>{词.名[k]=q$(k)?this.eval(js): Function('a,j',js)} )],
 类型默认:P.f(结构, ty=>ty.forEach(([k,t])=>{词[k]=t }) ||`/*有类型 ${J(ty,x=>x[0])}*/`),
@@ -120,7 +123,7 @@ $:[名,'=',NO, 标('子查询',(k,sql)=>{if(k[0]=='查')词.名['$'+尾(k)]=sql;
 ,['']:just(NO) }
 语句.$[2]=语句
 字("何用","show use",([k,v])=>{v+=' '
-  语句['有'+k]=[词A,_1(名,just('')), (a,k)=>(v=="use "&&a=="table")?`/*${词.表=k||词.表}*/`:v+a+(k=='s'?k:' '+k)]
+  语句['有'+k]=[词A,_Q(名), (a,k)=>(v=="use "&&a=="table")?`/*${词.表=k||词.表}*/`:v+a+(k=='s'?k:' '+k)]
 })
 字("日钟时","DATE TIME TIMESTAMP",([k,v])=>{v='CURRENT_'+v
   词["创建"+k]=`default `+v; 词["更新"+k]=`default ${v} ON UPDATE ${v}`;
@@ -140,15 +143,20 @@ SQ糖=SQ糖糖((s,a=[])=>(s(0).cmt=(_,x)=>a.push(`//`+x), a) )
 留loc=(o=localStorage)=>o.str=decodeURI(尾(location.search))||o.str
 }
 
+词.多fn={
+显:"printf",首不空:"coalesce",字数:"length",找字:"instr",字区:"substr",替换:"replace",字点:"unicode",字:"char", 若:"iif",符号:"sign",随N:"randomblob",随:"random",//rtrim,quote
+小写:"lower",大写:"upper",  删改统计:"total_changes",型:"typeof",行:"", 圈点:"highlight" //取(圈点email+2+'<b>'+'</b>') email('fts5'); 全文搜索match,利用C模块“虚拟表”
+}
+
 P受用=()=>{
 括=p=>['(',p,')',(_,x,__)=>x]
-行=p=>_N(p,','), 译=(k,t)=>k in t?t[k]:k
+行=p=>_N(p,','),_Q=p=>_1(p,just('')), 译=(k,t)=>k in t?t[k]:k
 J=(a,f,sep=", ")=>a.map(f).join(sep)
 
 let ri=1,r=o=>P.tok(ri++,_RE(o)),  词8=建典("&|","AND OR"),换8=(m,k)=>` ${词8[k]} `
 名=r(/[\w$][\d\w_]*/), 名k=P.f(名, k=>词.名.$名(k))
 数值=P.f(r(/([+-]?\d*)?(\.\d+)?/),x=>+x)
-文=P.f(r(/"((\\["nrtfbu])|[^"])*"?/),JSON.parse); 括原文=_1(r(/\([^)]+\)?/),just(''))//^可复用
+文=P.f(r(/"((\\["nrtfbu])|[^"])*"?/),JSON.parse); 括原文=_Q(r(/\([^)]+\)?/))//^可复用
 
 选=[_1(名k, s=>词.表), 括原文 ,(s,co)=>[s,co?( co.replace(/\?(\d+)/g, (m,i)=>词.问k[i]=`_`+i),
   ` where ${co.replace(/([&|])/g,换8)}`):''] ]
@@ -248,7 +256,12 @@ P.典=(o,t=tadd(o,trieS) )=>P.tok(10,s=>{
 有用表;取;
 取(月龄/12 as 年龄,名)
 </code></pre>
-<pre><code>//当然也可以英文：但enum得全复制贴到MySQL执行！
+<pre><code>有表X(x 狗 当 删 跟着) //外键
+有改表狗(id 数4? 正 自增)
+有改表狗(名__昵称呀 文(11)?)
+有改表狗+&quot;foreign key&quot; (xx 狗)
+
+//当然也可以英文：但enum得全复制贴到MySQL执行！
 有表Dog(id 数4 主键 自增,
 Name 文, Weight 浮(3), Height 数1,
 Type 文(5), Age 数1, Color enum(&quot;白&quot;,&quot;黄&quot; ,&quot;黑&quot;)
@@ -296,14 +309,14 @@ WHERE condition(s)
 ORDER BY column ASC/DESC
 LIMIT num_limit OFFSET num_offset;
 </code></pre>
-<p>如今你见识过大部分SQL语法但没有写1行SQL。</p>
+<p>如今你见识过大部分SQL语法但没有写1行SQL。 这语言只含「有新取」三字</p>
 <p><strong>为什么SQ糖的作者不写SQL？</strong> 因为它被工程界误解得太严重了。</p>
 <p>实际上许多用SQL和各种DB解决的问题，NoSQL(KV数据库,MongoDB 文档数据库) 都能解决，</p>
 <p>SQL强大得太尴尬了、语法“自然”得太夸张了，还不如用ORM(对象1:N,存储) 单单纯粹做好 1人:N朋友 的这些关系。</p>
 <p>别忘了过度脚本化，曾造成SQL注入等严重问题(你可以理解为在输入 &gt;&lt; 时一些网站必然给它换成别的 为“防注入”)的PHP 2022年了还有人用呢。JavaEE log4j <a href="https://new.qq.com/omn/20211210/20211210A01JXN00.html">2021 年了还出严重RCE代码执行</a>呢，还复古流行起 CRUD boy 用&quot;sqlmapper&quot; Mybatis 绑定SQL语句去执行呢……</p>
 <p><strong>因为用途领域上的尴尬，SQL的用户接口真的差劲极了</strong> 。 XP.cn (中文面板) 常用免费的 <a href="https://demo.phpmyadmin.net/master-config/">PHPMyAdmin</a> 查点小东西都要重载、<a href="https://navicat.com.cn/navicat-16-highlights">Navicat</a>啥的收费又复杂，<a href="https://www.heidisql.com/screenshots.php">HeidiSQL</a>, <a href="https://zhuanlan.zhihu.com/p/265486596">DBeaver</a> 这些也都不适合入门 ，MSOffice 一堆“外行”好用但不会做普通SQL的“支持”，更何谈有大部分院校还在教学生用 CLI(cmd.exe) 客户端 <code>mysql -u root -p</code> 从记事本右键粘贴啦</p>
 <p>然而，宝刀未老的SQL仍是大部分人的选择。作者也是出于娱乐的心态弄了一门翻译到SQL的小语言，并支持用 ?1 和 <code>$新用户=新(?1 ?2 ?3)用户(默认)</code> 这种语法创建“函数”，当然在这里，这个为语言API桥接 的特性没有用处。只是说SQL真的很鸡肋</p>
-<p>IT工程界和教育有这么不堪吗？很抱歉，的确有。无论自诩多高等的机构、高级工程师，排名顶尖的，的确有。 天才尽管天才，也并不会创造解决实际问题的东西。</p>
+<p>IT工程界和教育有这么不堪吗？很抱歉，的确有。无论自诩多高等的机构、高级工程师，排名顶尖的，的确有。 天才尽管天才，也没机会创造解决实际问题的东西。</p>
 <p>SQ糖不会追求功能上的“丰满”和理论上的“精准”，只要求用着方便、学着能看到每行代码出现的理由。 <strong>SQ糖不告诉你知识，只愿你清楚理由</strong></p>
 <pre><code>取(id,名) //select
   影(年=&quot;2019年&quot;) //from-where
@@ -353,6 +366,7 @@ LIMIT num_limit OFFSET num_offset;
 <p>组内排序需要 <a href="https://sqlite.org/lang_aggfunc.html#group_concat">group_concat</a> ，这个SQLite里也有，不是MySQL/Postgres的扩展</p>
 <pre><code>取(拼组 名)影
 取(拼组名)影 序大票房 分组年
+取(拼组名+&quot;|&quot; |表格)影 序大票房 分组年
 </code></pre>
 <h3 id="执行顺序">执行顺序</h3>
 <blockquote>
@@ -374,8 +388,32 @@ LIMIT num_limit OFFSET num_offset;
 <li>类型：数1,2,4 integer；(改/长)文 char；浮顶精(10,1) =0.0~9.9 和8字节(双精)浮点“浮”；真假 bit 定 enum  时间 日期</li>
 <li>特殊值： 无 default 空 NULL ?0 首个$事=语句 参数(jsAPI:<code>词.事,问k</code> 页每 不支持!)</li>
 <li>函数：计 count 拼组/文 concat 求和均 极小大 正 abs 整取/低/高</li>
-<li>时间：<code>新建 当前[时/日/钟]=0/*即第1项*/ (0);</code></li>
+<li>时间：<code>新建 当前[时/日/钟]=0/*即第1项*/ (0);</code> 和 <code>当前时 更新时</code> （基于 <code>ON DELETE CASCADE</code> 这种特性）</li>
 </ul>
+<p>除了组内排名作列表等<a href="https://zhuanlan.zhihu.com/p/92654574">窗口函数</a>，SQLite 甚至能<a href="https://sqlite.org/lang_with.html#outlandish_recursive_query_examples">“生成” helloworld</a>，不过是关系式编程版的。</p>
+<p>或者1~100 (递归/循环 查询) <strong>请在命令行等 SQL 客户端执行</strong></p>
+<pre><code>WITH RECURSIVE cnt(x) AS (VALUES(1)
+  UNION ALL SELECT x+1 FROM cnt WHERE x&lt;100)
+SELECT x FROM cnt;
+
+WITH RECURSIVE cnt(x) AS (SELECT 1
+  UNION ALL
+  SELECT x+1 FROM cnt
+  LIMIT 100
+)
+SELECT x FROM cnt;
+</code></pre>
+<p>因此SQ糖尽管好用，限制还是很大的。 目前没有支持Index(表头定制)、ACID属性(transaction: begin commit rollback-to?savepoint)，也没有给 groupBy-having 和 join， replace into(on conflict) 语法糖</p>
+<p>另外：vaccum 是重建db文件，reindex 是删索引，attach 这些是CLI客户端命令。 like,glob,<code>name regexp &quot;\d+&quot;</code> 和 <code>&#39;{&quot;a&quot;:NULL}&#39; -&gt;&gt; &#39;$.a&#39;</code>(单&gt; 仍JSON) → NULL  json_type quote 这些是单格列表等的支持</p>
+<pre><code class="language-sql">SELECT DISTINCT user.name
+  FROM user, json_each(user.phone)
+ WHERE json_each.value LIKE &#39;704-%&#39;;
+
+SELECT DATEADD(HOUR,+1,min(JSON_VALUE(ExtraData,&#39;$.enrollDate&#39;)))  as [enroll_date] 
+ FROM school_7..StudentCourseItem 
+ WHERE Student_id = 11449387 AND ItemType_id = 2 
+ AND JSON_VALUE(ExtraData,&#39;$.levelNo&#39;) in (7,8,9)
+</code></pre>
 <p><a href="https://github.com/by-syk/CoolapkUserStats">https://github.com/by-syk/CoolapkUserStats</a></p>
 <pre><code class="language-sql">SELECT
     @rownum:=@rownum+1 AS &#39;#&#39;,
@@ -440,9 +478,31 @@ $查b=取(Sno)$a(Cno IN );
 类型默认(小文 文(4)?)
 有表AA(小文 $ 主键) //$=小文。 not null 不必重复两次
 </code></pre>
-<p>也可以在DevTools 应用&gt;存储&gt;WebSQL 即 (F12&gt;Application&gt;Storage) 查看表与执行SQL</p>
+<pre><code>取( )无 &quot;1+2 as n&quot;
+有用表无 //当计算器用
+简写$_=&quot;SQ增fn表(词.多fn)&quot;
+取(删改统计);
+取(型2);
+取( )&quot;(1,2,3) = (1,2,3),(1,2,3) = (1,NULL,3)&quot;
+
+有表t2(x 数,y 数,z 数);
+新建 t2 (1 2 3)(2 3 4)(1 空 5);
+取( )无&quot;(1,2,3) IN (SELECT * FROM t2)&quot;
+
+取(显&quot;%x&quot;+z- -7);
+有用表无
+取(大写&quot;abc&quot;);
+取(字数&quot;a&quot;);
+取(9%2);//余数, 从0~100 往复于0,1
+取(字区&quot;abc&quot;+1+2);
+取(替换&quot;abc&quot;+&quot;a&quot;+&quot;c&quot;)
+</code></pre>
+<p>也可以在DevTools 应用&gt;存储&gt;WebSQL 即 (F12&gt;Application&gt;Storage) 查看表与执行SQL，或清除数据</p>
 <pre><code>有删库a //提示：不要在生产环境使用（废话..
 </code></pre>
+<blockquote>
+<p>关于程序员的一些秃头和数学天才的笑话是说着玩，但删库跑路会被抓、暴露用户隐私很危险，都明白吧</p>
+</blockquote>
 <p>若不看注释， <code>SQ糖=SQ糖糖(()=&gt;[])</code> 即可</p>
-<p>SQ糖提供了较简洁的语法，可在js源代码里查看（只有210行）</p>
+<p>SQ糖提供了较简洁的语法，可在js源代码里查看（只有220行） ，然后还有个 <a href="db1">db1</a> 非常复杂..教科书。本原文是 <a href="db2.md">md文件</a></p>
 <p>首个空白会保留地址栏 <code>?</code> 后随的代码，你可以用这个分享查询片段</p>

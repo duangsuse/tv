@@ -43,6 +43,11 @@ __SQsugar(SQ糖)__ 是我设计的一门翻译到SQL的查询语言，作为一�
 ```
 
 ```
+有表X(x 狗 当 删 跟着) //外键
+有改表狗(id 数4? 正 自增)
+有改表狗(名__昵称呀 文(11)?)
+有改表狗+"foreign key" (xx 狗)
+
 //当然也可以英文：但enum得全复制贴到MySQL执行！
 有表Dog(id 数4 主键 自增,
 Name 文, Weight 浮(3), Height 数1,
@@ -100,7 +105,7 @@ ORDER BY column ASC/DESC
 LIMIT num_limit OFFSET num_offset;
 ```
 
-如今你见识过大部分SQL语法但没有写1行SQL。
+如今你见识过大部分SQL语法但没有写1行SQL。 这语言只含「有新取」三字
 
 __为什么SQ糖的作者不写SQL？__ 因为它被工程界误解得太严重了。
 
@@ -114,7 +119,7 @@ __因为用途领域上的尴尬，SQL的用户接口真的差劲极了__ 。 XP
 
 然而，宝刀未老的SQL仍是大部分人的选择。作者也是出于娱乐的心态弄了一门翻译到SQL的小语言，并支持用 ?1 和 `$新用户=新(?1 ?2 ?3)用户(默认)` 这种语法创建“函数”，当然在这里，这个为语言API桥接 的特性没有用处。只是说SQL真的很鸡肋
 
-IT工程界和教育有这么不堪吗？很抱歉，的确有。无论自诩多高等的机构、高级工程师，排名顶尖的，的确有。 天才尽管天才，也并不会创造解决实际问题的东西。
+IT工程界和教育有这么不堪吗？很抱歉，的确有。无论自诩多高等的机构、高级工程师，排名顶尖的，的确有。 天才尽管天才，也没机会创造解决实际问题的东西。
 
 SQ糖不会追求功能上的“丰满”和理论上的“精准”，只要求用着方便、学着能看到每行代码出现的理由。 __SQ糖不告诉你知识，只愿你清楚理由__
 
@@ -191,6 +196,7 @@ __SQL 的功能实际上是数据统计__ 而非1:N存储和 FilerSort 。它甚
 ```
 取(拼组 名)影
 取(拼组名)影 序大票房 分组年
+取(拼组名+"|" |表格)影 序大票房 分组年
 ```
 
 ### 执行顺序
@@ -212,7 +218,39 @@ __灵活运用以上的句法组合能在SQL层面更好的解决数据问题__ 
 + 类型：数1,2,4 integer；(改/长)文 char；浮顶精(10,1) =0.0~9.9 和8字节(双精)浮点“浮”；真假 bit 定 enum  时间 日期
 + 特殊值： 无 default 空 NULL ?0 首个$事=语句 参数(jsAPI:`词.事,问k` 页每 不支持!)
 + 函数：计 count 拼组/文 concat 求和均 极小大 正 abs 整取/低/高
-+ 时间：`新建 当前[时/日/钟]=0/*即第1项*/ (0);`
++ 时间：`新建 当前[时/日/钟]=0/*即第1项*/ (0);` 和 `当前时 更新时` （基于 `ON DELETE CASCADE` 这种特性）
+
+除了组内排名作列表等[窗口函数](https://zhuanlan.zhihu.com/p/92654574)，SQLite 甚至能[“生成” helloworld](https://sqlite.org/lang_with.html#outlandish_recursive_query_examples)，不过是关系式编程版的。
+
+或者1~100 (递归/循环 查询) __请在命令行等 SQL 客户端执行__
+
+```
+WITH RECURSIVE cnt(x) AS (VALUES(1)
+  UNION ALL SELECT x+1 FROM cnt WHERE x<100)
+SELECT x FROM cnt;
+
+WITH RECURSIVE cnt(x) AS (SELECT 1
+  UNION ALL
+  SELECT x+1 FROM cnt
+  LIMIT 100
+)
+SELECT x FROM cnt;
+```
+
+因此SQ糖尽管好用，限制还是很大的。 目前没有支持Index(表头定制)、ACID属性(transaction: begin commit rollback-to?savepoint)，也没有给 groupBy-having 和 join， replace into(on conflict) 语法糖
+
+另外：vaccum 是重建db文件，reindex 是删索引，attach 这些是CLI客户端命令。 like,glob,`name regexp "\d+"` 和 `'{"a":NULL}' ->> '$.a'`(单> 仍JSON) → NULL  json_type quote 这些是单格列表等的支持
+
+```sql
+SELECT DISTINCT user.name
+  FROM user, json_each(user.phone)
+ WHERE json_each.value LIKE '704-%';
+
+SELECT DATEADD(HOUR,+1,min(JSON_VALUE(ExtraData,'$.enrollDate')))  as [enroll_date] 
+ FROM school_7..StudentCourseItem 
+ WHERE Student_id = 11449387 AND ItemType_id = 2 
+ AND JSON_VALUE(ExtraData,'$.levelNo') in (7,8,9)
+```
 
 https://github.com/by-syk/CoolapkUserStats
 
@@ -291,14 +329,37 @@ $查b=取(Sno)$a(Cno IN );
 有表AA(小文 $ 主键) //$=小文。 not null 不必重复两次
 ```
 
-也可以在DevTools 应用>存储>WebSQL 即 (F12>Application>Storage) 查看表与执行SQL
+```
+取( )无 "1+2 as n";
+有用表无 //当计算器用
+简写$_="SQ增fn表(词.多fn)"
+取(删改统计);
+取(型2);
+取( )"(1,2,3) = (1,2,3),(1,2,3) = (1,NULL,3)"
+
+有表t2(x 数,y 数,z 数);
+新建 t2 (1 2 3)(2 3 4)(1 空 5);
+取( )无"(1,2,3) IN (SELECT * FROM t2)"
+
+取(显"%x"+z- -7)
+有用表无
+取(大写"abc");
+取(字数"a");
+取(9%2);//余数, 从0~100 往复于0,1
+取(字区"abc"+1+2);
+取(替换"abc"+"a"+"c")
+```
+
+也可以在DevTools 应用>存储>WebSQL 即 (F12>Application>Storage) 查看表与执行SQL，或清除数据
 
 ```
 有删库a //提示：不要在生产环境使用（废话..
 ```
 
+>关于程序员的一些秃头和数学天才的笑话是说着玩，但删库跑路会被抓、暴露用户隐私很危险，都明白吧
+
 若不看注释， `SQ糖=SQ糖糖(()=>[])` 即可
 
-SQ糖提供了较简洁的语法，可在js源代码里查看（只有210行）
+SQ糖提供了较简洁的语法，可在js源代码里查看（只有220行） ，然后还有个 [db1](db1) 非常复杂..教科书。本原文是 [md文件](db2.md)
 
 首个空白会保留地址栏 `?` 后随的代码，你可以用这个分享查询片段
