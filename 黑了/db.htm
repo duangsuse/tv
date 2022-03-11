@@ -37,7 +37,7 @@ on=(k,css,f)=>e=>e.addEventListener(k, ev=>{if(ev.target.matches(css))f(ev)})
 <style>
 .SQC{    border: 2px solid gray; position:absolute; background:whitesmoke;
     margin: 0.5em; opacity:0;
-    transition: .5s opacity; max-width:120vw; }
+    transition: .5s opacity cubic-bezier(0.42, 0.09, 0, 1.01); max-width:120vw; }
 .show{opacity:1}.gone{pointer-events:none}
 #SQC{width:100%}
 #SQCo>p::after{content:';'}
@@ -140,7 +140,7 @@ SQ糖糖=anew=>_N(_1(语句,s=>{if(s(1)=="\0")return[];throw `请在 ${Object.ke
   [anew, (a,A)=>{a.push(typeof A=="string"?A:A.join(';'))  }] )
 
 SQ糖=SQ糖糖((s,a=[])=>(s(0).cmt=(_,x)=>a.push(`//`+x), a) )
-留loc=(o=localStorage)=>o.str=decodeURI(尾(location.search))||o.str
+留loc=(o=localStorage)=>o.str=decodeURI(尾(location.search))||o.str||''
 }
 
 词.多fn={
@@ -313,9 +313,9 @@ LIMIT num_limit OFFSET num_offset;
 <p><strong>为什么SQ糖的作者不写SQL？</strong> 因为它被工程界误解得太严重了。</p>
 <p>实际上许多用SQL和各种DB解决的问题，NoSQL(KV数据库,MongoDB 文档数据库) 都能解决，</p>
 <p>SQL强大得太尴尬了、语法“自然”得太夸张了，还不如用ORM(对象1:N,存储) 单单纯粹做好 1人:N朋友 的这些关系。</p>
-<p>别忘了过度脚本化，曾造成SQL注入等严重问题(你可以理解为在输入 &gt;&lt; 时一些网站必然给它换成别的 为“防注入”)的PHP 2022年了还有人用呢。JavaEE log4j <a href="https://new.qq.com/omn/20211210/20211210A01JXN00.html">2021 年了还出严重RCE代码执行</a>呢，还复古流行起 CRUD boy 用&quot;sqlmapper&quot; Mybatis 绑定SQL语句去执行呢……</p>
+<p>别忘了，过度脚本化，曾造成SQL注入等严重问题(你可以理解为在输入 &gt;&lt; 时一些网站必然给它换成别的 为“防注入”)的PHP 2022年了还有人用呢。JavaEE log4j <a href="https://new.qq.com/omn/20211210/20211210A01JXN00.html">2021 年了还出严重RCE代码执行</a>呢，还复古流行起 CRUD boy 用&quot;sqlmapper&quot; Mybatis 绑定SQL语句去执行呢……</p>
 <p><strong>因为用途领域上的尴尬，SQL的用户接口真的差劲极了</strong> 。 XP.cn (中文面板) 常用免费的 <a href="https://demo.phpmyadmin.net/master-config/">PHPMyAdmin</a> 查点小东西都要重载、<a href="https://navicat.com.cn/navicat-16-highlights">Navicat</a>啥的收费又复杂，<a href="https://www.heidisql.com/screenshots.php">HeidiSQL</a>, <a href="https://zhuanlan.zhihu.com/p/265486596">DBeaver</a> 这些也都不适合入门 ，MSOffice 一堆“外行”好用但不会做普通SQL的“支持”，更何谈有大部分院校还在教学生用 CLI(cmd.exe) 客户端 <code>mysql -u root -p</code> 从记事本右键粘贴啦</p>
-<p>然而，宝刀未老的SQL仍是大部分人的选择。作者也是出于娱乐的心态弄了一门翻译到SQL的小语言，并支持用 ?1 和 <code>$新用户=新(?1 ?2 ?3)用户(默认)</code> 这种语法创建“函数”，当然在这里，这个为语言API桥接 的特性没有用处。只是说SQL真的很鸡肋</p>
+<p><strong>然而，宝刀未老的SQL仍是大部分人的选择</strong> 。作者也是出于娱乐的心态弄了一门翻译到SQL的小语言，并支持用 ?1 和 <code>$新用户=新(?1 ?2 ?3)用户(默认)</code> 这种语法创建“函数”，当然在这里，这个为语言API桥接 的特性没有用处。只是说SQL真的很鸡肋</p>
 <p>IT工程界和教育有这么不堪吗？很抱歉，的确有。无论自诩多高等的机构、高级工程师，排名顶尖的，的确有。 天才尽管天才，也没机会创造解决实际问题的东西。</p>
 <p>SQ糖不会追求功能上的“丰满”和理论上的“精准”，只要求用着方便、学着能看到每行代码出现的理由。 <strong>SQ糖不告诉你知识，只愿你清楚理由</strong></p>
 <pre><code>取(id,名) //select
@@ -347,7 +347,7 @@ LIMIT num_limit OFFSET num_offset;
 <p>你就取了 <code>主人=人名</code> 的(项的交集) INNER JOIN (即&quot;JOIN&quot;)</p>
 <p>LEFT/RIGHT JOIN 则会使 物品/人  的一些列为空，FULL JOIN 就更会了，毕竟这些是 &quot;OUTER JOIN&quot;</p>
 <blockquote>
-<p>^ 一个常见的误会是，“表格由行和列组成”。实际它是由含横格的多行组成的，列的本意是“所有行等位项”，有时却指代行内1格(2D数组或i&lt; n,i*m+j 总nm格拟2D 同理)</p>
+<p>^ <strong>一个常见的误会是，“表格由行和列组成”。</strong> 实际它是由含横格的多行组成的，列的本意是“所有行等位项”，有时却指代行内1格(2D数组或i&lt; n,i*m+j 总nm格拟2D 同理)</p>
 </blockquote>
 <p>什么意思呢？ <code>取物品(名=&quot;牙刷&quot;)</code> 的()条件删掉。如果有个主人 &quot;小茗&quot; 找不到，那么FULL 会保留这1行，空格填NULL。LEFT 也会</p>
 <blockquote>
@@ -403,7 +403,7 @@ WITH RECURSIVE cnt(x) AS (SELECT 1
 )
 SELECT x FROM cnt;
 </code></pre>
-<p>因此SQ糖尽管好用，限制还是很大的。 目前没有支持Index(表头定制)、ACID属性(transaction: begin commit rollback-to?savepoint)，也没有给 groupBy-having 和 join， replace into(on conflict) 语法糖</p>
+<p>因此SQ糖尽管好用，限制还是很大的。 目前没有支持Index(表头定制)、ACID属性(transaction: begin commit rollback-to?savepoint)，也没有给 groupBy-having 和 join， replace into(on conflict) 语法糖(故 改新取 支持&quot;代码&quot;)</p>
 <p>另外：vaccum 是重建db文件，reindex 是删索引，attach 这些是CLI客户端命令。 like,glob,<code>name regexp &quot;\d+&quot;</code> 和 <code>&#39;{&quot;a&quot;:NULL}&#39; -&gt;&gt; &#39;$.a&#39;</code>(单&gt; 仍JSON) → NULL  json_type quote 这些是单格列表等的支持</p>
 <pre><code class="language-sql">SELECT DISTINCT user.name
   FROM user, json_each(user.phone)
@@ -504,5 +504,5 @@ $查b=取(Sno)$a(Cno IN );
 <p>关于程序员的一些秃头和数学天才的笑话是说着玩，但删库跑路会被抓、暴露用户隐私很危险，都明白吧</p>
 </blockquote>
 <p>若不看注释， <code>SQ糖=SQ糖糖(()=&gt;[])</code> 即可</p>
-<p>SQ糖提供了较简洁的语法，可在js源代码里查看（只有220行） ，然后还有个 <a href="db1">db1</a> 非常复杂..教科书。本原文是 <a href="db2.md">md文件</a></p>
+<p><strong>SQ糖提供了较简洁的语法，可在js源代码里查看（只有220行）</strong> ，然后还有个 <a href="db1">db1</a> 非常复杂..教科书。本原文是 <a href="db2.md">md文件</a></p>
 <p>首个空白会保留地址栏 <code>?</code> 后随的代码，你可以用这个分享查询片段</p>

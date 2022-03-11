@@ -113,11 +113,11 @@ __为什么SQ糖的作者不写SQL？__ 因为它被工程界误解得太严重�
 
 SQL强大得太尴尬了、语法“自然”得太夸张了，还不如用ORM(对象1:N,存储) 单单纯粹做好 1人:N朋友 的这些关系。
 
-别忘了过度脚本化，曾造成SQL注入等严重问题(你可以理解为在输入 >< 时一些网站必然给它换成别的 为“防注入”)的PHP 2022年了还有人用呢。JavaEE log4j [2021 年了还出严重RCE代码执行](https://new.qq.com/omn/20211210/20211210A01JXN00.html)呢，还复古流行起 CRUD boy 用"sqlmapper" Mybatis 绑定SQL语句去执行呢……
+别忘了，过度脚本化，曾造成SQL注入等严重问题(你可以理解为在输入 >< 时一些网站必然给它换成别的 为“防注入”)的PHP 2022年了还有人用呢。JavaEE log4j [2021 年了还出严重RCE代码执行](https://new.qq.com/omn/20211210/20211210A01JXN00.html)呢，还复古流行起 CRUD boy 用"sqlmapper" Mybatis 绑定SQL语句去执行呢……
 
 __因为用途领域上的尴尬，SQL的用户接口真的差劲极了__ 。 XP.cn (中文面板) 常用免费的 [PHPMyAdmin](https://demo.phpmyadmin.net/master-config/) 查点小东西都要重载、[Navicat](https://navicat.com.cn/navicat-16-highlights)啥的收费又复杂，[HeidiSQL](https://www.heidisql.com/screenshots.php), [DBeaver](https://zhuanlan.zhihu.com/p/265486596) 这些也都不适合入门 ，MSOffice 一堆“外行”好用但不会做普通SQL的“支持”，更何谈有大部分院校还在教学生用 CLI(cmd.exe) 客户端 `mysql -u root -p` 从记事本右键粘贴啦
 
-然而，宝刀未老的SQL仍是大部分人的选择。作者也是出于娱乐的心态弄了一门翻译到SQL的小语言，并支持用 ?1 和 `$新用户=新(?1 ?2 ?3)用户(默认)` 这种语法创建“函数”，当然在这里，这个为语言API桥接 的特性没有用处。只是说SQL真的很鸡肋
+__然而，宝刀未老的SQL仍是大部分人的选择__ 。作者也是出于娱乐的心态弄了一门翻译到SQL的小语言，并支持用 ?1 和 `$新用户=新(?1 ?2 ?3)用户(默认)` 这种语法创建“函数”，当然在这里，这个为语言API桥接 的特性没有用处。只是说SQL真的很鸡肋
 
 IT工程界和教育有这么不堪吗？很抱歉，的确有。无论自诩多高等的机构、高级工程师，排名顶尖的，的确有。 天才尽管天才，也没机会创造解决实际问题的东西。
 
@@ -166,7 +166,7 @@ SQ糖并没有为JOINs 提供语法糖，因为它太机械化了。把同属1�
 
 LEFT/RIGHT JOIN 则会使 物品/人  的一些列为空，FULL JOIN 就更会了，毕竟这些是 "OUTER JOIN"
 
->^ 一个常见的误会是，“表格由行和列组成”。实际它是由含横格的多行组成的，列的本意是“所有行等位项”，有时却指代行内1格(2D数组或i< n,i*m+j 总nm格拟2D 同理)
+>^ __一个常见的误会是，“表格由行和列组成”。__ 实际它是由含横格的多行组成的，列的本意是“所有行等位项”，有时却指代行内1格(2D数组或i< n,i*m+j 总nm格拟2D 同理)
 
 什么意思呢？ `取物品(名="牙刷")` 的()条件删掉。如果有个主人 "小茗" 找不到，那么FULL 会保留这1行，空格填NULL。LEFT 也会
 
@@ -237,7 +237,7 @@ WITH RECURSIVE cnt(x) AS (SELECT 1
 SELECT x FROM cnt;
 ```
 
-因此SQ糖尽管好用，限制还是很大的。 目前没有支持Index(表头定制)、ACID属性(transaction: begin commit rollback-to?savepoint)，也没有给 groupBy-having 和 join， replace into(on conflict) 语法糖
+因此SQ糖尽管好用，限制还是很大的。 目前没有支持Index(表头定制)、ACID属性(transaction: begin commit rollback-to?savepoint)，也没有给 groupBy-having 和 join， replace into(on conflict) 语法糖(故 改新取 支持"代码")
 
 另外：vaccum 是重建db文件，reindex 是删索引，attach 这些是CLI客户端命令。 like,glob,`name regexp "\d+"` 和 `'{"a":NULL}' ->> '$.a'`(单> 仍JSON) → NULL  json_type quote 这些是单格列表等的支持
 
@@ -330,7 +330,7 @@ $查b=取(Sno)$a(Cno IN );
 ```
 
 ```
-取( )无 "1+2 as n";
+取( )无 "1+2 as n"
 有用表无 //当计算器用
 简写$_="SQ增fn表(词.多fn)"
 取(删改统计);
@@ -341,7 +341,7 @@ $查b=取(Sno)$a(Cno IN );
 新建 t2 (1 2 3)(2 3 4)(1 空 5);
 取( )无"(1,2,3) IN (SELECT * FROM t2)"
 
-取(显"%x"+z- -7)
+取(显"%x"+z- -7);
 有用表无
 取(大写"abc");
 取(字数"a");
@@ -360,6 +360,6 @@ $查b=取(Sno)$a(Cno IN );
 
 若不看注释， `SQ糖=SQ糖糖(()=>[])` 即可
 
-SQ糖提供了较简洁的语法，可在js源代码里查看（只有220行） ，然后还有个 [db1](db1) 非常复杂..教科书。本原文是 [md文件](db2.md)
+__SQ糖提供了较简洁的语法，可在js源代码里查看（只有220行）__ ，然后还有个 [db1](db1) 非常复杂..教科书。本原文是 [md文件](db2.md)
 
 首个空白会保留地址栏 `?` 后随的代码，你可以用这个分享查询片段
