@@ -12,6 +12,7 @@ onload=()=>{
 eK.onchange=()=>试析=this[eK.value]
 eTxt.onchange=()=>console.log(P.喂(试析, eTxt.value) )
 P受用();P查询(); eDB("pre:not(#SQCo),pre>code")
+doc.querySelector("code").innerText=留loc()
 }
 
 eDB=css=>{
@@ -136,6 +137,7 @@ SQ糖糖=anew=>_N(_1(语句,s=>{if(s(1)=="\0")return[];throw `请在 ${Object.ke
   [anew, (a,A)=>{a.push(typeof A=="string"?A:A.join(';'))  }] )
 
 SQ糖=SQ糖糖((s,a=[])=>(s(0).cmt=(_,x)=>a.push(`//`+x), a) )
+留loc=(o=localStorage)=>o.str=decodeURI(尾(location.search))||o.str
 }
 
 P受用=()=>{
@@ -212,7 +214,7 @@ P.典=(o,t=tadd(o,trieS) )=>P.tok(10,s=>{
 <!--https://codebeautify.org/markdown-viewer-->
 <h1 id="sqsu查询语言">SQsu查询语言</h1>
 <p><strong>SQsugar(SQ糖)</strong> 是我设计的一门翻译到SQL的查询语言，作为一次小实验。我给它写了个简单的查询界面，你可以在浏览器里离线地学习/简写通用 SQL 来操作数据库。</p>
-<p>请不要试着打字或默写本文的SQL语句，然后去粘贴到什么 _且忽略掉查询结果_，它不值得你这么做。</p>
+<p>请不要试着打字或默写本文的SQL语句，然后去粘贴到什么 <em>且忽略掉查询结果</em> ，它不值得你这么做。</p>
 <blockquote>
 <p>学会SQ糖等于学会 SQL 吗？</p>
 </blockquote>
@@ -253,10 +255,14 @@ Type 文(5), Age 数1, Color enum(&quot;白&quot;,&quot;黄&quot; ,&quot;黑&quo
 )
 </code></pre>
 <p>我们的测试环境(SQLite) 功能还算齐全，比如主键自增。但这“自增ID序号”和表结构是完全无关的。</p>
+<blockquote>
 <p>小秘密：你可以按 Ctrl+Shift+C 选中一个网页 tbody或&quot;table&quot; ，然后执行以下代码 <strong>“偷”些表格数据用于SQL练习</strong></p>
+</blockquote>
 <pre><code class="language-js">f=s=&gt;JSON.stringify(+s?+s:s); [...$0.children].map(r=&gt;[...r.children].map(v=&gt;f(v.innerText) ).join(&#39; &#39;)  ).slice(1).join(&quot;)\n(&quot;)
 </code></pre>
+<blockquote>
 <p>如果有些语法错误(没显示SQL语句)，你也可以按此快捷键，查看 Console js终端</p>
+</blockquote>
 <pre><code>有表影(id 数, 名 文(15), 票房 文(8), 年 文(5), 导演 文(12), 制作 文, 发行 文)
 新建影
 (1 &quot;哪吒之魔童降世&quot; &quot;50.35亿&quot; &quot;2019年&quot; &quot;饺子&quot; &quot;光线影业、彩条屋影业、可可豆动画、十月文化&quot; &quot;光线影业&quot;)
@@ -282,7 +288,7 @@ Type 文(5), Age 数1, Color enum(&quot;白&quot;,&quot;黄&quot; ,&quot;黑&quo
 
 取不重(年)影(发行 LIKE &quot;卓然%&quot;) //按“行”而非格单位不重复！
 </code></pre>
-<p>你可以用 LIKE &quot;%发财&quot; 匹配 <code>&quot;张发财&quot;,&quot;李发财&quot;</code> ，而 LIKE &quot;_某&quot; 匹配字串 吴某 范某 等某</p>
+<p>你可以用 LIKE &quot;%发财&quot; 匹配 <code>&quot;张发财&quot;,&quot;李大发财&quot;</code> ，而 LIKE &quot;_某&quot; 匹配字串 吴某 范某 等某</p>
 <h2 id="题外话">题外话</h2>
 <pre><code class="language-sql">SELECT column, another_column, …
 FROM mytable
@@ -294,15 +300,20 @@ LIMIT num_limit OFFSET num_offset;
 <p><strong>为什么SQ糖的作者不写SQL？</strong> 因为它被工程界误解得太严重了。</p>
 <p>实际上许多用SQL和各种DB解决的问题，NoSQL(KV数据库,MongoDB 文档数据库) 都能解决，</p>
 <p>SQL强大得太尴尬了、语法“自然”得太夸张了，还不如用ORM(对象1:N,存储) 单单纯粹做好 1人:N朋友 的这些关系。</p>
-<p>别忘了过度脚本化，曾造成SQL注入等严重问题的PHP 2022年了还有人用呢。JavaEE log4j 2021 年了还出严重RCE代码执行呢，还复古流行起 CRUD boy 用&quot;sqlmapper&quot; Mybatis 绑定SQL语句去执行呢……</p>
-<p><strong>因为用途领域上的尴尬，SQL的用户接口真的差劲极了</strong> 。免费的 PHPMyAdmin 查点小东西都要重载、Navicat啥的收费又复杂，HeidiSQL, DBeaver 这些也都不适合入门 ，MSOffice 一堆“外行”好用但不会做普通SQL的“支持”，更何谈有大部分院校还在教学生用 CLI(cmd.exe) 客户端 <code>mysql -u root -p</code> 从记事本右键粘贴啦</p>
-<p>然而，宝刀未老的SQL仍是大部分人的选择。作者也是出于娱乐的心态弄了一门翻译到SQL的小语言，并支持用 ?0 和 <code>$新用户=新(?0 ?1 ?2)用户(默认)</code> 这种语法创建“函数”，当然在这里，这个为语言API桥接 的特性没有用处。只是说SQL真的很鸡肋</p>
-<p>IT工程界和教育有这么不堪吗？很抱歉，的确有。无论自诩多高等的机构、高级工程师，排名顶尖的，的确有。</p>
+<p>别忘了过度脚本化，曾造成SQL注入等严重问题(你可以理解为在输入 &gt;&lt; 时一些网站必然给它换成别的 为“防注入”)的PHP 2022年了还有人用呢。JavaEE log4j <a href="https://new.qq.com/omn/20211210/20211210A01JXN00.html">2021 年了还出严重RCE代码执行</a>呢，还复古流行起 CRUD boy 用&quot;sqlmapper&quot; Mybatis 绑定SQL语句去执行呢……</p>
+<p><strong>因为用途领域上的尴尬，SQL的用户接口真的差劲极了</strong> 。 XP.cn (中文面板) 常用免费的 <a href="https://demo.phpmyadmin.net/master-config/">PHPMyAdmin</a> 查点小东西都要重载、<a href="https://navicat.com.cn/navicat-16-highlights">Navicat</a>啥的收费又复杂，<a href="https://www.heidisql.com/screenshots.php">HeidiSQL</a>, <a href="https://zhuanlan.zhihu.com/p/265486596">DBeaver</a> 这些也都不适合入门 ，MSOffice 一堆“外行”好用但不会做普通SQL的“支持”，更何谈有大部分院校还在教学生用 CLI(cmd.exe) 客户端 <code>mysql -u root -p</code> 从记事本右键粘贴啦</p>
+<p>然而，宝刀未老的SQL仍是大部分人的选择。作者也是出于娱乐的心态弄了一门翻译到SQL的小语言，并支持用 ?1 和 <code>$新用户=新(?1 ?2 ?3)用户(默认)</code> 这种语法创建“函数”，当然在这里，这个为语言API桥接 的特性没有用处。只是说SQL真的很鸡肋</p>
+<p>IT工程界和教育有这么不堪吗？很抱歉，的确有。无论自诩多高等的机构、高级工程师，排名顶尖的，的确有。 天才尽管天才，也并不会创造解决实际问题的东西。</p>
 <p>SQ糖不会追求功能上的“丰满”和理论上的“精准”，只要求用着方便、学着能看到每行代码出现的理由。 <strong>SQ糖不告诉你知识，只愿你清楚理由</strong></p>
 <pre><code>取(id,名) //select
   影(年=&quot;2019年&quot;) //from-where
   序小年 //order-by asc
   页每5 0//limit 5 offset 0
+</code></pre>
+<pre><code>取(id+1 as 号,名)
+  影(年=&quot;2019年&quot;)
+  序小 号
+  页每5
 </code></pre>
 <h2 id="join">JOIN</h2>
 <pre><code>类型默认(字/*：*/ 文 主键)
@@ -316,26 +327,30 @@ LIMIT num_limit OFFSET num_offset;
 <p>这个词是“连接”的意思，比如寝室里这物品可能被多个人引用，所以不能直接附在人上，那么给你物品，你能查到人的外号吗？</p>
 <p><strong>主键默认是唯一的，就是用于JOIN</strong></p>
 <p>SQ糖并没有为JOINs 提供语法糖，因为它太机械化了。把同属1人的东西独立成表，本身就是太现实的问题，即便简写也无法简单；但幸好还有文章可以写</p>
-<pre><code>取(物品.字,外号) 物品 "inner join 人 on 物品.主人=人.字"
-取(外号) 物品(物品.字="牙刷") "inner join 人 on 主人=人.字"</code></pre>
+<pre><code>取(物品.字,外号) 物品 &quot;inner join 人 on 物品.主人=人.字&quot;
+取(外号) 物品(物品.字=&quot;牙刷&quot;) &quot;inner join 人 on 主人=人.字&quot;
+</code></pre>
 <p>可以翻译为：<code>取(外号)物品(名=牙刷) 联动/*我,右,全*/与 人：名=主人</code> 但SQ糖没有。</p>
 <p>你就取了 <code>主人=人名</code> 的(项的交集) INNER JOIN (即&quot;JOIN&quot;)</p>
 <p>LEFT/RIGHT JOIN 则会使 物品/人  的一些列为空，FULL JOIN 就更会了，毕竟这些是 &quot;OUTER JOIN&quot;</p>
+<blockquote>
+<p>^ 一个常见的误会是，“表格由行和列组成”。实际它是由含横格的多行组成的，列的本意是“所有行等位项”，有时却指代行内1格(2D数组或i&lt; n,i*m+j 总nm格拟2D 同理)</p>
+</blockquote>
 <p>什么意思呢？ <code>取物品(名=&quot;牙刷&quot;)</code> 的()条件删掉。如果有个主人 &quot;小茗&quot; 找不到，那么FULL 会保留这1行，空格填NULL。LEFT 也会</p>
 <blockquote>
-<p>SQ糖里 <code>新(&quot;电子字典&quot; 无)物品(名=&quot;字典&quot;)</code> 代表 <code>新 名=&quot;电子&quot;/*无改主人*/ 物品()</code> 或 <code>default</code>，而空代表NULL</p>
+<p>SQ糖里 <code>新(&quot;电子字典&quot; 无)物品(名=&quot;字典&quot;)</code> 代表 <code>新 名=&quot;电子&quot;/*无改主人*/ 物品()</code> 或 <code>无=default</code>，而空代表NULL</p>
 </blockquote>
 <p>NULL不会参与许多计算，比如平均值，要滤掉NULL 取物品(名!=NULL)</p>
 <p>另，有种叉联动把A的每项与B的所有项 生成 nA*nB 个结果，叫 <code>cross join</code> 笛卡尔积</p>
 <h2 id="计算">计算</h2>
-<p>SQL 的功能实际上是数据统计而非1:N存储和 FilerSort 。它甚至在某些数据上比 Excel 好用，比如单位换算和表头(列名) SQL都能处理</p>
+<p><strong>SQL 的功能实际上是数据统计</strong> 而非1:N存储和 FilerSort 。它甚至在某些数据上比 Excel 好用，比如单位换算和表头(列名) SQL都能处理</p>
 <pre><code>取(1+1 as 二);
 取巨长表名&quot;as 此 inner join 人 on 此.主人=人.名&quot;
 </code></pre>
 <p><code>分组键</code> 能在组内做统计(如排序)</p>
 <pre><code>取(计*| as 组项N) 影 分组年//有几组得几项(=行)。像 取(计,极小,极大) 这些是只得1项
 </code></pre>
-<p>组内排序需要 group_concat ，这个SQLite里也有，不是MySQL/Postgres的扩展</p>
+<p>组内排序需要 <a href="https://sqlite.org/lang_aggfunc.html#group_concat">group_concat</a> ，这个SQLite里也有，不是MySQL/Postgres的扩展</p>
 <pre><code>取(拼组 名)影
 取(拼组名)影 序大票房 分组年
 </code></pre>
@@ -381,7 +396,7 @@ fan*.5- -feed*.4- -app*.08- -find*.02| as &#39;score&#39;,
 fan,feed,app,find
 ) user 序大score 页每100
 
-//刷新页面以删除简写(js 词.名.$取 ,.$名 翻译?)
+//刷新页面以删除简写！(js 词.名.$取 ,.$名 翻译?)
 </code></pre>
 <p><a href="https://liolok.com/zhs/database-exercise/">https://liolok.com/zhs/database-exercise/</a></p>
 <pre><code class="language-sql">-- (1) 找出与李勇在同一个班级的学生信息；
@@ -417,6 +432,7 @@ $查b=取(Sno)$a(Cno IN );
 新(?1?2)用户(默认) //和新名=?0 用户 一样可以创建语言绑定($事名=语句 )
 
 简写增列=&quot;a[j]*=2&quot;
+简写$wtf=&quot;&#39;常量文本&#39;&quot; //SQ糖的常量与类型名 是会“或许”被“翻译”的
 
 新建A 增列=0 (1)(2) $无=0 (3);
 新建A 当前时=0 (0)(0);
@@ -424,6 +440,9 @@ $查b=取(Sno)$a(Cno IN );
 类型默认(小文 文(4)?)
 有表AA(小文 $ 主键) //$=小文。 not null 不必重复两次
 </code></pre>
-<p>也可以在DevTools 应用&gt;存储(F12&gt;Application&gt;Storage)&gt;WebSQL 查看表与执行SQL</p>
+<p>也可以在DevTools 应用&gt;存储&gt;WebSQL 即 (F12&gt;Application&gt;Storage) 查看表与执行SQL</p>
+<pre><code>有删库a //提示：不要在生产环境使用（废话..
+</code></pre>
 <p>若不看注释， <code>SQ糖=SQ糖糖(()=&gt;[])</code> 即可</p>
-<p>SQ糖提供了较简洁的语法，可在js代码里查看</p>
+<p>SQ糖提供了较简洁的语法，可在js源代码里查看（只有210行）</p>
+<p>首个空白会保留地址栏 <code>?</code> 后随的代码，你可以用这个分享查询片段</p>
