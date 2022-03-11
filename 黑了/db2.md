@@ -95,6 +95,8 @@ f=s=>JSON.stringify(+s?+s:s); [...$0.children].map(r=>[...r.children].map(v=>f(v
 
 你可以用 LIKE "%发财" 匹配 `"张发财","李大发财"` ，而 LIKE "_某" 匹配字串 吴某 范某 等某
 
+HAVE a nice DAY hacking!
+
 ## 题外话
 
 ```sql
@@ -214,13 +216,19 @@ __SQL 的功能实际上是数据统计__ 而非1:N存储和 FilerSort 。它甚
 
 __灵活运用以上的句法组合能在SQL层面更好的解决数据问题__ ，而不必把问题都抛给程序逻辑。
 
-+ 列性质：主键(且唯一) 自增 正(unsiged)
-+ 类型：数1,2,4 integer；(改/长)文 char；浮顶精(10,1) =0.0~9.9 和8字节(双精)浮点“浮”；真假 bit 定 enum  时间 日期
-+ 特殊值： 无 default 空 NULL ?0 首个$事=语句 参数(jsAPI:`词.事,问k` 页每 不支持!)
-+ 函数：计 count 拼组/文 concat 求和均 极小大 正 abs 整取/低/高
-+ 时间：`新建 当前[时/日/钟]=0/*即第1项*/ (0);` 和 `当前时 更新时` （基于 `ON DELETE CASCADE` 这种特性）
+### 功能
 
-除了组内排名作列表等[窗口函数](https://zhuanlan.zhihu.com/p/92654574)，SQLite 甚至能[“生成” helloworld](https://sqlite.org/lang_with.html#outlandish_recursive_query_examples)，不过是关系式编程版的。
+>最完整的列表请打开js终端，词 和 SQ__ 变量 就是
+
++ 列性质：主键(且唯一) 自增 正(unsiged)
++ 类型：数1,2,4 integer；(改/长)文 char；浮顶精(10,1) =0.0~9.9 和8字节(双精)浮点“浮”
++ .. 真假 bit 定 enum  时间 日期
++ 时间：`新建 当前[时/日/钟]=0/*即第1项*/ (0);` 和 `当前时 更新时` （基于 `ON DELETE CASCADE` 这种特性）
++ 特殊值： 无 default 空 NULL
++ .. ?1 首个$事=语句 参数(jsAPI:`词.事,问k` 页每 不支持!)
++ 函数：计 count 拼组/文 concat 求和均 极小大 正 abs 整取/低/高
+
+除了组内排名作列表等[窗口函数](https://zhuanlan.zhihu.com/p/92654574)，SQLite 甚至能[生成 “he!!oworld”](https://sqlite.org/lang_with.html#outlandish_recursive_query_examples)，不过是关系式编程版的。
 
 或者1~100 (递归/循环 查询) __请在命令行等 SQL 客户端执行__
 
@@ -237,7 +245,9 @@ WITH RECURSIVE cnt(x) AS (SELECT 1
 SELECT x FROM cnt;
 ```
 
-因此SQ糖尽管好用，限制还是很大的。 目前没有支持Index(表头定制)、ACID属性(transaction: begin commit rollback-to?savepoint)，也没有给 groupBy-having 和 join， replace into(on conflict) 语法糖(故 改新取 支持"代码")
+因此SQ糖尽管好用，限制还是很大的。 目前没有支持Index(表头定制)、ACID属性(transaction: begin commit rollback-to?savepoint)
+
+也没有给 groupBy-having 和 join， replace into(on conflict) 语法糖(故 改新取 支持"代码")
 
 另外：vaccum 是重建db文件，reindex 是删索引，attach 这些是CLI客户端命令。 like,glob,`name regexp "\d+"` 和 `'{"a":NULL}' ->> '$.a'`(单> 仍JSON) → NULL  json_type quote 这些是单格列表等的支持
 
@@ -251,6 +261,8 @@ SELECT DATEADD(HOUR,+1,min(JSON_VALUE(ExtraData,'$.enrollDate')))  as [enroll_da
  WHERE Student_id = 11449387 AND ItemType_id = 2 
  AND JSON_VALUE(ExtraData,'$.levelNo') in (7,8,9)
 ```
+
+>现实一点的查询
 
 https://github.com/by-syk/CoolapkUserStats
 
@@ -309,7 +321,7 @@ $查b=取(Sno)$a(Cno IN );
 
 >所以我说 __学SQ糖基本等于学会SQL__ 。从简单、常用到复杂、混乱，SQ糖都能表达
 
-至于什么精通，让爱死记硬背的人通去吧
+至于什么精通，让爱死记硬背的人通去吧 。想精通SQ糖，你可能要在200行源码里搜 `译 选 问k 加 _Q q$` 等关键函数
 
 ## Hack
 
@@ -318,6 +330,8 @@ $查b=取(Sno)$a(Cno IN );
 有删表A,B,C //并立是支持的,只是网页上可能无法执行
 
 新(?1?2)用户(默认) //和新名=?0 用户 一样可以创建语言绑定($事名=语句 )
+新(?2?1)用户(字="小明")
+新 boy=1 用户(字="小红")
 
 简写增列="a[j]*=2"
 简写$wtf="'常量文本'" //SQ糖的常量与类型名 是会“或许”被“翻译”的
@@ -337,7 +351,7 @@ $查b=取(Sno)$a(Cno IN );
 取(型2);
 取( )"(1,2,3) = (1,2,3),(1,2,3) = (1,NULL,3)"
 
-有表t2(x 数,y 数,z 数);
+有表t2(x 数,y 数?,z 数);
 新建 t2 (1 2 3)(2 3 4)(1 空 5);
 取( )无"(1,2,3) IN (SELECT * FROM t2)"
 

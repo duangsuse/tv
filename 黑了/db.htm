@@ -1,4 +1,4 @@
-<input id=eTxt>以<input size=3 id=eK>
+<input id=eTxt>以<input size=3 id=eK> <input type=checkbox id=eSel>点选复制
 <div class=SQC><table></table>
 <pre id=SQCo>SQL</pre>
 <textarea id=SQC placeholder="SQ糖代码"></textarea>
@@ -16,7 +16,7 @@ doc.querySelector("code").innerText=留loc()
 }
 
 eDB=css=>{
-SQC.onchange=()=>{set(SQCo,"p", P.喂(SQ糖,SQC.value+'\0')); getSelection().selectAllChildren(SQCo);doc.execCommand("copy") } //emm之前还以为只有blur
+SQC.onchange=()=>{set(SQCo,"p", P.喂(SQ糖,SQC.value+'\0')); if(eSel.checked){getSelection().selectAllChildren(SQCo);doc.execCommand("copy")} } //emm之前还以为只有blur
 let f=dbSql("a"),e=SQC.parentNode,eC,tbl; on("click",css, eHid(e,E=>{SQC.value=E.innerText;SQC.onchange()} ) )(doc.body)
 
 on("click","p", ev=>f((eC=ev.target).innerText,tbl) )(e)
@@ -86,7 +86,7 @@ tupC=a=>J(a, ([k,s])=>k+`  `+(q$(s)?词[k]+尾(s) :s)),
 填问=(v,k)=>{if(typeof v=="string"){let m;if(m=/^\0\?(\d+)/.exec(v))词.问k[m[1]]=k }},
 fn表=KV(词.fn),译函=s=>{let 调=fn表.find(e=>s.startsWith(e[0])),f=([k,v],I)=>v+`(${s.slice(n(k),I).replaceAll(词.fn.逗,',')})`+s.slice(I+1); return (NO==调)?s: f(调,orLen(s,s.lastIndexOf('|')))},
 f简=o=>a=>{for(let[k,v]of o)词.名[k](a,v) ;return a},
-外键=(k,s)=>为典(s)? ` references ${k}(${s.find(([k,v])=>/ primary key/.test(v))[0]})`:s
+外键=(k,s)=>为典(s)? ` references ${k}(${s.find(([k,v])=>/ primary key/.test(v))[0]})`:s,
 
 为典=o=>Array.isArray(o[0]),
 标=(A,f)=>(k,_,v)=>{f(k,v);return `/*${A} ${k}=${v}*/`},
@@ -302,6 +302,7 @@ Type 文(5), Age 数1, Color enum(&quot;白&quot;,&quot;黄&quot; ,&quot;黑&quo
 取不重(年)影(发行 LIKE &quot;卓然%&quot;) //按“行”而非格单位不重复！
 </code></pre>
 <p>你可以用 LIKE &quot;%发财&quot; 匹配 <code>&quot;张发财&quot;,&quot;李大发财&quot;</code> ，而 LIKE &quot;_某&quot; 匹配字串 吴某 范某 等某</p>
+<p>HAVE a nice DAY hacking!</p>
 <h2 id="题外话">题外话</h2>
 <pre><code class="language-sql">SELECT column, another_column, …
 FROM mytable
@@ -383,14 +384,20 @@ LIMIT num_limit OFFSET num_offset;
 <li>limit/offset 截取部分数据。 这个过程可以用Cursor(已选行) 实现，在Server等单次请求的地方 它比cursor更利于缓存</li>
 </ol>
 <p><strong>灵活运用以上的句法组合能在SQL层面更好的解决数据问题</strong> ，而不必把问题都抛给程序逻辑。</p>
+<h3 id="功能">功能</h3>
+<blockquote>
+<p>最完整的列表请打开js终端，词 和 SQ__ 变量 就是</p>
+</blockquote>
 <ul>
 <li>列性质：主键(且唯一) 自增 正(unsiged)</li>
-<li>类型：数1,2,4 integer；(改/长)文 char；浮顶精(10,1) =0.0~9.9 和8字节(双精)浮点“浮”；真假 bit 定 enum  时间 日期</li>
-<li>特殊值： 无 default 空 NULL ?0 首个$事=语句 参数(jsAPI:<code>词.事,问k</code> 页每 不支持!)</li>
-<li>函数：计 count 拼组/文 concat 求和均 极小大 正 abs 整取/低/高</li>
+<li>类型：数1,2,4 integer；(改/长)文 char；浮顶精(10,1) =0.0~9.9 和8字节(双精)浮点“浮”</li>
+<li>.. 真假 bit 定 enum  时间 日期</li>
 <li>时间：<code>新建 当前[时/日/钟]=0/*即第1项*/ (0);</code> 和 <code>当前时 更新时</code> （基于 <code>ON DELETE CASCADE</code> 这种特性）</li>
+<li>特殊值： 无 default 空 NULL</li>
+<li>.. ?1 首个$事=语句 参数(jsAPI:<code>词.事,问k</code> 页每 不支持!)</li>
+<li>函数：计 count 拼组/文 concat 求和均 极小大 正 abs 整取/低/高</li>
 </ul>
-<p>除了组内排名作列表等<a href="https://zhuanlan.zhihu.com/p/92654574">窗口函数</a>，SQLite 甚至能<a href="https://sqlite.org/lang_with.html#outlandish_recursive_query_examples">“生成” helloworld</a>，不过是关系式编程版的。</p>
+<p>除了组内排名作列表等<a href="https://zhuanlan.zhihu.com/p/92654574">窗口函数</a>，SQLite 甚至能<a href="https://sqlite.org/lang_with.html#outlandish_recursive_query_examples">生成 “he!!oworld”</a>，不过是关系式编程版的。</p>
 <p>或者1~100 (递归/循环 查询) <strong>请在命令行等 SQL 客户端执行</strong></p>
 <pre><code>WITH RECURSIVE cnt(x) AS (VALUES(1)
   UNION ALL SELECT x+1 FROM cnt WHERE x&lt;100)
@@ -403,17 +410,21 @@ WITH RECURSIVE cnt(x) AS (SELECT 1
 )
 SELECT x FROM cnt;
 </code></pre>
-<p>因此SQ糖尽管好用，限制还是很大的。 目前没有支持Index(表头定制)、ACID属性(transaction: begin commit rollback-to?savepoint)，也没有给 groupBy-having 和 join， replace into(on conflict) 语法糖(故 改新取 支持&quot;代码&quot;)</p>
+<p>因此SQ糖尽管好用，限制还是很大的。 目前没有支持Index(表头定制)、ACID属性(transaction: begin commit rollback-to?savepoint)</p>
+<p>也没有给 groupBy-having 和 join， replace into(on conflict) 语法糖(故 改新取 支持&quot;代码&quot;)</p>
 <p>另外：vaccum 是重建db文件，reindex 是删索引，attach 这些是CLI客户端命令。 like,glob,<code>name regexp &quot;\d+&quot;</code> 和 <code>&#39;{&quot;a&quot;:NULL}&#39; -&gt;&gt; &#39;$.a&#39;</code>(单&gt; 仍JSON) → NULL  json_type quote 这些是单格列表等的支持</p>
 <pre><code class="language-sql">SELECT DISTINCT user.name
   FROM user, json_each(user.phone)
  WHERE json_each.value LIKE &#39;704-%&#39;;
 
-SELECT DATEADD(HOUR,+1,min(JSON_VALUE(ExtraData,&#39;$.enrollDate&#39;)))  as [enroll_date] 
- FROM school_7..StudentCourseItem 
- WHERE Student_id = 11449387 AND ItemType_id = 2 
+SELECT DATEADD(HOUR,+1,min(JSON_VALUE(ExtraData,&#39;$.enrollDate&#39;)))  as [enroll_date]
+ FROM school_7..StudentCourseItem
+ WHERE Student_id = 11449387 AND ItemType_id = 2
  AND JSON_VALUE(ExtraData,&#39;$.levelNo&#39;) in (7,8,9)
 </code></pre>
+<blockquote>
+<p>现实一点的查询</p>
+</blockquote>
 <p><a href="https://github.com/by-syk/CoolapkUserStats">https://github.com/by-syk/CoolapkUserStats</a></p>
 <pre><code class="language-sql">SELECT
     @rownum:=@rownum+1 AS &#39;#&#39;,
@@ -462,12 +473,14 @@ $查b=取(Sno)$a(Cno IN );
 <blockquote>
 <p>所以我说 <strong>学SQ糖基本等于学会SQL</strong> 。从简单、常用到复杂、混乱，SQ糖都能表达</p>
 </blockquote>
-<p>至于什么精通，让爱死记硬背的人通去吧</p>
+<p>至于什么精通，让爱死记硬背的人通去吧 。想精通SQ糖，你可能要在200行源码里搜 <code>译 选 问k 加 _Q q$</code> 等关键函数</p>
 <h2 id="hack">Hack</h2>
 <pre><code>有表A(x 数4),B(s 文),C(t 时间), 用户(字,boy 真假 或1)
 有删表A,B,C //并立是支持的,只是网页上可能无法执行
 
 新(?1?2)用户(默认) //和新名=?0 用户 一样可以创建语言绑定($事名=语句 )
+新(?2?1)用户(字=&quot;小明&quot;)
+新 boy=1 用户(字=&quot;小红&quot;)
 
 简写增列=&quot;a[j]*=2&quot;
 简写$wtf=&quot;&#39;常量文本&#39;&quot; //SQ糖的常量与类型名 是会“或许”被“翻译”的
@@ -485,7 +498,7 @@ $查b=取(Sno)$a(Cno IN );
 取(型2);
 取( )&quot;(1,2,3) = (1,2,3),(1,2,3) = (1,NULL,3)&quot;
 
-有表t2(x 数,y 数,z 数);
+有表t2(x 数,y 数?,z 数);
 新建 t2 (1 2 3)(2 3 4)(1 空 5);
 取( )无&quot;(1,2,3) IN (SELECT * FROM t2)&quot;
 
