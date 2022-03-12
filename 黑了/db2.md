@@ -46,7 +46,7 @@ __SQsugar(SQ糖)__ 是我设计的一门翻译到SQL的查询语言，作为一�
 有表X(x 狗 当 删 跟着) //外键
 有改表狗(id 数4? 正 自增)
 有改表狗(名__昵称呀 文(11)?)
-有改表狗+"foreign key" (xx 狗)
+有改表狗"foreign key"+ (xx 狗)
 
 //当然也可以英文：但enum得全复制贴到MySQL执行！
 有表Dog(id 数4 主键 自增,
@@ -63,7 +63,7 @@ Type 文(5), Age 数1, Color enum("白","黄" ,"黑")
 f=s=>JSON.stringify(+s?+s:s); [...$0.children].map(r=>[...r.children].map(v=>f(v.innerText) ).join(' ')  ).slice(1).join(")\n(")
 ```
 
->如果有些语法错误(没显示SQL语句)，你也可以按此快捷键，查看 Console js终端
+>如果有些语法错误(没浮窗显示SQL语句)，你也可以按此快捷键，查看 Console js终端
 
 ```
 有表影(id 数, 名 文(15), 票房 文(8), 年 文(5), 导演 文(12), 制作 文, 发行 文)
@@ -121,7 +121,11 @@ __因为用途领域上的尴尬，SQL的用户接口真的差劲极了__ 。 XP
 
 __然而，宝刀未老的SQL仍是大部分人的选择__ 。作者也是出于娱乐的心态弄了一门翻译到SQL的小语言，并支持用 ?1 和 `$新用户=新(?1 ?2 ?3)用户(默认)` 这种语法创建“函数”，当然在这里，这个为语言API桥接 的特性没有用处。只是说SQL真的很鸡肋
 
+>我说句大实话，“实体”创建与部分更新/验证、API路径绑定的这类篇幅都是废话套话。 为取数据子集写专门“学”代码没有任何意义也无关SQL，尽管它仍是“后端”编程的必修、尽管越难工资越高
+
 IT工程界和教育有这么不堪吗？很抱歉，的确有。无论自诩多高等的机构、高级工程师，排名顶尖的，的确有。 天才尽管天才，也没机会创造解决实际问题的东西。
+
+如果做什么都仰仗智商、责怪智商，拿一个小数代表智慧“高低”，终究会一事无成。 物理座标都要4个数
 
 SQ糖不会追求功能上的“丰满”和理论上的“精准”，只要求用着方便、学着能看到每行代码出现的理由。 __SQ糖不告诉你知识，只愿你清楚理由__
 
@@ -138,6 +142,24 @@ SQ糖不会追求功能上的“丰满”和理论上的“精准”，只要求
   序小 号
   页每5
 ```
+
+>你可以忽略取(列域) 表名(条件) 里的任何一个括号，但如果忽略表名 就得加末尾分号，新建也要加。
+
+```
+get(id+1 as No_, Name)
+  Film(Year=2019)
+  sortMin No_
+  paged 5
+```
+
+```
+select id+1 as No_, Name from
+  Film where Year=2019
+  order by No_ asc
+  limit 5;
+```
+
+>嗯，不错，自然多了。这是一种进化、4GL“次世代语言”SQL……
 
 ## JOIN
 
@@ -159,24 +181,38 @@ SQ糖并没有为JOINs 提供语法糖，因为它太机械化了。把同属1�
 
 ```
 取(物品.字,外号) 物品 "inner join 人 on 物品.主人=人.字"
-取(外号) 物品(物品.字="牙刷") "inner join 人 on 主人=人.字"
+取(外号) 物品(物品.字="牙刷") " join 人 on 主人=人.字"
 ```
 
 可以翻译为：`取(外号)物品(名=牙刷) 联动/*我,右,全*/与 人：名=主人` 但SQ糖没有。
 
 你就取了 `主人=人名` 的(项的交集) INNER JOIN (即"JOIN")
 
-LEFT/RIGHT JOIN 则会使 物品/人  的一些列为空，FULL JOIN 就更会了，毕竟这些是 "OUTER JOIN"
+LEFT/RIGHT JOIN 则会使 物品/人  的一些列为空，FULL JOIN 就更会了，毕竟这些是 "OUTER JOIN" (SQLite 只支持 left? join 往往够用)
 
->^ __一个常见的误会是，“表格由行和列组成”。__ 实际它是由含横格的多行组成的，列的本意是“所有行等位项”，有时却指代行内1格(2D数组或i< n,i*m+j 总nm格拟2D 同理)
+>^ __一个常见的误会是，“表格由行和列组成”。__ 实际它是由含横格的多行组成的， __列的本意是“所有行内等位项”__ ，有时却指代行内1格(2D数组或i< n,i*m+j 总nm格拟2D 同理)
 
 什么意思呢？ `取物品(名="牙刷")` 的()条件删掉。如果有个主人 "小茗" 找不到，那么FULL 会保留这1行，空格填NULL。LEFT 也会
+
+```
+新建物品("茶""小茗");
+取(物品.字 as 本我,*)物品" join 人 on 人.字=主人"
+取物品" left join 人 on 主人=人.字"
+```
 
 >SQ糖里 `新("电子字典" 无)物品(名="字典")` 代表 `新 名="电子"/*无改主人*/ 物品()` 或 `无=default`，而空代表NULL
 
 NULL不会参与许多计算，比如平均值，要滤掉NULL 取物品(名!=NULL)
 
-另，有种叉联动把A的每项与B的所有项 生成 nA*nB 个结果，叫 `cross join` 笛卡尔积
+另，有种叉联动把A的每项与B的所有项 生成 nA*nB 个结果，叫 `cross join` 笛卡尔积；如果join后过滤 A=空|B=空 还能做集合相减(比如 join on A=B where B=NULL)
+
+```
+取(*,A.外号)人"as A cross join 人"
+有用表无
+$查a=取(1); $查b=取(1); //改成2?
+串不重$a $b
+串$a $b
+```
 
 ## 计算
 
@@ -184,7 +220,7 @@ __SQL 的功能实际上是数据统计__ 而非1:N存储和 FilerSort 。它甚
 
 ```
 取(1+1 as 二);
-取巨长表名"as 此 inner join 人 on 此.主人=人.名"
+取巨长表名"as 此 join 人 on 此.主人=人.名"
 ```
 
 `分组键` 能在组内做统计(如排序)
@@ -193,7 +229,7 @@ __SQL 的功能实际上是数据统计__ 而非1:N存储和 FilerSort 。它甚
 取(计*| as 组项N) 影 分组年//有几组得几项(=行)。像 取(计,极小,极大) 这些是只得1项
 ```
 
-组内排序需要 [group_concat](https://sqlite.org/lang_aggfunc.html#group_concat) ，这个SQLite里也有，不是MySQL/Postgres的扩展
+组内排序需要 [group_concat](https://sqlite.org/lang_aggfunc.html#group_concat) ，这个SQLite里也有，不是MySQL/Postgres的扩展（更好的方法是[窗口函数](https://zhuanlan.zhihu.com/p/92654574) 分子集操作）
 
 ```
 取(拼组 名)影
@@ -221,14 +257,14 @@ __灵活运用以上的句法组合能在SQL层面更好的解决数据问题__ 
 >最完整的列表请打开js终端，词 和 SQ__ 变量 就是
 
 + 列性质：主键(且唯一) 自增 正(unsiged)
-+ 类型：数1,2,4 integer；(改/长)文 char；浮顶精(10,1) =0.0~9.9 和8字节(双精)浮点“浮”
++ [类型](https://www.runoob.com/sql/sql-datatypes.htmlZ)：数1,2,4 integer；(改/长)文 char；浮顶精(10,1) =0.0~9.9 和8字节(双精)浮点“浮”
 + .. 真假 bit 定 enum  时间 日期
 + 时间：`新建 当前[时/日/钟]=0/*即第1项*/ (0);` 和 `当前时 更新时` （基于 `ON DELETE CASCADE` 这种特性）
 + 特殊值： 无 default 空 NULL
 + .. ?1 首个$事=语句 参数(jsAPI:`词.事,问k` 页每 不支持!)
 + 函数：计 count 拼组/文 concat 求和均 极小大 正 abs 整取/低/高
 
-除了组内排名作列表等[窗口函数](https://zhuanlan.zhihu.com/p/92654574)，SQLite 甚至能[生成 “he!!oworld”](https://sqlite.org/lang_with.html#outlandish_recursive_query_examples)，不过是关系式编程版的。
+除了组内排名作列表等窗口，SQLite 甚至能[生成 “he!!oworld”](https://sqlite.org/lang_with.html#outlandish_recursive_query_examples)，不过是关系式编程版的。
 
 或者1~100 (递归/循环 查询) __请在命令行等 SQL 客户端执行__
 
@@ -245,11 +281,20 @@ WITH RECURSIVE cnt(x) AS (SELECT 1
 SELECT x FROM cnt;
 ```
 
+```
+简写$递1="`with recursive cnt(x) as ($) $`"
+$查a=取(1)无; $查b=取(x+1)cnt 页每100;
+$句递1: 串$a $b 取(x)cnt;
+
+$查b=取(x+1)cnt(x<100);
+$句递1: 串$a $b 取(x)cnt;
+```
+
 因此SQ糖尽管好用，限制还是很大的。 目前没有支持Index(表头定制)、ACID属性(transaction: begin commit rollback-to?savepoint)
 
-也没有给 groupBy-having 和 join， replace into(on conflict) 语法糖(故 改新取 支持"代码")
+也没有给 groupBy-having 和 join， replace into(on conflict) 语法糖(故 改新取 支持["代码"](https://www.runoob.com/sql/sql-select-into.html))
 
-另外：vaccum 是重建db文件，reindex 是删索引，attach 这些是CLI客户端命令。 like,glob,`name regexp "\d+"` 和 `'{"a":NULL}' ->> '$.a'`(单> 仍JSON) → NULL  json_type quote 这些是单格列表等的支持
+另外：vaccum 是重建db文件，reindex 是删索引，attach 这些是CLI客户端命令top=limit 还有支持PERCENT%。 like,glob,`name regexp "\d+"` 和 `'{"a":NULL}' ->> '$.a'`(单> 仍JSON) → NULL  json_type quote 这些是单格列表等的支持
 
 ```sql
 SELECT DISTINCT user.name
@@ -322,6 +367,10 @@ $查b=取(Sno)$a(Cno IN );
 >所以我说 __学SQ糖基本等于学会SQL__ 。从简单、常用到复杂、混乱，SQ糖都能表达
 
 至于什么精通，让爱死记硬背的人通去吧 。想精通SQ糖，你可能要在200行源码里搜 `译 选 问k 加 _Q q$` 等关键函数
+
+所以你看看，其实各种 SQL 方言就是高级点的 Excel 而已，而“后端”就是定义一个 Excel 操作员的工作规章和座位仪容，加 Session表-Cookie键或签发JWT 身份确认
+
+那么编程呢，就是在合适的地点、契机 做能复用的计算，就像跳舞，这手脚是“模块” 机会是“业务流程” 计算是“固定关节按灵活曲线运动” 。大小层次的变与不变都清楚，程序才能写好。
 
 ## Hack
 
