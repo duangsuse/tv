@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+
+
+   <title>Page for scripts</title>
+<style>canvas{width:100vw;height:100vh; top:0;left:0} .bg{z-index:-1; position:absolute} </style>
+<style></style>
+  </head>
+  <body>
+    <header><input size=3 onchange="document.location.hash=event.target.value" id=eJU placeholder="jsURL"></header>
+    <main><canvas id=eG class=bg></canvas><script>doc=document, docSty=doc.styleSheets;
+布=e=>{let w=e.width=e.offsetWidth,h=e.height=e.offsetHeight; return [[w,h],e.getContext("2d")]}
+(onhashchange=()=>{let s=doc.location.hash; [L,G]=布(eG); if(s)doc.head.appendChild(doc.createElement("script")).src=eJU.value=s.slice(1)+".js"; })()//'#'+x+".js"
+
+玩它=(f,a)=>{let m=/\((.*?)\)(.*?)/.exec(String(f)),参=m[1].split(','),N,eA, e=el.div(m[2],eA=el.p(),N=el.input(e=>{e.type="number";e.min=-(e.max=20)})),up; N.value=4
+参.forEach((k,i)=>el(e, k,el.input(e=>{e.type="range";bind(N,"change",()=>{let v=e.value=a[i]; e.min=v/N.value;e.max=v*N.value;if(e.min<1.0)e.step=e.min});
+  e.onchange=()=>{a[i]=e.valueAsNumber;up()} })) ) ;up=()=>{if(!cfg.keep)G.clearRect(0,0,...L);f(...a);eA.innerText=a.join(', ')}; up();return e}
+
+n=o=>o.length,ss=s=>s.split(" "),isa=(k,o)=>k==typeof o,
+newA=(n,f)=>{let a=Array(n),i=0;for(;i<n;i++)a[i]=f(i); return a}
+el=(e,...ee)=>{if(isa('string',e))e=doc.createElement(e); while(isa('function',ee[0]))ee.shift()(e); for(let x of ee)e.append(x);return e}
+keyCall=(f,o={})=>new Proxy(o,{get:(o,k)=>(...a)=>f.call(o,k,...a)})
+
+el=keyCall(el,el)
+bind=(e,k,f)=>{e.addEventListener(k,f);f()}
+fplot=(dt,x1,f)=>{let[w,h]=L
+  for(let x=0,dX=dt*w/x1,X=0;x<x1;x+=dt,X+=dX)g.fillRect(X,h-f(x)*h,2,2)
+}
+</script></main>
+  </body>
+</html>
