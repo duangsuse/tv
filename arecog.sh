@@ -1,7 +1,7 @@
 #!/bin/bash
 #VOSK 语音识别的 SetWords 音组词根本不能用， srt 也不支持流输入，也不能利用 more_itertools.chunked(N 分块处理字幕因为可能在句内切断
 #我决定做一个违背祖宗的决定：让 srt 支持行缓冲，
-export VOSK_MOD=~/.local/share/kdenlive/speechmodels/vosk-model-small-cn-0.3 N_SAMP=16000 #大部分模型不能降低这采样率
+export VOSK_MOD=~/.local/share/kdenlive/speechmodels/vosk-model-${VOSKK:-cn-kaldi-multicn-2-lgraph} N_SAMP=16000 #大部分模型不能降低这采样率
 srtSTT(){
 qsec=$1;shift
 ffmpeg -loglevel quiet $* -f s16le -ac 1 -ar $N_SAMP -|python -c '
@@ -65,9 +65,9 @@ for i,x in enumerate(zipTakeWhile(inSameLine,lineSrt(stdin))):
 ' $*
 }
 
-if [ $0 != bash ];then
-[ -f a.srt ]&&srtMerg $1 'usersub(x)' <a.srt >b.srt  ||srtSTT 1 -i $1 1>a.srt
+if [ $0 == ./arecog.sh ];then
+[ -f a.srt ]&&srtMerg $1 'usersub(rmspc(x))' <a.srt >b.srt  ||srtSTT 1 -i $1 1>a.srt
 fi
 #usage: arecog audfile  >a.srt|max_dist_sec a>b.srt
-#lib: srtSTT 1 -f alsa -i default a.wav|srtMerg 0.18 'userchk(rmspc(x))'
+#lib: srtSTT 1 -f alsa -i default a.wav|srtMerg 0.18 'userchk(rmsp(x))'
 #or srtMerg 0.2 'x'

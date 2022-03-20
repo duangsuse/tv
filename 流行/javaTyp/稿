@@ -1,0 +1,212 @@
+Hi大家好，动苏在写啥
+
+今天闲逛B站时发现一个讲 Java 泛型的视频居然有1w播放，唉我们这些泛语言(+=Py,TS,Kt,C#..)的人真是不中用了，那我也讲讲 Java 语法与限制的知识呗
+
+1.泛型Generics
+
+参数化类型，就是类型也能细化 含有些类型参数 包存在<> 里，类型参数名一般 List<E 或 T> Map<K,V> 这样 如 List<String>
+
+它是JDK1.5 (Java5,JDK=编译器版本.向低版本兼容) 引入的编译期检查，原来是 java.util.List ，现在是 List<Integer>, List<String> 或者 List<?> (无类型 不可add但可转Object)
+
+你要说泛型没意义吧， List<T> .get(i)=T .set(i,T) 乃至 .addAll(List<out T> src)  .addTo(List<in T> dst) 自动检查和转换就是意义，只支持数组类型如 String.join(" ","我打字带空格".split("")) 扩展业务时就会遇到瓶颈
+class List<T>{ T get(int idx); void set(int idx, T value); }
+
+为什么不能像 int[] 一样写 List<int> ？如果你反编译(IDEA搜decompile) 就会发现，代码里 List<Integer> xs=new List<>(); 实际类型参数消失了、擦除了 List xs=new List(); ，只有那些函数签名和类结构里的泛型会存作元数据 供反射使用
+
+所以许多人给它解释为强转的语法糖哈，其实硬要这么说，不同的编程语言 也不过是不同的语法糖；它还是对类型系统的扩充
+
+熟悉APT(源码大结构自动处理如 @Override)的人也知道 lang.reflect 是能检查字段 返回值 类型的型参的，可用来做些隐式参数(注入)
+
+学语言不止是熟悉语法，像 javap "javax.annotation.processing.Processor" @interface，以及 @Override 只是自动检查 非必要“语法” 不知道的人也很多，它们才是“设计模式” 什么“百万架构师”
+
+```java
+import java.util.*;
+
+import javax.lang.model.*;
+import javax.lang.model.element.*;//Type,Method..
+import javax.annotation.processing.*;//XX.java内大定义 的处理环境
+
+@SupportedAnnotationTypes({"codegen.SomeBoilerplate"})//Boiler套版
+@SupportedSourceVersion(SourceVersion.RELEASE_8)
+public class CGProcessor extends AbstractProcessor {
+    @Override public boolean process
+      (Set<TypeElement> ao, RoundEnvironment eenv) {
+        for(var a:ao)for(var e:eenv.getElementsAnnotatedWith(a)){
+          e.getAnnotation(SDKInfo.class).ver();
+          env.getMessager().printMessage(Kind.WARNING,"",e);
+        }//和Type接口就是@Override需要的一切
+        out.println("已受用");
+        return false;//unchanged
+    }
+  //init(ProcessingEnv){env=it}
+  java.io.PrintWriter s=
+    env.getFiler().createSourceFile(pkName + ".XXBinding",
+    new Element[]{}/*纯no-op.Javac/ECJ无视"增量改"*/).openWriter();
+  //^JDK6 javax.tools.JavaFileObject
+}//添加compile 依赖即在任何源码上执行process()
+
+import java.lang.annotation.*;
+@Retention(RetentionPolicy.SOURCE)//无(运行期)反射
+@Target(ElementType.FIELD)
+public @interface SDKInfo { int ver(); }
+```
+
+https://yimipuzi.com/1160.html
+https://www.jianshu.com/p/d7567258ae85
+
+有一点， List<Int> 和 add(1) 是否都算“调用”，其实都是 只不过 List<> 的调用在编译期发生 生成了 reflect.Type 和反射元数据 附着在变量啦参数的定义上， ?,?extends,Int 这些都是 Type 值，不能加减乘除 只能算是否报错 而已
+
+2.擦除erasure
+
+不传递类型实参给库 好像会有性能问题，比如List就不能知道内项的sizeof，但这不是重点。 int,float,..数组和List 不同，"基元类型(prim type,无String)" 是复制传递，没有 Object 内存地址，所以需要“装箱 Integer x=(int)1;”再保存
+
+但你仔细一想，Object的地址(一个long) 完全是能存储 int 的，都long了还不如int宽吗？而 C++ list即 std::vector 根本不需要装箱(只有链表要尾指针)，所以 List 实际是能同时包含 int,long,String,... 为区分类型 才有装箱这一出，好家伙
+
+3.型参的形变
+
+除了 void ，Java 的一切都有 Object 版本(+个null情况..)， Object[] 能存储任何值，但能被视为 int[] ary; 吗？若代码只含 ary[随便i]=233; 的赋值就就可以！但一般只能说 int[] 可视为 Object[]
+
+```
+Object
+(CharSeq String)(Number Integer Long Float)
+(Throwable Error Exception) (Closeable File Reader Scanner)
+```
+
+因为 int 有 Obj 的所有成员，也就是比 Obj “大”，它的实例数就比 Obj “窄”
+
+在任何 Obj[]的变量你都能提供 int[] 值，叫子类型 subtype ，即类型的小大-宽窄。形变就是类型参数<T> 的子类型
+
++ 因为「Obj可为int」那「组<Obj>可为组<int>」 ，是协变 f(List<?extends Obj>) ，f可接受List<Int>,List<Num>,.
++ 因为「Obj可为int」那「只能set的Consumer<Int> 可为 Consumer<Obj> 」，是逆变 f(Consumer<?super Int>) ，f可接受任何比Int宽的 如 Consumer<Obj>。整体都能收，我还怕你子类
++ 否则是不变(invariant)，既get又set 那只能是T自己。提一嘴上面俩的英文是 covariant,contra-variant ，这3种可能称为 形变性 variance
+
+```java
+import java.lang.*;
+import java.util.function.*;
+
+//如果说 List<T>有.get 故是 T 的"Producer"
+
+f(List<?extends Obj>) //接受List<Int>,List<Str>,.
+
+f(Consumer<?super Int>)//Consumer<Obj>,Consumer<Num>
+
+f(List<Number>) //只能是List<Number>. List<Int>不能传入
+//因为不知道是否会 add(1f) ,add((Num)anyNotInt)
+
+
+//若有
+<T> T f(Function<?super T,Integer>){return f.apply(1);}
+//则称<T>是 <in T>. 这样就不必传"?类型"了(Kotlin)
+
+//协变covariant,逆变contra-variant,不变invariant
+```
+
+那么兼容最多 (T)->R 函数的类型是啥？ Func<in *,out *> = Func<?super Void/*=Nothing*/, ?extends Object> ，什么也不接受 什么也能输出，Kotlin 星形投影 很浪漫一个词
+
+然而 <?super > 这种"type wildcard"通配符对数据类的使用者完全没有意义，反而要在要接收此类型是一遍又一遍
+
+啊 Function<?super T,?extends R> ，啊这个参数是 final 的不能改、成员是 public 的，你看Groovy源码就知道了，也就万年钟情XML的Java 看得上这种语言
+
+4.形变和“仅读写”
+
+知道怎么用，现在来谈谈形变性是怎么来的
+
+Java 的泛型数组是个大坑， Object[] a=new Integer[2]; 可以，你就能随便 a[0]="Not a Num"; ，但Java又给数组外以额外检查，他可真是个大聪明，我草
+Integer a[]={0}; Number b[]=a;
+b[0]=2L;int x=a[0];
+
+List<?extends Number> xs=new ArrayList<Long>();
+xs.add((Long)1L);
+
+List<?ex> 或<?>会禁用所有写方法，因为它可为所有 List< Int,Long,Float,..  > ，写会破坏数据一致性(Producer-extends,Consumer-super)PECS原则
+
+```
+import java.lang.*;
+import java.util.function.*;
+
+import kotlin.*
+
+Function<?super T,?extends R>
+Func<in *,out *> = Func<?super Void/*=Nothing*/, ?extends Object/*Any?*/>
+
+//List<?ex> 或<?>会禁用所有写方法，因为它可为所有 List< Int,Long,Float,..  >
+
+List<?> a=new List(){{add(2)}}; //=匿名子类,请 List.of(1)!
+(Object)a.get(0);//可以。List 裸类型也行
+a.add(1); //禁止(?="?ex Obj")
+```
+
+像Go、Flutter 这种半道出家的语言，一开始作者连子类型都没研究清楚，也就会衍生出更多问题；但它对语言是否必须呢？
+
+JDK5 之前 List.add 任何类型都会减成 Object get() 要强转，VB里只有Dim(,to)as 数组和Variant自动强转，JS,Py,Lua 里直接没有类型，有成员就能调用
+
+但相对的，优秀的 JVM 语言 Kotlin在“型参定义处inout形变”，Function<in T,out R> 后就没必要到处?extends 了，正如 val args:Array<out String> 只读量 var 变量 就没必要纠结参数final 与否了，
+
+连类型都能自动推导，hashCode dataclass和成员转别this Delegate 也不用写了，by lazy{} 就能懒初始化，推荐大家到 KotlinLang.org 学习
+
+```kotlin
+import kotlinx.coroutines.* //断续(suspend)执行的“回调组合 .then(=>构值)”
+
+suspend fun main()=coroutineScope {//Scope等待再退出
+  for (i in 1..10) {
+    launch { delay(3000L - 300*i) // 启动10个任务：暂停3k~300ms  继续
+      log(start, "Countdown: $i")
+    }
+  }
+}
+
+interface 别抄我{fun 巨长名()}
+
+class A(): 别抄我 {//当然"主构造器" 也无需super()或new
+  override fun 巨长名()=throw Error("然鹅没用")// require(1==1){""} ,check
+  val sqrt_2 by lazy{kotlin.math.sqrt(2F)}//getValue(p,self):Int
+}
+
+class 别抄By(val a:A): 别抄我 by a //"Delegate",so 别抄By(A()).巨长名()=a.巨_()
+
+data class Pair<out A,out B>(val a:A,val b:B) {//俩项<AB> 。更别说 listOf(1,2) 这些Java都抄得勉强的设计了
+  override fun toString()="Pair($a,$b) hashCode,equals,toStr 自动实现"
+}
+data class Tup2<A,B>(var a:A,var b:B) //现学现卖
+
+```
+
+唉，这期我还想多讲点，但考虑视频播放量一直不咋地，Java 里别的稀罕物下期再说
+
+4.交并集类型
+
+我豁出去了啊，这个王垠都懒得跟你讲的。 可能是AB的类型或同时是AB的类型
+
+当然王垠和知乎PLT(程序语言论)大佬是懒得写文，我是懒得配音，因为中国在这个领域没1个能打的，还说什么中文编程 自主软件呢，搞个出脚本语言或堆砌而非设计“编译器”代码就万事大吉了
+
+JDK5 也引入了 mutli-catch ，因为 Java 的受检异常只要非 RuntimeException 就得填 throws 太严苛了， if(fp.exists()) new FileInputStream(fp) 都会报错，就差给递归加上 StackOverflow 、给new 加内存 OOM 异常了
+
+try(FileReader sf=open(f)) { new Scanner(sf) } catch(IOException|IllegalArgumentException/*IOE|IAE*/ ex){ err.println("啊我死了. 别吞掉异常"); }
+
+至于许多人爱吞异常，实际也就是因为 checked exception 使得每行代码都能报错，他觉得这段不会出问题，一不小心把行号和 Throwable 子类的范围设大了。 真想对Java之父James Gosling 说，这叫矫枉过正，物极必反。
+
+Exception 情况让调用方或Thread 处理而不panic(abort,exit)是应该的，但许多时候 null 就能解决问题，像Kotlin 化空指针NPE腐朽为神奇的 num.get(k)?.let{it+1} ?: 1
+
+再不济像 JS Error() 有个message 个stack 甚至啊 Promise.catch(alert) 足矣，Java 是越分越细、越限越严 何况异常还 Serializable
+
+回到上面 比 Obj “大”，它的实例数就比 Obj “窄” ；反之更小的成员集，范围就更宽
+
+里面这个 IOE|IAE 就是并集类型，接受 A|B xx 并集的操作，范围更宽，因此只能访问 A,B 都有的成员；但调用时就同时兼容二者，比如 Kotlin 的 Int? = Int|Null 。这个语法在效仿了 Ruby 的 Crystal-lang 有效
+
+然后Java 还有个 <T extends Comparable&RandomAccess&Closable> void f(T wtf); ， A&B 范围更窄，T就含 interface A,B 的所有成员，调用时 wtf.getClass() 需 implements A,B
+
+需要注意 Kt 里是没有 ?extends 的，只有 <out Int> ，就避免了型参约束和 ?类型 的不统一，<>调用是传入 ?类型 、<>定义默认inout性 ；非常好笑的是 P<T
+
+..extends Wtf>自己也需检查T的上下界，和 检查子类(P<?ex>,P1<Int>) (P<?ex T>,P1<?ex T1>) 时一模一样
+
+我们说的类型交并集，都是指实例数上的 更窄更宽，不是说共同成员或全部成员
+
+那么编译器类型检查怎么做？ f(int x); f((int)1) 这显然的，常量都有类型。 那么  g(Obj x); f(int x)=g(x); 咋整呢？其实x 的值不确定，它的类型 却早在那了。 Obj可为int (isAssignableFrom int)，所以g((int)x) 是ok的
+
+广一点讲， Obj|int 是 Obj ，Obj依然可为这个并； 但若 User|Monkey=Obj包容了二者 ，User 不可为 Obj 。
+
+类型推导就是取<T> 所有位置的并(即共同成员即超类)，然后再做遍检查。 Kotlin和TypeScript 里你都能看到这点的体现，型参的意义是统一，每位置的取值
+
+类型推导能不能取&交集 呢？不合实际。一段用A|B的代码可收A,B ；但用 A&B 就只能同时是A,B (取全部成员)，太窄了 也不严谨
+
+Rust里交集是+，Kt 里 fun<T> wtf() where T:A,T:B ，1个限制 fun<T:Num> 就可，这是相同概念不同语法

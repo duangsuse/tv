@@ -6,13 +6,14 @@
 
    <title>Page for scripts</title>
 <style>canvas{width:100vw;height:100vh; top:0;left:0} .bg{z-index:-1; position:absolute} </style>
-<style></style>
+<style>.todo{}</style>
   </head>
   <body>
     <header><input size=3 onchange="document.location.hash=event.target.value" id=eJU placeholder="jsURL"></header>
     <main><canvas id=eG class=bg></canvas><script>doc=document, docSty=doc.styleSheets;
 布=e=>{let w=e.width=e.offsetWidth,h=e.height=e.offsetHeight; return [[w,h],e.getContext("2d")]}
-(onhashchange=()=>{let s=doc.location.hash; [L,G]=布(eG); if(s)doc.head.appendChild(doc.createElement("script")).src=eJU.value=s.slice(1)+".js"; })()//'#'+x+".js"
+addJS=k=>doc.head.appendChild(doc.createElement("script")).src=k+".js";
+(onhashchange=()=>{let s=doc.location.hash; [L,G]=布(eG); if(s)addJS(eJU.value=s.slice(1)); })()//'#'+x+".js"
 
 玩它=(f,a)=>{let m=/\((.*?)\)(.*?)/.exec(String(f)),参=m[1].split(','),N,eA, e=el.div(m[2],eA=el.p(),N=el.input(e=>{e.type="number";e.min=-(e.max=20)})),up; N.value=4
 参.forEach((k,i)=>el(e, k,el.input(e=>{e.type="range";bind(N,"change",()=>{let v=e.value=a[i]; e.min=v/N.value;e.max=v*N.value;if(e.min<1.0)e.step=e.min});
@@ -28,6 +29,7 @@ bind=(e,k,f)=>{e.addEventListener(k,f);f()}
 fplot=(dt,x1,f)=>{let[w,h]=L
   for(let x=0,dX=dt*w/x1,X=0;x<x1;x+=dt,X+=dX)g.fillRect(X,h-f(x)*h,2,2)
 }
+split=(s,sp,...sp1)=>s.split(sp).map(x=> sp1.length? split(x, ...sp1) : x)
 </script></main>
   </body>
 </html>

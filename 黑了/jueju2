@@ -15,6 +15,7 @@
     若n%它是0，交(它)；n=它。
 
 
+
 “我们建议WWF(熊猫徽标环保组织)”时说什么“他阴阳怪气”、“境外NGO黑钱”、“他看不起中国人吃肉”，看个标题都能对号入座，自卑的是谁呢？一群攀着进口货、软件的人，哦现在明白中国最强了 可以止步了 可以“科普多了去了 不缺你1个”的发稿
 
 “1的碘化银”他能时说什么“哇中国技术真是太厉害了”，不好意思人家就一直追随中国技术。陪伴是最长情的告白，嘴上的『爱』，图片仅供参考。
@@ -56,7 +57,7 @@
 事量变恒记其中
 判重复是空则作?
 
-窍：书物类 物定内 事判看滤序组归
+窍：书物类 物定内 事判看滤序组归  同名多义 部分求值 类实例
 
 物事:inner class, 双主语扩充(函我), 对何<我>
 恒:inline reified(or in-out)
@@ -81,3 +82,18 @@
 二生三(段于体构物)
 
 三生万物。
+
+律贰扫： PE/ELF dll和函数表(启动)hook  内存区-数值/增减搜索 地址读写锁
+
+//Layout 为{}或:\n 缩进块, :语句; 提供IDE导航 asig({wsN,wsUp})。p果.lay=[item..]
+lay=(open=":",item, sep=";")=>p=>
+//逆波兰算符重排 1+2*3=1 2* 3+ ，在 a=1+2*3 里(=)最小 层次最大，若有 (a=1)+1 大含小则在 P.fde 加括号
+op=(item,t)=>
+
+
+el/prop/Eqv  Only1/emet/time-VecN-anim
+makes(sort),make n-变 wOp[acty
+tapup计时/连线,移窗(过程), 绘画擦, 大小拖影; 色彩scroll substr 队列 彩方
+
+require("vs/editor/browser/services/abstractCodeEditorService") //listAll(). Did,activate,ctx,Dispose..
+ce=x.getActiveCodeEditor();$('.modified.editor').onclick=()=>ce._paste(1,'\n')
