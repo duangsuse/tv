@@ -61,7 +61,7 @@ rep(n=1,ok=noOp,stopr=NO){ let{rate,ease:{f}}=anim,{dur,t0}=this,q=n>0,
   id=setInterval(()=>{this( f(t) );t+=dt ;if(q? t>n:t<n)ed()}, rate),ed=()=>{clearInterval(id); if(n!=0||t0!=0)this(n),ok()};if(stopr)stopr(ed,this)
 }},v0.vec?function at(t){f(this._dv.dup.pk(t).p(v0))} : function v(t){f(v0+t*this._dv)}) )
 
-//或许该加 逆/往复/往返N次 的动画线和 dt=NO|0|1 的队列(支持序和%=p,CSS:delay,副本变形[rng] 路径队 dt-du幻灯片队:进退场换)?
+//或许该加 逆/往复/往返N次 的动画线和 dt=NO|0|1 的队列(支持序和%=p,CSS:delay,副本变形[rng] 路径队 dt-du幻灯片队:进退场换)? //边框 行diff插 重聚
 //vrep 0原1反2正反3反正4正反负正反   vtwo("cir sin",.5)  atScroll(e)  画布缓存-rxy圣诞树,人脸
 {let{cos,sqrt}=Math, exp=t=>2**(10*(t-1)),
 k=7.5625,kf=[4,8,10].map(x=>x/11),Kf=[6,9,10.5].map(x=>x/11),t0=[.75,.9375,.984375]
