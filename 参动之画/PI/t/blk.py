@@ -20,3 +20,5 @@ A.save("c.png")
 
 #https://stackoom.com/question/40jX5  ImageStat.Stat().rms COLOR_BGR2HSV[...,2] split()  cv2.Sobel(lum,cv2.CV_64F,x=1,0,ksize=5) cv2.addWeighted(im, .3, np.sqrt(gradX**2 + gradY**2), 1.0-.3,0)
 #,ImageDraw as ImD A=ImD.Draw(imA:=) , x*W+W,y*H+H
+#e=$(".follow-main"),i=0,a=new Set; e.on("DOMNodeRemoved",ev=>{if(0== (i=(i+1)%20) ){$("img",e).each((i,x)=>a.add(x.src)) ;$(".be-pager-next").click() }  }) #禁止删Node或1页200+Ctrl S 就能保存网页图片,这是炫技装爬虫（确信
+#[...a].join("\n"); xargs wget; for f in *.webp;do convert $f d/$f.png; done
