@@ -124,3 +124,9 @@ tapup计时/连线,移窗(过程), 绘画擦, 大小拖影; 色彩scroll substr 
 
 require("vs/editor/browser/services/abstractCodeEditorService") //listAll(). Did,activate,ctx,Dispose..
 ce=x.getActiveCodeEditor();$('.modified.editor').onclick=()=>ce._paste(1,'\n')
+
+char[5] s="hello";//or 6 .不能整体重赋值，但能{""}初始 或memcpy
+#pragma pack(push,1)
+
+#define SQR(x) x*x
+a/=SQR(a+b)/SQR(c)

@@ -140,7 +140,7 @@ fib=n=>{let a,b=1,c=1; for(;n-->0;c=a+b)a=b,b=c;  return b}//0,1时得1 。c是1
 
 fib_=(n,a,b,c)=>n==0?b: fib_(n-1, b,c,a+b)
 fib=n=>fib_(n,0,1,1)
-fib=n=>n==0?1: fib(n-1)+fib(n-2) //递归。若把重算优化为视口缓存/留所有b 就有点像DP
+fib=n=>n==0?1: fib(n-1)+fib(n-2) //递归。若把重算优化为视口缓存/留所有b 就有点像DP. DP内子问题不相互独立 缓存起很自然
 ```
 
 ```js
