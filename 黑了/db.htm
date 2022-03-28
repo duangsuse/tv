@@ -16,15 +16,16 @@ doc.querySelector("code").innerText=留loc()
 }
 
 eDB=css=>{
-SQC.onchange=()=>{set(SQCo,"p", P.喂(SQ糖,SQC.value+'\0')); if(eSel.checked){getSelection().selectAllChildren(SQCo);doc.execCommand("copy")} } //emm之前还以为只有blur
+SQC.onchange=()=>{set(SQCo,"p", P.喂(SQ糖,SQC.value+'\0')); cop(SQCo) } //emm之前还以为只有blur
 let f=dbSql("a"),e=SQC.parentNode,eC,tbl; on("click",css, eHid(e,E=>{SQC.value=E.innerText;SQC.onchange()} ) )(doc.body)
 
 on("click","p", ev=>f((eC=ev.target).innerText,tbl) )(e)
-tbl=({rows:a,rowsAffected:num})=>{eC.before(el("span",`*${n(a)}+`,num)); if(n(a)){let k=Object.keys(a[0]),th={},x;for(x of k)th[x]=x;
+tbl=({rows:a,rowsAffected:num})=>{eC.before(el("span",`*${n(a)}+`,num));cop(eC); if(n(a)){let k=Object.keys(a[0]),th={},x;for(x of k)th[x]=x;
   set(e.firstChild,NO, [th,...a].map(r=>set(el("tr"),"td", k.map(k=>r[k] )) ) )}}
 }
 
 set=(ul,li,a)=>{if(li)a.forEach((x,i)=>a[i]=el(li,x)); ul.innerHTML=``;return el(ul,...a) }
+cop=e=>{if(eSel.checked){getSelection().selectAllChildren(e);doc.execCommand("copy")}}
 eHid=(e,f)=>{
 let c=e.style,ct=k=>e.classList.toggle(k);
 ct("gone");e.onblur=()=>{ct("show");e.addEventListener("transitionend",()=>ct("gone"),{once:$Y}) }
@@ -40,7 +41,6 @@ on=(k,css,f)=>e=>e.addEventListener(k, ev=>{if(ev.target.matches(css))f(ev)})
     transition: .5s opacity cubic-bezier(0.42, 0.09, 0, 1.01); max-width:120vw; }
 .show{opacity:1}.gone{pointer-events:none}
 #SQC{width:100%}
-#SQCo>p::after{content:';'}
 #SQCo>p:hover{background:yellowgreen}
 #SQCo span{float:right;background:skyblue; border-left: 2px solid red;}
 
@@ -139,7 +139,7 @@ return a.join(sep)
 
 SQ糖糖=anew=>_N(_1(语句,s=>{if(s(1)=="\0")return[];throw `请在 ${Object.keys(语句)} 里选，非`+s(20)}) ,
   _1(';','；',s=>s(1)!="\0"?'':NO),
-  [anew, (a,A)=>{a.push(typeof A=="string"?A:A.join(';'))  }] )
+  [anew, (a,A)=>{a.push((typeof A=="string"?A:A.join(';'))+ ';')  }] )
 
 SQ糖=SQ糖糖((s,a=[])=>(s(0).cmt=(_,x)=>a.push(`//`+x), a) )
 留loc=(o=localStorage)=>o.str=decodeURI(尾(location.search))||o.str||''
@@ -389,7 +389,7 @@ $查a=取(1); $查b=取(1); //改成2?
 串$a $b
 </code></pre>
 <h2 id="计算">计算</h2>
-<p><strong>SQL 的功能实际上是数据统计</strong> 而非1:N存储和 FilerSort 。它甚至在某些数据上比 Excel 好用，比如单位换算和表头(列名) SQL都能处理</p>
+<p><strong>SQL 的功能实际上是数据统计</strong> 而非1:N存储和 FilterSort 。它甚至在某些数据上比 Excel 好用，比如单位换算和表头(列名) SQL都能处理</p>
 <pre><code>取(1+1 as 二);
 取巨长表名&quot;as 此 join 人 on 此.主人=人.名&quot;
 </code></pre>

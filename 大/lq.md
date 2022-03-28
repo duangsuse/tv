@@ -50,6 +50,19 @@ newA(100, i=>(i++,/*后得到*/ i+并立(i%3==0,i%5==0, "Fizz","Buzz","FizzBuzz"
 局=(a,b)=> 并立(a<b, a==0&&b==2, "赢","输","布包石头") //其实 (a+1)%3==b 也符右条件。
 
 乘法表=newA(9, i=>(i++,newA(i/*每行i有1~9个j.从上往下看逐渐变长*/, j=>`${j+1}*${i}=${i*(j+1)}` ) )
+
+FileReader readText
+
+BufferedReader InputStreamReader FileInputStream("","utf-8")
+while(read!=-1); readLine
+
+
+if(a)if(b)
+if(a&&b)
+
+if(a[0])if(a[1])
+
+for(x of a){if(!x)return false}return true
 ```
 
 你可以缩小算法输入来模拟执行： i,a,b 的值域都是 0~2 (即0止3)，(定义域是整数int)，选几个边界情况就能明白代码为什么能用。
@@ -177,6 +190,21 @@ for(A=0;A<N;A++){i=q?A:0;j=q?0:A; B=A;do{if(i<nu&&j<m)f(a[i][j]); if(q)i--,j++;e
 Z=(N,f)=>{let A,B/*扫描线,A竖B横*/, i,j, q=1/*"/"升序*/,na=n(a),m=n(a[0]),P=()=>{if(i<na&&j<m)f(a[i][j])};//与线试交集
 for(A=0;A<N;A++){B=A+1;if(q)for(i=A,j=0;B-->0;i--,j++)P();else for(i=0,j=A;B-->0;i++,j--)P() ;q=!q} }//穿梭,翻转
 b=[]; Z(4+ 4/2+1, x=>b.push(x) )
+
+newA(21,i=>newA(21,j=>(i%2==0&&Math.abs(j-10)<= Math.abs(i-10) ||j%2==0&&Math.abs(i-10)<= Math.abs(j-10) )?'#':' ').join(""))
+a=[1];newA(6, n=>{let A=[...a,1],i=1;for(;i<=n;i++)A[i]+=a[i-1]; return a=A/*旧值=上行*/})
+
+cb=(n,m)=>{
+  let N=n/2,M=m/2, 方=(a,b)=>a%2==0&&Math.abs(a)>=Math.abs(b)+2/*靠近中心=短2*/,
+  a=newA(n+1,i=>newA(m+1,j=>
+    方(i-N,j-M)||方(j-M,i-N)?'#':' '
+  )),
+  f=(a,i)=>{a[i]=a[m-i]='#'}
+  for(let i=2,d=1; i<n;i+=2){f(a[i],i);f(a[i],i-d);f(a[i-d],i); if(i==N){d=-d;f(a[i-d],i)} }
+
+  return a.map(x=>x.join(""))
+}
+
 ```
 
 要问拆解，都得非常清楚如何构造、子构件的限制
@@ -219,6 +247,12 @@ b=[]; Z(4+ 4/2+1, x=>b.push(x) )
 对称的部分在行[3] 是末2项。 裁掉i-2个，然后i-1个逆序
 
 F(i)/F(j)*F(j-i) //F=阶乘 纵增大,横(中心远)减小
+
+生成方法是a[1~]+=其左，再左右添1，没有二维数组那些上下.. 但可避免横重复 `1, 1, 2|2, 3 4 3, 4 7|7 4` 若是偶数就重复末项
+
+头歪45度看，每项是下层行左侧之和，假设有方法求出行1的每格是行0左格之和 的矩阵；但如何转45度输出矩阵呢？  若需完整输出n*2 加个ij区间判断就行 。当然fib和杨辉三角都有通项算式
+
+那么对这个求sum矩阵的式子减枝，不显示=0计算，让它更像个三角形
 
 ### 汉诺塔
 
