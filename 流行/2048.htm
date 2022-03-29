@@ -18,7 +18,7 @@ iv%2==0?v(竖/*里*/,横,1):v(横,竖,m)
   if(37<=k&&k<=40){d=iv[k-37];if(d=f允(d,d0)){f(d,a);d0=d; return d} } }
 
 cfg={l:[4,4], Pt:0, radd:()=>2,nr:1, bg:`341deg 52%`,an:{duration:150,easing:"ease-in-out"}}
-棋盘=()=>{let c=阵.style,[n,m]=cfg.l; c.setProperty("--n",m);c.setProperty("--l", c.height=c.width=minL(doc.body)+"px")//自顶向下(整到散)确定宽高
+棋盘=()=>{let c=阵.style,[n,m]=cfg.l; c.setProperty("--n",m);c.setProperty("--l", c.height=c.width=minL(doc.body)*.97+"px")//自顶向下(整到散)确定宽高
 阵.innerHTML=``
 return newA(n*m, _=>阵.appendChild(doc.createElement("b"))) } //span类似div 是默认行内元素,hr内不能有项
 
@@ -53,7 +53,7 @@ asig=Object.assign, chg=(a,b,f,k)=>a[k]=f(a[k]||0,b[k]), chgD=(a,b,k)=>`${a[k]-b
 display: grid; grid-template-columns: repeat(var(--n),calc(100% / var(--n)));
 
 background:#ffb28c; border-radius: 18px;
-padding: 0.5em;--r:45deg
+padding: 0.5em;margin:.3em;--r:45deg
 }
 #阵 b {
 width: 96%;height: 96%;
@@ -62,7 +62,8 @@ color: white;border-radius: 12px;
 font: 21pt sans;font-weight: 900;
 text-align: center;line-height:calc(var(--l) / var(--n) - 1pt)
 }
-body{overflow:hidden; height:95vh}
+body{overflow:hidden; height:100vh}
+*{margin:0}
 
 .n256{background: linear-gradient(var(--r), #e32929, #00fff9f0);}
 .n512{background: linear-gradient(var(--r), #2196f3, #4900c9);}
@@ -113,8 +114,9 @@ eval(decodeURI(location.search.slice(1)))
   on("down","start",v(c.p0)); on("up","end",v(c.p,c.fU))
   if(c.fM)on("move","move",v(c.p,c.fM))
 }
-触向(doc,{fU(){
+doc.body.addEventListener("click",
+()=>触向(doc,{fU(){
   let{p:[x,y], p0:[X,Y]}=this,f=Math.abs, q=f(x-X)<f(y-Y)
   doc.onkeydown({keyCode:37+q+2*(q?y>Y:x>X) })//LURD
-}})
+}}), {once:true})
 </script>
