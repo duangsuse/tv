@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<p id=阵></p> <input id=阵分> <a href="?配0(10,10,2,4);配1(1,100,20)">刷分</a><a href="?配0(7,7,2,128);doc.body.style.userSelect=`none`">爽文</a>
+<script>doc=document
+newA=(N,f)=>{let a=[],i=0;for(;i<N;i++)a[i]=f(i) ;return a},n=o=>o.length, ss=s=>s.split(" ")
+minL=e=>Math.min(e.offsetWidth,e.offsetHeight)
+xyBond=(e,ce=e.style)=>{let c=e.getClientRects()[0],k;ce.position="absolute"; for(k of ss(`left top width height`)) ce[k]=c[k]+"px"}
+
+线扫=([n,m],f行,f)=>(iv,a)=>{
+let i=0,j=0, N=n*m,
+横=(q,f)=>{if(q)for(j=0;j<m;j++)f();else for(j=m-1;j!=-1;j--)f()},
+竖=(q,f)=>{if(q)for(i=0;i<N;i+=m)f();else for(i=N-m;i>=0;i-=m)f()},//a[i][j] 里i增减
+
+v=(A,B,d)=>{let ln=()=>f行(iv>0?d:-d); null==f?ln(): A(true,()=>{ln();B(iv>0,()=> f(a[i+j],i+j)) }) }
+iv%2==0?v(竖/*里*/,横,1):v(横,竖,m)
+}
+
+键向=(a,f, f允=(a,b)=>a, d0=0)=>ev=>{let k=ev.keyCode,iv=[-2,-1,2,1],d; //允:只有换向才做f
+  if(37<=k&&k<=40){d=iv[k-37];if(d=f允(d,d0)){f(d,a);d0=d; return d} } }
+
+cfg={l:[4,4], Pt:0, radd:()=>2,nr:1, bg:`341deg 52%`,an:{duration:150,easing:"ease-in-out"}}
+棋盘=()=>{let c=阵.style,[n,m]=cfg.l; c.setProperty("--n",m);c.setProperty("--l", c.height=c.width=minL(doc.body)+"px")//自顶向下(整到散)确定宽高
+阵.innerHTML=``
+return newA(n*m, _=>阵.appendChild(doc.createElement("b"))) } //span类似div 是默认行内元素,hr内不能有项
+
+试用=(q,i0=0,i)=>{
+doc.onkeydown=q? 键向(棋盘(),线扫(cfg.l, iv=>{i=i0}, (x,I)=>x.className=`n${2**(x.innerText=i++)}`), (a,b)=>a==b?(i0+=a,a):a )
+ : 键向(0,线扫(cfg.l, console.log))//或只得四邻距差; 或试:a[I]=x+iv
+}
+
+_2048=a=>{let i,d, n左,
+落并2=(x,I)=>{
+  let _0=I-d*(i-n左), 并; i++
+  if(x!=0){//合并(首次不)或 左移(置0若动了)
+    if(i!=1&&(并=a[_0-d])== +x){a[_0-d]=asig(并*2,{id:[并.id,x.id].flat()/*224=8*/}); cfg.Pt+=并;a[I]=0}
+    else{a[_0]/*push*/=x; n左++; if(I!=_0)a[I]=0}
+  }
+}
+return 键向(a,线扫(cfg.l, iv=>{i=n左=0;d=iv}, 落并2), (a,b)=>qOk? -a :0)//左落,i需++ ;id旧位
+}
+
+顺滑=f=>{let e=棋盘(), a=Array(n(e)).fill(0),回合=f(a), c={Pt:0},
+显=()=>{qOk=1;阵分.value=`${chgD(cfg,c,"Pt")} max ${chg(localStorage,cfg,Math.max,"Pt")}`; a.forEach((x,i)=>{e[i].className="n"+(e[i].innerText=x); if(x)a[i]=asig(x,{id:e[i]}) })},
+新位=({id},i)=>{let p={};if(id){xyBond(e[i],p); return n(id)?[...id.map(x=>滑(x,p) ),cfg.bump(e[i])] :滑(id,p)} }
+
+e[1].innerHTML=`<span class=kts onclick="试用(1)">Hit↓ to Start`;qOk=1
+doc.onkeydown=ev=>{if(!回合(ev))return; for(let i=cfg.nr;i-->0;)pickZ(a,i=>{a[i]=cfg.radd();cfg.appear(e[i])}); qOk=0;Promise.all(a.flatMap(新位) ).then(显) } ;xa=a
+}
+pickZ=(a,f)=>{let i,N=n(a), bad=0;do{i=n(a)*Math.random()>>0}while(a[i]!=0&& ++bad!=N); if(N!=bad)f(i)} //不会在GG时真死机
+asig=Object.assign, chg=(a,b,f,k)=>a[k]=f(a[k]||0,b[k]), chgD=(a,b,k)=>`${a[k]-b[k]}+${b[k]=a[k]}`
+</script>
+<style>
+#阵{box-sizing: border-box;
+display: grid; grid-template-columns: repeat(var(--n),calc(100% / var(--n)));
+
+background:#ffb28c; border-radius: 18px;
+padding: 0.5em;--r:45deg
+}
+#阵 b {
+width: 96%;height: 96%;
+color: white;border-radius: 12px;
+
+font: 21pt sans;font-weight: 900;
+text-align: center;line-height:calc(var(--l) / var(--n) - 1pt)
+}
+body{overflow:hidden; height:95vh}
+
+.n256{background: linear-gradient(var(--r), #e32929, #00fff9f0);}
+.n512{background: linear-gradient(var(--r), #2196f3, #4900c9);}
+.n1024{background: linear-gradient(var(--r), #ef4545,#46d546,#6c4ed4);}
+.n2048{background: radial-gradient(#673ab7, #9c27b0,#2a659d99);}
+.n4096{background: radial-gradient(#673ab7, #e91e63,#2a659dab);}
+.n8192,.n32768{background: linear-gradient(red,green,yellow,blue,cyan);}
+.n16384,.n65536{background: linear-gradient(var(--r),red,green,yellow,blue,cyan); filter:drop-shadow(2px 4px 6px black);}
+.n0::selection{background:teal}
+
+.kts{
+outline-offset: 4px;
+outline: dotted; animation:1s kts infinite alternate cubic-bezier(0, 0, 0.6, -0.77);
+}@keyframes kts{to{
+outline-offset:9px; outline-color:red}}
+
+.kts,.sline{border: 6px dashed;
+white-space: pre; border-inline: none;
+filter: drop-shadow(-2px 9px 6px black);}
+.sizer{overflow:inherit;resize:both}
+.sizer *{line-height:unset !important}
+</style>
+<script>
+for(let c=doc.styleSheets[0],i=1;i<8;i++)
+c.addRule(".n"+2**i, `background:hsl(${cfg.bg} ${73-4*i}%)`)
+
+滑s=
+[(e0,p1)=>{let e=e0.cloneNode(1);e0.append(e);e0.className="n0"; xyBond(e0,e.style); return e.animate(p1,cfg.an).finished.then(_=>e.remove())}
+,(e,p)=>{let c={},v=k=>`calc(${p[k]} - ${c[k]})`;xyBond(e,c);return e.animate({transform:`translate(${v("left")},${v("top")})`},cfg.an).finished}
+,()=>Promise.resolve() ]
+//https://css-tricks.com/almanac/properties/p/perspective-origin/
+
+配0=(w,h, n,x)=>asig(cfg,{l:[h,w],nr:n,radd:()=>x})&&顺滑(_2048)
+配1=(i,a,b)=>{let f=du=> e=>e.animate({transform:`scale(1.2)`}, {duration:du,easing:"ease-out"})
+滑=滑s[i];cfg.appear=f(a);cfg.bump=f(b) ; if(i==0)doc.styleSheets[0].addRule(".n0",`background:bisque`) }
+
+配1(1,200,120)
+顺滑(_2048) //单推 http://ovolve.github.io/2048-AI/
+eval(decodeURI(location.search.slice(1)))
+
+触向=(e,c)=>{
+  let v=(P,f)=>E=>{P[0]=E.x,P[1]=E.y; if(f)f.call(c,E)},
+  q=navigator.maxTouchPoints,//兼容点距离
+  on=(PC,M,f)=>e.addEventListener((q?"touch"+M:"mouse"+PC),q?tap(f):f, {passive:false}),
+  tap=f=>E=>{let p=E.changedTouches[0]||E.touches[0]; E.x=p.clientX,E.y=p.clientY;f(E)}
+
+  asig(c,{p0:[],p:[]})
+  on("down","start",v(c.p0)); on("up","end",v(c.p,c.fU))
+  if(c.fM)on("move","move",v(c.p,c.fM))
+}
+触向(doc,{fU(){
+  let{p:[x,y], p0:[X,Y]}=this,f=Math.abs, q=f(x-X)<f(y-Y)
+  doc.onkeydown({keyCode:37+q+2*(q?y>Y:x>X) })//LURD
+}})
+</script>

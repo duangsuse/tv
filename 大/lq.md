@@ -63,6 +63,8 @@ if(a&&b)
 if(a[0])if(a[1])
 
 for(x of a){if(!x)return false}return true
+
+Map<Int,BitSet> .set(后4+3位)
 ```
 
 你可以缩小算法输入来模拟执行： i,a,b 的值域都是 0~2 (即0止3)，(定义域是整数int)，选几个边界情况就能明白代码为什么能用。

@@ -37,7 +37,9 @@ font-weight: 900;
 text-align: center;
 }
 body{display:grid; grid-template-columns:repeat(var(--m),calc(100% / var(--m)))}
-header,main{display: none}`
+header,main{display: none}
+
+.n0{background:#0000}.posa{position:absolute}`
 
 //无敌(撞蛇/墙) ,大增长/原地踏, 穿梭,反向
 //若一开始就以最具描述力的做法实现程序，几百行的“衍生问题”便“砰!”地消失了，能讲几个小时的故事、双向多选多序云云，在你选择从原理开始的那一刻戛然而止，只剩下“满目疮痍”的教学和产出的软件玩具
