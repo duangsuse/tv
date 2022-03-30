@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<p id=阵></p> <input id=阵分> <a href="?配0(10,10,2,4);配1(1,100,20)">刷分</a><a href="?配0(7,7,2,128);doc.body.style.userSelect=`none`">爽文</a>
+<main><p id=阵></p></main> <input id=阵分>次<input id=阵n type=number min="0" max="99999"> <a href="?配0(10,10,2,4);配1(1,100,20);配2(2)">刷分</a><a href="?配0(7,7,2,128);doc.body.style.userSelect=`none`;cfg.动感=1">爽文 </a>
+<a href="?配0(50,50,4,128);阵.style.fontSize=`5pt`;配2(3);配2(4)">巨</a><textarea id=cod rows="1"></textarea>
 <script>doc=document
 newA=(N,f)=>{let a=[],i=0;for(;i<N;i++)a[i]=f(i) ;return a},n=o=>o.length, ss=s=>s.split(" ")
 minL=e=>Math.min(e.offsetWidth,e.offsetHeight)
@@ -14,7 +15,7 @@ v=(A,B,d)=>{let ln=()=>f行(iv>0?d:-d); null==f?ln(): A(true,()=>{ln();B(iv>0,()
 iv%2==0?v(竖/*里*/,横,1):v(横,竖,m)
 }
 
-键向=(a,f, f允=(a,b)=>a, d0=0)=>ev=>{let k=ev.keyCode,iv=[-2,-1,2,1],d; //允:只有换向才做f
+键向=(a,f, f允=(a,b)=>a, d0=0)=>ev=>{let k=ev.keyCode,iv=[-2,-1,2,1],d, E=ev.target;if(E&&E.matches(`:read-write`))return //允:只有换向才做f
   if(37<=k&&k<=40){d=iv[k-37];if(d=f允(d,d0)){f(d,a);d0=d; return d} } }
 
 cfg={l:[4,4], Pt:0, radd:()=>2,nr:1, bg:`341deg 52%`,an:{duration:150,easing:"ease-in-out"}}
@@ -26,6 +27,7 @@ return newA(n*m, _=>阵.appendChild(doc.createElement("b"))) } //span类似div �
 doc.onkeydown=q? 键向(棋盘(),线扫(cfg.l, iv=>{i=i0}, (x,I)=>x.className=`n${2**(x.innerText=i++)}`), (a,b)=>a==b?(i0+=a,a):a )
  : 键向(0,线扫(cfg.l, console.log))//或只得四邻距差; 或试:a[I]=x+iv
 }
+
 
 _2048=a=>{let i,d, n左,
 落并2=(x,I)=>{
@@ -39,29 +41,31 @@ return 键向(a,线扫(cfg.l, iv=>{i=n左=0;d=iv}, 落并2), (a,b)=>qOk? -a :0)/
 }
 
 顺滑=f=>{let e=棋盘(), a=Array(n(e)).fill(0),回合=f(a), c={Pt:0},
-显=()=>{qOk=1;阵分.value=`${chgD(cfg,c,"Pt")} max ${chg(localStorage,cfg,Math.max,"Pt")}`; a.forEach((x,i)=>{e[i].className="n"+(e[i].innerText=x); if(x)a[i]=asig(x,{id:e[i]}) })},
+显=()=>{qOk=1;阵分.value=`${chgD(cfg,c,"Pt")} max ${chg(localStorage,cfg,Math.max,"Pt")}`; if(Arec)Arec.push([...a]); 阵n.value++;  a.ok()},
 新位=({id},i)=>{let p={};if(id){xyBond(e[i],p); return n(id)?[...id.map(x=>滑(x,p) ),cfg.bump(e[i])] :滑(id,p)} }
 
-e[1].innerHTML=`<span class=kts onclick="试用(1)">Hit↓ to Start`;qOk=1
-doc.onkeydown=ev=>{if(!回合(ev))return; for(let i=cfg.nr;i-->0;)pickZ(a,i=>{a[i]=cfg.radd();cfg.appear(e[i])}); qOk=0;Promise.all(a.flatMap(新位) ).then(显) } ;xa=a
+e[1].innerHTML=`<span class=kts onclick="试用(1)">Hit↓ to Start`
+qOk=1;a.ok=()=>a.forEach((x,i)=>{e[i].className="n"+(e[i].innerText=x);if(cfg.要滑(x))a[i]=asig(x,{id:e[i]}) }); a.ok0=()=>Promise.all(a.flatMap(新位) )
+doc.onkeydown=ev=>{if(!回合(ev))return; for(let i=cfg.nr;i-->0;)pickZ(a,i=>{a[i]=cfg.radd();cfg.appear(e[i])}); qOk=0;a.ok0().then(显)} ;A=a,Arec=0
 }
 pickZ=(a,f)=>{let i,N=n(a), bad=0;do{i=n(a)*Math.random()>>0}while(a[i]!=0&& ++bad!=N); if(N!=bad)f(i)} //不会在GG时真死机
 asig=Object.assign, chg=(a,b,f,k)=>a[k]=f(a[k]||0,b[k]), chgD=(a,b,k)=>`${a[k]-b[k]}+${b[k]=a[k]}`
 </script>
 <style>
 #阵{box-sizing: border-box;
-display: grid; grid-template-columns: repeat(var(--n),calc(100% / var(--n)));
+display: grid; grid-template-columns: repeat(var(--n),calc(100% / var(--n))); justify-items:center;
 
-background:#ffb28c; border-radius: 18px;
-padding: 0.5em;margin:.3em;--r:45deg
+background:#ffb28c;color: white;
+border-radius: 18px;font: 21pt sans;
+padding:.2em;margin:.2em; --r:45deg
 }
 #阵 b {
 width: 96%;height: 96%;
-color: white;border-radius: 12px;
+border-radius: 12px;font-weight: 900;
 
-font: 21pt sans;font-weight: 900;
 text-align: center;line-height:calc(var(--l) / var(--n) - 1pt)
 }
+#cod{float:right}
 body{overflow:hidden; height:100vh}
 *{margin:0}
 
@@ -83,13 +87,27 @@ outline-offset:9px; outline-color:red}}
 .kts,.sline{border: 6px dashed;
 white-space: pre; border-inline: none;
 filter: drop-shadow(-2px 9px 6px black);}
+
 .sizer{overflow:inherit;resize:both}
 .sizer *{line-height:unset !important}
+@media not{
+#阵{backdrop-filter: blur(13px);filter: opacity(0.8);}
+body{background: linear-gradient(134deg, #009688,#ff9800,red,#4caf50);}
+#阵>* {
+  filter: hue-rotate(var(--r)) opacity(0.8); text-shadow: -2px 3px 6px black;
+}
+}
+@media not{
+#阵 {background:whitesmoke;color:#333; border: dashed orangered}
+#阵 *{border:1px solid}
+}
+@media not{ body{background:#263238} #阵{background:#545a5d; filter:saturate(0.7)} }
+@media not{ .n0{visibility:hidden}}
+@media not{
+#阵{padding:0} #阵 b{border-radius:0; width:100%;height:100%}
+}
 </style>
 <script>
-for(let c=doc.styleSheets[0],i=1;i<8;i++)
-c.addRule(".n"+2**i, `background:hsl(${cfg.bg} ${73-4*i}%)`)
-
 滑s=
 [(e0,p1)=>{let e=e0.cloneNode(1);e0.append(e);e0.className="n0"; xyBond(e0,e.style); return e.animate(p1,cfg.an).finished.then(_=>e.remove())}
 ,(e,p)=>{let c={},v=k=>`calc(${p[k]} - ${c[k]})`;xyBond(e,c);return e.animate({transform:`translate(${v("left")},${v("top")})`},cfg.an).finished}
@@ -97,12 +115,25 @@ c.addRule(".n"+2**i, `background:hsl(${cfg.bg} ${73-4*i}%)`)
 //https://css-tricks.com/almanac/properties/p/perspective-origin/
 
 配0=(w,h, n,x)=>asig(cfg,{l:[h,w],nr:n,radd:()=>x})&&顺滑(_2048)
-配1=(i,a,b)=>{let f=du=> e=>e.animate({transform:`scale(1.2)`}, {duration:du,easing:"ease-out"})
-滑=滑s[i];cfg.appear=f(a);cfg.bump=f(b) ; if(i==0)doc.styleSheets[0].addRule(".n0",`background:bisque`) }
+配1=(i,a,b)=>{let f=du=> e=>e.animate({transform:`scale(1.2)`}, {duration:du,easing:`cubic-bezier(0.6, -1.34, 0.42, 1.15)`}), C=doc.styleSheets[0]
+滑=滑s[i];cfg.appear=f(a);cfg.bump=f(b) ; if(i==0)C.addRule(".n0",`background:bisque`)
+for(i=1;i<8;i++)C.addRule(".n"+2**i, `background:hsl(${cfg.bg} ${73-4*i}%)`)
+配2=i=> [...C.rules].filter(x=>x.media) [i].media.mediaText="all"
+}
 
-配1(1,200,120)
+cfg.要滑=x=>x!=0
+配1(1,200,170)
 顺滑(_2048) //单推 http://ovolve.github.io/2048-AI/
-eval(decodeURI(location.search.slice(1)))
+
+试用1=()=>{ //利用行重复性移x
+cfg.nr=0; let i,i0=0,j;顺滑(a=>键向(a,线扫(cfg.l, iv=>{i=i0;j++}, (x,I,v=2**(i++))=>a[I]=a.filter(x=>x==v)[j]||v ) , (a,b)=>a==b?(i0+=a,j=-1,a):a))
+}
+试用2=(i,d,i0=0)=>{ //^找差异,bug
+顺滑(a=>键向(a,线扫(cfg.l, iv=>{i=i0;d=iv}, (x,I,v=(2**i++))=>a[I]=newA(i,i=>a[I+i*d] ).find(x=>x==v)||v ) , (a,b)=>a==b?(i0+=Math.sign(a),j=-1,a):a))
+}
+试用3=(f=()=>A.reverse().ok0().then(A.ok).then(f))=>{f()
+asig(cfg.an,{duration:1000,easing:"cubic-bezier(1, -0.07, 0.06, 1.5)"})
+}
 
 触向=(e,c)=>{
   let v=(P,f)=>E=>{P[0]=E.x,P[1]=E.y; if(f)f.call(c,E)},
@@ -112,11 +143,35 @@ eval(decodeURI(location.search.slice(1)))
 
   asig(c,{p0:[],p:[]})
   on("down","start",v(c.p0)); on("up","end",v(c.p,c.fU))
-  if(c.fM)on("move","move",v(c.p,c.fM))
+  if(c.fM!=null)on("move","move",v(c.p,c.fM||c.fU))
 }
-doc.body.addEventListener("click",
-()=>触向(doc,{fU(){
+
+eval(decodeURI(location.search.slice(1)))
+
+doc.body.addEventListener("click",()=>{
+let c={fU(){
   let{p:[x,y], p0:[X,Y]}=this,f=Math.abs, q=f(x-X)<f(y-Y)
   doc.onkeydown({keyCode:37+q+2*(q?y>Y:x>X) })//LURD
-}}), {once:true})
+}}; if(cfg.动感)c.fM=0;
+触向(阵.parentNode,c)}, {once:true})
+
+阵n.onchange=()=>{if(Arec){ A.splice(0,n(A), ...Arec[阵n.value]);A.ok() }}
+阵n.onclick=()=>{if(!Arec){Arec=[];return} cfg.an.duration=600
+let N=parseInt(prompt("+-帧至",n(Arec)-1)),i=+阵n.value,d=Math.sign(N-i), f=()=>{if(i!=N){i+=d;A.splice(0,n(A), ...Arec[i]); A.ok0().then(A.ok).then(f)} }; if(!isNaN(N))f()}
+{
+let re=/^!(!(.*?) )?(.*?) $/s; a盘=(ma,[N,M]=cfg.l)=>newA(n(ma)/M>>0, i=>ma.slice(i*M, i*M+M) )
+cod.oninput=()=>{let m=re.exec(cod.value), sx,s,
+  L,reL=()=>{if(L.join()!=cfg.l.join()){cfg.l=L;顺滑(_2048) }}; if(!m)return
+  s=m[3];if(sx=m[2]) { L=sx.split('x').map(l=>+l); if(!L[1]) if(L[0])L[1]=L[0]; else L=cfg.l ; reL()
+    let [N,M]=L,i=0,j,I=0 ,f=Function("i,j,I",`let H=Math,N=${N},M=${M}; A[I]=${s}`)
+    for(;i<N;i++)for(j=0;j<M;j++,I++)f(i,j,I)  ;A.ok()
+  }else{
+    let sp=cfg.sep, a
+    if(!s){cod.value=a盘(A).map(x=>x.join(sp[1])).join(sp[0]); cod.select();return}
+    a=s.split(sp[0]); L=[n(a),n(a[0].split(sp[1])) ];reL()
+    a.flatMap(x=>x.split(sp[1])).forEach((x,I)=>{A[I]=x}) ;A.ok()
+  }
+}
+cfg.sep="\n "
+}//!!2x8 i*M+j !!10x20 H.abs(i-N/2)+H.abs(j-M/2)>4?0:2  !!16 2**((H.atan2(i-N/2,M/2-j)/H.PI*8>>0)+8) !!0 i+""+j
 </script>
