@@ -1,6 +1,7 @@
 <!DOCTYPE html>
-<main><p id=阵></p></main> <input id=阵分>次<input id=阵n type=number min="0" max="99999"> <a href="?配0(10,10,2,4);配1(1,100,20);配2(2)">刷分</a><a href="?配0(7,7,2,128);doc.body.style.userSelect=`none`;cfg.动感=1">爽文 </a>
+<input id=阵分>次<input id=阵n type=number min="0" max="99999"> <a href="?配0(10,10,2,4);配1(1,100,20);配2(2)">刷分</a><a href="?配0(7,7,2,128);doc.body.style.userSelect=`none`;cfg.动感=1">爽文 </a>
 <a href="?配0(50,50,4,128);阵.style.fontSize=`5pt`;配2(3);配2(4)">巨</a><textarea id=cod rows="1"></textarea>
+<main><p id=阵></p></main>
 <script>doc=document
 newA=(N,f)=>{let a=[],i=0;for(;i<N;i++)a[i]=f(i) ;return a},n=o=>o.length, ss=s=>s.split(" ")
 minL=e=>Math.min(e.offsetWidth,e.offsetHeight)
@@ -41,7 +42,7 @@ return 键向(a,线扫(cfg.l, iv=>{i=n左=0;d=iv}, 落并2), (a,b)=>qOk? -a :0)/
 }
 
 顺滑=f=>{let e=棋盘(), a=Array(n(e)).fill(0),回合=f(a), c={Pt:0},
-显=()=>{qOk=1;阵分.value=`${chgD(cfg,c,"Pt")} max ${chg(localStorage,cfg,Math.max,"Pt")}`; if(Arec)Arec.push([...a]); 阵n.value++;  a.ok()},
+显=()=>{qOk=1;阵分.value=`${chgD(cfg,c,"Pt")} : ${chg(localStorage,cfg,Math.max,"Pt")}`; if(Arec)Arec.push([...a]); 阵n.value++;  a.ok()},
 新位=({id},i)=>{let p={};if(id){xyBond(e[i],p); return n(id)?[...id.map(x=>滑(x,p) ),cfg.bump(e[i])] :滑(id,p)} }
 
 e[1].innerHTML=`<span class=kts onclick="试用(1)">Hit↓ to Start`
@@ -66,7 +67,7 @@ border-radius: 12px;font-weight: 900;
 text-align: center;line-height:calc(var(--l) / var(--n) - 1pt)
 }
 #cod{float:right}
-body{overflow:hidden; height:100vh}
+body{overflow:hidden} main{height:90vh}
 *{margin:0}
 
 .n256{background: linear-gradient(var(--r), #e32929, #00fff9f0);}
@@ -121,9 +122,11 @@ for(i=1;i<8;i++)C.addRule(".n"+2**i, `background:hsl(${cfg.bg} ${73-4*i}%)`)
 配2=i=> [...C.rules].filter(x=>x.media) [i].media.mediaText="all"
 }
 
+setTimeout(()=>{
 cfg.要滑=x=>x!=0
 配1(1,200,170)
 顺滑(_2048) //单推 http://ovolve.github.io/2048-AI/
+},50)
 
 试用1=()=>{ //利用行重复性移x
 cfg.nr=0; let i,i0=0,j;顺滑(a=>键向(a,线扫(cfg.l, iv=>{i=i0;j++}, (x,I,v=2**(i++))=>a[I]=a.filter(x=>x==v)[j]||v ) , (a,b)=>a==b?(i0+=a,j=-1,a):a))
@@ -158,6 +161,7 @@ let c={fU(){
 阵n.onchange=()=>{if(Arec){ A.splice(0,n(A), ...Arec[阵n.value]);A.ok() }}
 阵n.onclick=()=>{if(!Arec){Arec=[];return} cfg.an.duration=600
 let N=parseInt(prompt("+-帧至",n(Arec)-1)),i=+阵n.value,d=Math.sign(N-i), f=()=>{if(i!=N){i+=d;A.splice(0,n(A), ...Arec[i]); A.ok0().then(A.ok).then(f)} }; if(!isNaN(N))f()}
+阵n.value=0
 {
 let re=/^!(!(.*?) )?(.*?) $/s; a盘=(ma,[N,M]=cfg.l)=>newA(n(ma)/M>>0, i=>ma.slice(i*M, i*M+M) )
 cod.oninput=()=>{let m=re.exec(cod.value), sx,s,
@@ -165,7 +169,7 @@ cod.oninput=()=>{let m=re.exec(cod.value), sx,s,
   s=m[3];if(sx=m[2]) { L=sx.split('x').map(l=>+l); if(!L[1]) if(L[0])L[1]=L[0]; else L=cfg.l ; reL()
     let [N,M]=L,i=0,j,I=0 ,f=Function("i,j,I",`let H=Math,N=${N},M=${M}; A[I]=${s}`)
     for(;i<N;i++)for(j=0;j<M;j++,I++)f(i,j,I)  ;A.ok()
-  }else{
+  }else if(s[0]!='!'){
     let sp=cfg.sep, a
     if(!s){cod.value=a盘(A).map(x=>x.join(sp[1])).join(sp[0]); cod.select();return}
     a=s.split(sp[0]); L=[n(a),n(a[0].split(sp[1])) ];reL()
@@ -173,5 +177,5 @@ cod.oninput=()=>{let m=re.exec(cod.value), sx,s,
   }
 }
 cfg.sep="\n "
-}//!!2x8 i*M+j !!10x20 H.abs(i-N/2)+H.abs(j-M/2)>4?0:2  !!16 2**((H.atan2(i-N/2,M/2-j)/H.PI*8>>0)+8) !!0 i+""+j
+}//!!2x8 i*M+j !!10x20 H.abs(i-N/2)+H.abs(j-M/2)>4?0:2  !!16 2**((H.atan2(i-N/2,M/2-j)/H.PI*8>>0)+8) !!0 i+""+j !!0 "我要!"[I%3] !!0 A[i*M+(M-1-j)]||0
 </script>
