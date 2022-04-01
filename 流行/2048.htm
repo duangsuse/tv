@@ -125,9 +125,8 @@ for(i=1;i<8;i++)C.addRule(".n"+2**i, `background:hsl(${cfg.bg} ${73-4*i}%)`)
 }
 
 a盘=(ma,[N,M]=cfg.l)=>newA(n(ma)/M>>0, i=>ma.slice(i*M, i*M+M) ); fAll=(...f)=>(x,r)=>f.forEach(f=>r=f(x))||r
-if(this.process){let co=require("repl").REPLServer(""),{input:sI,output:sO}=co, w=s=>sO.write(s), wa=(v,n)=>{w('\x1b[');if(n)w(""+n);w(v)};
-  (({rows:n,columns:m})=>cfg.lTe=[n,m] )(sO) //曾用ffi 查user32/ioctl_tty 做过 con buffer winsz 和tcattr=async, 但node有绑定
-  eval(process.argv[2]); co.useGlobal=1; co.historySize=0
+if(this.process){let co=require("repl").REPLServer(""),{input:sI,output:sO}=co, w=s=>sO.write(s), wa=(v,n)=>w('\x1b['+ (n?n+"":"")+v);
+  co.useGlobal=1; co.historySize=0; (({rows:n,columns:m})=>cfg.lTe=[n,m] )(sO) //曾用ffi 查user32/ioctl_tty 做过 con buffer winsz 和tcattr=async, 但node有绑定
   cfg.bump=cfg.appear=e=>{}; 阵分=sco={}; 阵n=nth={value:0}; localStorage={}
 
   棋盘=()=>{let[n,m]=cfg.l,i, a=Array(n*m).fill(0)
@@ -136,7 +135,7 @@ if(this.process){let co=require("repl").REPLServer(""),{input:sI,output:sO}=co, 
   let f=()=>w("\n".repeat(n)); f();co.writer=fAll(f,co.writer)
   return a}
 
-  顺滑(_2048)
+  eval(process.argv[2]||'顺滑(_2048)')
   sI.on("keypress", doc.onkeydown)
 //Thread-main: wait
 //node -e 'fs.readFileSync("2048.htm").toString().replace(/<script>(.*?)<\/script>/sg, (_,s)=>eval(s))'
