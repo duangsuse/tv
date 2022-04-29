@@ -161,7 +161,7 @@ aprod=(a,f,i=0)=>i<n(a)? a[i].map(x=>aprod(a,(...x1)=>f(x,...x1) ,i+1)):f()
 
 VecN[0]=class Unit{}
 粒浮=(N,pc,gf_xy, 重力,挡板)=>{ let f=gf_xy,fv=重力, arg=n(f)-1, 挡=界函(L,挡板)
-pA=Va([2,2,arg]),A=newA(N,i=>pc(i/N).a).flat(),a=pA(A),{x:w,y:h}=L//Vxy,Pxy,color?
+pA=Va([2,2,arg]),A=newA(N,i=>pc(i/N).a).flat(),a=pA(A),{x:w,y:h}=L//Vxy,Pxy,color?  粒子参与% 实现延时差
 return t=>{G.fillRect(0,0,w,h)
 for(let i=0,v,p,e;i<N;i++){[v,p,e]=a(i); p.p(v);if(fv)fv(v,t,i); if(挡(p,v))continue; if(!arg)f(p);else f(p,...a.slice(e.i,e.i1))}
 }

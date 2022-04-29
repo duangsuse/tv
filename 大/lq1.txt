@@ -1,0 +1,65 @@
+A: c, -1
+B: System.out.println("\n")
+C: v2=m-1 , v1=m+1
+D: x.charAt(2)+x.charAt(1)
+E: 66785064
+
+newA(2021, a=>newA(++a, b=> Math.abs(a-b)<=21? lcm(a,b) : Infinity )) 每步选最低
+
+F:
+import java.util.*;
+import java.text.*;
+DateFormat f=new SimpleDateFormat("HH:mm:ss");f.setTimeZone(TimeZone.getTimeZone("GMT"));
+p(
+f.format(Date.from(java.time.Instant.ofEpochMilli(sc.nextLong() ) ) )
+);
+G:
+p(Math.floor(Math.log2(sc.nextInt() ))+1 ) //(a~b)最好划分点是 a,ceil(b/2),b-1 ，组合[0]+[2] 等数待引用
+//二分,但是仅有1后 7-1,ceil(7/2)-1 (n加入A集,n-1,n+1,..加入B集) 若B无才入A (二分优+-组合 删重)
+
+求*3+1 序列里不小于的首位置
+
+H:
+//a=[1];newA(6, n=>{let A=[...a,1],i=1;for(;i<=n;i++)A[i]+=a[i-1]; return a=A/*旧值=上行*/})
+
+List f(int n){int no=0 ,iL=0,i; List<Integer> a=new ArrayList<>(), A; a.add(1);
+for(;iL<n;iL++){for(A=new ArrayList<>(a),i=1;i<=iL;i++,no++)A.set(i,A.get(i)+a.get(i-1)); A.add(1);a=A;} a.add(no);return a;}
+//1=f(0)内第0
+
+int f1(int n){
+for(int iL=0;;iL++){List a=f(iL); for(int i=0,R=a.size()-1;i<R;i++)if(a.get(i).equals(n))return (int)a.get(R)+i; }
+}
+
+45度排序扫描组合数矩阵、累加行长，找绝对是首次出现
+
+I:
+//((1 2) 3 4 ) 是1多叉树，左子右兄
+
+J:
+//(n项 m个(降/升)序a[i~]操作)，求最终
+
+B: t=""+s.charAt(i)  //若s[i]!=n++ 断开
+D: reverseString(s.substring(1))
+E:
+F: f.format(f.parse("1:2:3")) 不String.format("%02d",1)也是牛. 介绍text.DateFormat不说Date 和time.Instant
+G:
+pows=n=>{ let i=1,AC=1
+for(; AC<n; i++)AC+=3**i; return i }
+
+newA(20, n=>{let t,w,c;t=w=c=1; while(t<n){c++;w*=3;t+=w}  return c})
+
+H:
+
+filA=(N,f, nZ=1,z=0)=>{N++;let a=Array(N),i=0;
+  for(;i<nZ;i++)a[i]=z;//基线“0”
+  for(;i<N;i++)a[i]=f(a,i-1);
+  return a//已填充
+}
+filA(10,(a,i)=>a[i]+a[i-1], 2,1)
+tri=n=>filA(n,(a,i)=>filA(n,(b,j)=>a[i][j]+a[i][j+1] ,1,1) ,1,newA(n+1,i=>i+1))
+a=[1];newA(6, n=>{let A=[...a,1],i=1;for(;i<=n;i++)A[i]+=a[i-1]; return a=A/*旧值=上行*/})
+tri(6)//列[2] 是没增1的，看来仍得递推.. [1]差1,3,6 [2]差2,4*2, 计算量反更大!
+
+I: 创建一个Map<Int,List<Int>> 分组， size()+max(dfs(it),d)
+
+J: Arrays.sort(A,a,b, (Comparator)Collections.reverseOrder) 模拟操作

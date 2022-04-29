@@ -42,3 +42,11 @@ el(doc.body,...e).style.setProperty("--m",m)
 
 let ac=0;试验=扫(na,m, d=>{ac=0}, (x,i)=>{ e[i].innerText=ac++ })
 }//贪吃蛇,推箱子,烟花
+
+
+if(0)线扫=([n,m],fRow,f)=>(iv,a)=>{let i=0,N=n*m, j=0, q=(iv>0), ok=()=>f(a[i+j],i+j),d,hi=()=>fRow(d)
+  if(iv%2==0){d=1*Math.sign(iv)
+    for(i=0;i<N;i+=m){hi();if(q)for(j=0;j<m;j++)ok(); else for(j=m-1;j!=-1;j--)ok() }//可加个 fRowend, 但反正不需检查n连续再操作
+  }else{d=m*Math.sign(iv)
+    for(j=0;j<m;j++){hi();if(q)for(i=0;i<N;i+=m)ok(); else for(i=N-m;i>=0;i-=m)ok() } }
+}

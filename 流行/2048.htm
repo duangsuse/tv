@@ -13,13 +13,13 @@ let i=0,j=0, N=n*m,
 竖=(q,f)=>{if(q)for(i=0;i<N;i+=m)f();else for(i=N-m;i>=0;i-=m)f()},//a[i][j] 里i增减
 
 v=(A,B,d)=>{let ln=()=>f行(iv>0?d:-d); null==f?ln(): A(true,()=>{ln();B(iv>0,()=> f(a[i+j],i+j)) }) }
-iv%2==0?v(竖/*里*/,横,1):v(横,竖,m)
+iv%2==0?v(横,/*偶*/竖,m):v(竖/*里*/,横,1)
 }
 
-键向=(a,f, f允=(a,b)=>a, d0=0)=>doc.body? ev=>{let k=ev.keyCode,iv=[-2,-1,2,1],d, E=ev.target;if(E&&E.matches(`:read-write`))return //允:只有换向才做f
+键向=(a,f, f允=(a,b)=>a, d0=0)=>doc.body? ev=>{let k=ev.keyCode,iv=[-1,-2,1,2],d, E=ev.target;if(E&&E.matches(`:read-write`))return //允:只有换向才做f
   if(37<=k&&k<=40){d=iv[k-37];if(d=f允(d,d0)){f(d,a);d0=d; return d} } }
 
-: (s,ev)=>{let k=ev.code,iv=[-1,1,2,-2],d; if(k&&k[0]=='['&& (d=k.charCodeAt(1) -65 )<4){d=iv[d]; if(d=f允(d,d0)){f(d,a);d0=d; return d}} }
+: (s,ev)=>{let k=ev.code,iv=[-2,2,1,-1],d; if(k&&k[0]=='['&& (d=k.charCodeAt(1) -65 )<4){d=iv[d]; if(d=f允(d,d0)){f(d,a);d0=d; return d}} }
 
 cfg={l:[4,4], Pt:0, radd:()=>2,nr:1, bg:`341deg 52%`,an:{duration:150,easing:"ease-in-out"}}
 棋盘=()=>{let c=阵.style,[n,m]=cfg.l; c.setProperty("--n",m);c.setProperty("--l", c.height=c.width=minL(doc.body)*.97+"px")//自顶向下(整到散)确定宽高
@@ -43,13 +43,13 @@ _2048=a=>{let i,d, n左,
 return 键向(a,线扫(cfg.l, iv=>{i=n左=0;d=iv}, 落并2), (a,b)=>qOk? -a :0)//左落,i需++ ;id旧位
 }
 
-顺滑=f=>{let e=棋盘(), a=e.ok?e: Array(n(e)).fill(0),回合=f(a), c={Pt:0},
+顺滑=f=>{let e=棋盘(), a=e.ok?e: Array(n(e)).fill(0),回合, c={Pt:0},
 显=()=>{qOk=1;阵分.value=`${chgD(cfg,c,"Pt")} : ${chg(localStorage,cfg,Math.max,"Pt")}`; if(Arec)Arec.push([...a]); 阵n.value++;  a.ok()},
 新位=({id},i)=>{let p={};if(id){xyBond(e[i],p); return n(id)?[...id.map(x=>滑(x,p) ),cfg.bump(e[i])] :滑(id,p)} }
 
 qOk=1;if(!e.ok){e[1].innerHTML=`<span class=kts onclick="试用(1)">Hit↓ to Start`
 a.ok=()=>a.forEach((x,i)=>{e[i].className="n"+(e[i].innerText=x);if(cfg.要滑(x))a[i]=asig(x,{id:e[i]}) }); a.ok0=()=>Promise.all(a.flatMap(新位)) }
-doc.onkeydown=(...ev)=>{if(!回合(...ev))return; for(let i=cfg.nr;i-->0;)pickZ(a,i=>{a[i]=cfg.radd();cfg.appear(e[i])}); qOk=0;a.ok0().then(显)} ;A=a,Arec=0
+doc.onkeydown=(...ev)=>{if(!回合(...ev))return; for(let i=cfg.nr;i-->0;)pickZ(a,i=>{a[i]=cfg.radd();cfg.appear(e[i])}); qOk=0;a.ok0().then(显)} ;A=a,Arec=0; 回合=f(a)
 }
 pickZ=(a,f)=>{let i,N=n(a), bad=0;do{i=n(a)*Math.random()>>0}while(a[i]!=0&& ++bad!=N); if(N!=bad)f(i)} //不会在GG时真死机
 asig=Object.assign, chg=(a,b,f,k)=>a[k]=f(a[k]||0,b[k]), chgD=(a,b,k)=>`${a[k]-b[k]}+${b[k]=a[k]}`
@@ -124,18 +124,18 @@ for(i=1;i<8;i++)C.addRule(".n"+2**i, `background:hsl(${cfg.bg} ${73-4*i}%)`)
 配2=i=> [...C.rules].filter(x=>x.media) [i].media.mediaText="all"
 }
 
-a盘=(ma,[N,M]=cfg.l)=>newA(n(ma)/M>>0, i=>ma.slice(i*M, i*M+M) ); fAll=(...f)=>(x,r)=>f.forEach(f=>r=f(x))||r
+s盘=(ma,[N,M]=cfg.l)=>newA(n(ma)/M>>0, i=>ma.slice(i*M, i*M+M) ); fAll=(...f)=>(x,r)=>f.forEach(f=>r=f(x))||r
 if(this.process){let co=require("repl").REPLServer(""),{input:sI,output:sO}=co, w=s=>sO.write(s), wa=(v,n)=>w('\x1b['+ (n?n+"":"")+v);
   co.useGlobal=1; co.historySize=0; (({rows:n,columns:m})=>cfg.lTe=[n,m] )(sO) //曾用ffi 查user32/ioctl_tty 做过 con buffer winsz 和tcattr=async, 但node有绑定
   cfg.bump=cfg.appear=e=>{}; 阵分=sco={}; 阵n=nth={value:0}; localStorage={}
 
   棋盘=()=>{let[n,m]=cfg.l,i, a=Array(n*m).fill(0)
   a.ok0=()=>Promise.resolve()
-  a.ok=()=>{for(i=0;i<n;i++){wa('A',1);wa('K')} for(let ln of a盘(A))w(ln.join(" ")+"\n")}
+  a.ok=()=>{for(i=0;i<n;i++){wa('A',1);wa('K')} for(let ln of s盘(A))w(ln.join(" ")+"\n")}
   let f=()=>w("\n".repeat(n)); f();co.writer=fAll(f,co.writer)
   return a}
 
-  eval(process.argv[2]||'顺滑(_2048)')
+  eval(process.argv[1]||'顺滑(_2048)')
   sI.on("keypress", doc.onkeydown)
 //Thread-main: wait
 //node -e 'fs.readFileSync("2048.htm").toString().replace(/<script>(.*?)<\/script>/sg, (_,s)=>eval(s))'
@@ -145,7 +145,8 @@ if(this.process){let co=require("repl").REPLServer(""),{input:sI,output:sO}=co, 
 setTimeout(()=>{
 cfg.要滑=x=>x!=0
 配1(1,200,170)
-顺滑(_2048) //单推 http://ovolve.github.io/2048-AI/
+// 顺滑(_2048) //单推 http://ovolve.github.io/2048-AI/
+顺滑(蛇)
 eval(decodeURI(location.search.slice(1)))
 }, this.mozInnerScreenY? 50:0)
 
@@ -178,6 +179,7 @@ let c={fU(){
 }}; if(cfg.动感)c.fM=0;
 触向(阵.parentNode,c)}, {once:true})
 
+//矩阵UI
 阵n.onchange=()=>{if(Arec){ A.splice(0,n(A), ...Arec[阵n.value]);A.ok() }}
 阵n.onclick=()=>{if(!Arec){Arec=[];return} cfg.an.duration=600
 let i=+阵n.value,N=parseInt(prompt("+-帧至",i?0:n(Arec)-1)),d=Math.sign(N-i), f=()=>{if(i!=N){i+=d;阵n.value=i;A.splice(0,n(A), ...Arec[i]); A.ok0().then(A.ok).then(f)} }; if(!isNaN(N))f()}
@@ -191,7 +193,7 @@ cod.oninput=()=>{let m=re.exec(cod.value), sx,s,
     for(;i<N;i++)for(j=0;j<M;j++,I++)f(i,j,I)  ;A.ok()
   }else if(s[0]!='!'){
     let a, sp=cfg.sep
-    if(!s){cod.value=a盘(A).map(x=>x.join(sp[1])).join(sp[0]); cod.select();return}
+    if(!s){cod.value=s盘(A).map(x=>x.join(sp[1])).join(sp[0]); cod.select();return}
     a=s.split(sp[0]); L=[n(a),n(a[0].split(sp[1])) ];reL()
     a.flatMap(x=>x.split(sp[1])).forEach((x,I)=>{A[I]=x}) ;A.ok()
   }
@@ -199,4 +201,23 @@ cod.oninput=()=>{let m=re.exec(cod.value), sx,s,
 cfg.sep="\n "
 }//!!2x8 i*M+j !!10x20 H.abs(i-N/2)+H.abs(j-M/2)>4?0:2  !!16 2**((H.atan2(i-N/2,M/2-j)/H.PI*8>>0)+8) !!0 i+""+j !!0 "我要!"[I%3] !!0 A[i*M+(M-1-j)]||0
 }
+
+posK=(x,y=x)=>n(A)*y+cfg.l[1]*x  >>0
+
+asig(cfg,{l:[20,20]})
+蛇=a=>{let p0=posK(.4),d=+1, ds=[], dir=i=>Math.abs(i)<2?i: 2*Math.sign(i),
+fd=键向(0,线扫(cfg.l, iv=>d=iv), (a,b)=>a!=-b||n(ds)<1?a:0 ), die=()=>{},
+snRev=()=>{}, mir=v=>(10<=v&&v<=14)? v-12 : v
+
+cfg.nr=0; a[p0]=d
+return (...ev)=>{if(ev!=0)fd(...ev)
+  let v,p, i;
+  ds.push(d)
+  p0=mir(p0+d); if((v=a[p0]) <3&&v!=0)die()
+  p=p0; for(i=n(ds)-1;i>=0;i--) a[p]=asig(dir(ds[i]), a[p-=ds[i] ]) //移动之前的有向格(如p0)
+  if(v==3){a[p]=dir(ds[0])}else {a[p]=0;ds.shift()}//也可 unshift-pop 免反遍历但不严谨
+  return 1
+}
+}
+// 大作战 俄方 点击消除
 </script>
