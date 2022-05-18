@@ -1,0 +1,65 @@
+后端一句话就是：HTTPd 监听80端口, req进来按 URL + GET,POST 分派处理函数，查添SQL什么的持久化数据，resp.write(JSON或HTML 静态页/模板填出动态页) 也能 设置+cookie,重定向 记住浏览器
+
+最重要的是 地址栏Enter 一个链接，查数据 生成页面 或者添加数据,cookie登录ID，怎么设计最简洁
+
+许多人学的时候根本不知道自己的目的是 handle 客户端 http.get 的访问，我觉得这是教学的问题。 如果你只知道代码怎么写 术语、名字叫啥，但不了解用户怎么操作，那你不会是好的程序员。编程是自动化人的动作。像办火车票 这个流程就可以自动嘛
+
+当然一个本来就不是单机软件作服务(SaaS)的公开平台，不止是开发者去负责。 运维要找机器联网、启动服务依赖的SQL,redis缓存等服务、记录和转发程序日志、恢复故障； 产品经理要设计亮点 PM要催进度  一些内容平台还有UGC PGC 的活动策划 ；办火车票你也是要沟通购买者和站台，后端在+实时WebSocket, 比GeoIP更进一步的“附近”前  ，它就是这样套版化
+
+所以有人觉得 HTML-CSS 只叫设计，定义一个界面动效，而前端要会点JS 的。 单机应用(计算器,某卫士)和游戏 专业软件(Ps,Excel)，是不是都在自动化一些手工或幻想里也能做的事，也就是 行为-响应 。
+而一些手工做起来有技巧的，比如音视频处理，就叫算法了。当然系统清理也有技巧 它是知识广度 而非深度上的技巧 ，我觉得程序员vs.Geek ，它其实就是多了个调用函数找文档的能力，对计算机工具的了解、操作速度大差不差
+
+但是遇到 IDEA内置Web服务器 localhost:63342 在浏览器查看PHP 悬浮条这种设计，真的就不好使了，设置页面都搜不到，还在根路径前擅自加项目名，仿佛Web是啥都没运行就有链接 天哪
+
+其实在业界 PHP 和 Java 虽然都能实现平台活动页啥的，而且著名的 Web 应用如 MediaWiki 是PHP的，编程上却是差异很大了
+在后端里 PHP 单文件是相当于 Java "MVC" 的 Controller、JS Python-WSGi 的 router.get("/", (req,res)=>res.write`<html>hello`) ；它靠 echo; foreach echo 去黏出来一个HTML文件，
+其实同时做了 View 显示排版的定义，就不需要什么 jstl,el 的 <for users u>Hello {u.name}</for> 模板语言“来渲染”了，项目管理简单许多，
+
+在数据表结构、data Model 上，比如登录信息 admin(uid,pass) 也有人写 teacher(uid,passwd,email) 这种“更自然”更特例化的逗比表名，许多人喜欢查靠 "where uid="+uid+"啥" 而非 uid=? 再bind参数出的 SQL ，甚至弄出过 SQL注入 这样时代性的设计错误。 今天中国的 WebDev 还流行起比 PHP 严谨点的 MyBatis+ ，Hibernate 这些 ORM, REST codegen 都不常见了
+
+Java 是强类型的 存取Admin(int,String)不会很方便 要写许多“自动生成”的玩意 XML一大堆， PHP 基本没有数据模型、领域DAO(既存数据) 一说，所有业务都手写Excel行<=>HTML/JSON 视图，又太弱了，可改性很差 所以正在被淘汰
+
+和XSLT格式校验对照的 模板语言当然是功能更单一 只能拼接文本 不能查询计算，叫解耦合 是JavaEE 的标志性特征，可以说 C# 界都没有过分的重视这些，当然我不是说/路径和视图 分开不好，而是没必要带来项目管理上的难度
+比如SQL和tpl都要bind参数去查去渲染，好像你生成页面必要这些绑定、做UI必须依各种框架的写法；这其实是 Java 语法太死板的锅，Java 1.5之前 List.get 都要类型强转
+
+现在 JS和服务端都是能参与页面显示(js模板自 fetch请求,前端 router ;即AJAX PJAX)，只有数据库是所有人统一、平台所有的，Leancloud, OpenResty, AWS Lambda, GCP, CloudFlare Workers, DBaaS  就是这种轻服务的东西
+
+其实我很奇怪，而且程序员的职责不是配置环境、初始化项目框架-配置，而是定义业务逻辑； 许多时候照着文档拼积木是能ok的，黏合示例就更容易了
+
+我的编程一直是，简写统一、推而广之、泛化；移植、添加、加更多  ，有的时候会发现，虽然你看的同类更多，费解的反而会更少， 多个关注 有何不可呢？ 那最后加段 LAMP(Linux-Apache-MySQL PHP) 环境配置
+
+https://wiki.archlinux.org/title/Apache_HTTP_Server
+pacman -S apache php-sqlite php-fpm #PHP的一个执行器,基于CGI 本机http反代
+取消注释 LoadModule mod_ proxy proxy_fcgi
+DirectoryIndex index.php index.html
+<FilesMatch \.php$>SetHandler "proxy:unix:/run/php-fpm/php-fpm.sock|fcgi://localhost/" </FilesMatch>
+
+PHP扩展装在 /lib/php/modules ，/etc/php/php.ini 搜"mic Ext" 解除 pdo_sqlite,sqlite3 的注释. php -a 试 new PDO("sqlite:xx"); 就能操作数据库了，注意用 prepare().bindValue().execute() 而别 query(SQL代码) 呦
+
+systemctl start httpd php-fpm #改配置 apachectl restart
+
+Apache 的conf和php.ini其实是 run-command (bashrc,zshrc) 文件，许多服务软件的配置都不太容易理解和修改 形式太自由 ，便捷编辑面板是 Win32 上的必需品，Linux 用户要会看文档。 SUSE 的 YaST, OpenWRT 的 LuCI, Webmin 也是可用的
+
+npm i -g cnpm; cnpm i -g @vue/cli babel webpack #别安成 vue-cli-xx或vue了
+cnpm i #package.json 的项目局部deps
+
+npm 比较迷的一点是它也是代码包json 的编辑命令像 --devDependencies，这些依赖局部全局安装也不分，npm run 脚本的相互推诿也很有意思
+Powersh get-Help exec 能查到 set-ExecutionPolicy -Scope CurrentUser  RemoteSigned ; $Env:PATH+=";." 可以直行这些小pm加的ps1命令，xp.cn 的面板也挺方便运维的
+
+Maven 不推荐手动配置，这些东西有个共性就是觉得自己的执行都是“框架”来负责，直接和CLI应用、算法割席了 ，但当然你用IDE一些就有智能提示 刷新几遍能找对工具 跑起来
+
+再举 Eclipse JSP后端 在IDEA运行的例子，先从.project 新建项目，右上新建 Tomcat 本地EAP，文件地址是 到USTC Apache 下载Tomcat.zip 和 commons/fileupload ，一起解压。系统属性设环境变量 JRE_HOME=JAVA_HOME ，若没装JDK用IDEA 自带的也行
+然后对项目F4 模块设置，添加库 Tomcat/servlet-api 和 fileupload (scope compile)就能Ant编译了，添加工件Web应用-平展 ，Tomcat运行后就能部署工件了。JSP后端的SQL链接一般在BaseDAO 里改
+
+Jupyter notebook 若出现Badfd 那 pip install pyzmq==19 --user 即可正常启动Kernel 。Node cnpm, Py tuna pip anaconda 是国内下载加速，可以搜下
+
+现在我发现我的投稿基本是按打卡激励的节奏去做了，曾经想要做的文稿太多， 到这一步 也是最好的一种选择吧。 为什么要当up呢，一个不爱玩游戏的人总还是要有生活目标吧，那就分享下知识 无所谓别人在乎与否
+以前总觉得拿动效可以包装这些 就是缺软件，现在想想如果你1分钟讲清的文稿也不想看，那其实高级PPT 也传达不到什么。终究是做视频的目的上有微妙的偏移。 其实我去蹭热度，不做技术区 或者那种TTS念稿的营销号 感觉还是可以努力补习去当评论者的，但我就觉得， 必须适应程序员的工作；因为我的爱好是编程，那我至少要做好机械的工作
+
+看的人多了慢慢发现 广为信任的、以前所谓的成功学，业余和专业真的就是是否依此谋生的问题，业余科学家、专业软件的业余替代、业余主播，它真的会有比专业还强的点 ；你不指望它吃饭，也不单纯弄流量，其实真的会非常容易被满足
+
+日均1w粉播放量，每月200 三年6000块创作激励，差点平均每天2块 ；在以前其实还是可以作为买咖啡的副业的，现在做自媒体还是要去下沉市场竖屏直播，B站vlog这些属于是业余爱好，就业也不加分
+
+我或者做那些卖丧的，只让大家笑笑 然后再不会被回想，去做我不想做的视频； 现在的鬼畜区也哪里像以前一样，有音MAD祭和故事缝合有共享音源，全靠讥鸡和啊啊啊大叫 ；当你看视频是为了点赞+1时，我觉得其实 就变了，和以前的投币不一样了，就像会员与番剧承包，终究是方向变了
+
+你会发现有些视频，即便播放量不如搞笑，投币收藏关注 的增长是很惊人的，这也是我坚持用心做每期的原因。 以后技术升级可能会带来更多点击，但没有点击，就像没有高报酬 也不是做不好的理由

@@ -43,3 +43,35 @@ rndis驱动可能是版本老 设备ID不对，也没有32位win8的inf，注册
 最理想的其实是用按键精灵或者 regscan、procmon检查，重新执行命令，但那很折腾
 
 NAT让主机拥有 虚拟机 ip a 的地址，在虚拟机面板设置网关为 ip r 的首项，无需端口转发即可ssh root@虚拟机
+
+
+#Blender 打开模板 VFX 看页2D anim ,座标泡 点Z轴 进入XY平面。拖视频进去
+o= C.scene.camera
+o.location=o.rotation_euler=Vector((0,0,0))
+o= C.object; o.empty_display_size=1
+C.scene.frame_end=o.image_user.frame_duration =o.data.frame_duration #RNA data
+
+是删建相机，按G平移，物体属性z轴升高先 小键盘0看着摄像机 对齐视频面，左下角放空物体轴浮标
+
+看页Motion 再拖一遍视频，添加浮标记 Ctrl T 跟踪、跟丢了拖回来继续。 打标一般朝颜色斜交接处，不转只放大。嫌慢匹配-上一帧
+完后 解算-几何数据-将空物体链接轨迹，物属关系 选左下浮标0点
+
+看页Composite ，使用节点，Shift A 椭圆遮罩 、输出-预览 ，右键给遮罩XY加驱动器，=var,对应Track 局部空间 X,Y位置 ；然后y要/宽高比 (横屏率) ，就能预览到xywh方框了
+如果需要 G'MIC,Shadertoy 滤镜(比如鱼眼扭曲)则需要专门的 Natron 混成软件，但后者动追起来很麻烦，我们可以导入Blender 的xy% 函数线，dx=1的采样率默认一致 。先跟踪轨迹-到曲线图，选中动画轨
+
+df=[[p.co[1]for p in f.keyframe_points ] for f in C.object.animation_data.action.fcurves]
+open("/tmp/Bfx","w+").write("\n".join(" ".join(map(str,v))for v in zip(*df) ) ) #D.image[].size
+
+加特效给 Center点 Set Key 在Curve图编辑, 再 Set Expr (Node的信息API 乱得令人发指，干脆短写)
+(lambda i:thisParam.get()[i]*[720,1280][i]) (dimension)
+i=dimension;return thisParam.get()[i]*[1280,720][i]
+
+你可以右键创建新参数页面，用Ctrl+拖拽 写算式 来偏移跟踪点啥的，写语句要开Multi-line 。但总体来说脚本处理甚至宏 还是很有效的
+
+https://github.com/10Dev/Blender3D/blob/master/source/blender/editors/space_image/image_ops.c#L1493  Image edit项由其im或SpaceIm确定
+
+bpy.ops.image.match_movie_length({ "region":C.screen.areas[0].regions[2]})
+o=C.object; o.empty_display_size=1
+C.scene.frame_end=o.image_user.frame_duration
+
+pacaur -S kdenlive rubberband pitivi gst-libav
