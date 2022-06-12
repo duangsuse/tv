@@ -45,6 +45,7 @@ cnpm i #package.json 的项目局部deps
 
 npm 比较迷的一点是它也是代码包json 的编辑命令像 --devDependencies，这些依赖局部全局安装也不分，npm run 脚本的相互推诿也很有意思
 Powersh get-Help exec 能查到 set-ExecutionPolicy -Scope CurrentUser  RemoteSigned ; $Env:PATH+=";." 可以直行这些小pm加的ps1命令，xp.cn 的面板也挺方便运维的
+nohup, 2> supervisor, ss netstat
 
 Maven 不推荐手动配置，这些东西有个共性就是觉得自己的执行都是“框架”来负责，直接和CLI应用、算法割席了 ，但当然你用IDE一些就有智能提示 刷新几遍能找对工具 跑起来
 

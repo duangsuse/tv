@@ -2,10 +2,10 @@
 *.m4a
 *.mkv
 *.avi
+*.wav
 
 **/ls/**
 *.srt~
-a.wav
 a.srt
 b.srt
 x

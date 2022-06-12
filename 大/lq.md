@@ -211,6 +211,16 @@ b=[]; Z(4+ 4/2+1, x=>b.push(x) )
 newA(21,i=>newA(21,j=>(i%2==0&&Math.abs(j-10)<= Math.abs(i-10) ||j%2==0&&Math.abs(i-10)<= Math.abs(j-10) )?'#':' ').join("")) //辉角四方
 a=[1];newA(6, n=>{let A=[...a,1],i=1;for(;i<=n;i++)A[i]+=a[i-1]; return a=A/*旧值=上行*/})
 
+/*import numpy as np
+a=np.array((10,10))
+a[1::2,::2]=1 ; a[::2,1::2]=1 #奇行偶格 偶行奇格 棋盘纹理
+
+import matplotlib.pyplot as P
+P.plot(a)
+r=np.linspace(0,2*3.14, 12); P.scatter(np.sin(r),np.cos(r))
+r=np.arange(1000); P.plot(np.sin(r))
+*/
+
 前后缀=(s,f)=>{let N=s.length,i,j/*iB*/; for(i=0;i<N;i++)for(j=i;j<N;j++)f(s.slice(i,j+1))  }
 
 cb=(n,m)=>{
