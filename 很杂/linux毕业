@@ -1,0 +1,18 @@
+Linux 其实并不是类似“Windows操作系统”那样正式的名称，它只负责内存进程调度(cgroup,mmap)、socket通信与外设IO、pthread,shm等并发控制，也就是通过libc暴露的跨CPU型号规范syscall C-API
+Linux 提供了许多外设的开源规范： v4l2,alsa,video-mesa,pty,/dev/disk,/sys/class ，这些不仅对标Win32的“内核级驱动”，还是不容易完成的大轮子
+客观的说，Android 和各类Linux 的差别就是 Google 和 bionic-libc 以服务binder实现了这些驱动里面很大一部分；各种路由器也是如此，Linux 是姹紫嫣红的
+
+玩 Linux 并不是玩内核。实际上 Gentoo,LFS 用户都给了很好的doc和命令行界面(TUI,ncurses)，在笔记本上30分钟能编译完5.x的内核，用systemd启动自己编译的整个系统；但说到底对man,DE WM 等软件习俗的了解、学会用Bing，比对 /etc 格式的机械学习更像在“玩”Linux
+Linux 的运维，常需ssh,sftp到看不见的服务硬件上，这需要对开源软件的用户文化(sl,bb,telnet,screenfetch)有较好的理解，熟念 sudo -i, systemctl,cron,pm2, apt yum dnf, update-*, docker 包管理和ini式语法，
+或者用 RH Cockpit, SUSE YaST, Webmin,LuCI 等配置面板。它们不仅支持 LVM,LuKS 等命令行计算调用极其繁杂的模块，还提供多种控制界面，比如 YaST 就有 Qt,GTK,Web 的前端
+
+作为PC和服务器上运行的OS，libc 的全名是 /lib/glibc-2.*.so ，它是 gcc -shared -pie -Lgcc-libs 生成的动态链接对象(DSO)之 DLL --全是GCC!
+没有这两个库和 bash,sed,nano 等便利CLI工具“复制粘贴一键配置”以及 clang,gdb,strace,lsof,ss 的开发辅助，Linux 上没有程序能跑起来，ld会报missing。
+
+LD_PRELOAD 也被pacman等工具用于“无root chroot”，但使用这些技巧，就是开发者专属了。试问不了解 Linux ，如何知道程序执行时究竟发生了什么、依赖了哪些服务管道？
+UNIX 都提供大量脚本解释器- bash sed awk tcl perl 和 ruby python lua 甚至 php,powershell ，因此改一个设置有许多选择，但通过这次的学习，总是手工不失为更加易懂 的好方法
+
+GNU/Linux 或 Fedora,RedHat,Arch 更适合用作操作系统这一大集合的名字
+作者Linus 的内核与世界各地的kmod开发者的成果精炼在 /boot/vmlinuz ，而发行版做了initrd文件树和pkg下载、镜像的分别，在各种设备和应用上，比如国产的Deepin,RemixOS,香橙派 就有很大成分的自研软件
+
+

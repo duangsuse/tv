@@ -44,6 +44,29 @@ rndis驱动可能是版本老 设备ID不对，也没有32位win8的inf，注册
 
 NAT让主机拥有 虚拟机 ip a 的地址，在虚拟机面板设置网关为 ip r 的首项，无需端口转发即可ssh root@虚拟机
 
+docker容器化服务越来越零散飘逸，opt root var etc位置都混乱， create -v a:b 都是绝对路径，还不写 $PWD/a
+ll /etc/`pidof java`/fd 能查看stdio 。centos LVM存储不足可到 Cockpit,LuCI YaST 等面板添加卷组扩容，Docker也能管理
+
+
+Win10 更新时自动改写UEFI设置，但文件没删，害得我找了很久如何回Arch… 没有U盘和DriveDroid/Mountr来直接裸机启动，干脆让VBox挂载整个硬盘，用archiso再 chroot `mount boot; bootctl install` 下好了
+
+VBox 只需创建 `VBoxManage internalcommands createrawvmdk -filename a.vmdk -rawdisk /dev/sdb` (`usermod -a -G disk vbox` 才能读写sdX盘)
+
+rawdisk 如 `\\.\PhysicalDrive0` 可用 `wmic DISKDRIVE GET INDEX,SIGNATURE` 取(话说 VHD 可直接在 diskmgmt.msc 挂载)
+
+但 Win,OSX 下(cd \Program Files\Oracle 需)会有占用和禁止访问的特技，ACHI和NVMe都没办法进行任何修改，如果没管理员权限连读都不让！
+
+幸好 EFI 下 wbmgr 是可以 chainload Linux内核的，`bcdboot /set "{bootmgr}" \EFI\BOOT\bootx64.efi ` 可修改(BIOS菜单项?)
+
+缺失.efi可用 `cp /usr/lib/systemd/boot/efi/$f /boot/efi/BOOT/`
+
+shutdown /r /o 高级重新启动，可以选择其他设备
+
+查看 $esp 可用 diskpart `select partition 1; ass`(ign letter) 后 `taskkill /f /im expoler.exe` 并在taskmgr以管理员重启(Win8+不行了)
+
+
+mvn POM 里相对路径不用 <systemPath> ${basedir} ，SQL 类似int(3) 括号时常报错。Tomcat WEB-INF/lib 可能冲突，NoClassDef 时要增改服务器的libs？ 千万别。 重命名冲突jar，-api域为provided(即用全局库)即可编译 避免踩坑许多finally{}吃异常、线程run()假死的连接库
+nio.CancelledKeyException 是客户端obj失效 偶发卡线程，需更新版连接库
 
 #Blender 打开模板 VFX 看页2D anim ,座标泡 点Z轴 进入XY平面。拖视频进去
 o= C.scene.camera
@@ -68,6 +91,13 @@ i=dimension;return thisParam.get()[i]*[1280,720][i]
 
 你可以右键创建新参数页面，用Ctrl+拖拽 写算式 来偏移跟踪点啥的，写语句要开Multi-line 。但总体来说脚本处理甚至宏 还是很有效的
 
+播放按钮左自动插帧 点选属性，悬停 记下快捷键，当然可以只含插帧集内 动成函数线。
+BUI Area 右/上角 一般能调吸附和选区,光标模式, T开(视图)工具栏。滚动条对触摸板用户不友好 要多摸索菜单
+Space 里有 Context-Panel 用ops编辑(快捷键和撤销历史)，而Workspace-Area 排版这些，原理参考 ui_panel menu tool ，鼠标事件拖拽 operator_modal ，3D对象叫 gizmo
+import bpy 有选区Ctx和数据Data ，types ops msgbus 暴露操作监听，utils app 脚本版本 其他太通用。ops是基于select=True 的半全局传参
+
+VSE的字幕与图片功能还不完善，特效调整点[添加]，工作流规范时影响不大
+
 https://github.com/10Dev/Blender3D/blob/master/source/blender/editors/space_image/image_ops.c#L1493  Image edit项由其im或SpaceIm确定
 
 bpy.ops.image.match_movie_length({ "region":C.screen.areas[0].regions[2]})
@@ -75,3 +105,16 @@ o=C.object; o.empty_display_size=1
 C.scene.frame_end=o.image_user.frame_duration
 
 pacaur -S kdenlive rubberband pitivi gst-libav
+pacaur -S glibc gcc#-libs
+
+
+IME
+
+Powsh 里列表处理.属性名 就成，UNIX `awk '{if(NR==1){print $3}}'` 不至于 `head -n1|cut -d ' ' -f3` 要两配合、`grep -oE 'via (\S+)` 会输出via、`ip r|sed 's/.*via (\S+).*/\1/;q' -r` 就更智障了
+
+最后我不认换行，`ip r|cut -zd' ' -f3` 选其首格..
+
+sh 的文化是 $() 和各种'' *!?边运行边确定参数个数，=JS+乱eval+仅str类型 ，想做点管道都极其麻烦
+```
+f=proxychains.conf; cat /etc/$f>$f; echo socks5 `ip r|cut -zd' ' -f3` 10808 >>$f; proxychains $0
+```

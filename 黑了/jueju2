@@ -33,6 +33,37 @@ a令为，仨项(极小、极大、叠加/计)。令为，[是 a b c]"$a[$c]$b"�
 对何<任我读写 恒>（其中 T 可序）
 for<*“also "notype,dynamic" ”,this,get,set> (T HasSort)
 
+
+from string import*
+import random as rn
+def takeSet(f,n,res):
+    while len(res)!=n: res.add(f())
+    return res
+def randStr(n,nS=10,cs=ascii_letters+digits):return takeSet(lambda:"".join(rn.choice(cs)for _ in range(nS)),n,set())
+
+rmContChar=s=>s.replace(/(.)(\1+)/gi,"$1")
+
+引string
+引单random 作rn
+对何<T>事 改集<T>.取满(n：数、f：函0<T>) 为
+  重复若长<n，添(f())。
+
+事 randStr(n：数、nS=10、cs=ascii_letters+digits)=改，建集<文>()。令，
+  取满(n)，nS次 去文隔("") 「rn去choice(cs)」。
+
+况物 Nat 为
+  Z()
+  S(：Nat)
+
+事 Nat.试相等(n：Nat)=判我到n 是，
+  Z到Z，真。
+  S(a)到S(b)，a==b。
+  否则，假。
+
+(建组(5)，
+  建组(5、0))令，
+  (0~末针)去看，[i] 我[i][i]=i。
+
 量a：任
 
 不定长 组<> 对恒事量是特殊的。 恒量a=建行(1、x)[1] 在运行期执行，而 恒量a=建组(1、x)[1] 展开为“x”。恒量b=(0~1)去看为，a[它]+1。 恒量b是建组(x、y) 也是编译期确定的，组能装算式，这可以用于创建比C更多功能的语法宏
