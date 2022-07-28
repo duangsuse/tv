@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style>
+.L,.R {
+    padding: 2px 1em;
+    font: 20pt sans;
+    white-space: break-spaces;
+    opacity: 0;
+}
+
+.L>*, .R>*{
+    display: inline-block;
+    background: var(--c);
+    border-radius: 6px;
+    padding: .2em;
+    margin: 7px 0;
+}
+.L>img, .R>img {
+    padding: 2px;
+    width: 1.77em;
+    background: white;
+    vertical-align: middle;
+    border-right: 8px solid #0000;
+    border-image: linear-gradient( var(--r), red,blue) 10;
+    pointer-events: none;
+    user-select: none;
+    border-top-right-radius: 3.7px;
+    border-bottom-right-radius: 10px;
+}
+
+.L { --c: linear-gradient(#38ac38,31%,green); --r: 6deg; --dir:-100% }
+.R {text-align: right; --c: linear-gradient(#519455,31%,#3d7a3d); --r: 145deg; --dir:+100% }
+.R>img { border-left: 8px solid #0000; border-right: 0 }
+
+@keyframes slide {
+    0%{transform: translateX(var(--dir)); opacity:0 }
+    to{transform: translateX(0); opacity: 1 }
+}
+
+pre[talk] { overflow: hidden; background: radial-gradient(#c2bd8f, #c29a50);color: hsl(240deg 100% 96%); }
+pre[talk].viewn>* {
+    animation: 2s slide cubic-bezier(0.67, 0.12, 0.53, 0.96) 1 forwards;
+}
+[talk] u { text-decoration: 4px red underline wavy; }
+/* HTML是显示性，而非数据性结构故 float:right 不行。但其实可以用flex:-reverse 甚至 position:rel ，那就是不同的换行风格了，就像本来可以用 border-image 或::before仿微信 */
+
+body {
+    background: repeating-linear-gradient(-45deg, #0000,#0000 25px,      #47bfda 25px, #3a6788 50px)
+}
+header {
+    padding: 0;
+    backdrop-filter: blur(3px);
+    border: 3px solid orangered;
+    box-shadow: #8cb95a 3px -1px 7px 2px;
+    z-index: 2;
+    position: absolute;
+    right: 1em;
+    top: 1em;
+}
+header.content-hd * {
+    font: 16pt iconfont !important;
+    text-decoration: none;
+}
+</style>
+<script>
+doc=document
+
+viewn=es=>{
+  let a=es.map(e=> e.offsetTop ), i0=0,i, y0=0,  mark=e=>e.classList.add("viewn")
+  onscroll=()=>{if(scrollY>y0) { i=a.findIndex(y=> y>y0+innerHeight ); es.slice(i0,i).forEach(mark); i0=i; y0=scrollY }}
+}
+
+onload=()=>{
+  let e, es=doc.querySelectorAll("pre[talk]"),
+  md=s=>s.replace(/_(.*?)_/g,"<u>$1</u>").replace(/(\S+)@([:%#\w\./-]+)/g, (_,k,u)=>`<a href="${u}">${k}</a>`),
+  add=(s,isR)=>isR? `<div class="R"><p>${s}</p><img src="data:image/jpeg;base64,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"></div>`
+   : `<div class="L"><img src="data:image/png;base64,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"></img><p>${s}</div>`
+  for(e of es) {
+    e.innerHTML=e.innerText.split("\n>").map(s=> (s[0]==' ')? add(md(s.slice(1)),true) : add(md(s),false) ).join("")
+  }
+  viewn([...es])
+}
+</script>
+<link rel="stylesheet" href="https://wu-sili.gitee.io/resume/index.css">
+
+<body>
+    <!-- https://wu-sili.gitee.io/resume/ 这段很长的代码不是原创 -->
+<header class="content-hd">
+    <section class="title clearfix">
+        <div class="name">
+        <h1>
+            姚羽霄
+            <sub>"duangsuse"</sub>
+        </h1>
+        </div>
+        <div class="job">
+        <h2>Web后端开发工程师</h2>
+        <div class="avartor">
+            <img width=40 src="data:image/jpeg;base64,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" alt="">
+        </div>
+        </div>
+    </section>
+
+    <div class="clearfix">
+        <section class="info">
+        <h2>男 / 2002.1 湖北</h2>
+        <h3>专科 / 2023年毕业</h3>
+        <p>
+            <a target="_blank" href="http://www.hbgyzy.edu.cn/">
+                湖北工业职业技术学院
+            </a>
+            <span>软件工程专业</span>
+        </p>
+        <p>
+            <span style="position:absolute">可用：J2EE、Py和JS互助、任意URL,ORM-SQL,XML-JSON存储流程框架<br>* 此处的H5动态页与排版是业余能力</span>
+            <!-- <span>成绩绩点：2.97</span> -->
+        </p>
+        </section>
+
+        <section class="contact">
+        <ul>
+            <li>
+            <a href="https://www.zhihu.com/people/duangsuse" target="_blank">
+                <span>知乎博主</span>
+                <i class="iconfont icon-zhihu-circle-fill"></i>
+            </a>
+            </li>
+            <li>
+            <a href="https://space.bilibili.com/10020818" target="_blank">
+                <span>B站up主</span>
+                <i class="iconfont icon-pdf"></i>
+            </a>
+            </li>
+            <li>
+            <a href="https://github.com/duangsuse" target="_blank">
+                <span>GitHub码仓</span>
+                <i class="iconfont icon-github"></i>
+            </a>
+            </li>
+            <li>
+            <a href="tel:18995682772">
+                <span>+86 18995682772</span>
+                <i class="iconfont icon-phone_circle_fill"></i>
+            </a>
+            </li>
+            <li>
+            <a href="mailto:fedora-opensuse@outlook.com">
+                <span>微软邮箱</span>
+                <i class="iconfont icon-mail4"></i>
+            </a>
+            </li>
+
+        </ul>
+        </section>
+    </div>
+    </header>
+
+<pre talk>
+>好友[HR]已添加，你们可以开始聊天了
+>个人经历我看到了，但看完后我只想让你等通知。
+>要说说我们凭什么要你吗？
+>以及你对你选的职位_热门技术、基础知识_有何理解，这不算面试
+>我个人好奇
+> 这个网页不是创新，前端SEO后端集群/并发 也并非我实践过的内容，但我会给你一个无法拒绝的理由
+>你用过什么框架，_写了多大或多快/高效的应用_？ 或者能默写多底层的算法、八股文、调优
+>除了大外商的从业证书、代码贡献，拿LeetCode之类的分数看人也很准
+> 从2017我阅读过不同目的、不同圈层的代码，如今6年过去，我似乎没写过比360卫士的UI工程量更大的东西
+> 但是，从HTTP到Socket与Linux、元素到数据表到画布、源码到 @APT到AOP到bytecode，都有些了解
+>这种了解太空泛了，我们不需要“样样通 样样松”
+> 的确。尽管我_基于领域-业务概念，而不以框架名词来编程_，
+但看完我写的东西，
+> 你就懂为何我能兼容任何我没习惯的代码基、或快速原型要求。
+对知识渠道的重视也是理由之一！
+>那，你用过哪些编程语言
+> JS-TS, Python, Java-Kotlin@https://kotlinlang.org/, C/++/# , Ruby Lua Bash Powersh, Scala x86@https://github.com/duangsuse-valid-projects/CoolTok 乃至 PHP,VBA,Matlab,Lisp 都是我的工具
+> 不同的语言间，只有{}布局和基本数据与灵活性略有区别，所以我已对函数式“语法糖”们有直觉的记忆
+> “不接触外语，无法在根本上理解自己的语文” 。更广的数据输入，
+_常能得到集思广益的结果，这是我写代码的动力_
+>Talk is cheap, 想要靠说辞打动人，除非你能给全体程序员
+“Emacs 和 Vim 谁更好”一个答案
+> So, show you what I have done
+</pre>
+
+
+<pre talk>
+>SQL@https://duangsuse.github.io/tv/%E9%BB%91%E4%BA%86/db.htm ?
+>这些作品很好，如果是你原创的话。但，我们维护的_产品不含这类功能点_
+>比如说，利用JS的跨平台在_触屏、浏览器、命令行_、像素画都可玩的 2048@https://duangsuse.github.io/tv/%E6%B5%81%E8%A1%8C/2048.htm 与 PWA贪吃蛇@https://duangsuse.github.io/tv/%E6%B8%B8%E6%88%8F%E6%97%B6%E9%97%B4/%E8%B4%AA%E5%90%83%E8%9B%87
+>两种螺旋打印也证明你确实会一些八股文，但只代表一些。
+>人脸识别与CG图形处理、画家算法@https://duangsuse.github.io/tv/%E5%8F%82%E5%8A%A8%E4%B9%8B%E7%94%BB/%E7%B2%92%E5%AD%90/x.html、 字符@https://www.bilibili.com/video/BV18L4y1e7NF/ /拼缀画@https://www.bilibili.com/video/BV1wL411A7My
+>也算是有知识背景的
+>包括利用 OCR做字幕提取@https://github.com/duangsuse-valid-projects/extract-subtitles ，以及 VOSK语音字幕@https://github.com/duangsuse/tv/blob/main/arecog.sh 的 Python 熟悉度
+> 看起来，这6年我_没写什么数据性的应用_，却也没有白费
+> btw. 但办公软件我还是会用的
+>可团队不需要专门脱团耍花样的人，来做普通的开发
+>老实说，它们很耗精力，对你来说会很繁重，你能保证质量吗？
+> 原作与复制唯一能分别的点，在于原作_知其所以然_，而我的长处恰恰是_擅长表达、能为人师_。
+> 6年宽泛的学习，使我能区分必不可少的片段与常见写法，并条理出有序的资料
+> 尽管我的数学很差，可这也没能影响我写出API_恰如其分的代码和软件_，反而能在物理与语文上保持0余缀
+>你能写有实用的工具？比如呢？
+> 抱歉，_本文本可内嵌iframe动手体验_，但因为要展示的实验、技巧片段 太多了，聚集起来很耗时，故只添加了对话……
+> 而且就这个也不完整，以前光顾着写代码，没时间截图
+</pre>
+
+<pre talk>
+>那么，你应该习惯 JSTL 和 thymeleaf 之类的具体实现
+> 不仅如此，ERB,JSX-E4X 的格式我也熟悉，所以说我编程写的泛语言
+> 或许我记不得，封装抽像继承多态，但我也自己在 Lua 实现过原型链的OOP(无重载)
+>GeekSpec 和 Swagger@apifox.cn,Postman 是啥关系？
+> 当年我不知道这俩，但就是_为了避免步骤冗余 而写这个生成工具_
+>SQsu 真的是门编程语言？
+> 严格来说如果它不算，javac 也就只是 .java=>.class 的结构化工具了，像这 带步骤的计算器@https://github.com/duangsuse/tv/blob/main/%E9%BB%91%E4%BA%86/calc.js
+> 编译器和读写器并无本质的不同，毕竟里面的算法都能单独拿出来用，绑在一起就难改了！
+
+>那么，你会 MyBatis+, Redis, Docker 这些近年热门吗
+> 前些年流行 ORM 的时候我还不懂 load/dump 一些对象和 @OneToMany 为啥那么复杂
+> 以及 Repository 和 Mapper 到底为啥那么叫
+> _如今了解了底层原理，这些只是名词途径有别_(比如 Dockerfile 比 systemctl 好写)，并无流程的差异
+>你会 Docker 以及常见服务的部署吗？
+> 利用 Cockpit@https://cockpit-project.org/ 和 YaST@https://yast.opensuse.org/ 等图形面板，这些能被更安全可控的管理，而不必输入重复命令
+>你连 PowerShell 都学？ Turtle 是儿童编程的？
+> Posh 的|运算符和 C# 交互性非常适合理解 Win32 平台的小技巧及其数据过滤
+> Python 可 import turtle@https://github.com/brython-dev/brython/blob/master/www/gallery/turtle.html ，我把它视为_一种文化底蕴_，很短(未必易懂)的代码也能实现眼花缭乱的效果
+> 在做事时，我很注意流程的自动化。比如从文本换行创建一大批PPT页，我可以用 VBA 或拼接XML来做
+> 在 Linux 里我用 for in 和 youtube-dl 下载各站我喜欢的视频，或者自己写油猴脚本保存视频封面
+> 需要写一大堆 H5 form 时，甚至利用 RegExp 自己弄一个解析字串-模板生成，也不费事
+>听说过 Selemium 吗？
+> Java,Py 的 EdgeDriver() 和 js-pupetler 操偶师都提供了基于 headless 无界面浏览器和 CDP(jsonRPC协议)
+> 这些高层封装，模拟点击拖拽等 ActionChain ，随口说就是不能录制宏的按键精灵， 八爪鱼@https://www.bazhuayu.com/ 则可以录制
+</pre>
+
+
+
+<pre talk>
+>那么其他的算法呢？
+> 以前参加学校的蓝桥杯竞赛活动，写了些 题记@https://zhuanlan.zhihu.com/p/495661667 ，_但大概只能算日记看看了_
+> 杨辉三角和星星、棋盘、十字也就图一乐，但我确实没参考过答案
+> 不过，我亲手实现过 Mandelbrot,三角分形@https://www.bilibili.com/video/BV1sb4y1s7sv,  JS仿OpenGL着色器@https://github.com/duangsuse/tv/tree/main/%E5%8F%82%E5%8A%A8%E4%B9%8B%E7%94%BB/%E5%98%89%E5%AE%BE/z2.htm , (隐等式@https://github.com/duangsuse/mkey/blob/main/making%5Freco/love_4quad.js)函数图查看器
+> 排序_算法可视化@https://duangsuse.github.io/mkey/making%5Freco/#sorts3 _,BFS-DFS 可视化, 粒子特效
+> 以及“关系式”求解器用Peano(链表数)解 x+5=7 的 mkey@https://github.com/duangsuse/mkey
+> 和同道 Mivik 君的类C编译器 "kamet@https://mivik.gitee.io/2020/tech/kamet-basic-implementation/" 的代码复用重构
+>这么泛？
+> 还有 linker(ld-linux).so 的C函数运行期劫持 nmhok@https://github.com/duangsuse-valid-projects/Share/blob/master/Others/c/nm/nm.c
+> 调用 BIOS 中断的“内核” 汇编demo@https://www.bilibili.com/video/BV11S4y197zj
+> 傅里叶变换@https://duangsuse.github.io/tv/%E5%8F%82%E5%8A%A8%E4%B9%8B%E7%94%BB/%E6%96%9C%E7%9C%BC/ftx.htm 教程、Bezier曲线绘制法、靠串 CSS 扒取数据的精炼爬虫，只要去做过，一定会更好
+
+>你怎么证明自己有前后端开发的能力？
+> 比起“瀑布流有3种写法”，我更注意_「知识来源」的质量，这种方法论_是鱼和渔的区别
+> 比如 阮老师@https://ruanyifeng.com/ 、 张鑫旭@https://www.zhangxinxu.com/ 、 程浩的博客@https://coolshell.cn/ 和SoF,Segf等常见问答社区，甚至直接到源码按行找答案
+> 我对自己代码的要求从来不是“能跑就不改”，而是要 彻彻底底摸清每个括号的必要性
+> 幸运的是，这反而使我对重复步骤的了解，流于整个项目，而_能避免许多本可尽早修复的坑_
+</pre>
+
+<pre talk>
+>那么，你自己写过什么有公开价值的通常库？
+> 这个20行的小JS脚本@https://www.bilibili.com/video/BV1Af4y1M7Yn 能比 Word 更快的改写思维导图
+> TkGUI@https://github.com/duangsuse-valid-projects/TkGUI 作为 import Tkinter 的跨平台封装，实现了0开销语法糖，真的值得一提
+> ArgParser@https://github.com/ParserKt/ArgParser 可以解析多种风格的命令行参数，比 GNU getopt 宽容且兼容太多了
+> SomeAXML@https://github.com/duangsuse-valid-projects/SomeAXML 虽未完成，但其部分框架已能_读写 Java ClassFile_ ，且被 Go JVM 开发者认可
+> 这篇明志的博文@https://duangsuse-valid-projects.github.io/Share/%E5%AF%B9drakeet%E7%9A%84%E4%B8%80%E4%BA%9B%E8%AF%9D/html/%E5%AF%B9%20drakeet%20%E7%9A%84%E4%B8%80%E4%BA%9B%E8%AF%9D%20%E2%80%93%20Telegraph.html ，里4个(脚注,大纲树,夜间等)插件是我自主完成的
+> 我能很快写出“QR码分享echarts图表” 的页面
+> GIMP,Blender 的 Python 插件我也写过，尽管他们的 API 不太完整
+>为什么你没有写完 pylit@https://github.com/duangsuse-valid-projects/Share/tree/master/Others/CN_constitution
+> 当时我一直在开“实验”而这也是其一，说的没完成，其实也只差 fs-watch 双向同步更新
+> 不是把时间都花在“无用”的项目上，而是我在找_更值得自己付出的地方_
+</pre>
+
+<pre talk>那就这么愉快的决定了？</pre>
+<pre talk></pre>
+
+</body>
