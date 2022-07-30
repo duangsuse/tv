@@ -112,6 +112,9 @@ IME
 
 Powsh 里列表处理.属性名 就成，UNIX `awk '{if(NR==1){print $3}}'` 不至于 `head -n1|cut -d ' ' -f3` 要两配合、`grep -oE 'via (\S+)` 会输出via、`ip r|sed 's/.*via (\S+).*/\1/;q' -r` 就更智障了
 
+sed -ne '/\[main] \[INFO] Building/h;/Exception units:/{x;p;x;}' -e '//,/^$/p' 把[INFO]行挪到Exc..上方
+
+
 最后我不认换行，`ip r|cut -zd' ' -f3` 选其首格..
 
 sh 的文化是 $() 和各种'' *!?边运行边确定参数个数，=JS+乱eval+仅str类型 ，想做点管道都极其麻烦

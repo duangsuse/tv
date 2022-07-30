@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>土拨鼠全景漫游图 - {1 or $pageData.title}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, viewport-fit=cover" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta http-equiv="x-ua-compatible" content="IE=edge" />
+    <link rel="stylesheet" href="{$Think.TBS_STATIC}/common/css/new_base.css?v=1560493706" />
+    <link rel="stylesheet" href="/res/impression/vtour/pc/krpano.css"/>
+    <style>
+        @-ms-viewport { width:device-width; }
+        @media only screen and (min-device-width:800px) { html { overflow:hidden; } }
+        html { height:100%; }
+        body { height:100%; overflow:hidden; margin:0; padding:0; font-family:Arial, Helvetica, sans-serif; font-size:16px; color:#FFFFFF; background-color:#000000; }
+        .loading{
+            /* display: none; */
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 3;
+            background-color: #fff;
+            color:#333;
+            z-index: 100;
+        }
+        .loadingimg {
+            width: 184px;
+            height: 108px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            -webkit-transform: translateX(-50%) translateY(-50%);
+            -moz-transform: translateX(-50%) translateY(-50%);
+            -ms-transform: translateX(-50%) translateY(-50%);
+            transform: translateX(-50%) translateY(-50%);
+            text-align: center;
+        }
+        .loadingimg img {
+            width: 100%;
+            height: 100%;
+        }
+        .poiner {
+            display: inline-block;
+            width: 16px;
+            vertical-align: bottom;
+            overflow: hidden;
+            /* animation: poiner 3s infinite step-start; */
+        }
+    </style>
+</head>
+<body>
+<script src="vtour/tour.js"></script>
+    <div class="loading">
+        <div class="loadingimg">
+            <img src="{$Think.TBS_STATIC}/impression/vtour/img/loading.png">
+            <div>加载中</div>
+        </div>
+    </div>
+    <div id="pano" style="width:100%;height:100%;">
+    </div>
+</body>
+    <script>
+        // var krpano = null;
+        embedpano({
+            swf: "{Think.TBS_STATIC}/impression/vtour/tour.swf?v={Think.CDNTIME}",
+            xml: "/3dpic/panoxml/{$cutNum}_{$codeVal}",
+            target: "pano",
+            html5: "auto",
+            mobilescale: 1.0,
+            passQueryParameters: true,
+        });
+    </script>
+    <script type="text/javascript" src="vtour/krpano.js"></script>
+</html>
