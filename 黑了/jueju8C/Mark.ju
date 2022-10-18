@@ -1,0 +1,76 @@
+/** `"中文 en English jp 日語"` tranlate text. Langcode for Chinese is ""(xx.ju), for english it's "en" xx.ju_en. (en_jp.tsv for Non-terminology words) */
+/**: `"中 en 英 jp 日 zh 正體"` 式单词翻译。中文的语言代号是"" 并占用无_en式后缀 .ju 扩展名。 非术语建 en_jp.tsv 等来分词翻译
+  物定义在类型表新加约束并放值表“造于、同名例(受调用)”3个重载。不能以返回值重载，但 [_] 能隐转至[文]以翻译字串 */
+eval-thing _(i18n:Str)
+
+/** Items with repeating modifier [code] */
+/**: 为代码项添加重复的修饰符 */
+@_("以下")
+@Target({THING NOUN VERB MADE})
+eval-thing Below(n:Cnt, code:Str)
+/** Repeat items, change name$1$2 and "$1" (embed code: atRow$0 & `fun atRow0~1..`). see [ArgsName]*/
+/**: 重复代码项，填写 名$1$2、"$1" 项，嵌入代码靠 `事 于0~1` 于$0() 。另见 [组参名] */
+@_("以下有")
+@Target({*empty<AnnotationTarget> EXPR FILE  ARG TYPEARG TYPE})
+eval-thing BelowFor(rows:Str)
+
+@_("勿报")
+@Target(Flags.full<AnnotationTarget>)
+eval-thing Suppress(names: Args<Str>)
+
+@Target(Flags.full<AnnotationTarget> - {NOUN_VAR VAR ARG}, runtime=1)
+eval-thing Deprecated(msg:Str, refactor: ReplaceWith = ReplaceWith(""), hide: Bool3=NO)
+@_("弃后换")
+@Target({})
+eval-thing ReplaceWith(expr:Str, use:Str)
+
+平台仅；平台常量
+
+/** Mark Fn as Fun extension, members and Fun(Fn) vars are resolved before extXXX(:This,...) funs */
+@Target({TYPE})
+eval-thing JuFun
+
+/** Disable "you" in scope with two "this" having the same `@X` base-type(`@DslMarker X`) */
+/** “我”的层叠上只留最近1层有 `@X` 父类的类型(`【专属语言】X`) */
+@Target({EVAL_THING})
+eval-thing DslMarker
+
+/** Unify to guess T `List<T>` with it's `add(1); add("")` calls in block, works in `Seq: got(1)` */
+@Target({ARG})
+eval-thing YieldInference
+
+/** `juec -c 'v:0.9'` fail for `@SinceStd("1.0") val` */
+eval-thing SinceStd(min:Semver)
+
+/** [runtime]: NO=noCodegen, $N=noReflect */
+@_("修饰")
+eval-thing Target(allowed: Flag<AnnotationTarget>, repeat=$N, runtime:Bool3=NO)
+
+/** Hide member when don't match e.g. "set T" or T itself, see [Ary.sort]. try `as<Ary<@UnsafeVariance T>>` */
+@Target({TYPE_ARG})
+eval-thing SafeVariance(decl:Str)
+/** Suppress conflict of typearg variance */
+@Target({TYPE_ARG})
+eval-thing UnsafeVariance
+
+/** Target `class` can only have compile-time `class-insta` (use in `eval fun`), may with `CompanionObj: interfaces` */
+/**: 只在编译期允许类例存在 */
+@Target({THING})
+eval-thing Typeclass
+
+
+
+/** typealias==new-thing. @prefix: file,get,set,(noun)var */
+/**: 行1 [TYPEARG] 是类型定义处，[TYPE] [EXPR] 等是引用处，[EVAL_THING]指@interface。
+  量[NOUN] (可指JVM字段和读写er) 事[VERB]。【前缀:】有4项 书读写变；如只令getter的名字不含get */
+@_("修饰物")
+enum-thing AnnotationTarget where Flag.Bit:
+  THING; EVAL_THING; TYPEARG
+  NOUN; NOUN_VAR; VAR; ARG; MADE
+  VERB; NOUN_GET; NOUN_SET
+  TYPE; EXPR; FILE
+
+class-insta Empty AnnotationTarget:
+  impl fun empty = Flag(THING,NOUN,NOUN_VAR, VAR,ARG,MADE, VERB,NOUN_GET,NOUN_SET)
+
+

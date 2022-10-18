@@ -1,0 +1,164 @@
+pkg jueju.io
+/** computing/transfer chunk size, low-latency already. [say]&[hear] won't use this */
+var Int bufferSize were 2**12 //1<<10==1024
+
+/** Read/maybe write(get,add) stream like [Deque] but [IO_Int] optimized. `JSON<Line<Int>>(ioChar) let: add {1 2 3}; cut("[]")` */
+for<T> impl? thing IO were CanClose:
+  fun `add`(:T)
+  fun get: T
+  /** read() side still buf like `stdbuf -o0 -iL` [bufferSize]. [close] do this *//** Useful e.g. `less x.txt` pager; HTTP FileUpload */
+  fun flush
+  fun closeHalf(write=$Y)
+
+for<T> fun IO<T>.`adds`(ending:_1More<T>):
+  ending.see(`add`); close()
+
+for<T>(T:Vars) fun IO_Int.as: IO<T>
+for<TE>(T:CanSee<E>, T:CanAdd<E>) fun IO_Int.as: IO<T>
+fun Bytes.IO: IO_Int
+
+for<> Bytes=AryN<Int1>
+/** JDK:[InputStream]+JDK:[DataInput], byte position: [i], byteorder: [isLE] for "12" 2 first */
+thing IO_Int were IO<Int>:
+  var Cnt8 i
+  var Cnt8 size
+  fun add(:Bytes)
+  fun get(to:Bytes)
+  fun get(to:Bytes.Part)
+  fun getOnce(to:Bytes): Cnt
+  fun getOnce(to:Bytes.Part): Cnt
+  fun codec(:Chars.Enc): IO_Char
+  fun codec(:EqvOf<Bytes>): IO_Int
+  var Bool isLE
+  for<N>(N: Num.Bit) fun iCat = get(N.nByte)(Fold.From<N>(empty): bits(+8)+it)
+  for<N>(N: Num.Bit) fun iCut(:N):
+    add Ary(N.nByte, rev=!isLE):[i] n.bits&0xFF.bits(+i*8)
+/** JDK:[Reader] */
+impl? thing IO_Char were IO<Char>:
+/** JDK:[BufferedReader] of lines */
+thing IO_Str were IO_Char:
+  fun add(:Str)
+  fun get: Str
+
+
+
+
+
+class BitConv:
+  /** ratint(NaN) is pure */
+  class Conv:
+    val boolInt = Eqv(`it.way(1,0)`, `it!=0`)
+    val charInt = Eqv(`it.code`, Char)
+    val ratInt4: Eqv<Rat4,Int4>
+    val ratInt8: Eqv<Rat8,Int8>
+  class Base64:
+    thing-fun wasCall(:Mode=Base, pad=$Y) were Eqv<Str,Bytes>:
+      impl?? val bytes: EqvOf<Bytes>
+    /** [Eqv.strChunk] for MIME linebreak */
+    enum-thing Mode:
+      MIME;URL;Base
+
+thing-fun JVM.as were BitConv:
+  insta were Conv:
+    !val ratInt4=Eqv(Float`floatToIntBits`, Float`intBitsToFloat`)
+    !val ratInt8=Eqv(Double`doubleToLongBits`, Double`longBitsToDouble`)
+  insta were Base64:
+    !thing-fun wasCall:
+      val e=java.util.Base64 lets:
+        when mode:
+          Base: encoder to decoder
+          MIME: mimeEncoder to mimeDecoder
+          URL: urlEncoder to urlDecoder
+      !val cat=e.A`encodeToString`
+      !val cut=e.B`decode`
+      !val bytes=Eqv(e.A`encode`, e.B`decode`)
+    
+
+/** Ways to get&change [FileInfo] and do [IO]. test abspath(relative to "/"): `File(fp).path==fp || fp==(File(fp)-File.roots[0]).name` */
+for<This> impl? thing File(name:Str) were FileInfo,Tree:
+  /** mkdir: `(File/"out"/"").touch.up` */
+  fun touch(mkdirs=$N) = let:
+  fun openb(write:Bool3=$N) were IO_Int
+  fun open(write:Bool3=$N) = openb(write).codec(Chars.enc)
+  fun wasCall(write=$Y, mkdirs=$Y) = touch(mkdirs).open(write)
+
+  val asDir: Tree? = takeIf:
+  var isLink: Str?
+
+  samename-insta were File("."):
+    fun `cd`(pwd="~")
+    fun tmp(base_suf:PairOf<Str>, at=File("/tmp/"))
+    /** New process fork() at [File.cd]&env by `sh`, pipe it's IO(see [PidFile]) *//** `sh: - (pipe('ls','head -n${1}') >>"file.txt") ` */
+    fun `sh`(cmd:Str)=sh("sh","-c",cmd)() ; fun sh==Sh`let`
+    fun sh(argv:Args<Str>): PidFile
+    /** JDK:[ProcessHandle] *//** `ps -aux; htop` *//** self */
+    fun pid(:Idx): PidFile
+    val pids: Line<PidFile>
+    val ``$0``: PidFile
+    /** `xx.{srt,mp4}`, `~/.log/2022-0{1..9}/**`, `"\$HOME/.{local,config}"` at `env["PWD"]` */
+    fun expand(:Str, env=env): Line<Str>
+    /** disk free()=(usable+mayReserved)/full */
+    fun df(:File): Pair3Of<Cnt8>
+    /** It's [File]s, UNIX have 1 root "/". *//** Text envvars *//** `char** environ = "k0=v0\0k1..";` */
+    val roots: Line<Tree>
+    val env: KVOf<Str>
+    val envb: KVOf<Bytes>
+    insta Sh:
+      eval fun wasQuote(cmd:Pair3<Line<Str>,Line<Any>,Str>) = sh(*cmd.lets: A.zip(B).seenFlat{[==s to v]aryOf(s,v.Str)}+C )
+      fun pipe(:Line<PidFile>): PidFile
+      /** for <<<"str" use `sh: 'cat'() adds "str" ` *//** wait end, detach stdOE */
+      fun PidFile.`<`(input:Str)
+      fun `-`(wait:PidFile) = waitAll: wait(NO,$N); wait.end
+      fun PidFile.`>`==reout(NO)
+      fun PidFile.`>>`==reout($Y)
+      @Argsep("1 1") same0 eval fun reout(w:Bool3, output:Str):
+        File(output)(w)
+/** Process with stdIOE bound when [open]. [close] kill&[exist] or [ls] acts as normal, `open(write=NO,mkdirs=$Y)` for detach stdO+redir stdE `2>&1`, or always piped */
+thing Pid(id:Idx8) File:
+  val err: IO<get Char>
+  val end: Wait
+  val ``$?``: Int
+
+
+fun Eqv.My.csvLn(sep=",",esc='\\') = Eqv<Str>({ it.split(re:'(?!<${esc})'+sep) }, { it.joinStr(sep) })+{ onEach replace(esc+sep,sep) }
+
+enum-thing TermColor
+
+for<> TermBicolor=Word_On<TermColor,/*bg*/TermColor>
+val TermBicolor.id = A.id.bit(+8)+B.id
+fun TermColor.as=this on glass
+
+fun Str.wasCall(c:TermBicolor) = LinkLn(this to c)
+fun LinkLn<Pair<Str,TermBicolor>>.as=Seq:
+  see{[==s to c]"\x1b[${c.id}m"+s}; got("\x1b[0m")
+
+/** Deep `{a {b c}}` with Str-locable nodes. File=dir(0child)+[File.open], dirs can have time/owner/mode too! */
+for<This> class Tree:
+  /** if is dir, depth=1 childs, or {}. *//** parent, multi: `5times(Fold.From(fp,{up}).eachRStep)` *//** test or `rm -rf` file */
+  fun ls(glob="*"): Line<This>
+  var This up
+  var Bool `exists`
+  /** to joinpath: `{"a b"}(Fold.From(File):this/it)` *//** `app/(fp-app)==fp`, relpath */
+  fun `/`(sub:Str): This
+  fun `-`(base:This): This
+  fun pathMay(star:Str) = takeIf:
+
+/** VirtFS(Linux compat) for OSX Win JS etc. Path sep always '/' and "drive letter" like /C:/Windows, [size] dir=stat() size */
+class FileInfo were Sized:
+  /** mv this file(relative to [File]), overwrite. to dir: `fp.up=File("out/")` *//** abspath, or copy. overwrite *//** basename&1 .suffix */
+  var Str name
+  var Str path
+  var PairOf<Str> nameExt
+  /** user,grp,others. 777=3*rwx, 755=rwx+2*r0x, 644=rw0+2*r00 *//** user,grp *//** access(>),modify,create *//** [Mode.Pin]=readonly; hide(also) may not really, `man chattr` */
+  var Pair3<Flag<RWX>> mask; var Pair2<Str> owner
+  var Pair3<Date> times
+
+  var Flag<Mode> mode
+  enum-thing RWX were Flag.Bit:
+    X;W;R
+  enum-thing Mode were Flag.Bit:
+    Blk;Sock;Dir;Link;FIFO;Char; Pin;Hide
+
+/** Won't err when not opened, may not exclusive. [ErrIO] */
+class CanClose:
+  fun close

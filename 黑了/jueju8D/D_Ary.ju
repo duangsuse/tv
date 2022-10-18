@@ -1,0 +1,158 @@
+pkg jueju.data
+use1 java.util.Arrays
+
+class Impl:
+  insta were Vec_Bool.Named
+
+/** [Thr.msgQue] supports [waitMax]. [Line.Queue] [Sorts]: __MaxAt0=LIFO=Stack__, MinAt0=FIFO=Pipe, Eq=+ThrSafe */
+for<T>class Queue were Seq:
+  val peek: T?; fun pop: T
+  /** shift more items */
+  fun pop(n:Cnt)=Seq.it.take(n).Line
+  val sizeMax: Cnt?
+  var Time waitMax
+
+/** friend: [Seq] */
+for<T This> class CanAdd where Copy,Empty,Sized:
+  fun `add`(:T); fun contains(:T):Bool
+  fun pop(:T); fun clear()
+  fun `+`(:Seq) = let: xs.see(`add`)
+  fun `-`(:Seq) = let: xs.see(`pop`)
+  fun `&`(:Seq) = see { if it !in xs: pop(it) }
+  fun contains(you:Seq)=you.all: it in this
+  fun copy = empty().itLet: see(it`add`)
+
+/** Can [see] 0+N items, but may blocks until Ctrl+C. */
+for<T> class SeqInf:
+  fun see(:Fn1<T>)
+
+/** Only 1way to "[see]" loop over many items, [Seq.Once]=JDK:[Iterator] */
+for<T> class Seq were SeqInf:
+
+  samename-insta:
+    for<T>fun wasCall(:Fun2<SeqScope,FnCont>):Once=WaitSeq(fn).let: fn{done=$Y}
+    for<T>same0 thing-fun WaitSeq(:FnCont) were SeqScope,Once:
+      var*: done $N; last byLater
+      !fun got(:T, :FnCont): last=x
+
+  for<T> class SeqScope:
+    fun `got`(:T)
+    fun gotAll(:Args<T>)
+  for<T> class Once were Seq:
+    fun wasCall: T
+    val done: Bool
+    !fun see(:Fn1<T>):
+      loop if !done: fn(this())
+
+
+/** "Deck". pop<1<2<3<add. can be fixed-size [RingDeque] */
+for<T>class Deque were Stack:
+  /** Should support this, may with `RwLine` */
+  fun unpop(:Ary<T>)
+  fun unadd(n:Cnt): Ary<T>
+  val peekAdd: T?
+  fun RSeq = got(unadd(size)).Seq
+  fun contains(:T)
+  fun pop(:T)
+
+for<T> fun Ary.Sync==Vector
+
+
+@Compiled("boxedNum")
+for<T>JavaAry=AryN
+/** Prim array. replaced parallel JDK:[spliterator] and JDK:[stream] by [CanSee], [JavaAry]: for [Integer],. boxed on-heap. see JDK:[Arrays] */
+for<T>eval thing AryN(n:Cnt, init:Fn1<Idx,T>) were Sized:
+  fun get(:Idx):T =VMOp
+  fun set(:Idx,:T)=VMOp
+  !val size get: VMOp
+  same0 fun wasInit:
+    fullIdx.see: this[it]=init(it)
+  fun as=asList(this).Ary
+  /** `[I@memAddr` didn't implement JDK:[Object], so always [asList]?? */
+  !fun `==`(:AryN)=equals(this,you)
+  !fun Str=toString(this)
+  !fun hashCode=hashCode(this)
+  fun wasCall(ord=Sort)=let: ord.onAsc{sort(this)}
+  fun get(:Range<Idx>)=Part(rn)
+  fun set(src:Part)=System.arraycopy(src.ary,src.rn.A, this,i, src.rn.size)
+  val full=this[fullIdx]
+  
+  thing-fun deep:
+    !fun `==`(you:AryN)=deepEquals(this[^1],you)
+    !fun Str=deepToString(you)
+    !fun hashCode=deepHashCode(you); val ary=you
+  thing-fun Part(:Range<Idx>, pure=$Y):
+    fun AryN=copyOfRange(you,*rn)
+    fun set(:Fn1<Idx,T>)=pure.way(parallelSetAll,setAll)(you,fn)
+    fun copy(zfill:Cnt)=copyOf(you,zfill)
+    fun fill(:T)=fill(you,*rn,it)
+
+    fun wasCall(ord=Sort)=let: ord.onAsc { S(you,*rn) }
+    fun wasCall(:FnSort)=let: S(you,*rn, fn)
+    fun find(sorted:T)=binarySearch(you,*rn, sorted)
+    fun find(sorted:T, :FnSort)=binarySearch(you,*rn, sorted, fn)
+    fun sumLeft(:Fn2<T,T,T>)=parallelPrefix(you,*rn, fn)
+
+    same0 val S=pure.way(parallelSort,sort)
+    same-pkg val ary=you
+
+val Sort=Sorts.MinAt0
+/** for [Rat]: -0<+0, any<NaN */
+@Compiled("bidir(-1,MinAt0,Eq,MaxAt0)")
+enum-thing Sorts:
+  MinAt0;MaxAt0; Eq
+  fun onAsc(:Fn0<Ary<*>>) = when this:
+    Eq: this
+    MinAt0: fn(); MaxAt0: fn().reversed
+
+  /** [Eq] gives nullsLast Dsc order. */
+  for<R>(R:CanSort) fun by(key:Fun1<T,R>)=when this:
+    MinAt0:
+      FnSort:[a b] R.normalOrd(key(a),key(b))
+    MaxAt0:
+      FnSort:[a b] R.normalOrd(key(b),key(a))
+    Eq:
+      FnSort {[a b]when:
+        a==NO: MaxAt0 //b->left
+        b==NO: MinAt0
+        else: R.normalOrd(key(b),key(a)) }
+  samename-insta:
+    for<T> fun by(:Fun1<Sorts,CanSee<FnSort>>) = fn()(Fold.From0: as<Comparable>.thenComparing(it))
+    eval fun FnSort.first==LinkLn
+
+/** Infinite line of bits. [Vars.sizeHint] */
+for<This>
+thing Vec_Bool same0 made(j:JBit) were Ary<Bool>,ByImpl<Any,j>, Num.Bit:
+  impl?? made()
+  !fun clear=j.clear
+  !val size get: j.length
+  !fun copy=BitSet(j.clone.as)
+  fun count(q=$Y) = q.way(`cardinality`): size-count()
+
+  !fun get==j`get`; !fun set==j`set`
+  !fun get(:Range<Idx>)=BitSet(j.get(*rn))
+  !fun set(:Range<Idx>, q=$Y)=j.set(*rn,q)
+  @BelowFor("next; previous R")
+  fun find$2(at:Idx, bit=$Y)=bit.way(j`$1SetBit`, j`$1ClearBit`)(from)+at
+  fun flip(:Idx)=j.flip(i)  
+
+  !fun `&`(:BitSet)=let: j.and(you.j)
+  !fun `+`(:BitSet)=let: j.or(you.j)
+  !fun `-`(:BitSet)=let: j.andNot(you.j)
+  !fun xor(:BitSet)=let: j.xor(you.j)
+  !fun flip(rn=fullIdx)=j.flip(*rn)
+  !fun wasCall(shl:Int)=let:
+    ((shl>0).way(0,shl)~NO).see{[i] this[i]=this[i+shl]}
+
+  impl?? samename-insta:
+    val bytes=-Eqv<BitSet>(`it.j.toByteArray`, JBit`valueOf`)
+    val int8s=-Eqv<BitSet>(`it.j.toLongArray`, JBit`valueOf`)
+
+thing-fun JVM.as were Impl:
+  !insta Vec_Bool:
+    !fun wasCall==empty
+    !fun sizeHint(n:Cnt?) = Vec_Bool(JBit(n!!))
+    !fun empty=Vec_Bool(JBit())
+where^2:
+  for<>JBit=java.util.BitSet
+

@@ -1,0 +1,38 @@
+for<T> Async = Wait<Res<T>>
+
+for<get T> when-thing Res:
+  Ok(res:T); Err(ex:Exception)
+  fun get
+  fun getMay
+  for<R> fun way(ok: Fn1<T,R>, err: Fn1<Exception,R>={throw it}) = when this is:
+    Err: err(ex)
+    Ok: ok(res)
+  for<R> fun seen(op:Fn1<T,R>) = trys { way(op) }
+  /** Won't chain too long like Haskell. see [Wait.any] */
+  fun `|`(:Res<T>) = way(`it`): you.getMay
+  /** `say(File(fp).read&{ fetch(it.lines[0]) })` */
+  for<B> fun `&`(wrap:Fn1<T,Res<B>>) = way({[x] wrap(x).way(`Res.Ok(it)`, `Res.Err`)})
+  for<B> fun `+`(:Res<B>) = this+`you`
+  for<B> fun `+`(wrap:Fn1<T,Res<B>>) = & { get() to it }
+
+  fun Either = when this is:
+    Ok: Either.A(res)
+    Err: Either.B(ex)
+
+for<T> thing Wait:
+  fun `!`(c:FnCont<R>)
+  samename-insta:
+    for<T> fun got(now: T) = wait: got(now)
+    for<E> fun all(:Args<Async<E>>) = wait:
+      if n==num: got()
+    for<E> fun any(:Args<Async<E>>)
+    for<E> fun allMay(:Args<Wait<E>>)
+    for<E> fun race(:Args<Wait<E>>)
+
+
+/** NOTE `throw` compile to `return Err` */
+for<T> eval fun Async<T>.`!!`(c:FnCont<T>) = wait.way(c, `throw it`)
+for<TR> fun Async<T>.seen(then: Fn1<T,R>) = wait: you.wait.seen(then)
+for<R> fun Async<R>.seenErr(rescue: Fn1<Exception,R>) = wait: you.wait.way(`it`): rescue(it)
+
+

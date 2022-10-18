@@ -1,0 +1,24 @@
+
+/** C scanf-printf inputs with C++ var capture */
+for<T> eval thing-fun hear(items:Args<Word_On<Var,Str>>):
+  same0 val vs=items.seen: A
+  fun Ary = vs.seen: v
+  fun set(:Ary) = vs.toIdx.see{[==v to i] v.v=ary[i]}
+  fun Str
+  fun say
+  fun wasCall(io=IO.std)
+
+for<T> fun Var.as=this to ""
+
+data-thing UUID(bitA:Int8, bitB:Int8) were ByImpl<CanSort,bitA>:
+  made()
+  made(:Str)
+  made(:Bytes)
+  var Int:
+    version; variant
+  /** 14+48+60 */
+  thing-fun Type1:
+    var node: Int8
+    var timestamp: Int8
+    var clock
+

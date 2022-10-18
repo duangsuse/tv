@@ -1,0 +1,137 @@
+pkg jueju.jvm
+use java.lang
+use java.io
+
+@BelowFor('''1 2 4 8; byte short int long''')
+class-insta WasConvert Ary<Int$1>:
+  eval fun as==t(VMT.$2)
+@BelowFor('''4 8; float double''')
+class-insta WasConvert Ary<Rat$1>:
+  eval fun as==t(VMT.$2)
+/** UTF-16(short) '\x00' num in JVM. btw J=long,Z=bool,L=typeID in bytecode */
+class-insta WasConvert Ary<Char>:
+  eval fun as==t(VMT.char)
+class-insta WasConvert Ary<Bool>:
+  eval fun as==t(VMT.boolean)
+for<T> class-insta WasConvert Ary<T>:
+  eval fun as==t(VMT(T))
+
+@ArgSplit({1 1})
+same0 eval fun t(:JType, a:Ary<*>): Ary<type.ju>:
+  val b=VMT.array(type, a.size)
+  a.toIdx.see:[==x i] b[i]=x.as<type.ju>
+  return b
+
+
+class JVM where Platform:
+class JS where Platform:
+class AOSP where JVM:
+
+class-insta DataItem JVM:
+  fun lineOf==Fn.pipe(`listOf`, `KList`)
+  fun kvOf==Fn.pipe(`mapOf`, `KMap`)
+  fun setOf==Fn.pipe(`setOf`, `KSet`)
+  for<T> eval fun aryOf(it: Args<T>)
+
+class DataItem:
+  for<T> fun lineOf(it: Args<T>): Line<T>
+  for<KV> fun kvOf(it: Args<Pair<K,V>>): KV<K,V>
+  for<T> fun aryOf(it: Args<T>): Ary<get T>
+  for<E> fun setOf(it: Args<E>): Set<E>
+
+same-pkg class DataRw:
+  for<T> fun lineOf(it: Args<T>): RwLine<T>
+  for<KV> fun kvOf(it: Args<Pair<K,V>>): RwKV<K,V>
+  for<T> fun aryOf(it: Args<T>): Ary<T>
+  for<E> fun setOf(it: Args<E>): RwSet<E>
+fun rw==RwData`lets`
+
+for<> CanClose=AutoCloseable
+for<> CanThrow=Throwable
+
+for<> Error=Error
+/** Giving `jshell`&jueju why-errors. */
+for<> Err=Exception
+/** Jueju forbids `Integer[]` outside reflects */
+for<T> thing JavaArray: Ary<T>
+
+/** `assert 1+1==3` */
+for<> ErrorAssert=AssertionError
+/** e.g. `Exec.prop["os.name"]=="BSD"` */
+for<> ErrorNoImpl=NotImplementedError
+@Below(10, '''Err''')
+/**`URL("file:").openStream`*/ for<> IO=IOException
+/** Every error "[Throws] unchecked" derives this */
+for<> Runtime=RuntimeException
+/** `List.of().add(1)` */ for<> NoSupp=UnsupportedOperationException
+/** `(int)(Object)""` */ for<> As=ClassCastException
+/** `rw{lineOf(1,2)}.see: popAt(0)` */ for<> UnexpectModify=ConcurrentModificationException
+/** `aryOf(0)[1]` */ for<> GetAt=IndexOutOfBoundsException
+/** `kvOf(0 to 1)[1]` */ for<> Get=NoSuchElementException
+/** `Integer.valueOf("a",10)` */for<> Parsenum=NumberFormatException
+/** `Thread.sleep((int)10e3)`&Ctrl+C SIGINT [Exec.thr] */for<> ErrCtrlC=InterruptedException
+/** (int)`1/0` */for<> ErrCalc=ArithmeticException
+
+/** `Map.of(null,0)` need access. ":T=[later] not init" also this */
+for<> Null=KotlinNullPointerException
+/** `URL("")`. NoWhenBranchMatched also this */
+for<> Arg=IllegalArgumentException
+/** `f.close(); f.read()` */ for<> Vars=IllegalStateException
+
+/** 无论[fn] 异常与否，调用close。这取代了含糊的 `finally{}` 见 [可闭.全] */
+for<TR>(T: CanClose) fun T.use(:Fn1<T,R>) = try { val r=fn(this); close();r } catch(Throwable) { close(); throw you }
+for<TR>(T: CanClose) fun T.use(task:Fn1<T,Wait<R>>) = wait:
+  task(this)!.let: you.close()
+@_("锁线程")
+for<R> fun synchronized(noRace: Any, :Fn0<R>) :R = VMOp.lock
+
+/** `CanClose.all(File("tee>xx").sh, File("xx").lines).use:[==aryOf(cmd,out)]cmd` */
+@_("全")
+for<T>(T: CanClose) eval
+fun CanClose.Companion.all(todo:Args<T>) = Group()
+where:
+  thing-fun Group where ByImpl<Ary<T>>(todo), CanClose:
+    impl fun close = see: it.close()
+
+
+/** Add to multipart JuFile with [JvmName] */
+/**: 添加到多文件class [Jvm名] */
+@Target({FILE})
+eval-thing JvmNFiles
+@Target({VERB NOUN_GET NOUN_SET FILE}, runtime=$N)
+eval-thing JvmName(k:Str)
+@Target({VERB NOUN_GET NOUN_SET NOUN})
+eval-thing JvmStatic
+/** For default args. f(a,b=1,c=3) +3 methods */ /**: 对默认参数 */
+@Target({VERB MADE})
+eval-thing JvmOverloads
+/** Don't make get/setter(for impl! var x=) */
+/**: (终定量)不提供字段外的get/set */
+@Target({NOUN_VAR})
+eval-thing JvmField
+
+/** We don't force CheckedExceptions, but you can! */
+/**: 绝句不要求API用户穷举报错case，但您能！ */
+@_("将抛下")
+@Target({VERB NOUN_GET NOUN_SET MADE})
+eval-thing Throws(exTypes: Args<Type<CanThrow>>)
+/** Stored in ClassFile, `juec` won't see those(but uses [JvmFlags.Synthetic] for `same-pkg`, which is "public") */
+eval-thing JvmFlag(: Flag<JvmFlags>)
+
+
+
+
+eval-thing Jueju1(
+    /** class,file,synth,nfiles,nfile */ kind: Int = 1,
+    s1: Array<String> = [],
+    s2: Array<String> = [],
+    sRel: String = "",
+    pkg: String = "",
+    flg: Int = 0)
+
+
+enum-thing JvmFlags where Flag.Bit:
+  Synthetic; Strictfp; /** method will LOCK(single thread) on this */ Synchronized
+  /** won't serialize */Transient
+  /** writes are thread-safe(e.g. for ONCE-init lazy Singleton), use Atomics for read+write */
+  Volatile

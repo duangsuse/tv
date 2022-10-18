@@ -1,0 +1,349 @@
+
+
+/** ord:[Sort], MaxAt0=LIFO=Stack, MinAt0=FIFO=Pipe, Eq=unorder; can be fixed-size [RingDeque] */
+for<T>class Deque where Sized:
+  fun add(x:T); fun pop: T
+  /** shift more item */
+  fun pop(n:Cnt): Ary<T>
+  /** Should support this, may with `RwLine` */
+  fun unpop(:Ary<T>)
+  fun add(:Ary<T>)
+  fun Seq = Seq: size**{ got(pop()) }
+
+
+for<T This>(This: Empty) class CanAdd where Copy:
+  fun add(x: T)
+  fun pop(x: T); fun clear()
+  fun `+`(xs: Seq<T>) = let: xs.see(`add`)
+  fun `&`(xs: Seq<T>) = see { if it !in xs: pop(it) }
+  fun pop(xs: Seq<T>) = xs.see(`pop`)
+  fun copy = empty().itLet: see(it`add`)
+
+/** Well generated copy-constructor(can be override), not mark-as `Cloneable` & [Object.clone]. see serialize [BySend] */
+for<This>class Copy:
+  fun copy: This
+for<T> fun `+`(old:Line<T>) = +old.as<RwLine>
+for<KV> fun `+`(old:KV<K,V>) = +old.as<RwKV>
+for<E> fun `+`(old:Set<E>) = +old.as<RwSet>
+for<M>(M:Copy) fun `+`(old:M) = old.copy()
+
+for<This> class Empty:
+  samename-insta:
+    fun empty: This
+for<T>(T: Empty) eval fun empty = T.empty
+class-insta Empty Any?:
+  impl fun empty=NO
+
+for<TR> fun Ary<T>.wasCall(:Fold.From0<T,R>) = fold().lets:
+  acc = this[0]
+  (1~lastIdx).see { got(this[i]) } done()
+for<TR> fun Ary<T>.foldRight(:Fold<T,R>) = fold().lets:
+  (fullIdx step -1).see { got(this[i]) } done()
+@_("叠开")
+for<TR> fun Ary<T>.foldExpand(:Fold<T,R>)
+
+for<KV> fun CanSee<Pair<K,V>>.find(p: FnTest<V>): K?:
+  see { if p(B): return A }
+  return NO
+
+for<V>(V: CanSort) fun CanSee<V>.sorted = Line().let: sort
+for<V> fun CanSee<V>.reversed = Line().let: reverse
+
+
+same-pkg for<K get V>  // in KV.funs V can't be arg, diff to RwLine<V>
+class KV where Sized,CanSee<Pair<K,V>>:
+  fun get(:K): V?
+  val keys: Set<K>
+  val vals: Set<V>
+  fun contains(:K)
+
+/** Like Kt:[Grouping.aggregate] */
+for<KVR> fun KV<K,CanSee<V>>.folds(todo:Fn1<K, Fold<V,R>>) = KVTo: B(todo(A))
+/** Good for [Seq], real-time updates */
+for<VR> fun CanSee<V>.folds(todo:Args<Fold<V,R>>) = todo.seen { this() }.itLet: [st]
+  you.seen { st.see { it.got(this) } }
+.seen { done() }
+
+// no size-hint, hash(v)!=hash(k) so nBuckets may diff
+for<KV> fun KV<K,V>.flip = rw{kvOf<V,K>()}.let: you.see {[==k to v] set(v,k) }
+for<KV> fun KV<K,V>.gets(:Args<K>): Ary<Var<V>> = ks.seen: this[it]
+
+for<KV> class RwKV where KV<K,V>,CanAdd<Pair<K,V>>:
+  fun set(:K,:V)
+  fun pop(:K): V?
+  fun setIfNo(:K, calc:Fn0<V>):
+    if k !in this: this[k]=calc()
+  fun `+`(:This) = copy().let:
+    you.see: [==k v] this[k]=v
+  fun `&`(:This) = (keys&you.keys).KV: [k] k to (this[k] to you[k])
+  fun `-`(:Set<K>) = (keys-set).KV: [k] k to this[k]
+  data-thing Entry(var :K,:V)
+  val entries: RwSet<Entry>
+
+for<get E> class Set where Sized,CanSee<E>:
+  fun `+`(:This) = copy().let:
+    you.see: [==k v] this[k]=v
+  fun `&`(:This): This
+  fun `-`(:This): This
+
+for<E> class RwSet where Set<E>,CanAdd<E>
+
+/** Replaces "bisect" ordered insert in [Line], [Deque] */
+for<E> class SetSort where RwSet<E>:
+  val ord: CanSort<E>
+  val first: E; val last: E
+  fun popFirst: E; val popLast: E
+  /** use [first]~e for headSet, e~NO for tail. `(str+"\0")` is [incOf] str */
+  fun get(:RangeHalf<E>)
+
+  /** minGreaterThan, or ceiling [e] in set */
+  fun incOf(:E, equal=$Y): E?
+  /** maxLessThan, or floor [e] in set */
+  fun decOf(:E, equal=$Y)
+
+/** Span Tree [get] by [SetSort] B-search. */
+for<NV> thing KRangeV where RwKV<Range<N>,V>:
+  fun get(:N): V?
+  /** Ray(abv): ByImpl<Sorted>(a) */
+  val entries = SetSort<Pair<Range<N>, V>>: A.A
+
+@Compiler("switchMap")
+for<N> eval fun KRangeV<N,Fn0<*>>.when(:N) = get(n)()
+
+/** Prefix Tree(for Dict,Radix,.). "ab abc ac"=>a{b{:0, c{:1}}, c:2}.
+  Btw: `K:eval`=type K infer from consts(str,.), with "eval type" `:you==Int` can also a type, & typearg missing=inferred */
+for<PVK>(K: eval, P: CanSee<K>) thing KVkv were CanSee<Pair<Line<K>, V>>, CanAdd<Pair<P,V>>:
+  var V? here
+  fun get(:K): Kvkv<P,V>?
+  fun get(:P): Kvkv<P,V>?
+  fun set(:P, :V)
+  /** in "abc ax": don't fail when no 'c' @b, set failptr to a/  so easy2match full text */
+  fun AC: KVkv<P,V>
+  samename-insta:
+    val KZ="\0".Sym
+    val KFail="^".Sym
+
+/** Suffix Tree(compressed), "ok okay jay"=>ok{:0, ay:1},jay{:2} so [get] simply use [Cut2.pre] match on EACH branch:
+  but `ok{..}` works with a [Fold] to find optimal try length(e.g. 1) to [KV.get] prior.
+ */
+for<PV>(P: Cut2) thing KVkvcat were CanSee<Pair<Line<P>, V>>, CanAdd<Pair<P,V>>:
+  var Fold<P,Cnt> guessPreSize
+
+for<This> class Cut2 were Sized:
+  fun pre(:This): Cnt
+  fun cut2(at:Idx): PairOf<This>
+
+/** Make a grouping, can then apply multi [folds]. `eachCount = KVFold(Fold.From(0):it+1): it` */
+for<KVR> thing KVFold(:Fn0<Fold<V,R>>, key: Fn1<V,K>) where RwKV<K,R>,Fold<V,This>:
+  impl fun got(:V): setIfNo(key(v), fold).got(v)
+  impl fun done=this
+
+  impl fun see(op:Fn1) = see:[==k to v] op(k to v.done())
+  impl val vals get: vals.seenTo(): v.done()
+  impl fun get(:K) = get(k)?.done()
+
+class-insta Empty Line:
+  impl val empty=listOf()
+class-insta Empty RwLine:
+  impl val empty get: RwData.listOf()
+
+class-insta Empty KV:
+  impl val empty=kvOf()
+class-insta Empty RwKV:
+  impl val empty get: RwData.kvOf()
+
+for<T> val RwLine<T>.noRw = as<Line>
+
+for<T> class-insta WasDestruct Vars<T>:
+  fun destructBy(:Vars<Var<T>>):
+    val hole=you.vars
+    hole.toIdx.see:[==x to i] hole[i].v = vars[i].v
+
+for<KV> class-insta WasDestruct KV<K,V>:
+  fun destructBy(:KV<K,Var<V>>):
+    kv.see:[==k to v] kv[k].v = this[k]
+
+/** So all fun receving V can also use `Var<V>` */
+for<V> class-insta WasConvert Var<V>:
+  fun as=v
+
+/** "Line" is just Kt:[List], translated from "行" in Chinese, it prevents 绝句 from obscuring 2 types "列表": Seq&KV,
+  and prepares mental-model for 2D `a[i][j]` sheets. It's not "line\n" in [Str], but have some similarity */
+same-pkg for<T>
+class Line_ where Ary<T>:
+  fun `+`(:This) = (+this)+you
+for<T> Line = Line_<get T>
+
+for<T> class RwLine where Line_<T>, CanAdd<T>:
+  fun popAt(i:Cnt): T
+  fun addAt(i:Cnt, xs:Ary<get T>)
+  thing-fun Deque(newer:Sort=MinAt0) where Deque:
+    impl fun pop = popAt(when newer:
+      MaxAt0: lastIdx
+      MinAt0: 0
+      Eq: Random(fullIdx))
+  /** Tamper `this` list, so never realloc for huge lists */
+  fun filterHere(keep:FnTest<T>) = lets:
+    var i 0
+    see { if keep(it): this[i]=it; i=i+1 }
+    get(0~i)
+
+
+/** [CanSee]+infinite items */
+@_("可看尽")
+for<T> class CanSeeInf:
+  fun see(op: Fn1<T>)
+  fun onSeen(:Fn1<T>): CanSee
+  fun onSeenIdx(:Fn2<T,Idx>): CanSee
+  /** Turn to iterator that can be async&infinite. `{1 2}.Seq.itLet: it()==1 and !it.done` */
+  fun Seq: Seq
+  @Compiler("indexedSeers")
+  val `toIdx`: Seq<Pair<T, Idx>> = Seq:
+    var* i 0
+    you.Seq.see: got(it to i); i=i+1
+
+  val it=fwd(noOp)
+  thing-fun fwd(:Fn1<RwLine<T>>):
+    fun first(p:FnTest<T>): T?
+    fun take(n:Cnt)
+    fun drop(n:Cnt)
+    fun takeWhile(head:FnTest<T>)
+    fun dropWhile(head:FnTest<T>)
+    fun getAt(:Idx): T?
+    for<KV> fun CanSee<Pair<K,V>>.find(p: FnTest<V>): K?:
+
+  for<R> fun chunked(sizeMax: Cnt, :Fn1<Line<T>,R>) = Seq:
+    got()
+
+  fun chunkedN(size: Cnt, or: T?, step:Cnt=1)
+
+  @_("切内俩")
+  fun chunkedEvery2(comb:Fun1<PairOf<T>,Bool>)
+
+  
+
+
+for<AB> fun Seq<A>.zip(b:Seq<B>) = seen { it to b() }
+@_("带其右")
+for<AR> fun Seq<A>.zipWithNext(:Fn2<A,A,R>)
+for<A> fun Seq<A>.zipWithNext=zipWithNext(`Pair`)
+@_("带离")
+for<VAB> fun CanSee<V>.unzip(sep:Fn<V,Pair<A,B>>) = rw{lineOf<A>() to lineOf<B>()}.let:
+  see: val vv=sep(it);  A.add(vv.A); B.add(vv.B)
+for<VABC> fun CanSee<V>.unzip(sep:Fn<V,Pair3<A,B,C>>) = rw{Pair3(lineOf<A>(),lineOf<B>(),lineOf<C>())}.let:
+  see: val v3=sep(it);  val v3==Pair3(a,b,c); A.add(a);B.add(b);C.add(c)
+
+for<V> fun CanSee<CanSee<V>>.flat = rw{lineOf<V>()}.let:
+  //you.see:[a] a.see { add(it) }
+  you.seen(to=this): it
+
+
+/** `Collection<E>` = [Sized]+[CanSee], no more `Iterable` s cause `impl fun ` [see] implies async Seq */
+for<T> class CanSee where CanSeeInf:
+  for<R> fun seen(to=rw{lineOf<R>()},op: Fun1<T,R>) = to.let { you.see: add(it.op()) }
+  for<R> fun seenNot(no:R, to=rw{lineOf<R>()}, op: Fun1<T,R>)
+  fun contains(x: T)
+  fun contains(xs: Seq<T>) = xs.all: it in this
+
+  /** Copy items */fun Line: Line
+  /** Unique items */fun Set: Set
+  for<KV> fun KV(to:WKV<K,V>=empty, assoc: Fn1<T,Pair<K,V>>) = to.let:
+    you.see: add(assoc(it))
+  for<K> fun KVBy(to:WKV<K,T>=empty, key: Fn1<T,K>) = to.let: you.see { set(key(it), it) }
+  for<V> fun KVTo(to:WKV<T,V>=empty, value: Fn1<T,V>) = to.let: you.see { set(it, value(it)) }
+  for<R> fun wasCall(:Fold<T,R>) = fold().lets:
+    see { got(it) } done()
+  for<R> fun wasCall(:Fold.From0<T,R>) = fold().lets:
+    val x = Seq()
+    acc = x()
+    x.see { got(it) } done()
+  for<KR> fun wasCall(:Fold<T,R>, groupBy:Fn1<T,K>) = KVFold(fold,groupBy)
+
+  fun single: T?
+  fun count(:FnTest<T>): Cnt
+
+  val rev=reversed.fwd: it.reverse()
+
+  fun partition(:Idx)
+  fun partition(div:FnTest<T>)
+  fun filter
+  fun filterNot
+  for<T1> fun filterIs() = rw{lineOf<T1>()}.let: you.see { if it is T1: add(it) }
+
+  fun `+`(:CanSee) = Seq:
+    this.see{got(it)}; you.see{got(it)}
+  fun `+`(:T) = Seq:
+    this.see{got(it)}; got(you)
+
+  fun `all`==pred($Y,`&`)
+  fun `any`==pred($N,`|`)
+  fun joinTo(:CanAdd<Str>, sep:Str, between:PairOf<Str>, n=-1, trail="…", seen:Fn1<T,Str>)
+  fun joinToStr(sep:Str, seen:Fn1<T,Str>) = joinTo(sep,seen=seen)
+where:
+  for<KV> WKV=RwKV<set K, set V>
+  @ArgSplit({2 2})
+  for<T> eval fun pred(q:Bool, qq:FnJoin<Bool>, xs:CanSee<T>,p:FnTest<T>) = xs(Fold.From(q): qq(this, p(it)) )
+
+for<T> fun CanSee<T?>.requireNoNO=filterIs<T>
+
+for<T> class Seq:
+  val isDone: Bool
+  fun wasCall(): T
+
+  fun comb(:Args<Ary<T>>)
+  /** cycle ary.size*[n] */
+  fun repeat(:Ary<T>, n=-1)
+  fun repeat(one:T, n=-1)
+
+/** Known as `Collector` in Java8 but don't do [Seq.filter], etc. */
+for<TR> Fold = Fn0<Foldy<T,R>>
+for<set T get R> class Foldy:
+  fun got(x:T); /** able call twice */ fun done: R
+  fun only(p: FnTest<T>) = pipe { if(p(it)) got(it) }
+  /** runningFold or scan in Kt */
+  fun eachStep
+  for<O> thing-fun then(op:Fn1<R,O>) where Foldy:
+    impl fun got(x:T)=you.got(x)
+    impl fun done=op(you.done())
+  thing-fun pipe(op:Fun2<Foldy,T>) where Foldy:
+    impl fun got(x:T)=you.op(x)
+    impl fun done=you.done()
+
+  /** `{1 2 3}(Fold.From(0):it+1)` 0-cost like just `var n:Int`, Jueju packs `Type` for 1-var eval things, never `new` */
+  for<A> eval thing From
+    same0 made(inc: Fun2<A,T, A>, end: Fn1<A,R>, var acc:A) where Foldy:
+    made(acc:A, inc:Fun2, end:Fn1)=made(inc,end,acc)
+    impl fun got(x:T): acc=acc.inc(x)
+    impl fun done = end(acc)
+  eval fun From(acc:T, inc: Fun2<R,T, R>) = From(acc,inc,noOp)
+  for<A> eval thing From0(inc: Fun2<R,T, R>) where Foldy:
+    var acc: R; impl fun done = acc
+    impl fun got(x:T): acc=acc.inc(x)
+  eval thing To(dst: R, add: Fun1<R,T>) where Foldy:
+    impl fun done = dst
+    impl fun got==dst`add`
+  /** `To0(Var): v=v+it ` */
+  eval thing To0(dst_0: Fn1<T,R>, add: Fun1<R,T>) where Foldy:
+    var dst: R?
+    impl fun done = dst
+    impl fun got(x:T):
+      if dst==NO: dst=dst_0(x)
+      else: dst.add(x)
+
+  thing-fun strBuild where Foldy:
+    val sb=StrBuilder()
+    impl fun got==sb`add`
+    impl fun done=sb.toStr
+  thing-fun avg where Foldy:
+    var: n 0; sum 0
+    impl fun got(x:N): n=n+1; sum.set`+x`
+    impl fun done=Pair3(sum/n, sum,n)
+
+  for<N> data-thing MinMax(var a:N, b=a):
+    fun got(x:N):
+      if x<a: a=x
+      if x>b: b=x
+  for<N>fun minMax=To0(`MinMax`): got(it)
+  fun count=From(0): it+1
+  for<T> fun line=To(rw{lineOf<T>()})
+

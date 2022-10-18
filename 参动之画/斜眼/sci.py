@@ -147,6 +147,10 @@ void mainImage(out vec4 bg, vec2 P){
   bg = vec4(v,v,v,1);
 }
 
+vec2 p=P/iResolution.xy;
+p.x+=sin(p.y*4.+6.*iTime)/6.28;
+fragColor = vec4(texture(iChannel0,p).rgb ,1); //波纹
+
 这是一个”老相片“视频滤镜，展示了GL无所不能的inputs... ，猜猜它是怎么处理颜色的
 
 void mainImage(out vec4 bg, vec2 P){
@@ -533,10 +537,14 @@ https://www.shadertoy.com/view/3l23Rh 体积雾龙卷/160 https://www.shadertoy.
 https://www.shadertoy.com/view/4slGz4 @iq sound/100 link2doc graphtool.com
 https://www.shadertoy.com/view/ftVXDD 157 https://www.shadertoy.com/view/Xsd3R2 /120 sound https://www.shadertoy.com/view/Mt3GWs 235 https://www.shadertoy.com/view/4ttGDH 200 (fun Noise Contour, blog http://candycat1992.github.io/)
 https://www.shadertoy.com/view/wd33zl glass
+https://www.shadertoy.com/view/fstyD4 梵高 https://www.shadertoy.com/view/flcyRB
+https://www.shadertoy.com/view/NslGRN 玻璃体素
+https://www.shadertoy.com/view/XdcGW2 GoL 海岸
 https://www.shadertoy.com/view/fslyW4 黄金比例/100
 https://www.shadertoy.com/view/fsXcRS 分形绳子/150
 https://www.shadertoy.com/view/wl2SzR 彩绳子/30
 https://www.shadertoy.com/view/4ljGD1 音乐线
+https://www.shadertoy.com/view/4dG3R1 修改react() 尾main polycu.be
 https://www.shadertoy.com/view/7lKSWW 万花筒/300
 https://www.shadertoy.com/view/lddGWl 海/60
 https://www.shadertoy.com/view/4dccR4 棱镜光/60

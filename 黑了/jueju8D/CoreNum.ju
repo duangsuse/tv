@@ -1,0 +1,167 @@
+pkg jueju
+use1 NumLike
+
+for<T>(T:Flip) fun `-`(:T)=it.flip
+for<T>(T:Flip) fun `+`(:T)=it
+for<T>(T:Empty)fun empty=T.empty
+for<T>(T:Sum) fun Seq<T>.sum=this(Fold.From(T.empty, `+`))
+for<T>(T:Sum) fun Cnt.times(repeat:T)=lets:
+  var T x=from
+  times{x=x+x};x
+
+thing NumLike:
+  /** `-(-it)==it` */
+  for<This>class Flip:
+    fun flip: This
+  for<This>class Sum were Empty:
+    fun `+`1(:This)
+  for<This>class Empty:
+    samename-insta:
+      fun empty: This
+
+for<This>class Num were Flip,Sum:
+  @Below(3,':This')
+  fun `*`0(:This)=VMOp
+  fun `/`0(:This)=VMOp
+  fun `**`0R(:This)=VMOp
+  fun `-`1(:This)=+(-you)
+
+  for<This>thing-fun rem:
+    fun wasCall(:This):This=VMOp
+    fun `/`(:This)=this[^1]/you to this(you)
+
+for<N> thing-fun N.as were WasDestruct:
+  fun assignTo(:Pow<N,Var<N>>):
+    val pow==x to k
+    k.v=Vec1 lets: log(x)/log(you)
+  fun assignTo(:Pow<Var<N>,N>):
+    val pow==x to k
+    x.v=Vec1 lets: sqrt(you,k)
+
+
+
+/** Numerics represent by 2+4+8+.. Unlike [Num], `a&-b == a-b; a+(2a-a)==2a; a(shl=0)+a==a; a.xor(a)==0`, for ushr: [Cnt] */
+for<This>class Bit were Flip,Sum:
+  fun `-`(:This)=this&-you
+  fun `&`(:This)
+  fun xor(:This)
+  fun wasCall(shl:Int)
+
+@_("分量同算")
+for<This T>class CalcEachIdx were Num,Sized:
+  fun get(:Idx): Num<T>
+
+
+for<This> thing Int:
+
+class Rat
+  val `finite`
+  val `NaN`
+  samename-insta:
+
+
+for<> Int1 = Int`$N`
+for<> Int2 = Int`$N`
+
+@BelowFor("4 8 N", 2+2)
+fun Int1.as:Int$1
+fun Int2.as:Int$1
+fun Cnt1.as:Int$1
+fun Cnt2.as:Int$1
+
+@BelowFor("8 N", 1+1)
+fun Int4.as:Int$1
+fun Cnt4.as:Int$1
+@BelowFor("I C", 1)
+fun $1nt8.as:$1ntN
+
+@BelowFor("8 N")
+fun Rat4.as:Rat$1
+fun Rat8.as:RatN
+
+
+
+
+
+
+for<N> thing Vec
+
+@BelowFor('''1 2 4 8; byte short int long''')
+class-insta WasConvert Ary<Int$1>:
+  eval fun as==t(VMT.$2)
+@BelowFor('''4 8; float double''')
+class-insta WasConvert Ary<Rat$1>:
+  eval fun as==t(VMT.$2)
+/** UTF-16(short) '\x00' num in JVM. btw J=long,Z=bool,L=typeID in bytecode */
+class-insta WasConvert Ary<Char>:
+  eval fun as==t(VMT.char)
+class-insta WasConvert Ary<Bool>:
+  eval fun as==t(VMT.boolean)
+for<T> class-insta WasConvert Ary<T>:
+  eval fun as==t(VMT(T))
+
+@ArgSplit({1 1})
+same0 eval fun t(:JType, a:Ary<*>): Ary<type.ju>:
+  val b=VMT.array(type, a.size)
+  a.toIdx.see:[==x i] b[i]=x.as<type.ju>
+  return b
+
+
+
+  
+
+/** 
+Vectors are mutable point with angle and magnitude, Vec1 capture e.g. `Var<Int>` but just adds math funs to it:
+(hyperbolic)trigonometric, rounding [saw], [sign] and [abs]olute value. For power&it's exponents, logarithmic see [exp1]
+ */
+for<N> thing Vec1(r:Deg, yaxis=$N)
+  fun abs = let: sign=+1
+  val sign get: (n==0).way(0, `(n>0).way(+1,-1)`)
+    set: v=Vec1(you).sign*abs()
+  /** make this [step]-divisable. see [saw] */
+  fun sawMod(step:N): N
+  samename-insta Math:
+    @BelowFor("4 8", 3)
+    /** support [bOvf] negate. Test `x in Int.range` for safe converts */
+    fun addExact(a:Int$1, bOvf:Int$1) = a+bOvf
+    fun mulExact(a:Int$1, bOvf:Int$1) = a*bOvf
+    /** floor, round, ceil. normal `a/b==trunc(a/b)` round to 0 */
+    fun saw$1(:Rat$1, closer=-1): Int$1
+    /** Move point to leftmost, find precision `1/Math.ulp(1)=1e7`. ignore sign, NaN */
+    fun ulp(:Rat$1) = VMOp.xx
+    /** `nextIn(10~+Inf)` */
+    fun nextIn(:Range<Rat$1>) = VMOp.xx
+    fun getExp(:Rat$1)
+    fun IEEErem(a:Rat,b:Rat): Rat
+    /** expm1, ln1p, for [E]. Use `8.itLet{[==2**x]x}` for log2(,log10) */
+    val exp1=Equiv(`E**it`, `Math.log(it)`).plus(-1)
+    /** JDK:[scalb] */
+    fun mul2k(n:Rat, k:Rat) = n*2**k
+    eval val PI=3.1415926535897931; /** `ln(E)=1,ln=logE.log=log10` */ eval val E=2.7182818284590451
+    /** `180/360*DEG` */
+    val radians = Equiv.ratio(DEG/360)
+    /** [a] for arc, [h] for hyperbolic */
+    enum-thing AngularFn:
+      Sin; Cos; Tan
+    /** `Vec1(.5turn)==Vec1(Cos,PI)`, JDK:[atan2] `Vec2(x,y).r` in 0~1turn. math atan^2 in 0~2 */
+    for<N> fun wasCall(:AngularFn, :N)
+    /** `sin(arcsin x)==x`  */
+    for<N> fun a(:AngularFn, :N):N
+    /** JDK:[hypot] `sqrt(xx+yy)`  done with `Vec2(x,y).l` */
+    fun<N> fun h(:AngularFn, :N): N
+
+/** So use `val n==x**2` for sqrt, `val n==2**k` for log2 */
+for<N> fun N.`**`(k:N) = Pow(this,k)
+for<N> eval val N.`turn`=this*2*Vec1.PI
+
+for<N> thing Pow(:N,k:N) where WasConvert:
+  fun as = Math.pow(n,k)
+
+class-insta WasDestruct N:
+  fun destructBy(po:Pow<Var<N>>):
+    if(po.n is Var): po.n.v = when po.k:
+      2: Math.sqrt(n); 3: Math.cbrt(n)
+    else:
+      po.k.v = Math.log(n)/Math.log(po.n)
+
+

@@ -1,0 +1,158 @@
+pkg jueju.words
+
+/** Marking `data-class: Vars` won't let the whole struct equiv a serialized [Line],
+  but it's giving (de)constructors&[Var.type] so data outside [Ary],[KV<Str,*>],[Set] sendable via [IO]
+  like [JSON] make(T,"{pairs} or [items]"), btw. use [Type.vars] for get/make-set objkeys, [Vars] is mostly inlined only */
+for<T This> class Vars:
+  val vars: Line<Var>
+  samename-insta:
+    /** `new FixedSize(fill zero)`, or get itemType e.g. [KV<Int,Int>] */
+    fun sizeHint(n:Int): Either<This, Var.K>
+
+
+class Word were CanMark:
+  val visible: Same
+  val provide: Impl
+  eval val asE: E?
+  enum-thing Same:
+    Yes; Pkg; Type; No
+  enum-thing Impl:
+    Open; NoDef; IsDef
+
+class CanMark:
+  val name: Str
+  val markers: Line<Any>
+
+/** Markers. [runtime]: NO=noCodegen, $N=noReflect. arg of eval-thing: [JSON],[Type],[Enum],[Ary] as [AryN],eval-thing */
+@_("修饰")
+eval-thing Target(allowed: Flag<AnnotationTarget>, runtime:Bool3=NO, repeat=$N)
+
+/** typealias==new-thing. @prefix: file,get,set,(var)mem; empty: thing+vars+funs */
+/**: [EVAL_THING]指@interface，[TYPE] [EXPR] 等是使用处
+  量[VAR] (可指JVM字段和读写er) 事[FUN]。【前缀:】可含4项 书读写变；如只重命名getter */
+@_("修饰物")
+enum-thing AnnotationTarget where Flag.Bit:
+  THING; EVAL_THING
+  VAR; VAR_MEM; EXPR_VAR;ARG
+  MADE; FUN; VAR_GET;VAR_SET
+  TYPE; TYPEARG; EXPR; FILE
+  samename-insta:
+    !fun empty = Flag(THING, VAR,VAR_MEM,EXPR_VAR,ARG, MADE,FUN, VAR_GET,VAR_SET)
+
+@_("勿报")
+@Target(Flags.full)
+eval-thing Suppress(names: Args<Str>)
+
+/** `"中文 en English jp 日語"` tranlate text. Langcode for Chinese is ""(xx.ju), for english it's "en" xx.ju_en. (en_jp.tsv for Non-terminology words) */
+/**: `"中 en 英 jp 日 zh 正體"` 式单词翻译。中文的语言代号是"" 并占用无_en式后缀 .ju 扩展名。 非术语建 en_jp.tsv 等来分词翻译
+  物定义在类型表新加约束并放值表“造于、同名例(受调用)”3个重载。不能以返回值重载，但 [_] 能隐转至[文]以翻译字串 */
+@Target({THING VAR FUN MADE EXPR_VAR})
+eval-thing _(i18n:Str)
+
+/** Items with repeating modifier [code] */
+/**: 为代码项添加重复的修饰符 */
+@_("以下")
+@Target({THING VAR FUN MADE FILE})
+eval-thing Below(n:Cnt, code:Str)
+/** Repeat items like `where^2:val..`, change name$1$2 and "$1" (embed code: atRow$0 & `fun atRow0~1..`). see [ArgsName]*/
+/**: 重复代码项类如 `其中^2`，填写 名$1$2、"$1" 项，嵌入代码靠 `事 于0~1` 于$0() 。另见 [组参名] */
+@_("以下含")
+@Target({*empty FILE EXPR})
+eval-thing BelowFor(rows:Str)
+
+
+/** Think twice&give your API!<3 demo before publishing any pkg version! */
+/**: 好事多磨！至少给你的API写3个示例再发布书 */
+@Target(empty - {VAR_MEM EXPR_VAR ARG}, runtime=$Y)
+eval-thing Deprecated(msg:Str, refactor=ReplaceWith(""), hide:Bool3=NO)
+@_("弃后换")
+@Target({})
+eval-thing ReplaceWith(expr:Str, use:Str)
+
+
+/** [name]=="" for `made()`, "getX" for `val x get:1` */
+for<get R> class Fun were Word:
+  val args: Line<Arg>
+  val res: Type<R>
+  /** `args[it~NO].all: default!=NO`, note `args[0~it]` can have defaults, but inorder `f(*anyarg,**kw)` */
+  val vararg: Idx?
+  val typeArgs: Line<TVar>
+  val : Flag<Feature>
+
+  fun wasCall(:Args<Any?>): R
+  fun callBy(:KV<Arg,Any?>): R
+
+  enum-thing Feature were Flag.Bit:
+    Notation; Eval; Cont; PWord
+
+/** val/r members in [Var], [Var.V.prop]=[F0]|[S0], try `val reID: Prop.S1 = User\`id\`` . [byLater] */
+for<get V> when-class Prop were Word:
+  val : Type<V>
+  val fget: Fun<V>
+  class Rw were Prop:
+    val fset: Fun
+  @BelowFor("F Prop `0+i`; S Rw `1+i`", 3)
+  class $1$0 were $2,Fn$3<V>
+  for<A>class $1$0 were $2,Fn$3<A,V>
+  for<AB>class $1$0 were $2,Fn$3<A,B,V>
+
+/** [name] can be "thisParam" or "you", only `thing-fun A.as: fun B.pair=you to this` &no `context(A,B)fun` */
+class Arg were CanMark:
+  val type: Type<*>
+  val i: Int
+  val default: E?
+
+class TVar were TypeHole:
+  val mustBe: Line<Type>
+  val isGet: Bool3
+  val eval: Any?
+
+for<> TypeArg=Pair<Type?, Bool3>
+class TypeHole:
+  val name: Str
+  val ofStar: Type<*>
+  fun of(:Line<TypeArg>, canNull=$Y, markers:Line<Any>=empty): Type<*>
+  /** [ObjCompanionKey] @HereIs(t:Type) this; `t.INSTANCE` */
+  for<A: Marker> fun objCompanion: Any?
+
+for<T>class Type were CanMark:
+  val base: TypeHole
+  val args: Line<TypeArg>
+  val canNull: Bool
+  fun canBe(:Type<*>): Bool
+  fun canHave(v:Any?) = v.takeIf: it!=NO &&canBe(Type(it))
+  impl val name=base.name
+  val vars: Line<Prop>
+  val funs: Line<Fun>
+  samename-insta:
+    for<T> fun wasCall(): Type
+    for<T> fun wasCall(_:T): Type
+  
+//
+/** extXXX(:This,...) funs resoved AFTER Fun(Fn) vars and members */
+@Target({TYPE})
+eval-thing JuFun
+
+/** Disable "you" in scope with two "this" having the same `@X` base-type(`@DslMarker X`) */
+/** “我”的层叠上只留最近1层有 `@X` 父类的类型(`【专属语言】X`) */
+@Target({EVAL_THING})
+eval-thing MarkDsl
+
+/** Unify to guess T, `List<T>` in block: with it's `add(1); add("")` calls, works in `Seq: got(1)` */
+@Target({ARG})
+eval-thing YieldInference
+
+/** Suppress conflicts of typearg variance */
+@Target({TYPE_ARG})
+eval-thing UnsafeVariance
+/** Show member only if match e.g. [Ary.sort]:"set T" or T itself. try `as<Ary<@UnsafeVariance T>>` */
+@Target({TYPE_ARG})
+eval-thing SafeVariance(decl:Str)
+
+/** `juec -c 'v:0.9'` fail for `@SinceStd("1.0") val` */
+eval-thing SinceStd(min:Semver)
+
+/** Target `class` can only have compile-time `class-insta` (use in `eval fun`), may with `CompanionObj: interfaces` */
+/**: 只在编译期允许类例存在 */
+@Target({THING})
+eval-thing Typeclass

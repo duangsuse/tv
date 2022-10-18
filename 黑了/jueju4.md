@@ -1,4 +1,4 @@
-# 绝句
+# 绝句 
 
 我们从“描述法特点”上看绝句编程语言，不太纠结具体语法或词法、算式层次，而只谈绝句比 C-like “结构-过程式”语言添加的，现实应用需求。
 
@@ -124,6 +124,19 @@ instance (Inc Int) where --实现了“Inc的子类型Int”
   事 add1=我+1
   同名例：常量 为
     量zero=0
+
+for<^>class Inc:
+  fun add1: ^
+  samename insta: Kst
+  class Kst:
+    val zero: ^
+class-insta Inc Int:
+  fun add1=this+1
+  samename insta :Kst:
+    val zero=0
+
+fun Inc.`+2`=add1.add1
+for<T>(T:Inc) fun two=T.zero+2
 
 ‘Inc的扩展函数’
 事 Inc.『+2』=add1“再”去add1

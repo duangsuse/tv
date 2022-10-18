@@ -1,0 +1,54 @@
+for<N> fun N.`~`2(:N) = Range(this,you)
+for<N> fun N.`~`(:NO) = RangeHalf(this)
+for<N> fun N.`~<`2(:N) = ~you.dec // int,float
+for<N> fun N.`~+`(:N) = ~this+n
+for<N> fun N.`~+-`(:N) = this-n~this+n
+
+for<N> fun `*`3(:Range)=aryOf(rn.A,rn.B.inc).as<Args<N>>
+/**: `"哈"+2次"啊"` 次数(乘方)请用[数值.**] */
+fun Cnt.`times`0(:Fn0)=(0~this).see: fn()
+
+
+/** JDK:[Comparable] implies this */
+for<This>class CanSort:
+  val normalOrd: FnSort<This>
+
+for<T>(T:CanSort) fun T.`<`2(:T) = T.normalOrd(this,you)==MinAt0
+for<T>(T:CanSort) fun T.`>`2(:T) = T.normalOrd(this,you)==MaxAt0
+
+for<T>(T:CanSort) fun T.mustIn==or: throw ErrVars("$it !in $this")
+for<T>(T:CanSort) fun T.wereIn==or: (it<A).way(A,B)
+where^2:
+  fun or(n:T,:Fun2<ClosedRange,T>)=Fn1: (n in it).way(n, `it.fn(n)`)
+for<N> fun N.mustIn==or: throw ErrVars("$it<$A")
+for<N> fun N.wereIn==or: A
+where^2:
+  fun or(:N,:Fun2<RangeHalf,N>)=Fn1: (n in it).way(n, `it.fn(n)`)
+
+/** Max val unknown, so not a [Range] */
+for<N> eval thing RangeHalf(A:N):
+  fun `~`(:N)=A~n
+  fun step(step:N)=Seq:
+    var N  i=A
+    loop if $Y: got(i); i set `+step`
+for<N> N.`in`(rn0:RangeHalf)=this!<rn0.A
+for<T> T.`in`(:Range<T>)=rn.contains(this)
+
+
+for<T>(T:CanSort) impl? thing ClosedRange(A:T,B:T):
+  fun contains(:T) =A!>it&it!>B
+  val isEmpty = A!<B
+  !fun Str="$A~$B"
+
+for<N> eval when-thing Range(A,B) were ClosedRange<N>,Sized,Seq<N>:
+  /** not accurate: for [Rat] use [isEmpty] */
+  !val size = B-A
+  !fun Seq=Seq:
+    var N  i=A
+    loop if i!>B: got(i); i incy
+  /** see [Vec1.sawMod] for [Int]s */
+  fun `stepN`(n:Cnt)=step (B-A)/n
+  thing-fun `step`(step:N) were Range:
+    !fun Seq=Seq:
+      var N  i=A
+      loop if i!>B: got(i); i set `+step`

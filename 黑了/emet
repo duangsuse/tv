@@ -90,3 +90,16 @@ Emet 支持 , >+ ()及 tag[k=v] , [k="abc",k1=$1] 符，逗+ 和空> 仅是层�
 链设置本身只是扩张this作用域，此外能缩小条件设置等的语法差异，不宜滥用
 
 emet的 `ul li["$0"]:names` 支持元组列表， 单项可用于bind仅文本变化标签及 `b${wCls.wtf}` 配置
+
+pat=(re,f,arg=[])=>(
+  re=RegExp(re.replace(/([a-z_]+)/g, (_,k)=>(arg.push(k),"(.*?)"))+'$'),
+  s=>{let m=re.exec(s); return f(Object.fromEntries(arg.map((k,i)=>[k,m[1+i]] ))) }
+)
+pat("a\\+b",console.log)("1+2")=={ a: '1', b: '2' }
+
+envDB=pat('db://user:password@hostname/database', m=>Object.entries(m).map(([k,v])=>`${(m.db+'_'+k).toUpperCase()}=${v}`).join() )
+
+envDB("mysql://root:123@local/mydb")==
+'MYSQL_DB=mysql,MYSQL_USER=root,MYSQL_PASSWORD=123,MYSQL_HOSTNAME=local,MYSQL_DATABASE=mydb'
+
+fish.js

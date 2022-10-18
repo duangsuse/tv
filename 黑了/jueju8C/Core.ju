@@ -1,0 +1,346 @@
+pkg jueju
+
+/** Any value(!=null) provided to fun-[Args]ument and val/vars, maybe const literal, system registry or user input.
+  expr and its subexpr/vars comes with 1 value&type. types are implicitly `:(extends) Any` and canBe(it's subtype) [Break] */
+/**: 事参数和变量接受的任意(非空)值，可能由常量字面、系统登记或人类输入。
+  算式及其子式/末端单量都有1值和其类型。任何物类隐式 `：(属于) 值` 且可为(即有子类) [断止] */ 
+impl? thing Any:
+  /** Test content equality(provided any!=NO), see [CanSort]: math rules, [Vars]: memAddr equality */
+  /**: 实现内容相等性，任何值!=空，数学性质见 [可序], 内存地址相等见 [变量集] */
+  @_("是") @CopyInfix(_("不是 en !="))
+  fun `==`(:This): Bool = VMOp.eq
+  /** Brief obj(&inners), rarely used outside debugging (except [StrBuild]). Add :[CanSend] for load/dump */
+  /**: 简述对象和其内项数据，很少在调试外有用（除在 [文拼]）。导入导出请加 :[CanSend] */
+  fun Str: Str = VMOp.objStr
+  /** Pregrouping key for optimizing [==] lookup, must pure(equals->sameHash)
+    or [KV.get] becomes UB. Hashes are sparse like pseudo-[Random] */
+  /**: 优化“靠 [==] 查表”的预分组线索，必须纯（相等->散列相同）
+    否则 [表.取] bug。相邻值散列不扎堆这点像伪[随机] */
+  fun Hash: Int = VMOp.objID
+
+  /** `Any` canBe `Str,Int,Ary`,. (`"" is Any`), if provided value implements([is]) [T] e.g. Str&you can't change type signature(e.g. Any), cast `any.as<Str>` is efficient
+    for `int1.as<Int4>` widen, `int.as<Int1>` lose precision it's C-like(& lit-int=>float,Char!=Int2). for JVM APIs autoboxing `Ary<Int> == int[]` supported (slower). see [WasConvert] */
+  /** 值可为文,数,组,. 也即 `"" 属于 值`。若提供的值有实现([is]) [T] 如=[文]，且你不能精确化类型签名如[值]，强转 `此值去作<文>` 不慢
+    对数1作数4 宽化、数4作数1 精度丢失属C语言族（但只有字面int=>float、[字]!=[数2]）。对JVM接口，支持略慢自动装箱如 `组<数> == int[]`。见 [WasConvert] */
+  for<T> impl! eval fun as: T = VMOp.checkcast
+  /** Check if typeof this inherits [T], or have `class-insta T This`. `class: samename-insta where XX: ` inherits, like [Empty]
+    Such [Bool] infix supports `!is` and `when x is:` syntax. "type" is statically(compiler-time) known part whatever (func)value, or "def" order is, faster&safer */
+  /** 检查值的类型是否继承[T]的全员，或有 `类例 T 我类型`。 类的无名同名例会被继承如 [值空]。
+    类似真假函数支持 `不属于` 和 `判x属于，` 语法。值的类型/型参静态(编译器)已知。无论值由谁何时提供，更快速而安全  */
+  @_("属于")
+  for<T> impl! eval fun `is`: Bool = VMOp.instanceof
+
+@Below(4+3, '''eval ''')
+for<T> fun Any.asMay = is<T>.way(`as<T>`, NO)
+@_("存于")
+for<T> fun T.`in`(set:CanSee<T>) = set.contains(this)
+for<N> fun `-`(:N): N = VMOp.neg
+for<N> fun `+`(:N) = n //later def N=Vec,Sort
+@Below(3, '''@CopyInfix''')
+@_("非")
+fun `!`(q:Bool) = q.not //del "!!"
+/**: 只能 `1不>2` 而无“1不大2”。否运算lteq "<=" */
+for<N> fun N.`>`(:N): Bool = VMOp.gt
+/** [>] */
+for<N> fun N.`<`(:N): Bool = VMOp.lt
+
+/** Any?=Any+NO: `null`, nullptr or None */
+insta NO: Any?
+/** See [HalfRange] */
+eval val Omit=NO
+
+/** Instrinic stub, impls are inlined */
+same-pkg impl?? thing VMOp
+/** TO distinguish int & Integer(e.g. how Ary<Int> => Integer[]) , var on VMT changes */
+same-pkg impl?? thing VMT
+/** typeof `throw` or [Exec.exit], never has value so anything canBe Break. `Any?<T<Break` in memberSet */
+/**: `抛下` 和 [进程.结束] 的类型，不返回值故任何类型可为断止。词(成员)数上 `值?<T<断止` */
+impl! thing Break
+
+// scope fun
+for<T> fun T.takeIf(p:FnTest<T>) = p(this).way(this,NO)
+
+// helper
+eval fun TODO(reason:Str="I'm tired"): Break = throw ErrNoImpl(reason)
+fun error(msg:Str): Break = throw ErrVars(msg)
+
+fun require(q:Bool, msgr: Fn0<Str>):
+  if !q: throw ErrArg(msgr())
+for<T> fun requireNot(it: T?, value: T?, msgr: Fn0<Str>): T
+for<T> fun requireNotNO
+
+/** See [assert] for testing */
+fun check(q:Bool, msgr: Fn0<Str>)
+for<T> fun checkNot(it: T?, value: T?, msgr: Fn0<Str>): T
+
+for<R> fun trys(:Fn0<R>) = try { Res.Ok(fn()) } catch(CanThrow) { Res.Err(you) }
+
+/** Switch `$Y` or `$N` (true|false) */
+/**: 在 `真` 和 `假` 间选择 */
+thing Bool where CanSort:
+  /** use [!] instead */
+  fun not: Bool = VMOp.not
+  @_("且")
+  fun `&`(:Bool): Bool = VMOp.and
+  @_("或")
+  fun `|`(:Bool): Bool = VMOp.or
+  /** Only 1 Bool true? see [Int.xor] */
+  /**: 只有一个真值？见 [数.xor] */
+  fun xor(:Bool): Bool = VMOp.xor
+
+@Compiled("bidir(-1,MinAt0,Eq,MaxAt0)")
+enum-thing Sort(sign:Int):
+  MinAt0(-1); MaxAt0(+1); Eq(0)
+  //min,max
+/** Type with comparator. to sort [compareTo] must: 0. not random (pure) 1. a=b&b=c&a=c (refl,identical & transitive) 2. a>b & b<a (!symmetric) */
+for<This>class CanSort:
+  fun `compareTo`(:This): Sort
+  //by rev nullsFirst  thenBy
+
+
+@Compiled("bidir(-1,NO,$N,$Y)")
+for<> Bool3 = Bool?
+
+for<AB> A.`to`(:B) = Pair(this,b)
+/** Typical data with 2 [Vars]. use [PairOf] for (type)A=B, [Vec] for numeric */
+for<get A get B> data-thing Pair(A:A,B:B) where CanSend:
+  impl fun toStr="$A:$B"
+for<get A get B get C> data-thing Pair3(A:A,B:B,C:C) where CanSend:
+  impl fun toStr="$A,$B,$C"
+for<T> PairOf=Pair<T,T>
+for<T> PairOf3=Pair3<T,T,T>
+
+for<N> when-thing RangeHalf(A:N) where CanSee<N>:
+  fun contains(:N) = n!<A
+  fun see(:Fn1<N>) = (this step 1).see(fn)
+  fun gotSize(it:Sized) = A~it.size
+
+for<N> thing Range(A:N, B:N) where RangeHalf(A):
+  fun contains(:N) = n!<A & n!>B
+  fun see(:Fn1<N>) = (this step 1).see(fn)
+  fun moveAndPad(:Int,n:Cnt)
+
+for<N> RangeSub=PairOf<Range<N>?>
+
+for<TR> PairOf<T?>.joinOr(v0:T, :Fn2<T,T,R>) = fn(A?:v0, B?:v0)
+
+for<N> fun N.`~`(:NO) = RangeHalf(this)
+for<N> fun N.`~`(last:N) = Range(this,last)
+for<N> fun N.`~+`(right:N) = Range(this,this+right)
+/** `0~+-5` = ±5 */
+for<N> fun N.`~+-`(pad:N) = Range(this-pad,this+pad)
+for<N> fun RangeHalf<N>.`step`(d:N) = RangeStep(this,d)
+for<N> fun RangeHalf<N>.`div`(:N) = this step (B-A)/n
+
+/** `0~10 step 2`. [d]: delta, increment */
+for<N> thing RangeStep(rn:RangeHalf, d:N) where CanSee<N>:
+  fun see(:Fn1<N>):
+    var N: i A; n B-1
+    val fwd:Fn0<Bool> = (rn is Range).way( (b.remDiv(d).A==0).way(`i!=n`, `i<n`), `$Y`)
+    loop if fwd(): fn(i); i=i+d
+  fun contains(:N) = (n in rn)& n.remDiv(d).A==0
+
+thing Char where CanSort,Zeros,CKase:
+  fun Int = as<Int>
+  fun `+`(:Int) = (as<Int> + i).Char
+
+  samename-insta:
+    eval val surrogate=(56320~57343).seen{Char} to (55296~56319).seen{Char}
+    impl val N_BYTE = 2
+    impl val sign = $N
+
+
+for<This> class CKase:
+  var noCase=$N
+  fun equals(:This)
+  fun retype(need:Case, lo:Locale) = when need:
+    Upcase: uppercase(lo)
+    Lowcase: lowercase(lo)
+    Title: titlecase(lo)
+  fun contains(:Chars): Bool
+  fun contains(:Regex): Bool
+  fun split(:Args<Str>, n:Cnt=-1)
+  fun split(:Args<Char>, n:Cnt=-1)
+
+  fun filter(p:FnTest<Char>) = filter<StrBuild>(p).Str
+
+  class Posited:
+    fun with(sub:Str): Bool
+    fun without(sub:Str)
+    fun pad(n:Cnt, :Char)
+    fun padLines(n:Cnt, :Char, lf=CKase.LF)
+    /** reverses [pad] */
+    fun trim: Str
+    fun trimMargin(before: Str): Str
+    val pad2pad
+    maxOf
+
+  enum-thing Case:
+    Upcase; Lowcase; Title
+
+  samename-insta:
+    for<R> fun ignore(msdos:Fun1<CNoKase,R>) = CNoKase.msdos
+
+/** `"string文", "abc"` consts are of this type: [Chars] with Unicode, uppercase, sort support  */
+thing Str where Chars,CKase,CanSort:
+  fun BGets(:Charset=UTF_8)
+
+  /** `sel=i~+1` for surrogate pair(UTF16) */
+  fun UnicodeN(sel:Range<Idx>)
+  fun UnicodeAt(:Idx)
+
+
+  fun lines
+
+
+  fun Trie
+
+
+
+/** `add("1"[0~1]).add(*'a'~'z')` */
+class StrBuild:
+  @Below(3, ''' fun _:This = VMOp.xx''')
+  fun add(: Args<Chars?>)
+  fun addLn(: Chars) fun addLn
+
+/** See immutable [Str], [StrBuild] */
+class Chars where Ary<Char>
+  /** Use `Regex.Flag.empty()-G` for only-first matching */
+  fun replace(:Regex, :Fn1<Regrp,Str>)
+  fun replace(:Range<Idx>, :Str)
+  fun split
+  fun `like`(:Regex)
+  /** get substr for [Y](range or full), others for [N], then concat back. "a.2".partition(`first('.')?~NO`, `it`, "")=="2" */
+  fun partition(:Fun1<Str,RangeHalf<Idx>?>, Y:FnNew<Str>, N:FnNew<Str>)
+  /** [partition], if no match then `N(this)` */
+  fun partition(:Regex, Y:FnNew<Str>, N:FnNew<Str>)
+
+for<N> fun Range<N>.`+`(:N) = Range(A+n,B+n)
+for<N> fun Range<N>.`-`(inner:Range<N>): Ary<Range<N>>
+
+
+Chars.notBlank
+
+
+
+
+
+fun Cnt.`**`(repeated: Fn0):
+  var n this
+  loop if n!=0: repeated(); n=n-1
+
+fun Str?.`+`(orEmpty: Any?) = (this?:"")+(orEmpty?.Str ?:"")
+
+enum-thing TermColor
+
+for<> TermBicolor = Word_On<TermColor, TermColor>
+
+fun Str.wasCall(c:) = LinkLn(this to c)
+
+class-insta WasConvert LinkLn<Pair<Str,TermBicolor>>:
+  fun as were Str:
+    var*: lA; lB
+    return joinStr(end=TermColor.glass.esc):[==s to (A on B)]
+      B.esc.ifNew(lB)+A.esc.ifNew(lA)+s
+  where
+    fun Str.ifNew(:Var<Str>)=(this==var).way("") : var.v=this; this
+class-insta WasConvert TermColor:
+  fun as=this on glass
+
+thing Flag:
+  samename-insta:
+    for<E>(E:Enum) fun all()
+    for<E>(E:Enum) fun get(name:Str)
+
+  impl? thing Bit(name: String, ordinal: Int, mask=2**ordinal)
+
+for<This> impl?? thing Enum(name: String, ordinal: Int) where CanSort
+
+
+
+/** Ranged data, no get() or see() funs for [Set], [weak.Set] with only a size */
+class Sized:
+  val size: Cnt
+  val `empty` = size==0
+val Ary<*>.lastIdx: Idx = size-1
+val Ary<*>.fullIdx = 0~lastIdx
+@_("无则")
+for<T>(T:Sized) fun T.`ifEmpty`(vzero: T) = empty.way(vzero,this)
+for<T>(T:Sized) fun T.`ifEmptyOr`(forbids:FnTest<T>, vzero: T) = (empty|forbits(this)).way(vzero,this)
+for<T>(T:Sized) fun T?.ifEmptyOrNO = ifEmptyOr(NO).as<T>
+
+fun Chars.`ifBlank`(vzero: T) = isBlank.way(vzero,this)
+fun Chars.`ifBlankOr`(forbids:FnTest<T>, vzero: T) = (isBlank|forbits(this)).way(vzero,this)
+fun T?.ifBlankOrNO = ifBlankOr(NO).as<T>
+
+@_("空作0项")
+for<T>(T:Empty) fun T?.`orEmpty` = this?:empty()
+
+/** `NO` means str "No xxx" */
+eval fun Var<Any?>.noAsNO(no=_("空 en No")) = when this:
+  Var.V: "$no $name"
+  Var.I: "$no #$i+1"
+  Var.K: '$no "$k"'
+
+/** [Line] with fixed size, not actually "Array" in JVM or tuple(`Ary<get T>`) in Py. see: unboxed [AryN], [Args] */
+for<T This> impl? thing Ary where Sized,CanSee<T>, Copy,Vars<T>:
+  fun get(:Idx): T
+  /** Try to make 0-copy viewport(`subList`,.), or do [slice] */
+  fun get(sel:Range<Idx>): This
+  fun set(:Idx, x:T)
+  fun set(sel:Range<Idx>, vs: Seq<T>) = vs.toIdx.see: [==x to i] this[i]=x
+  fun set(sel:Range<Idx>, fill: T) = set(seq, Seq.repeat(fill))
+  /** for JDK:[System.arraycopy] */
+  fun set(sel:Range<Idx>, vs: Ary<Var<T>>) = (vs[0] to vs.getN(-1)!!).seen<Var.I>:
+    System.arraycopy(a,A.i, this,0,B.i-A.i)
+  impl fun see(op: Fn1<T>): fullIdx.see { op(this[it]) }
+  samename-insta Impl:
+    /** Native impl for `T[]` type&VM operators. */
+    for<T>(T:Empty) fun wasCall(n:Cnt, init: Fn1<Idx, T>): AryN<T> = aryOfZeros(n).let:
+      fullIdx.see: set(it, init(it))
+
+  @Below(4, '''@SafeVariance("set T") ''')
+  fun sort(ord:Sort=MinAt0, cmp:Fn2<T,T,Sort>)
+  fun reverse
+  /** sequence randomly shuffled */
+  fun shuffle(ran=Random())
+  val vars = seenLine: this[it].as<Var>
+  /** defaults to 0-copy. but for [filter], even dup2 is better than *inplace* Bubble Sort's slow */
+  fun seen(set:FnNew<T>) = let:
+    toIdx.see:[==x to i] this[i]=x.set()
+
+for<TR>(R:CanSort) fun Ary<T>.sortBy(ord:Sort=MinAt0, key:Fn1<T,R>) = sort(ord):[a,b] key(a).compare(key(b))
+for<T>(T:CanSort) fun Ary<T>.sort(ord:Sort=MinAt0) = sortBy(ord,noOp)
+
+for<T> fun Ary<T>.getN(ineg:Int) = lets:
+  val i=(ineg<0).way(size+i, i)
+  (i<size).way(`this[i]`, NO)
+for<TA>(A: CanAdd<T>) eval fun CanSee<T>.copyTo(a=empty<A>()) = a.let { you.see: add(it) }
+
+/** May asList(for int[] do copy) to `Ary<T>`. On JVM [get] returns `int`, not `Integer` boxed,
+  `Ary<Int>` can't do this for it can be a [Line]. Supports JVM `Object[]`, or [T]: Int,. for typed array */
+for<T> impl? eval thing AryN where Ary<T>
+/** Compile-time known expr list, use it for const expansion or destruct */
+for<T> eval thing Args where Ary<T>
+/** `fun pair(:ArgsName<Str, 2 to "ab"> )` */
+for<TK>(K: eval, K: Pair<Int,Str>) eval thing ArgsName where Args<T>
+
+
+/** means `Fn1<Flag<E>>` canBe `Fn1<Line<E>>`. NOTE member in class-insta implicts 'eval impl' */
+for<E> class-insta WasConvert Ary<Flag.Bit<E>>:
+  fun as: Flag<E> = copyTo() // this(Fold.To(Flag<E>()): add(it) )
+
+@_("可变")
+Var
+@_("晚设")
+later = ("debug" in Platform.flag).way(Var(),Hint())
+@_("值继承")
+ByImpl
+/** Run calcuation only when needed. May use `=Lazy` for thing-val & arg */
+@_("懒")
+for<E> eval thing ByLazy(@_("跨线程多次") thrCallTwice:Bool3=NO)
+@_("值最新")
+ByNewest
+
+Platform
+//值变；值晚；值懒；值改；值继承

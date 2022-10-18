@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+  <!-- for optimal display on high DPI devices -->
+  <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>智能工地</title>  
+</head>
+
+
+<body>
+  <script src="https://cdn.jsdelivr.net/npm/three/build/three.min.js"></script>
+  <script src="lib.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/uevent@2/browser.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/photo-sphere-viewer@4/dist/photo-sphere-viewer.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/photo-sphere-viewer@4.7.0/dist/plugins/markers.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photo-sphere-viewer@4/dist/photo-sphere-viewer.min.css"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photo-sphere-viewer@4.7.0/dist/plugins/markers.css"/>
+<style>
+.psv-marker::after {
+  background: radial-gradient(circle, #00bcd4 0%, #546e7a 15%,#0000 32%);
+  content: '·';
+  font-size: 2em;
+  vertical-align: top;
+  color: #0000;
+  animation: big 1s infinite alternate;
+}
+
+@keyframes big {
+0%{padding:8px 9px}to{padding:17px 13px}
+}
+
+
+*{margin:0;padding:0}
+#eViewer {width: 100vw; height: 100vh;
+  position: absolute;
+  top: 0;left: 0; z-index: 0;
+}
+
+</style>
+
+<div id=eViewer></div>
+<script>//this.it.PhotoSphereViewer.onmod =(o)=> 
+setRetry(()=>
+  viewer = new PhotoSphereViewer.Viewer({"container": eViewer,
+    "panorama": "eqr1.png",
+
+    "plugins":[
+    [PhotoSphereViewer.MarkersPlugin, {markers: [
+  {
+    "id": "marker-gvh5gz9b6ra",
+    "html": "摊铺机",
+    "longitude": 6.089,
+    "latitude": -0.067,
+    "anchor": "center left",
+    "tooltip": {
+      "content": "带有GPS+RTK和激光雷达，可安全规划路线",
+      "position": "top center",
+      "trigger": "hover"
+    },
+    "style": {
+      "fontSize": "30px",
+      "color": "#F2C511"
+    }
+  },
+  {
+    "id": "marker-9jsd1awrzga",
+    "html": "压路(小)",
+    "longitude": 0.672,
+    "latitude": -0.082,
+    "tooltip": {
+      "content": "测试用机器",
+      "position": "top center",
+      "trigger": "hover"
+    },
+    "style": {
+      "fontSize": "19px",
+      "color": "#F2C511"
+    }
+  },
+  {
+    "id": "marker-hv51o016e3k",
+    "html": "平整车",
+    "longitude": 2.804,
+    "latitude": -0.389,
+    "tooltip": {
+      "content": "开发测试用，敬请期待",
+      "position": "top center",
+      "trigger": "hover"
+    },
+    "style": {
+      "fontSize": "23px",
+      "color": "#F2C511"
+    }
+  }
+]}] ],
+
+    "loadingImg": "https://photo-sphere-viewer.js.org/assets/photosphere-logo.gif",
+    "loadingTxt": "前往...",
+    "fisheye": 0,
+    "minFov": 30,
+    "maxFov": 90,
+    "defaultZoomLvl": 50,
+    "defaultLong": 0,
+    "defaultLat": 0,
+    "sphereCorrection": null,
+    "moveSpeed": ".7",
+    "zoomSpeed": 1,
+    "autorotateDelay": null,
+    "autorotateIdle": false,
+    "autorotateSpeed": 0.10471975511965977,
+    "autorotateLat": 0,
+    "moveInertia": true,
+    "mousewheel": true,
+    "mousemove": true,
+    "navbar": [
+        "autorotate",
+        "move",
+        "description",
+        "caption",
+        "fullscreen"
+    ],
+    "lang": {
+        "autorotate": "旋转看看",
+        "zoom": "缩放",
+        "zoomOut": "缩小",
+        "zoomIn": "Zoom in",
+        "move": "移动",
+        "download": "Download",
+        "fullscreen": "全屏",
+        "menu": "Menu",
+        "twoFingers": "Use two fingers to navigate",
+        "ctrlZoom": "Use ctrl + scroll to zoom the image",
+        "loadError": "网络有点慢！",
+        "markers": "Markers",
+        "markersList": "Markers list"
+    }
+}));
+</script>
+</body>
+</html>

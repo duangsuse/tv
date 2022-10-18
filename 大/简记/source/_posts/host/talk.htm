@@ -1,0 +1,83 @@
+<ul id="talk">
+  <form class="P-bot" onsubmit="ws.sends(doc.all.say);event.preventDefault()">
+    <!-- <input name="say" placeholder="回车发送" onchange="this.form.submit()"><input type="submit" value="=>"> -->
+    <input name="say" placeholder=" <=回车发送" required autocomplete="off" tabindex="-1">
+  </form>
+</ul>
+<script src="lib.js"></script>
+
+<style>
+#talk {
+  position: fixed;
+  padding: 0;
+  right: 0;top: 0;
+  width: calc(max(60%, 400px)); height: 90%;
+  resize: both;
+  overflow: auto;
+  background: url(https://wallpapertops.com/walldb/original/e/a/d/673293.jpg) repeat fixed;
+  background-size: contain;
+
+  border-radius: 15px;
+  margin-right: 5px;
+}
+#talk>* {
+  display: block;
+  height: 2em;
+}
+
+
+#talk input {
+  box-sizing: border-box;
+  width: 100%;
+  font: 1.2em sans;
+
+  background: #0000002e;
+  backdrop-filter: sepia(1);
+  border: 2px dashed whitesmoke;
+  outline: 0;
+}
+#talk input::selection {background: cadetblue}
+#talk input:invalid {direction: rtl;}
+.P-bot {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}
+
+
+.L,.R {
+  padding: 2px 9px;
+  font: 20pt sans;
+  white-space: break-spaces;
+  /* opacity: 0; */
+}
+.R>img { border-left: 8px solid #0000; border-right: 0 !important }
+
+.L>*, .R>*{
+  display: inline-block;
+  background: var(--c);
+  border-radius: 6px;
+  padding: .2em;
+  margin: 7px 0;
+}
+.L>img, .R>img {
+  width: 1.77em;
+  padding: 2px;
+  vertical-align: middle;
+  background: white;
+  border-image: linear-gradient( var(--r), red,blue) 10;
+  border-right: 8px solid #0000;
+  user-select: none;pointer-events: none;
+
+  border-top-right-radius: 3.7px;
+  border-bottom-right-radius: 10px;
+}
+
+.L { --c: linear-gradient(#38ac38,31%,green); --dir:+100%;  --r: .1turn }
+.R {text-align: right; --c: linear-gradient(#519455,31%,#3d7a3d); --dir:-100%; --r: .4turn }
+
+@keyframes slide {
+  0%{transform: translateX(calc(0% - var(--dir))); opacity:0 }
+  to{transform: translateX(0); opacity: 1 }
+}
+</style>
