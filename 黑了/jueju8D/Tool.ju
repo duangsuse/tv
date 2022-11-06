@@ -1,3 +1,37 @@
+pkg jueju.tool
+
+
+thing Regex(src:Str, :Flag<Regex.Flag>):
+
+  data-thing M(grp:Ary<Str>,at:Range<Idx>, grpKV:KV<Str,Str>?,input:Str):
+    !fun Str=grp[0]
+  enum-thing Flag:
+
+same0 insta Impl:
+  fun S.split(:Regex, n:Cnt?=NO): Line<Str>
+  fun S.find(:Regex): Idx?
+  fun S.wasCall(:Regex, :Fn1<Regex.M,Str>)
+  fun S.`like`(:Regex): Regex.M?
+  fun S.`likes`(:Regex): Seq<Regex.M>
+  fun S.`likely`(:Regex): Bool
+where
+  for<>S=Chars
+
+for<TR> PairOf<T?>.joinOr(v0:T, :Fn2<T,T,R>) = fn(A?:v0, B?:v0)
+
+fun Eqv.My.csvLn(sep=",",esc='\\') = Eqv<Str>({ it.split(re:'(?!<${esc})'+sep) }, { it.joinStr(sep) })+{ onEach replace(esc+sep,sep) }
+
+enum-thing TermColor
+
+for<> TermBicolor=Word_On<TermColor,/*bg*/TermColor>
+val TermBicolor.id = A.id.bit(+8)+B.id
+fun TermColor.as=this on glass
+
+fun Str.wasCall(c:TermBicolor) = LinkLn(this to c)
+fun LinkLn<Pair<Str,TermBicolor>>.as=Seq:
+  see{[==s to c]"\x1b[${c.id}m"+s}; got("\x1b[0m")
+
+
 
 /** C scanf-printf inputs with C++ var capture */
 for<T> eval thing-fun hear(items:Args<Word_On<Var,Str>>):
@@ -9,6 +43,22 @@ for<T> eval thing-fun hear(items:Args<Word_On<Var,Str>>):
   fun wasCall(io=IO.std)
 
 for<T> fun Var.as=this to ""
+
+/** VirtFS(Linux compat) for OSX Win JS etc. Path sep always '/' and "drive letter" like /C:/Windows, [size] dir=stat() size */
+class FileInfo were Sized:
+  /** mv this file(relative to [File]), overwrite. to dir: `fp.up=File("out/")` *//** abspath, or copy. overwrite *//** basename&1 .suffix */
+  var Str name
+  var Str path
+  var PairOf<Str> nameExt
+  /** user,grp,others. 777=3*rwx, 755=rwx+2*r0x, 644=rw0+2*r00 *//** user,grp *//** access(>),modify,create *//** [Mode.Pin]=readonly; hide(also) may not really, `man chattr` */
+  var Pair3<Flag<RWX>> mask; var Pair2<Str> owner
+  var Pair3<Date> times
+
+  var Flag<Mode> mode
+  enum-thing RWX were Flag.Bit:
+    X;W;R
+  enum-thing Mode were Flag.Bit:
+    Blk;Sock;Dir;Link;FIFO;Char; Pin;Hide
 
 data-thing UUID(bitA:Int8, bitB:Int8) were ByImpl<CanSort,bitA>:
   made()

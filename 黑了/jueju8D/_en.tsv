@@ -1,0 +1,76 @@
+针  Idx
+数  Int
+浮  Rat
+计  Cnt
+文  Str
+值  Any
+断止  Break
+
+真假  Bool
+旗  flag
+路  way
+否  may
+翻  flip
+且  &
+或  |
+抑  xor
+可  can
+序  sort
+常序 normalOrd
+函  Fn
+函我  Fun
+试 test
+作 as
+属于  is
+存于  in
+函续  FnCont
+
+令  let
+其令  itLet
+令为  lets
+其令为  itLets
+
+摘要码  Hash
+俩项  Pair
+仨项  Pair3
+俩  PairOf
+仨  PairOf3
+略  Omit
+
+组N AryN
+组参  Args
+组参计名  ArgsName
+
+平台  platform
+列  Seq
+行  line
+表  KV
+组  Ary
+集  Set
+
+折叠  collapse
+待写  TODO
+报错  error
+要求  require
+确保  check
+不为  not
+
+位  bit
+和  sum
+余  rem
+罩  mask
+新空  empty
+乘方  Pow
+单量  Vec1
+俩量  Vec2
+仨量  Vec3
+
+次  times
+试存  contains
+区间  ClosedRange
+半  half
+域  Range
+步  step
+必于  mustIn
+需于  wereIn
+

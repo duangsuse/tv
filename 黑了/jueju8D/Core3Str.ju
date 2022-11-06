@@ -1,0 +1,88 @@
+fun Str?.`+`(:Any?) = (this?:"")+(any?.Str ?:"")
+
+fun Chars.`ifBlank`(vzero: T) = isBlank.way(vzero,this)
+fun Chars.`ifBlankOr`(forbids:FnTest<T>, vzero: T) = (isBlank|forbits(this)).way(vzero,this)
+fun T?.ifBlankOrNO = ifBlankOr(NO).as<T>
+
+@_("空作0项")
+for<T>(T:Empty) fun T?.`orEmpty` = this?:empty()
+
+/** `NO` means str "No xxx" */
+eval fun Var<Any?>.noAsNO(no=_("空 en No")) = when this:
+  Var.V: "$no ${k.name}"
+  Var.K: '$no "$k"'
+
+/** `add("1"[0~1]).add(*'a'~'z')` */
+class StrBuild:
+  @Below(3, ''' fun _:This = VMOp.xx''')
+  fun add(: Args<Chars?>)
+  fun addLn(: Chars) fun addLn
+
+/** See immutable [Str], [StrBuild] */
+class Chars where Ary<Char>
+  /** Use `Regex.Flag.empty()-G` for only-first matching */
+  fun replace(:Regex, :Fn1<Regrp,Str>)
+  fun replace(:Range<Idx>, :Str)
+  fun split
+  fun `like`(:Regex)
+  /** get substr for [Y](range or full), others for [N], then concat back. "a.2".partition(`first('.')?~NO`, `it`, "")=="2" */
+  fun partition(:Fun1<Str,RangeHalf<Idx>?>, Y:FnNew<Str>, N:FnNew<Str>)
+  /** [partition], if no match then `N(this)` */
+  fun partition(:Regex, Y:FnNew<Str>, N:FnNew<Str>)
+  val `blank`
+
+/** UTF-16(short) '\x00' num in JVM. btw J=long,Z=bool,L=typeID in bytecode */
+thing Char where CanSort,Zeros,CKase:
+  fun Int = as<Int>
+  fun `+`(:Int) = (as<Int> + i).Char
+
+  samename-insta:
+    eval val surrogate=(56320~57343).seen{Char} to (55296~56319).seen{Char}
+    impl val N_BYTE = 2
+    impl val sign = $N
+
+
+for<This> class CKase:
+  var noCase=$N
+  fun equals(:This)
+  fun retype(need:Case, lo:Locale) = when need:
+    Upcase: uppercase(lo)
+    Lowcase: lowercase(lo)
+    Title: titlecase(lo)
+  fun contains(:Chars): Bool
+  fun contains(:Regex): Bool
+  fun split(:Args<Str>, n:Cnt=-1)
+  fun split(:Args<Char>, n:Cnt=-1)
+
+  fun filter(p:FnTest<Char>) = filter<StrBuild>(p).Str
+
+  class Posited:
+    fun with(sub:Str): Bool
+    fun without(sub:Str)
+    fun pad(n:Cnt, :Char)
+    fun padLines(n:Cnt, :Char, lf=CKase.LF)
+    /** reverses [pad] */
+    fun trim: Str
+    fun trimMargin(before: Str): Str
+    val pad2pad
+    maxOf
+
+  enum-thing Case:
+    Upcase; Lowcase; Title
+
+  samename-insta:
+    for<R> fun ignore(msdos:Fun1<CNoKase,R>) = CNoKase.msdos
+
+/** `"string文", "abc"` consts are of this type: [Chars] with Unicode, uppercase, sort support  */
+thing Str where Chars,CKase,CanSort:
+  fun BGets(:Charset=UTF_8)
+
+  /** `sel=i~+1` for surrogate pair(UTF16) */
+  fun UnicodeN(sel:Range<Idx>)
+  fun UnicodeAt(:Idx)
+
+
+  fun lines
+
+
+  fun Trie

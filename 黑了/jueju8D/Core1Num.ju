@@ -5,7 +5,7 @@ for<T>(T:Flip) fun `-`(:T)=it.flip
 for<T>(T:Flip) fun `+`(:T)=it
 for<T>(T:Empty)fun empty=T.empty
 for<T>(T:Sum) fun Seq<T>.sum=this(Fold.From(T.empty, `+`))
-for<T>(T:Sum) fun Cnt.times(repeat:T)=lets:
+for<T>(T:Sum) fun Cnt.`times`0(repeat:T)=lets:
   var T x=from
   times{x=x+x};x
 
@@ -15,41 +15,58 @@ thing NumLike:
     fun flip: This
   for<This>class Sum were Empty:
     fun `+`1(:This)
+  /** use `val: author now.User; n 0` for (Num) default init */
   for<This>class Empty:
-    samename-insta:
+    same-insta:
       fun empty: This
+  for<This>class Sibling:
+    val inc:This
+    val dec:This
+  for<This>class Num Empty:
+    val rn: ClosedRange<This>
+    val bitsFull:This
 
-for<This>class Num were Flip,Sum:
-  @Below(3,':This')
-  fun `*`0(:This)=VMOp
-  fun `/`0(:This)=VMOp
-  fun `**`0R(:This)=VMOp
-  fun `-`1(:This)=+(-you)
+  @_("分量同算")
+  for<This T>class CalcEachIdx were Num,Sized,*:
+    fun get(:Idx): Num<T>
+    eval fun wasGet(k:Str): Var<num<T,k> <T>>
+  where:
+    eval fun num(:Type, k:Str)=when k.size:
+      1: error("no $k in $type")
+      2: Vec2; 3: Vec3; 4: Vec4
+      else: VecN
+
+for<This>class Num were Sum,Flip,Sibling,NumEmpty:
+  @Below(3,'_(:This):This')
+  fun `*`0=VMOp
+  fun `/`0=VMOp
+  /** So use `val n==x**2` for sqrt, `val n==2**k` for log2 */
+  fun `**`0R=Pow(this,you)
+  fun `-`1=+(-you)
 
   for<This>thing-fun rem:
     fun wasCall(:This):This=VMOp
-    fun `/`(:This)=this[^1]/you to this(you)
+    fun `/`(:This)=this(you) to this[^1]/you
 
-for<N> thing-fun N.as were WasDestruct:
-  fun assignTo(:Pow<N,Var<N>>):
-    val pow==x to k
-    k.v=Vec1 lets: log(x)/log(you)
-  fun assignTo(:Pow<Var<N>,N>):
-    val pow==x to k
-    x.v=Vec1 lets: sqrt(you,k)
+  /** Numerics represent by 2+4+8+.. Unlike [Num], `a&-b == a-b; a+(2a-a)==2a; a(shl=0)+a==a; a.xor(a)==0`, for ushr: [Cnt] */
+  for<This>class Bit were Flip,Sum:
+    fun `&`(:This)
+    fun `-`(:This)=this&-you
+    fun xor(:This)
+    fun wasCall(shl:Int)
+
+for<N> Pow=PairOf<N>
+for<N> Pow.as:N=Vec1.pow(A,B)
+for<N> thing-fun Pow<N,Var<N>>.as were WasDestruct:
+  fun eq(:N):
+    B.v=Vec1 lets: log(A)/log(n)
+for<N> thing-fun Pow<Var<N>,N>.as were WasDestruct:
+  fun eq(:N):
+    A.v=Vec1 lets: sqrt(you,B)
 
 
 
-/** Numerics represent by 2+4+8+.. Unlike [Num], `a&-b == a-b; a+(2a-a)==2a; a(shl=0)+a==a; a.xor(a)==0`, for ushr: [Cnt] */
-for<This>class Bit were Flip,Sum:
-  fun `-`(:This)=this&-you
-  fun `&`(:This)
-  fun xor(:This)
-  fun wasCall(shl:Int)
 
-@_("分量同算")
-for<This T>class CalcEachIdx were Num,Sized:
-  fun get(:Idx): Num<T>
 
 
 for<This> thing Int:
@@ -83,43 +100,34 @@ fun Rat8.as:RatN
 
 
 
+for<> Deg=Rat `in 0~<1`
+for<N> eval val N.`deg`=Num.deg.cat(this)
 
-for<N> thing Vec
+/** mutable point with angle [r] and magnitude [l] */
+for<N> thing Vec2(x:N,y:N) were CalcEachIdx:
+  var Deg r
+  var Rat l
+  /** weighted sum */
+  fun `·`(:Vec2)=x*you.x+y*you.y
+  same-pkg var rVec get:Vec2 
+for<N> thing Vec3(x:N,y:N,z:N) were CalcEachIdx:
+  fun cross(:Vec3)
+for<N> thing Vec4(R:N,G:N,B:N,A:N=1) were CalcEachIdx:
 
-@BelowFor('''1 2 4 8; byte short int long''')
-class-insta WasConvert Ary<Int$1>:
-  eval fun as==t(VMT.$2)
-@BelowFor('''4 8; float double''')
-class-insta WasConvert Ary<Rat$1>:
-  eval fun as==t(VMT.$2)
-/** UTF-16(short) '\x00' num in JVM. btw J=long,Z=bool,L=typeID in bytecode */
-class-insta WasConvert Ary<Char>:
-  eval fun as==t(VMT.char)
-class-insta WasConvert Ary<Bool>:
-  eval fun as==t(VMT.boolean)
-for<T> class-insta WasConvert Ary<T>:
-  eval fun as==t(VMT(T))
-
-@ArgSplit({1 1})
-same0 eval fun t(:JType, a:Ary<*>): Ary<type.ju>:
-  val b=VMT.array(type, a.size)
-  a.toIdx.see:[==x i] b[i]=x.as<type.ju>
-  return b
-
-
-
-  
+for<N> thing VecN(it:Args<N>) were CalcEachIdx:
+  fun get(:Line<Idx>)
+  fun set(:Line<Idx>)
 
 /** 
-Vectors are mutable point with angle and magnitude, Vec1 capture e.g. `Var<Int>` but just adds math funs to it:
+Vectors are e.g. [Vec2](x,y) points, Vec1 capture e.g. `Var<Int>` but just adds math funs to it:
 (hyperbolic)trigonometric, rounding [saw], [sign] and [abs]olute value. For power&it's exponents, logarithmic see [exp1]
  */
 for<N> thing Vec1(r:Deg, yaxis=$N)
   fun abs = let: sign=+1
   val sign get: (n==0).way(0, `(n>0).way(+1,-1)`)
     set: v=Vec1(you).sign*abs()
-  /** make this [step]-divisable. see [saw] */
-  fun sawMod(step:N): N
+  /** make this [n]-divisable. see [saw] */
+  fun sawStep(:N): N
   samename-insta Math:
     @BelowFor("4 8", 3)
     /** support [bOvf] negate. Test `x in Int.range` for safe converts */
@@ -150,18 +158,5 @@ for<N> thing Vec1(r:Deg, yaxis=$N)
     /** JDK:[hypot] `sqrt(xx+yy)`  done with `Vec2(x,y).l` */
     fun<N> fun h(:AngularFn, :N): N
 
-/** So use `val n==x**2` for sqrt, `val n==2**k` for log2 */
-for<N> fun N.`**`(k:N) = Pow(this,k)
-for<N> eval val N.`turn`=this*2*Vec1.PI
-
-for<N> thing Pow(:N,k:N) where WasConvert:
-  fun as = Math.pow(n,k)
-
-class-insta WasDestruct N:
-  fun destructBy(po:Pow<Var<N>>):
-    if(po.n is Var): po.n.v = when po.k:
-      2: Math.sqrt(n); 3: Math.cbrt(n)
-    else:
-      po.k.v = Math.log(n)/Math.log(po.n)
 
 

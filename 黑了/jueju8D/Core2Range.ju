@@ -1,0 +1,90 @@
+for<N> fun N.`~`2(:N) = Range(this,you)
+for<N> fun N.`~`(b:Omit<N>) = RangeHalf(this,b)
+for<N> fun N.`~<`2(:N) = ~you.dec // int,float
+/**`user.age~+10`*//**`0~+-5`. ±5*/
+for<N> fun N.`~+`(:N) = ~this+n
+for<N> fun N.`~+-`(:N) = this-n~this+n
+
+/**: 只能 `2不<1` 而无“2不小1”、gteq ">=" */
+for<T>(T:CanSort) fun T.`<`2(:T) = T.normalOrd(this,you)==MinAt0
+for<T>(T:CanSort) fun T.`>`2(:T) = T.normalOrd(this,you)==MaxAt0
+
+for<N> fun `*`(:Range)=*aryOf(rn.A,rn.B.inc)
+/**: `"呐"+2次"啊"` 次数(乘方)请用[数值.**] */
+fun Cnt.times(:Fn0)=(1~this).see: fn()
+
+
+/** JDK:[Comparable] implies this */
+for<setThis>class CanSort:
+  val normalOrd: FnSort<This>
+
+for<N> N.in(rn0:RangeHalf)=this!<rn0.A
+for<T> T.in(:ClosedRange<T>)=rn.contains(this)
+
+for<T>(T:CanSort) fun T.mustIn==or: ErrVars("$it !in $this").justNO
+for<T>(T:CanSort) fun T.wereIn==or: (it<A).way(A,B)
+where^2:
+  for<R>fun or(n:T,:Fun2<ClosedRange,T>)=Fn1: (n in it).way(n, `it.fn(n)`)
+for<N> fun N.mustIn==or: ErrVars("$it<$A").justNO
+for<N> fun N.wereIn==or: A
+where^2:
+  for<R>fun or(:N,:Fun2<RangeHalf,N>)=Fn1: (n in it).way(n, `it.fn(n)`)
+
+/** Max val unknown, so not a [Range] */
+for<N> eval thing RangeHalf(A:N,B:Omit<N>):
+  fun `~`(:N)=A~B.fn(n)
+  fun `step`(step:N)=Seq:
+    var N  i=A
+    loop if $Y: got(i); i sets `+step`
+
+@Namely("rn")
+for<T>(T:CanSort) impl? thing ClosedRange(A:T,B:T):
+  fun contains(:T) =A!>it&it!>B
+  val isEmpty = A!<B
+  !fun Str="$A~$B"
+
+
+for<N> eval when-thing Range(A,B) were ClosedRange<N>,Sized,Seq<N>:
+  /** not accurate: for [Rat] use [isEmpty] */
+  !val size = B-A
+  !fun Seq=Seq:
+    var N  i=A
+    loop if i!>B: got(i); i=i+1
+  fun `stepN`(n:Cnt)=step (B-A)/n
+  /** filter [Vec1.sawStep](x,step)==x */
+  thing-fun step(step:N) were Range:
+    !fun contains(:N) = (n in rn)& n.remDiv(d).A==0
+    !fun Seq=Seq:
+      var N  i=A
+      loop if i!>B: got(i); i sets `+step`
+    !val size=(B-A-1)/step
+
+  /** Move, size-=2*n */
+  fun pad(move=0, n=1)=(A+move+n)~(B+move-n)
+  /**`rn.cut{this}.size==0`*/
+  fun cut(:Fun1<Range,Range>)=fn().lets: aryOf(you.A~<A, B.inc~you.B)
+
+
+val Sort=Sorts.MinAt0
+/** for [Rat]: -0<+0, any<NaN. `Sorts.by: cmp first +cmp1+..` */
+@Compiled("bidir(-1,MinAt0,Eq,MaxAt0)")
+enum-thing Sorts:
+  MinAt0;MaxAt0; Eq
+  fun onAsc(:Fn0<Ary<*>>) = when this:
+    Eq: this
+    MinAt0: fn(); MaxAt0: fn().reversed
+
+  /** [Eq] gives nullsLast Asc order. */
+  for<R>(R:CanSort) fun by(key:Fun1<T,R>)=when this:
+    MinAt0:
+      FnSort:[a b] R.normalOrd(key(a),key(b))
+    MaxAt0:
+      FnSort:[a b] R.normalOrd(key(b),key(a))
+    Eq:
+      FnSort {[a b]when:
+        a==NO: MinAt0 //a->left
+        b==NO: MaxAt0
+        else: R.normalOrd(key(b),key(a)) }
+  samename-insta:
+    for<T> fun by(:Fun1<Sorts,CanSee<FnSort>>) = fn()(Fold.From0: as<Comparable>.thenComparing(it))
+    eval fun FnSort.first==LinkLn

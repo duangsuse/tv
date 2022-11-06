@@ -1,3 +1,5 @@
 pkg jueju.data
 
 for<E> thing SetSort where Set:
+
+

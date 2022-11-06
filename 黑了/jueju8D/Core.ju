@@ -1,31 +1,65 @@
 pkg jueju
+use1 SomeEqv
 
-for<T>fun `*`3(args:Seq)=Ary().as<Args>
+for<T>fun `*`3(args:Ary)=as<Args>
 for<T>fun T?.`?` :T? =VMOp
 for<T>eval fun T?.`!!` :T = this ?: lets: throw ErrNull(asE.Str)
 @_("空则")
 for<T>fun T?.`?:`0(:Fn0<T>) = (this!=NO).way(as<T>,fn)
 
+
 @Namely("i")
 for<> Idx=Cnt4
 for<> Int=Int4 //IntN in Py
 for<> Rat=Rat8
-for<> Cnt=Cnt4
+for<> Cnt=Cnt4 //Cnt? NO==-1
 
 for<T> eval fun Bool.way(Y:Fn0<T>, N:Fn0<T>) = if this: Y()
   else: N() //q? a:b
+@_("非")
 eval fun `!`(:Bool)=q.flip
-/** $Yes or $No, `$Y|sayYes; $N&sayYes` does nothing(calc [byLazy]). [Flag],[Vec_Bool] */
+/** $Yes or $No "q"uestion, `$Y|sayYes; $N&sayYes` does nothing(calc [byLazy]). [Flag],[Vec_Bool] */
 /**: 真或假，`真或做；假且做` 啥都不做([值懒]算)。[旗],[向量_真假] */
 @Namely("q")
 thing Bool were CanSort,NumLike.Flip:
-  fun `&`3(:Bool):Bool=VMOp
-  fun `|`3(:Bool):Bool=VMOp
-  !fun `==`3(:Bool):Bool
+  @Below(3+1, "_(:Bool):Bool=VMOp")
+  fun `&`3
+  fun `|`3
+  fun xor
+  !fun `==`3
   !fun Str=way("$Y","$N")
-  fun xor(:Bool):Bool=VMOp
-  samename-insta:
-    !val normalOrd get:VMOp
+  same-insta:
+    !val normalOrd=VMOp
+
+
+@Namely("p")for<T> FnTest=Fn1<T,Bool>
+@Namely("c")for<R> FnCont=Fn1<R>
+for<T> Fnew=Fn1<T,T>
+for<T> FnSort=Fn2<T,T,Sort>
+
+for<T> T.as=FnTest: you==this
+for<T> T.as=Fn0: this
+
+// scope fun
+@Below(4+3,"eval")
+for<AR> fun A.let(:Fun1):
+  fn(); return this
+for<AR> fun A.lets(:Fun1)=fn()
+for<TR> fun A.itLet(:Fn):
+  fn(this); return this
+for<TR> fun A.itLets(:Fn)=fn(this)
+
+@_("取否")
+for<T> fun T.takeIf(:FnTest) = p(this).way(this,NO)
+for<T> fun T.test(cases:Fun1<T,Bool>)=cases()
+for<T> fun Var.`sets`(:Fnew<T>):
+  v=fn(v)
+
+for<T> fun Vars.Named.swap(a:Var,b:Var):
+  val v0=a; a.v=b; b.v=a0
+for<T> fun Vars.Named.with(set:Pair<Var,T>)=set.itLets:[==v to need]
+  val v0=v; v.v=need
+  CanClose: v.v=v0
 
 /** Any?=Any+NO: `null`, nullptr or None
   Any value(!=null) provided to fun-[Args]ument and val/vars, maybe const literal, system registry or user input.
@@ -56,7 +90,7 @@ impl? thing Any:
 for<T> eval fun Any?.as: T = VMOp
 for<T> fun Any.asMay = is<T>.way(`as<T>`, NO)
 
-/** Check if typeof this inherits [T], or have `class-insta T This`. `class: samename-insta where XX: ` inherits, like [Empty]
+/** Check if typeof this inherits [T], or have `class-insta T This`. `class: same-insta where XX: ` inherits, like [Empty]
   Such [Bool] infix supports `!is` and `when x is:` syntax. "type" is statically(compiler-time) known part whatever (func)value, or "def" order is, faster&safer */
 /** 检查值的类型是否继承[T]全员，或有 `我类型.作：T`。 类的无名同名例会被继承如 [值空]。
   有 `不属于` 和 `判x属于，` 语法。值的类型/型参静态(编译时)已知，无论值由谁何时提供，比弱类型快速而安全  */
@@ -66,11 +100,28 @@ for<T> eval fun Any?.`is`2: Bool = VMOp
 for<T> fun T.`in`2(set:Seq<T>) = set.contains(this)
 //[CoreRange]: +- ><
 
+for<AB> A.`to`(:B) = Pair(this,b)
 
+for<getA getB> eval data-thing Pair(A:A,B:B) were Vars:
+  fun Seq=lineOf(A,B)
+  !fun toStr="$A:$B"
+for<getA getB getC> eval data-thing Pair3(A:A,B:B,C:C) were Vars:
+  fun Seq=lineOf(A,B,C)
+  !fun toStr="$A,$B,$C"
 
-@BelowFor("`({'T'}+('B'~'H'))  (Fold.From("",{+it}).eachStep)`")
-for<$1R> class Fn$0:
-  fun wasCall(): R
+@Compiled("bidir(-1,NO,$N,$Y)")
+for<> Bool3 = Bool?
+
+for<T>eval when-thing Omit(:Fnew<T>):
+  same-insta were Omit(`it`):
+    fun `-`(:N)=Omit:it-n
+
+for<T> PairOf=Pair<T,T>
+for<T> PairOf3=Pair3<T,T,T>
+
+@BelowFor("`({'T'}+('B'~'H') )(Fold.From("",{+" set"+it}).eachStep)` `$1.Seq`")
+for<$1 getR> class Fn$0:
+  fun wasCall(:$2): R
 
 @Below(8, "@jueju.words.JuFun")
 // [*-* ~](~  ^_^)
@@ -84,65 +135,94 @@ for<ATBCDEFR>Fun7=Fn7<A,T,B,C,D,E,F>
 for<ATBCDEFGR>Fun8=Fn8<A,T,B,C,D,E,F,G>
 
 
+/** typeof `throw` or [Exec.exit], never has value so anything canBe Break. `Any?<T<Break` in memberSet */
+/**: `抛下` 和 [进程.结束] 的类型，不返回值故任何类型可为断止。词(成员)数上 `值?<T<断止` */
+impl! thing Break
+/** Instrinic stub, impls are inlined */
+same-pkg val VMOp get: TODO()
+/** TO distinguish int & Integer(e.g. how Ary<Int> => JavaAry<Int> => Integer[]) , key on VMT changes */
+same-pkg impl?? thing VMT
 
-for<T> FnNew=Fn1<T,T>
-@Namely("p")for<T> FnTest=Fn1<T,Bool>
-@Namely("c")for<R> FnCont=Fn1<R>
-for<T> FnSort=Fn2<T,T,Sort>
-
-for<T> T.as=FnTest: you==this
-for<T> T.as=Fn0: this
-
-
-/** May asList(for int[] do copy) to `Ary<T>`. On JVM [get] returns `int`, not `Integer` boxed,
-  `Ary<Int>` can't do this for it can be a [Line]. Supports JVM `Object[]`, or [T]: Int,. for typed array */
-for<T> eval thing AryN where Ary<T>
 /** Compile-time known expr list, use it for const expansion or destruct */
 for<T> eval thing Args where Ary<T>
 /** `fun pair(:ArgsName<Str, 2 to "ab"> )` */
 for<TK>(K: eval, K: Pair<Int,Str>) eval thing ArgsName where Args<T>
 
+for<This> impl?? thing Enum
+  same-type made(name: String, ordinal: Int) were CanSort:
+  same-insta:
+    for<E>(E:Enum) fun get(name:Str)=VMOp
+
 for<E This>(E:Flag.Bit) thing Flag(var bits=Cnt.ALL_ONE.bits) were Empty:
   fun set(:E,q:Bool)=bits set: q.way(it+e, it-e)
   fun get(:E)=bits&e.mask
 
-  for<This>thing Bit(i,name,mask=0b1.bits(+i)) were Enum:
+  for<This>thing Bit(i,name,mask=2**i) were Enum:
     fun `+`(:This)=Bit(i,name+you.name,mask+you.mask)
-  samename-insta:
+  same-insta:
     !fun empty=Flag(0)
+    for<E>(E:Enum) fun full=Flag()
 
+for<E>(E:Flag.Bit) Ary<E>.as=this(Fold.To(Flag(0)): set(it,$Y) )
+
+/** Load/dump(cat cut) repr of val into mem, `Eqv/2+1`. [EqvOf] */
+for<AB> thing Eqv(cat:Fn1<A,B>, cut:Fn1<B,A>):
+  fun flip=Eqv(cut,cat)
+  /**`oncut(x,noOp)==x`*/
+  fun oncut(it:A,:Fnew<B>)=cut(fn(cat(it)))
+  for<T>eval-thing At(pipe:EqvOf<T>):
+    for<R>fun `+`(work:Eqv<T,R>)=work.lets:eq(cat,cut)
+    for<R>fun eq(cat:Fun1<T,R>, cut:Fun1<R,T>)=At(Eqv({cat(pipe.cat(it))}, {pipe.cut(cut(it))}))
+  for<T>same-insta were At(noOp):
+
+for<N>insta SomeEqv:
+  fun EN.`+`(:N)=eq({this+n},{this-n})
+  fun EN.`-`(:N)=this+-n
+  fun EN.`*`(:N)=eq({*n},{/n})
+  for<Rat>fun Eq<Rat>.`/`(:Rat)=*(1/n)
+  for<TR>fun Eq<Seq>.`/`(:Eqv<T,R>)=eq({seen(e.cat)}, {seen(e.cut)})
+
+  fun Eq<Str>.sep(:Str)=eq({split(str)}, {joinStr(str)})
+  for<T>(T:Flip) Eq.not=eq({flip},{flip})
+  for<KV> fun KV.as=Eqv(`get`, flip`get`)
+
+  for<Int>fun Eqv<Str>.int(base=10)=eq(`Int(base)`,`Str`)
+  fun Eq<Str>.surr(a:Str,b="")=eq({split(str)}, {joinStr(str)})
+  /** pos L:(0)"1.23e2", toPrecision; R:(0)toLocal, toFixed */
+  for<Rat>fun Eqv<Str>.num(fix=1, of:Pos=Right)=eq(`Rat`,`Str`)
+  fun Eq<Any?>.fmt(:Str)
+  for<Int>fun Eq<Int>.digit(bases:Args<Int>)
+where:
+  for<T>Eq=Eqv.At
+  for<>EN=Eq<N>
+
+
+for<T> EqvOf=Eqv<T,T>
+for<T> val EqvOf.cats=Eqv(cat,noOp)
+for<T> val EqvOf.cuts=Eqv(noOp,cut)
 
 
 /**: `物事 JVM.作：独有实现` juec可见全部语言内类型签名，但只生成当前平台的调用。其内物事受调用()能覆盖 `终定` 成员以提供造于()和常量等 继承时合并代码 */
 class Platform
 
-/** `Collection<E>` = [Sized]+[CanSee], no more `Iterable` s cause `impl fun ` [see] implies async Seq */
-for<T> class CanSee where CanSeeInf:
-  for<R> fun seen(to=rw{lineOf<R>()},op: Fun1<T,R>) = to.let { you.see: add(it.op()) }
-  for<R> fun seenNot(no:R, to=rw{lineOf<R>()}, op: Fun1<T,R>)
-  fun contains(x: T)
-  fun contains(xs: Seq<T>) = xs.all: it in this
 
-/** like [Seq] but optimized to [RwLine.add], AND adds caller to [Seq] */
-for<T> fun SLine(:Fun1<AddScope>) = rw{lineOf().as<AddScope>} let: fn()
-where:
-  for<T> AddScope=RwLine`$N`
-  for<T> fun AddScope.got(x:T)=as<RwLine> add x
 
 fun collapse(editorOpen=0, :Fn0):
   if editorOpen: fn()
 fun TODO(reason="having a rest") were Break:
   throw ErrNoImpl(reason)
 fun error(msg:Str): Break = throw ErrVars(msg)
-
-fun require(q:Bool, msgr: Fn0<Str>):
-  if !q: throw ErrArg(msgr())
-for<T> fun requireNot(it: T?, value: T?, msgr: Fn0<Str>): T
-for<T> fun requireNotNO
-
-/** See [assert] for testing */
-fun check(q:Bool, msgr: Fn0<Str>)
-for<T> fun checkNot(it: T?, value: T?, msgr: Fn0<Str>): T
-
+@_("试做")
 for<R> fun trys(:Fn0<R>) = try { Res.Ok(fn()) } catch(CanThrow) { Res.Err(you) }
+
+fun require(msgr: Fn0<Str>, q:BoolAnds):
+  if you q() !empty: throw ErrArg(msgr()+". "+you.joinStr())
+/** Uses [assert] for testing */
+fun check(msgr: Fn0<Str>, q:BoolAnds):
+  if you q() !empty: error(msgr()+"! "+you.joinStr())
+/** use `it!!` for notNull */
+for<T> fun requireNot(value: T, msgr: Fn0<Str>, it: T?)=it.let: require(msgr,{!=value})
+for<T> fun checkNot(value: T?, msgr: Fn0<Str>, it: T?)=it.let: check(msgr,{!=value})
+
+
 

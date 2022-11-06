@@ -1,0 +1,46 @@
+
+@_("勿报")
+@Target(Flags.full)
+eval-thing Suppress(names: Args<Str>)
+
+/** `"中文 en English jp 日語"` tranlate text. Langcode for Chinese is ""(xx.ju), for english it's "en" xx.ju_en. (en_jp.tsv for Non-terminology words) */
+/**: `"中 en 英 jp 日 zh 正體"` 式单词翻译。中文的语言代号是"" 并占用无_en式后缀 .ju 扩展名。 非术语建 en_jp.tsv 等来分词翻译
+  物定义在类型表新加约束并放值表“造于、同名例(受调用)”3个重载。不能以返回值重载，但 [_] 能隐转至[文]以翻译字串 */
+@Target([THING VAR FUN MADE EXPR_VAR])
+eval-thing _(i18n:Str)
+
+/** Items with repeating modifier [code]. `(modifier*) Signature? (=E)?` old name:"_", args:append, "=":default */
+/**: 为代码项添加重复的修饰符。语法 `(定语*) 签名? (=言)?` 原名以"_"替换 参数尾添 =是默认实现 */
+@_("以下")
+@Target([THING VAR FUN MADE FILE])
+eval-thing Below(n:Cnt, code:Str)
+/** Repeat items like `where^2:val..`, change name$1$2 and "$1" (embed code: atRow$0 & `fun atRow0~1..`). see [ArgsName]*/
+/**: 重复代码项类如 `其中^2`，填写 名$1$2、"$1" 项，嵌入代码靠 `事 于0~1` 于$0() 。对形参等只重复型参/有此标的事。另见 [组参名] */
+@_("以下含")
+@Target([*empty FILE EXPR])
+eval-thing BelowFor(rows:Str)
+
+@Target([FUN])
+eval-thing ArgSplit(:Args<Cnt>)
+
+/** Marking `data-class: Vars` won't let the whole struct equiv a serialized [Line],
+  but it's giving (de)constructors&[Var.type] so data outside [Ary],[KV<Str,*>],[Set] sendable via [IO]
+  like [JSON] make(T,"{pairs} or [items]"), btw. use [Type.vars] for get/make-set objkeys, [Vars] is mostly inlined only */
+for<T This> class Vars:
+  val vars: Line<Var>
+  samename-insta:
+    /** `new FixedSize(fill zero)`, or get itemType e.g. [KV<Int,Int>] */
+    fun sizeHint(n:Int): Either<This, Var.K>
+
+
+@_("值改")
+Var
+@_("值晚")
+ByLater = ("debug" in Platform.flag).way(Var(),Hint())
+/** Run calcuation only when needed. May use `=Lazy` for thing-val & arg */
+@_("值懒")
+for<E> eval thing ByLazy(@_("跨线程多次") thrCallTwice:Bool3=NO)
+@_("值新")
+ByNewest
+@_("值继承")
+ByImpl

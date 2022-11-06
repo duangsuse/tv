@@ -2,6 +2,16 @@ pkg jueju.io
 /** computing/transfer chunk size, low-latency already. [say]&[hear] won't use this */
 var Int bufferSize were 2**12 //1<<10==1024
 
+/** Won't err when not opened, may not exclusive, `File("a").open: say(size)` replaces `finally`. [ErrIO] */
+class CanClose:
+  fun close
+  same-insta:
+    fun wasCall(all:Args<CanClose>)=CanClose: all.see{it.close}
+for<TR>(T:CanClose) fun T.wasCall(:Fun1<T>) //=fn().let: close()
+ = try { val r=fn(); close();r } catch(Throwable) { close(); throw you }
+
+for<TR>(T:CanClose) fun T.wasCall(task:Fun1<T,Wait<R>>) = wait { task()!.let: close() }
+
 /** Read/maybe write(get,add) stream like [Deque] but [IO_Int] optimized. `JSON<Line<Int>>(ioChar) let: add {1 2 3}; cut("[]")` */
 for<T> impl? thing IO were CanClose:
   fun `add`(:T)
@@ -75,7 +85,7 @@ thing-fun JVM.as were BitConv:
     
 
 /** Ways to get&change [FileInfo] and do [IO]. test abspath(relative to "/"): `File(fp).path==fp || fp==(File(fp)-File.roots[0]).name` */
-for<This> impl? thing File(name:Str) were FileInfo,Tree:
+for<This> impl? thing File(name:Str) were Tree,jueju.tool.FileInfo:
   /** mkdir: `(File/"out"/"").touch.up` */
   fun touch(mkdirs=$N) = let:
   fun openb(write:Bool3=$N) were IO_Int
@@ -120,45 +130,17 @@ thing Pid(id:Idx8) File:
   val ``$?``: Int
 
 
-fun Eqv.My.csvLn(sep=",",esc='\\') = Eqv<Str>({ it.split(re:'(?!<${esc})'+sep) }, { it.joinStr(sep) })+{ onEach replace(esc+sep,sep) }
 
-enum-thing TermColor
-
-for<> TermBicolor=Word_On<TermColor,/*bg*/TermColor>
-val TermBicolor.id = A.id.bit(+8)+B.id
-fun TermColor.as=this on glass
-
-fun Str.wasCall(c:TermBicolor) = LinkLn(this to c)
-fun LinkLn<Pair<Str,TermBicolor>>.as=Seq:
-  see{[==s to c]"\x1b[${c.id}m"+s}; got("\x1b[0m")
-
-/** Deep `{a {b c}}` with Str-locable nodes. File=dir(0child)+[File.open], dirs can have time/owner/mode too! */
-for<This> class Tree:
+/** Deep `{a {b c}}` with (K=Str)-locable nodes. File=dir(0child)+[File.open], dirs can have time/owner/mode too! */
+for<K This> class Tree:
   /** if is dir, depth=1 childs, or {}. *//** parent, multi: `5times(Fold.From(fp,{up}).eachRStep)` *//** test or `rm -rf` file */
   fun ls(glob="*"): Line<This>
   var This up
   var Bool `exists`
-  /** to joinpath: `{"a b"}(Fold.From(File):this/it)` *//** `app/(fp-app)==fp`, relpath */
-  fun `/`(sub:Str): This
+  fun `/`(sub:K): This
+  fun `/`(sub:Seq<K>)=Fold.From(this):/it
+  /** `app/(fp-app)==fp`, relpath */
   fun `-`(base:This): This
   fun pathMay(star:Str) = takeIf:
 
-/** VirtFS(Linux compat) for OSX Win JS etc. Path sep always '/' and "drive letter" like /C:/Windows, [size] dir=stat() size */
-class FileInfo were Sized:
-  /** mv this file(relative to [File]), overwrite. to dir: `fp.up=File("out/")` *//** abspath, or copy. overwrite *//** basename&1 .suffix */
-  var Str name
-  var Str path
-  var PairOf<Str> nameExt
-  /** user,grp,others. 777=3*rwx, 755=rwx+2*r0x, 644=rw0+2*r00 *//** user,grp *//** access(>),modify,create *//** [Mode.Pin]=readonly; hide(also) may not really, `man chattr` */
-  var Pair3<Flag<RWX>> mask; var Pair2<Str> owner
-  var Pair3<Date> times
 
-  var Flag<Mode> mode
-  enum-thing RWX were Flag.Bit:
-    X;W;R
-  enum-thing Mode were Flag.Bit:
-    Blk;Sock;Dir;Link;FIFO;Char; Pin;Hide
-
-/** Won't err when not opened, may not exclusive. [ErrIO] */
-class CanClose:
-  fun close

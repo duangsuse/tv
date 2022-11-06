@@ -1,0 +1,84 @@
+pkg jueju.jvm
+use java.lang
+use java.io
+
+class-insta DataItem JVM:
+  fun lineOf==Fn.pipe(`listOf`, `KList`)
+  fun kvOf==Fn.pipe(`mapOf`, `KMap`)
+  fun setOf==Fn.pipe(`setOf`, `KSet`)
+  for<T> eval fun aryOf(it: Args<T>)
+
+
+@_("锁线程")
+for<R> fun synchronized(noRace: Any, :Fn0<R>):R=VMOp
+
+for<> CanClose=AutoCloseable
+for<> CanThrow=Throwable
+
+for<> Error=Error
+/** Giving `jshell`&jueju why-errors. */
+for<> Err=Exception
+
+/** `assert 1+1==3` */ /** e.g. `Exec.prop["os.name"]=="BSD"` */
+for<> ErrorAssert=AssertionError
+for<> ErrorNoImpl=NotImplementedError
+@Below(10, "Err_")
+/**`URL("file:").openStream`*/ /** Every error "[Throws] unchecked" derives this */
+/** `Map.of(null,0)` nokey. ":T=[later] not init" */
+for<> IO=IOException
+for<> Runtime=RuntimeException
+for<> Null=KotlinNullPointerException
+/** `URL("")`. NoWhenBranchMatched also this */ /** `f.close(); f.read()` */
+for<> Arg=IllegalArgumentException
+for<> Vars=IllegalStateException
+/** `List.of().add(1)` */ /** `(int)(Object)""` */
+for<> NoSupp=UnsupportedOperationException
+for<> As=ClassCastException
+/** `rw{lineOf(1,2)}.see: popAt(0)` */ /** `aryOf(0)[1]` */ /** `kvOf(0 to 1)[1]` */
+for<> BadModify=ConcurrentModificationException
+for<> GetAt=IndexOutOfBoundsException
+for<> Get=NoSuchElementException
+/** `Integer.valueOf("a",10)` */ /** `Thread.sleep((int)10e3)`&Ctrl+C SIGINT [Exec.thr] */ /** (int)`1/0` */
+for<> Parsenum=NumberFormatException
+for<> CtrlC=InterruptedException
+for<> Calc=ArithmeticException
+
+
+/** Add to multipart JuFile with [JvmName] */
+/**: 添加到多文件class [Jvm名] */
+@Target([FILE])
+eval-thing JvmNFiles
+@Target([FUN VAR VAR_GET FILE], runtime=$N)
+eval-thing JvmName(k:Str)
+@Target([FUN VAR VAR_GET VAR_SET])
+eval-thing JvmStatic
+/** For default args. f(a,b=1,c=3) +3 methods */ /**: 对默认参数 */
+@Target([FUN MADE])
+eval-thing JvmOverloads
+
+
+enum-thing JvmFlags where Flag.Bit:
+  Synthetic; Strictfp
+  /** method will LOCK(single thread) on this */ /** won't serialize */ 
+  /** writes are thread-safe(e.g. for ONCE-init lazy Singleton), use Atomics for read+write */
+  Synchronized;Transient;Volatile
+
+/** Don't make get/setter(for impl! var x=) */
+/**: (终定量)不提供字段外的get/set */
+@Target([VAR_MEM])
+eval-thing JvmField
+/** We don't force CheckedExceptions, but you can! */
+/**: 绝句不要求API用户穷举报错case，但您能！ */
+@_("将抛下")
+@Target([FUN MADE VAR_GET VAR_SET])
+eval-thing Throws(exTypes: Args<Type<CanThrow>>)
+/** Stored in ClassFile, `juec` won't see those(but uses [JvmFlags.Synthetic] for `same-pkg`, which is "public") */
+eval-thing JvmFlag(: Flag<JvmFlags>)
+
+eval-thing Jueju1(
+    /** class,file,synth,nfiles,nfile */ kind: Int = 1,
+    s1: Ary<Str> = [],
+    s2: Ary<Str> = [],
+    sRel: Str = "",
+    pkg: Str = "",
+    flg: Int = 0)

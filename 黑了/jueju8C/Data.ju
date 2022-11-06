@@ -294,6 +294,12 @@ for<T> class Seq:
   /** cycle ary.size*[n] */
   fun repeat(:Ary<T>, n=-1)
   fun repeat(one:T, n=-1)
+  /** List product, combinations. `Seq.X(5 times [lineOf(1,2)]).Line.size==2**5` */
+  fun X
+  fun X()
+  fun X
+  /** factorial. `Seq.X("abc").Line.size==1*2*3`, 'a' take place[0~2] so 1*3 */
+  fun permutations(r=xs.size)
 
 /** Known as `Collector` in Java8 but don't do [Seq.filter], etc. */
 for<TR> Fold = Fn0<Foldy<T,R>>

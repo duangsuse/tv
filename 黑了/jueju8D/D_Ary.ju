@@ -4,86 +4,70 @@ use1 java.util.Arrays
 class Impl:
   insta were Vec_Bool.Named
 
-/** [Thr.msgQue] supports [waitMax]. [Line.Queue] [Sorts]: __MaxAt0=LIFO=Stack__, MinAt0=FIFO=Pipe, Eq=+ThrSafe */
-for<T>class Queue were Seq:
-  val peek: T?; fun pop: T
-  /** shift more items */
-  fun pop(n:Cnt)=Seq.it.take(n).Line
-  val sizeMax: Cnt?
-  var Time waitMax
-
-/** friend: [Seq] */
-for<T This> class CanAdd where Copy,Empty,Sized:
-  fun `add`(:T); fun contains(:T):Bool
-  fun pop(:T); fun clear()
-  fun `+`(:Seq) = let: xs.see(`add`)
-  fun `-`(:Seq) = let: xs.see(`pop`)
-  fun `&`(:Seq) = see { if it !in xs: pop(it) }
-  fun contains(you:Seq)=you.all: it in this
-  fun copy = empty().itLet: see(it`add`)
-
-/** Can [see] 0+N items, but may blocks until Ctrl+C. */
-for<T> class SeqInf:
-  fun see(:Fn1<T>)
-
-/** Only 1way to "[see]" loop over many items, [Seq.Once]=JDK:[Iterator] */
-for<T> class Seq were SeqInf:
-
-  samename-insta:
-    for<T>fun wasCall(:Fun2<SeqScope,FnCont>):Once=WaitSeq(fn).let: fn{done=$Y}
-    for<T>same0 thing-fun WaitSeq(:FnCont) were SeqScope,Once:
-      var*: done $N; last byLater
-      !fun got(:T, :FnCont): last=x
-
-  for<T> class SeqScope:
-    fun `got`(:T)
-    fun gotAll(:Args<T>)
-  for<T> class Once were Seq:
-    fun wasCall: T
-    val done: Bool
-    !fun see(:Fn1<T>):
-      loop if !done: fn(this())
 
 
-/** "Deck". pop<1<2<3<add. can be fixed-size [RingDeque] */
-for<T>class Deque were Stack:
-  /** Should support this, may with `RwLine` */
-  fun unpop(:Ary<T>)
-  fun unadd(n:Cnt): Ary<T>
-  val peekAdd: T?
-  fun RSeq = got(unadd(size)).Seq
-  fun contains(:T)
-  fun pop(:T)
+/** [Line] with fixed size, not actually "Array" in JVM or tuple(`Ary<get T>`) in Py. see: unboxed [AryN], [Args] */
+for<T This> impl? thing Ary where Sized,CanSee<T>, Copy,Vars<T>:
+  fun get(:Idx): T
+  fun set(:Idx, :T)
+  /** Try to make 0-copy viewport(`subList`,.), or do [slice] */
+  fun get(sel:Range<Idx>): This
+  fun set(sel:Range<Idx>, :Seq<T>) = vs.toIdx.see: [==x to i] this[i]=x
+  fun set(sel:Range<Idx>, fill: T) = set(seq, Seq.repeat(fill))
 
-for<T> fun Ary.Sync==Vector
+  !fun Seq=Seq.SIdx:
+    fullIdx.see: got(this[it] to it)
+
+  @Below(4, '''@SafeVariance("set T") ''')
+  /** Reuse given [cmp] with new [ord], `a(MinAt0.by: it+1)` */
+  fun wasCall(ord=Sort, cmp:FnSort)=VMOp
+  fun reverse
+  /** sequence randomly shuffled */
+  fun shuffle(ran=Random())
+  val vars = fullIdx.seen: this[it].as<Var>
+  /** defaults to 0-copy. but for [filter], even dup2 is better than *inplace* Bubble Sort's slow */
+  fun seen(set:Fnew<T>) = let:
+    toIdx.see:[==x to i] this[i]=x.set()
+
+for<T>(T:CanSort) fun Ary.wasCall(ord=Sort)=this(ord,T.normalOrd)
+val N=OmitN()
+for<T> eval thing-fun OmitN:
+  fun get(iNeg:Int)=this[i].as<Var>
+  fun wasCall(iNeg:Int)=(i<size).way(`this[i].as<Var>`, NO)
+  where^2:
+    val i=(iNeg<0).way(size+iNeg, iNeg)
+
 
 
 @Compiled("boxedNum")
 for<T>JavaAry=AryN
-/** Prim array. replaced parallel JDK:[spliterator] and JDK:[stream] by [CanSee], [JavaAry]: for [Integer],. boxed on-heap. see JDK:[Arrays] */
+/** Prim typed array. [Seq] replaces parallel JDK:[spliterator] and JDK:[stream]. see JDK:[Arrays]
+  On JVM [get] returns `int`, not `Integer` "boxed", `Ary<Int>` can't do this for it can be a [Line].
+  Supports JVM `Object[]`, [JavaAry]: exposes int,. boxed on-heap (for reflect) */
 for<T>eval thing AryN(n:Cnt, init:Fn1<Idx,T>) were Sized:
   fun get(:Idx):T =VMOp
   fun set(:Idx,:T)=VMOp
   !val size get: VMOp
   same0 fun wasInit:
     fullIdx.see: this[it]=init(it)
-  fun as=asList(this).Ary
+  fun as=T.isPrim.way(copyCast):asList(this).Ary
+  same0 fun copyCast=fullIdx.seen: this[it]
   /** `[I@memAddr` didn't implement JDK:[Object], so always [asList]?? */
   !fun `==`(:AryN)=equals(this,you)
   !fun Str=toString(this)
   !fun hashCode=hashCode(this)
   fun wasCall(ord=Sort)=let: ord.onAsc{sort(this)}
-  fun get(:Range<Idx>)=Part(rn)
-  fun set(src:Part)=System.arraycopy(src.ary,src.rn.A, this,i, src.rn.size)
+  !fun get(:Range<Idx>)=Part(rn)
+  fun set(:Idx,src:Part)=System.arraycopy(src.ary,src.rn.A, this,i, src.rn.size)
   val full=this[fullIdx]
   
   thing-fun deep:
     !fun `==`(you:AryN)=deepEquals(this[^1],you)
     !fun Str=deepToString(you)
     !fun hashCode=deepHashCode(you); val ary=you
-  thing-fun Part(:Range<Idx>, pure=$Y):
-    fun AryN=copyOfRange(you,*rn)
+  thing-fun Part(:Range<Idx>, pure=$Y) were ByImpl<AryN,you>:
     fun set(:Fn1<Idx,T>)=pure.way(parallelSetAll,setAll)(you,fn)
+    fun copy=copyOfRange(you,*rn)
     fun copy(zfill:Cnt)=copyOf(you,zfill)
     fun fill(:T)=fill(you,*rn,it)
 
@@ -96,29 +80,7 @@ for<T>eval thing AryN(n:Cnt, init:Fn1<Idx,T>) were Sized:
     same0 val S=pure.way(parallelSort,sort)
     same-pkg val ary=you
 
-val Sort=Sorts.MinAt0
-/** for [Rat]: -0<+0, any<NaN */
-@Compiled("bidir(-1,MinAt0,Eq,MaxAt0)")
-enum-thing Sorts:
-  MinAt0;MaxAt0; Eq
-  fun onAsc(:Fn0<Ary<*>>) = when this:
-    Eq: this
-    MinAt0: fn(); MaxAt0: fn().reversed
 
-  /** [Eq] gives nullsLast Dsc order. */
-  for<R>(R:CanSort) fun by(key:Fun1<T,R>)=when this:
-    MinAt0:
-      FnSort:[a b] R.normalOrd(key(a),key(b))
-    MaxAt0:
-      FnSort:[a b] R.normalOrd(key(b),key(a))
-    Eq:
-      FnSort {[a b]when:
-        a==NO: MaxAt0 //b->left
-        b==NO: MinAt0
-        else: R.normalOrd(key(b),key(a)) }
-  samename-insta:
-    for<T> fun by(:Fun1<Sorts,CanSee<FnSort>>) = fn()(Fold.From0: as<Comparable>.thenComparing(it))
-    eval fun FnSort.first==LinkLn
 
 /** Infinite line of bits. [Vars.sizeHint] */
 for<This>
@@ -139,6 +101,7 @@ thing Vec_Bool same0 made(j:JBit) were Ary<Bool>,ByImpl<Any,j>, Num.Bit:
   !fun `&`(:BitSet)=let: j.and(you.j)
   !fun `+`(:BitSet)=let: j.or(you.j)
   !fun `-`(:BitSet)=let: j.andNot(you.j)
+  /** Flip only [you]r bits */
   !fun xor(:BitSet)=let: j.xor(you.j)
   !fun flip(rn=fullIdx)=j.flip(*rn)
   !fun wasCall(shl:Int)=let:

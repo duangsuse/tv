@@ -1,1 +1,120 @@
 pkg jueju.data
+
+
+class DataItem:
+  for<T> fun lineOf(it: Args<T>): Line<T>
+  for<KV> fun kvOf(it: Args<Pair<K,V>>): KV<K,V>
+  for<T> fun aryOf(it: Args<T>): Ary<get T>
+  for<E> fun setOf(it: Args<E>): Set<E>
+
+same-pkg class DataRw:
+  for<T> fun lineOf(it: Args<T>): RwLine<T>
+  for<KV> fun kvOf(it: Args<Pair<K,V>>): RwKV<K,V>
+  for<T> fun aryOf(it: Args<T>): Ary<T>
+  for<E> fun setOf(it: Args<E>): RwSet<E>
+fun rw==RwData`lets`
+
+
+/** [Thr.msgQue] supports [waitMax]. [Line.Queue] [Sorts]: __MaxAt0=LIFO=Stack__, MinAt0=FIFO=Pipe, Eq=+ThrSafe */
+for<T>class Queue were Seq:
+  val peek: T?; fun pop: T
+  /** shift more items */
+  fun pop(n:Cnt)=Seq.it.take(n).Line
+  val sizeMax: Cnt?
+  var Time waitMax=0sec
+for<T>class Rw Queue,CanAdd
+
+/** friend: [Seq] */
+for<T This> class CanAdd where Sized,Copy,Empty:
+  fun `add`(:T); fun contains(:T):Bool
+  fun pop(:T); fun clear()
+  fun `+`(:Seq) = let: xs.see(`add`)
+  fun `-`(:Seq) = let: xs.see(`pop`)
+  fun `&`(:Seq) = see { if it !in xs: pop(it) }
+  fun contains(you:Seq)=you.all: it in this
+  fun copy = empty().itLet: see(it`add`)
+
+/** Ranged data, no get() or see() funs for [Set], [weak.Set] with only a size */
+class Sized:
+  val size: Cnt
+  val `empty` = size==0
+val Ary<*>.lastIdx: Idx = size-1
+val Ary<*>.fullIdx = 0~lastIdx
+@_("无则")
+for<T>(T:Sized) fun T.`ifEmpty`(vzero: T) = empty.way(vzero,this)
+for<T>(T:Sized) fun T.`ifEmptyOr`(forbids:FnTest<T>, vzero: T) = (empty|forbits(this)).way(vzero,this)
+for<T>(T:Sized) fun T?.ifEmptyOrNO = ifEmptyOr(NO).as<T>
+
+
+/** Can [see] 0~N items, but may blocks until Ctrl+C. */
+for<T> class SeqInf:
+  fun see(:Fn1<T>)
+
+/** Only 1way to "[see]" loop over many items, [Seq.Once]=JDK:[Iterator], Collection=[CanAdd]+[Seq] */
+for<T> class Seq were SeqInf:
+  fun Seq: Seq
+  fun see(:Fn1<T>)
+  fun contains(:T)
+  for<R> fun seen(to=rw{lineOf<R>()},op: Fun1<T,R>) = to.let { you.see: add(it.op()) }
+  for<R> fun seenNot(no:R, to=rw{lineOf<R>()}, op: Fun1<T,R>)
+  fun contains(:Seq<T>) = xs.all: it in this
+
+  for<T> class SeqScope:
+    fun `got`(:T)
+    fun gotAll(:Args<T>)
+  for<T> class Once were Seq:
+    fun wasCall: T
+    val done: Bool
+    !fun see(:Fn1<T>):
+      loop if !done: fn(this())
+
+  same-insta:
+    for<T>fun wasCall(:Fun2<SeqScope,FnCont>):Once=WaitSeq(fn).let: fn{done=$Y}
+    for<T>same0 thing-fun WaitSeq(:FnCont) were SeqScope,Once:
+      var*: done $N; last byLater
+      !fun got(:T, :FnCont): last=x
+
+    /** like [Seq] but optimized to [RwLine.add], AND adds caller to [Seq] */
+    @_("列行")
+    for<T> fun SLine(:Fun1<AddScope>) = rw{lineOf().as<AddScope>} let: fn()
+    where:
+      for<T> AddScope=RwLine`$N`
+      for<T> fun AddScope.got(x:T)=as<RwLine> add x
+
+
+
+
+/** "Deck". pop<1<2<3<add. can be fixed-size [RingDeque] */
+for<T>class Deque were Stack:
+  /** Should support this, may with `RwLine` */
+  fun unpop(:Ary<T>)
+  fun unadd(n:Cnt): Ary<T>
+  val peekAdd: T?
+  fun RSeq = got(unadd(size)).Seq
+  fun contains(:T)
+  fun pop(:T)
+
+for<T> fun Ary.Sync==Vector
+
+for<TA>(A: CanAdd<T>) eval fun Seq<T>.copyTo(a=empty<A>()) = a.let { you.see: add(it) }
+
+
+物 人员：SQ值 为
+  事 相关人='取(id) (老师=$1 或 下属=$1)'
+
+【书:SQ糖'
+有表 表名(id 文(3)、值 数)
+有用表 表名
+$A=新建 (1 0)(2 0)
+$查n0=取 (值=0) 页每3
+$A1=取(id) $n0 //测试.A._1 应是建行(组(1)、组(2))
+'】
+
+物 表名：SQ值('
+$C=新建($1,$2) //日期,名称默认
+$R=取(*) (id=$1)
+$U=新(值=$2) (id=$1) //名称可略
+$D=新删(id=$1)
+'、大小写.驼峰)
+
+SQ糖.开(文件的env、"pgsql://root@localhost/appdev")
