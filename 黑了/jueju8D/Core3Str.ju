@@ -24,7 +24,6 @@ class Chars where Ary<Char>
   fun replace(:Regex, :Fn1<Regrp,Str>)
   fun replace(:Range<Idx>, :Str)
   fun split
-  fun `like`(:Regex)
   /** get substr for [Y](range or full), others for [N], then concat back. "a.2".partition(`first('.')?~NO`, `it`, "")=="2" */
   fun partition(:Fun1<Str,RangeHalf<Idx>?>, Y:FnNew<Str>, N:FnNew<Str>)
   /** [partition], if no match then `N(this)` */

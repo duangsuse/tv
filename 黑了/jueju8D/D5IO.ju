@@ -1,3 +1,4 @@
+@_("绝句.读写")
 pkg jueju.io
 /** computing/transfer chunk size, low-latency already. [say]&[hear] won't use this */
 var Int bufferSize were 2**12 //1<<10==1024
@@ -19,6 +20,10 @@ for<T> impl? thing IO were CanClose:
   /** read() side still buf like `stdbuf -o0 -iL` [bufferSize]. [close] do this *//** Useful e.g. `less x.txt` pager; HTTP FileUpload */
   fun flush
   fun closeHalf(write=$Y)
+
+  /** Get [raw] underlaying stream from Buffered/Decode/etc. `this` may unusable after IO on it's raw */
+  for<S> thing BufLike were IO:
+    fun raw: S
 
 for<T> fun IO<T>.`adds`(ending:_1More<T>):
   ending.see(`add`); close()
@@ -52,6 +57,15 @@ thing IO_Str were IO_Char:
 
 
 
+
+impl?? thing Random:
+  fun bits(n:Cnt): Int
+  fun bytes(:Bytes.View)
+  fun YN: Bool
+  fun Rat(rn=0~1.0): Rat
+  fun Int(rn=0~1): Int
+  fun Int8(rn=0~1L): Int8
+  fun Rat4: Rat4
 
 
 class BitConv:
@@ -97,6 +111,7 @@ for<This> impl? thing File(name:Str) were Tree,jueju.tool.FileInfo:
 
   samename-insta were File("."):
     fun `cd`(pwd="~")
+    /** `tmp("cache" to "")` for tmpdir */
     fun tmp(base_suf:PairOf<Str>, at=File("/tmp/"))
     /** New process fork() at [File.cd]&env by `sh`, pipe it's IO(see [PidFile]) *//** `sh: - (pipe('ls','head -n${1}') >>"file.txt") ` */
     fun `sh`(cmd:Str)=sh("sh","-c",cmd)() ; fun sh==Sh`let`
@@ -105,6 +120,7 @@ for<This> impl? thing File(name:Str) were Tree,jueju.tool.FileInfo:
     fun pid(:Idx): PidFile
     val pids: Line<PidFile>
     val ``$0``: PidFile
+    fun exitProcess(``$?``:Cnt8): Break
     /** `xx.{srt,mp4}`, `~/.log/2022-0{1..9}/**`, `"\$HOME/.{local,config}"` at `env["PWD"]` */
     fun expand(:Str, env=env): Line<Str>
     /** disk free()=(usable+mayReserved)/full */

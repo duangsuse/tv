@@ -1,3 +1,5 @@
+pkg jueju
+
 for<N> fun N.`~`2(:N) = Range(this,you)
 for<N> fun N.`~`(b:Omit<N>) = RangeHalf(this,b)
 for<N> fun N.`~<`2(:N) = ~you.dec // int,float

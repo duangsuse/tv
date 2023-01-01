@@ -131,6 +131,9 @@ el.let(_=>objIf(c.it.img, 图=>框(
 )))
 ```
 
+系统/频谱监视器 渐变
+高亮
+
 support lib:
 
 ```js

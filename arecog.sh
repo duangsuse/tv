@@ -71,3 +71,6 @@ fi
 #usage: arecog audfile  >a.srt|max_dist_sec a>b.srt
 #lib: srtSTT 1 -f alsa -i default a.wav|srtMerg 0.18 'userchk(rmsp(x))'
 #or srtMerg 0.2 'x'
+
+#require("vs/editor/browser/services/abstractCodeEditorService")
+#ce=this.getActiveCodeEditor();$('.modified.editor').onclick=()=>ce._paste(1,'\n')

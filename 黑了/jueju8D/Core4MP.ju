@@ -1,3 +1,4 @@
+pkg jueju
 
 @_("勿报")
 @Target(Flags.full)

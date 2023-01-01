@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<main id="ps">
+<img id="scr">
+</main><hr>
+<input id="scrV" type="file" accept="image/*">
+
+<style>
+#ps { position: relative; }
+#ps div { position: absolute; box-sizing: border-box; background: red }
+#ps img {pointer-events: none; user-select: none;}
+
+.edit div {resize: both;overflow: auto;}
+</style>
+
+<script>
+ST=(o,k,v={})=>{
+  onunload=()=>{o[k]=JSON.stringify(v)}
+  try{return v=JSON.parse(o[k])}
+  catch{return o[k]=v}
+}
+def=(o,k,f)=>{
+  if(k!==''){let K='_'+k
+  Object.defineProperty(o,k, {set(v) {this[K]=v; f(v)}, get(){return this[K]}}); f(o[k]) }
+  else {
+    let i,fa=i=>def(o,i, f)
+    for(i=o.length;i-->0;)fa(i)
+    o.push=x=>(fa(o.length), [].push.call(o,x))
+  }
+}
+readAs=(k,fp)=>new Promise(ok=>{
+  o=new FileReader(); o['readAs'+k].call(o,fp)
+  o.onload=()=>ok(o.result)
+})
+
+$=s=>{let e=document.createElement("div"); e.innerHTML=s; return e.firstChild}
+</script>
+<script>
+let app=ST(localStorage,'qr')
+app.__proto__=Array.prototype //depth-1
+
+def(app,'scr', v=>scr.src=v)
+scrV.onchange=()=>readAs('DataURL',scrV.files[0]).then(x=>app.scr=x)
+
+asig=(e,o)=>{ for(let k in o)if(+o[k])o[k]=o[k]+'px'
+  Object.assign(e.style,o)
+}
+
+def(app,'', P=>{
+  if(!P)return;
+  //MD 调了半天发现监听丢失是因用innerHTML, 纯DOM果然简写拉垮
+  let e=ps.appendChild($(`<div draggable=true>`)), f=()=>(([x,y,w,h])=>asig(e,{
+    left:x,top:y, width:w,height:h
+  }) )(P)
+  e.onmouseleave=()=>(({left:x,top:y, width:w,height:h})=>Object.assign(P, [x,y,w,h])
+  )(e.style)
+  f()
+})
+
+
+
+if (location.hash=='#edit') {
+  ps.ondragend=({target,x,y})=>asig(target, {
+    left:x-ps.offsetLeft, top:y-ps.offsetTop
+  })
+  ps.className=`edit`
+} else onclick=()=>scr.requestFullscreen()
+
+
+
+</script>

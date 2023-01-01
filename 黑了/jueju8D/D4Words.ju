@@ -1,3 +1,4 @@
+@_("绝句.文词")
 pkg jueju.words
 
 
@@ -57,15 +58,15 @@ for<get R> class Fun were Word:
     Notation; Eval; Cont; PWord
 
 /** val/r members in [Var], [Var.V.prop]=[F0]|[S0], try `val reID: Prop.S1 = User\`id\`` . [byLater] */
-for<get V> when-class Prop were Word:
+for<get V> when-class V were Word:
   val : Type<V>
   val fget: Fun<V>
-  class Rw were Prop:
-    val fset: Fun
-  @BelowFor("F Prop `0+i`; S Rw `1+i`", 3)
-  class $1$0 were $2,Fn$3<V>
-  for<A>class $1$0 were $2,Fn$3<A,V>
-  for<AB>class $1$0 were $2,Fn$3<A,B,V>
+  val fset: Fun?
+  //@BelowFor("F Prop `0+i`; S Rw `1+i`", 3)
+  @BelowFor("`1+i`", 3)
+  class F$1 were V,Fn$1<V>
+  for<A>class F$1 were Fn$1<A,V>
+  for<AB>class F$1 were Fn$1<A,B,V>
 
 /** [name] can be "thisParam" or "you", only `thing-fun A.as: fun B.pair=you to this` &no `context(A,B)fun` */
 class Arg were CanMark:

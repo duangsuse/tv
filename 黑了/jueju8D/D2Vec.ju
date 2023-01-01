@@ -1,0 +1,73 @@
+@_("绝句.算")
+pkg jueju.calc
+
+for<N> Pow=PairOf<N>
+for<N> Pow.as:N=Vec1.pow(A,B)
+for<N> thing-fun Pow<N,Var<N>>.as were WasDestruct:
+  fun eq(:N):
+    B.v=Vec1 lets: log(A)/log(n)
+for<N> thing-fun Pow<Var<N>,N>.as were WasDestruct:
+  fun eq(:N):
+    A.v=Vec1 lets: sqrt(you,B)
+
+
+for<> Deg=Rat `in 0~<1`
+for<N> eval val N.`deg`=Num.deg.cat(this)
+
+/** mutable point with angle [r] and magnitude [l] */
+for<N> thing Vec2(x:N,y:N) were CalcEachIdx:
+  var Deg r
+  var Rat l
+  /** weighted sum */
+  fun `·`(:Vec2)=x*you.x+y*you.y
+  same-pkg var rVec get:Vec2 
+for<N> thing Vec3(x:N,y:N,z:N) were CalcEachIdx:
+  fun cross(:Vec3)
+for<N> thing Vec4(R:N,G:N,B:N,A:N=1) were CalcEachIdx:
+
+for<N> thing VecN(it:Args<N>) were CalcEachIdx:
+  fun get(:Line<Idx>)
+  fun set(:Line<Idx>)
+
+/** 
+Vectors are e.g. [Vec2](x,y) points, Vec1 capture e.g. `Var<Int>` but just adds math funs to it:
+(hyperbolic)trigonometric, rounding [saw], [sign] and [abs]olute value. For power&it's exponents, logarithmic see [exp1]
+ */
+for<N> thing Vec1(r:Deg, yaxis=$N)
+  fun abs = let: sign=+1
+  val sign get: (n==0).way(0, `(n>0).way(+1,-1)`)
+    set: v=Vec1(you).sign*abs()
+  /** make this [n]-divisable. see [saw] */
+  fun sawStep(:N): N
+  samename-insta Math:
+    @BelowFor("4 8", 3)
+    /** support [bOvf] negate. Test `x in Int.range` for safe converts */
+    fun addExact(a:Int$1, bOvf:Int$1) = a+bOvf
+    fun mulExact(a:Int$1, bOvf:Int$1) = a*bOvf
+    /** floor, round, ceil. normal `a/b==trunc(a/b)` round to 0 */
+    fun saw$1(:Rat$1, closer=-1): Int$1
+    /** Move point to leftmost, find precision `1/Math.ulp(1)=1e7`. ignore sign, NaN */
+    fun ulp(:Rat$1) = VMOp.xx
+    /** `nextIn(10~+Inf)` */
+    fun nextIn(:Range<Rat$1>) = VMOp.xx
+    fun getExp(:Rat$1)
+    fun IEEErem(a:Rat,b:Rat): Rat
+    /** expm1, ln1p, for [E]. Use `8.itLet{[==2**x]x}` for log2(,log10) */
+    val exp1=Equiv(`E**it`, `Math.log(it)`).plus(-1)
+    /** JDK:[scalb] */
+    fun mul2k(n:Rat, k:Rat) = n*2**k
+    eval val PI=3.1415926535897931; /** `ln(E)=1,ln=logE.log=log10` */ eval val E=2.7182818284590451
+    /** `180/360*DEG` */
+    val radians = Equiv.ratio(DEG/360)
+    /** [a] for arc, [h] for hyperbolic */
+    enum-thing AngularFn:
+      Sin; Cos; Tan
+    /** `Vec1(.5turn)==Vec1(Cos,PI)`, JDK:[atan2] `Vec2(x,y).r` in 0~1turn. math atan^2 in 0~2 */
+    for<N> fun wasCall(:AngularFn, :N)
+    /** `sin(arcsin x)==x`  */
+    for<N> fun a(:AngularFn, :N):N
+    /** JDK:[hypot] `sqrt(xx+yy)`  done with `Vec2(x,y).l` */
+    fun<N> fun h(:AngularFn, :N): N
+
+
+

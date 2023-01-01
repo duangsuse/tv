@@ -32,15 +32,16 @@ doc.onkeydown=q? 键向(棋盘(),线扫(cfg.l, iv=>{i=i0}, (x,I)=>x.className=`n
 }
 
 
-_2048=a=>{let i,d, n左,
+_2048=a=>{let d,j左,j,
 落并2=(x,I)=>{
-  let _0=I-d*(i-n左), 并; i++
-  if(x!=0){//合并(首次不)或 左移(置0若动了)
-    if(i!=1&&(并=a[_0-d])== +x){a[_0-d]=asig(并*2,{id:[并.id,x.id].flat()/*224=8*/}); cfg.Pt+=并;a[I]=0}
-    else{a[_0]/*push*/=x; n左++; if(I!=_0)a[I]=0}
+  if(j左==null)j左=I
+  let _0=j左-d, 并; j++
+  if(x!=0){//则合并(首次不需)或 左移(置0若真移). j列号
+    if(j!=1&& +x==(并=a[_0])){a[_0]=asig(并*2,{id:[并.id,x.id].flat()/*224=8*/}); cfg.Pt+=并;a[I]=0}
+    else{a[j左]=x; if(I!=j左)a[I]=0; j左+=d}
   }
 }
-return 键向(a,线扫(cfg.l, iv=>{i=n左=0;d=iv}, 落并2), (a,b)=>qOk? -a :0)//左落,i需++ ;id旧位
+return 键向(a,线扫(cfg.l, iv=>{j左=null,j=0;d=iv}, 落并2), (a,b)=>qOk? -a :0)//左落,i需++ ;id旧位
 }
 
 顺滑=f=>{let e=棋盘(), a=e.ok?e: Array(n(e)).fill(0),回合, c={Pt:0},

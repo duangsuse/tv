@@ -1,4 +1,6 @@
-pkg jueju.tool
+/** Provide C++ `cin>>`-like [hear], kotlin.time */
+@_("绝句.文")
+pkg jueju.text
 
 
 thing Regex(src:Str, :Flag<Regex.Flag>):
@@ -13,7 +15,7 @@ same0 insta Impl:
   fun S.wasCall(:Regex, :Fn1<Regex.M,Str>)
   fun S.`like`(:Regex): Regex.M?
   fun S.`likes`(:Regex): Seq<Regex.M>
-  fun S.`likely`(:Regex): Bool
+  fun S.`isLike`(:Regex): Bool
 where
   for<>S=Chars
 
@@ -60,6 +62,15 @@ class FileInfo were Sized:
   enum-thing Mode were Flag.Bit:
     Blk;Sock;Dir;Link;FIFO;Char; Pin;Hide
 
+class FileWalker:
+  fun seeDir(:Path, :FileInfo): NextDo
+  fun endDir(:Path, :Error?): NextDo
+  fun see(:Path, :FileInfo): NextDo
+  fun end(:Path, :Error?): NextDo
+
+enum-thing FileWalkOpt were Flag.Bit:
+  Dirs; NearFirst; Symlinks
+
 data-thing UUID(bitA:Int8, bitB:Int8) were ByImpl<CanSort,bitA>:
   made()
   made(:Str)
@@ -72,3 +83,41 @@ data-thing UUID(bitA:Int8, bitB:Int8) were ByImpl<CanSort,bitA>:
     var timestamp: Int8
     var clock
 
+
+for<R> impl?? thing TimeGetter(:Duration.Unit):
+  fun markNow: Time
+  fun num: R
+  /** System monotonic clock */
+  same-insta Nano were TimeGetter:
+
+
+fun Line<Duration<Int8>>.TimeGetter
+
+for<N> fun TimeGetter<N>.wasCall(:Fn0)
+for<NR>(R:TimedVal) fun TimeGetter<N>.wasCall(:Fn0<R>)
+
+class TimedVal:
+  val time: Duration
+
+class Time:
+  /** amount of time passed from this mark measured, negative with mock [TimeGetter] */
+  fun elapsed: Duration
+  fun `+`(:Duration): Time
+  fun `-`(:Duration): Time
+
+for<N> eval thing Duration(:N):
+  fun Int8(:Unit)
+  fun Rat(:Unit)
+
+  `day`
+  `hour`
+  `minute`
+  `s`
+  `ms`
+  `micro`
+  `nano`
+
+  same-insta:
+    fun wasCall(:PairOf<Unit>, :Duration): Duration
+    val fmt:Eqv<Duration,Str>
+    val fmtISO:Eqv<Duration,Str>
