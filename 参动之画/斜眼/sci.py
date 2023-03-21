@@ -581,7 +581,7 @@ https://www.shadertoy.com/view/XtBXW3 激光
 https://www.shadertoy.com/view/4sy3W3 JFA拼贴画
 https://www.shadertoy.com/view/MslSDN 茶壶形变/160
 https://www.shadertoy.com/view/4dcGW2 粘菌照亮/160
-https://www.shadertoy.com/view/WdVXWy 金属流体/170 https://www.shadertoy.com/view/MlS3Rh 色流/80
+https://www.shadertoy.com/view/WdVXWy 金属流体/170 https://www.shadertoy.com/view/MlS3Rh 色流/80 https://www.shadertoy.com/view/fljBWc /130
 https://www.shadertoy.com/view/4syGW1 Ant迷宫搜索的树同类
 https://www.shadertoy.com/view/wslcWf 四分树搜索 https://www.shadertoy.com/view/3dBGzt kD树色聚类
 https://www.shadertoy.com/results?query=tag=filter&sort=popular&from=156&num=12 2x放大和亮点滤镜,detrend动画
@@ -818,6 +818,7 @@ vec2 mainSound( in int samp, float time )
     return vec2( sin(6.2831*440.0*time)*exp(-3.0*mod(time, .5)) );
 }
 
+//https://www.shadertoy.com/view/fdVfRD julia
 void mainImage( out vec4 f, in vec2 p ) //by iq. Mandelbrot
 {
     p = vec2(-.745,.186) + 3.*(p/iResolution.y-.5)*pow(.01,1.+cos(.2*iTime));
@@ -1166,6 +1167,7 @@ https://www.shadertoy.com/view/lds3zr Ribbons/200
 https://www.shadertoy.com/results?query=tag=distance&sort=popular&from=48&num=12 粒子和贝兹
 https://www.shadertoy.com/view/llXfRr 分形树/212
 https://www.shadertoy.com/view/Msl3Rr 频谱木柱/330
+https://www.shadertoy.com/view/Wlt3DM bend
 attributes.forEach{
   if (it.StartsWith("follow")) {//开关 https://zhuanlan.zhihu.com/p/419963912
     isSpecial = true;
@@ -1180,3 +1182,66 @@ attributes.forEach{
 
 
 
+let g=eG.getContext('2d',{alpha:0}); g.L=[eG.width,eG.height]
+// g.fillRect(0,0, g.L[0],90)
+
+animRect=(g, lAB, dur=5000,dt=1000/40)=>{
+  let t,t0=now(), //播放进度
+  _in01=f=>P=>f(vec(P,'/',g.L), pmix(lAB,t)); //点xy=0~1
+
+  [ok,stop]=fpsr(dt,()=>{ t=(now()-t0)/dur; if(t>1)stop()
+    g.clearRect(0,0,...g.L); xyFill(g, _in01(bg))
+  })
+  return ok
+}
+let now=()=>performance.now(), {cos}=Math,
+  bg=([x,y],t)=>map(vec([x,y,x],'+',[2,6,8]) //ShaderToy.com/new
+  , v=>255*(y<t? .5+.5*cos(t*10+v) :0) )
+
+
+pmix=([A,B],t)=>A+t*(B-A)
+fpsr=(dt,f, id,end)=>(id=setInterval(f,dt),
+  [new Promise(ok=>end=()=>{clearInterval(id);ok()}), end])
+
+vec=(A,f,B)=>(f=f.apply?f: calcs[f], //支持'+'
+  map(A,(x,i)=>f(x,B[i]))
+)
+map=(a,f, i=0,N=a.length)=>{for(;i<N;i++)a[i]=f(a[i],i); return a}
+
+xyFill=(g,f)=>{let x,y, [w,h]=g.L,
+  rgb=c=>'#'+c.map(v=>(v%256 >>1).toString(16).padStart(2,'0')).join("")
+  for(y=0;y<h;y++)for(x=0;x<w;x++) {
+    g.fillStyle=rgb(f([x,y])); g.fillRect(x,y,1,1)
+  }
+}
+mkFn=(ks,js, k,t={})=>{for(k of ks.split(' ')){t[k]=this.eval(js(k))}return t}
+
+//rgb=c=>'#'+c.reduce((a,b)=>a*256+b).toString(16)
+//xyFill(g, ([x,y])=>[0x66,x,0xff])
+(async()=>{
+  calcs=mkFn('+ - * /', k=>`(a,b)=>a${k}b`)
+  await animRect(g, [0,1])
+  await animRect(g, [1,0])
+})().catch(alert)
+
+
+rbRoll=(g,[w,h],{l=`90px`,lAng=`50px`,abg=`red`})=>{
+  g.globalCompositeOperation='destination-over'
+  g.translate(0,-l)
+  let n=h/l >>0,pa=new Path2D;[[0,0], [w,0], [w,l+lAng], [0,l]].forEach(([x,y])=>pa.lineTo(x,y) );
+  for(;n-->0;){g.fillStyle=abg[n%abg.length]||`hsl(${Math.random()}turn 60% 70%)`
+    g.fill(pa); g.translate(0,l) }
+}
+ 
+addJS=(T,f)=>T.addModule(URL.createObjectURL(new Blob([f], {type:'text/javascript'})))
+Paint=(f,kw={})=>{
+  let c=eval('('+/,({.*})/.exec(''+rbRoll)[1].replace(/=/g,':')+')' ), s=JSON.stringify,k
+  addJS(CSS.paintWorklet,`registerPaint(${s(f.name)}, class { static inputProperties=${s(Object.keys(c).map(k=>'--'+k))}
+    paint(g,l,kw){(${jbin(f)})(g,[l.width,l.height], new Proxy(kw,{get:(o,k ,v)=>(v=o.get('--'+k),
+      'l'==k[0]? v.to('px').value : 'a'==k[0]? v[0].trim().split(v[0].includes(')')? /(?<=\\))/:' ') : v) }))
+    } })`)
+  for(k in c)CSS.registerProperty({name:'--'+k,syntax:`<${'l'==k[0]?"length":kw[k]||''}>`.replace('<>','*'),initialValue:c[k],inherits:0})
+}
+jbin=f=>(f+'').replaceAll('window.runnerWindow.protect.protect','(x=>0)')
+
+Paint(rbRoll)

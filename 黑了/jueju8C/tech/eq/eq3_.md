@@ -75,7 +75,7 @@ anim.at.rest=e=>在垂直方向放 erase.flys
 anim.erase={
   fly('s',{Tscale:1}), //.iverb=2
   flys(A,B)(t=0~1),
-  fade(g,A,B),
+  fade(g,A,B), // perlin
   flow, // same, need el.draw
   cubes, //draw(,'svg')
   _('chess', mask, {smooth:±.5}) // '-' flip erase

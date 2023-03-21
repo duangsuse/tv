@@ -5,13 +5,13 @@
 界1
 - wOSA `wOp({},chk) wSty({},'#css')/反引 wA({},...f)` ，枝框架“大新2化” 大写OSD 刷新 淡化 绘画
   - O `{run(0,{dom:$N}),drop(), acty:$Y}`
-  - {tap:ev=>{e,ei,eRel,e0, T},tap2,tap2s_li} {hov:[ptrIn,Out]|=>it.x ,key,tapup,focus:[,blur] ,drag:s~end,dragok:over~drop} {draghov,insel:f full()?,inview:0~1 ,hovE,focusE,IME:oncomposition}, 'over stop/! once meFirst scroll')
+  - {tap:ev=>{e,ei,eRel,e0, T},tap2,tap2s_li} {hov:[ptrIn,Out]|=>it.x ,key,tapup,focus:[,blur] ,drag:over~drop,dragit:s~end} {draghov,insel:f full()?,inview:0~1 ,hovE,focusE,IME:oncomposition}, 'over stop/! once meFirst scroll')
   - inview: [IntersectionObserver](https://docs.w3cub.com/dom/intersectionobserver) `[[0~1],e,padout]` ,Vec2
   - `c={tap:$Y}; c.tap.then`
   - S `{color:fg on bg, pad/o, pos:皆可空["absolute",xy,wh-resize监听,$Y含框], anim:{dur},atranDur, Trotate:.5, Fshadow:[x,y,blur],Fhsl_H:NO, GbackdropBg,  _myVar,__mozXX}`. see:elsvg filters
   - pos:ResizeObserver or, see _Die
   - `CSS._.myVar=[0,'<length-%','time',]` !inherits. 支持#+重复：CSSUnitValue解析
-  - A `{ v,edit,show:淡化,has/hwrap:e|slot[name] ,drag}` faster `getAttrNode` than getV/attr[k]
+  - A `{ v,edit,show:淡化,has/hwrap:el.b|slot[name] ,drag}` faster `getAttrNode` than getV/attr[k]
 - qs监听 `qs.css${} .css1${}  e.qs[attr,], qs@mediaK: V, qs@net: wifi|none${c=>c.DL='2~4g',dl}` via:qs.on/atRule.net={v,}, dpi:scr/resize ,ori,acc,oriDiff, docDate
   - e.qs\*[|wtf].txt |>child${}\`=rv. `(e,{mut:"A|T|D", mutA},old)=>{}`
   - `qs.let(fn=wOp).let({id:1}).lets(e=>e+'').join()` qs得1或N项,  `el(tag, ...fe__ee)` 在 `el.get` 可用css或'*'匹配元素/正则
@@ -94,6 +94,7 @@ Eqv(cat,cut=cat):
 
 pipe(...keq_f) //按cat组合出 含1f? 函数:Eqv. k如'!','num'
 way(Y,N)|(v,eq,not)|({v:1, _VK: })
+only(p, eq)
 pad(+1, 2) //+1,*2
 x=noOp
 
@@ -105,6 +106,8 @@ base(k=64) //not win.crypto
 p7z('gzip|deflate|brotli').cut(utf|blob) //stream.pipeThrough. see:ndesmic/zip
 file(/*input-dropEv.fileBlobs*/to='DataURL|BS|json|',strm=[7z'gz']).cut(s|json|imsvg|data:)
   .dl(el.a |NO) = `<a download>`
+  .url.cat(u,e)// objectURL
+  .fmt
 //cat()._info={path,type:MIME ,size,atime} ; a.srcObject=Blob(['utf8'], ['text/plain']) . see:videojs
 //txt,ab: it|Response|worker ReadSync|fread. Blob='bitmaprenderer'
 form.cat(?search|&form|e)==kv.ify
@@ -122,7 +125,6 @@ h5(safe=NO|`div p img|!script head ; !hidden; main wrap`), //Sanitizer 2.用*10,
 esc={
   url={ //escape()
     full,
-    file, // objectURL
     id("xx"),
     short("im", bookmark="origin/%s")
   },
@@ -224,8 +226,8 @@ Eqv.diff(a,b) => [splice(0,1,'replace[0]'), [2,2,'del[2~3]'], ]
 
 see:[Worker-arg](https://developer.mozilla.org/en-US/docs/Glossary/Transferable_objects#supported_objects) [richtxt/st](https://docs.w3cub.com/dom/document/execcommand)
 
-- 列入路程： Bluetooth, crypto AES/SHA, TextTrack+vibrate MSE, GL, Detector polyfill, Gamepads.axes[yxyx], Collide2D
-- 需投票： Audio MIDI, RWStream, BgFetch, Crypto, WebAuthn, SW `index.add`, navigation, CustomElements/Shadow
+- 列入路程： Bluetooth, crypto AES/SHA, TextTrack+vibrate MSE, GL, FFT, Detector polyfill, Gamepads.axes[yxyx], Collide2D
+- 需投票： Audio MIDI, RWStream, BgFetch, Crypto, CBOR, WebAuthn, SW `index.add`, navigation, CustomElements/Shadow
 - 独立投票： Sensors 光电, ImageTrack(OpenCV), SVG/URLFont, Pinchrotate/swipe, UPnP/2UA投影/Quality, NFC NDEF, Serial/HID/USB, RTC, IDB,Idle/Sched
 - 禁用： 冗长淘汰的XSL模板和XHR,+不可取路径的XPath; `THREE aframe` 的AR/VR XRSystem; Pay, MediaKeys/Cap,CSP; SharedWorker/Locks; 10x降速URLPattern
 
@@ -284,7 +286,7 @@ it.fn={
   cache(f,c__f), //同参数只算1次
   wrap(F,fva_v), //logs() 记录参数/结果 的方法
   flip(F), //逆序传参
-  args(f),  //args((x,y)=>) == ss`x y`
+  args(f),  //args((x,y)=>) == ss`x y`  ){ 或 )=>，默认值不可含箭头/name=
   vars(f) //vars((a,b)=>{a+b.x+doc}) == [`a b`, `doc`]
 }
 ```
@@ -427,3 +429,38 @@ on={, saveData,noAnim  }
 当然，找子集碰撞的也是 `rediv(禁用原块)` 。另外划分必须是中位数，不然无法保证同格内=距离最近
 
 >JS也有p5,[Physjs](http://wellcaffeinated.net/PhysicsJS/) 和[Matter](https://brm.io/matter-js) 关键词:broadphase
+
+
+EQ分三界：界面、传输、语巧，'Eqv可同' 'Query查询' 二字则每界都有一部分
+
+1. 九宫格;OSDARR.  Only1,Slide, D data blob浮标链表, anim EAE, Reload(), Rn
+2. HISTPM. H http, HI pjax, ST storage, PM postMessage/App
+3. itFPVec. fn deep Trie unit(CSS,_=>{}), FGrp eachStep, CSS draw Paint(svgFilt), Vec2~N
+
+九宫格:
+- HTML 由 `<标签名>`+...三要素 及其(文本)children 组成的UI树，如 `p span.time, p b` 选中文段里“时间,或粗体”片段
+- ```js
+  el.let(_=>{ //EQ 不规定“mount”。这些“JSX”可被编译缓存
+    doc.body.tail=[p(span(wSty`time`, "8:00"), b("Bold")),
+      el`p span.time+b`
+    ]//^ 支持emmet.io
+    el.Timed=({t="", s=""})=>p(span[`.time`](t), b(s))
+    el.get((s)=>(el.Timed(out={s})(doc.body) ,s)) //Bold
+    out.t//8:00. `p`可以既存! SSR,爬虫,用户脚本 便利
+  })
+  ```
+- wOSA `wOp(c={tap单击,tap2s右键},'stop! only') c.acty启用; wSty({font},'#css'); wA({label,edit,show},'aria-')`
+- 说选问 `say(); sel(); ask()`
+- see/s If `see([1,2], x=>li("Food",x)); seeIf(user.vip, v=>'等级'+v.level, '可开通'); sees({type:user,..}, {user:x=>"是用户", else:i("请更新客户端")})`
+
+观念要改。打印变量请 `alert(("a"+1).let(say) )` 或以 `says(alert)("a"+1)` 直接截获看函数/对象的参数与返回。 `d=$0, db={table:1}` 则详细显示 `d('dir',console); dif=isBreak_; dm('',/char/)`，靠 `say.dbg` 启用
+
+`f={}.it(keys?)` 则 `rows=f(); f(rows)` 令对象为sql行。也有 `.it(key_swap, k__f)`
+
+EAE 通过 `anim._atMod(rv,f?)` 提供 `o[k]` 的渐变，需要 `div(anim.at(rv,), wSty({ease:'ball, k1 linear',erase:'arc', pos:[,rv]}))`。
+
+若配置了 `--an-exit: fade a1` 则remove()时淡退，append时erase并动画；且皆对childList右侧,block/grid 时逐个接替，否则 translateX/Y 同距离
+
+Va 通过能 movR,ins 的浮标链表，创建或绑定F64Array等ArrayBuffer ，以 -16 表示Vec2
+
+

@@ -24,6 +24,8 @@ eval-thing BelowFor(rows:Str)
 @Target([FUN])
 eval-thing ArgSplit(:Args<Cnt>)
 
+参组<"a b c"、数>
+
 /** Marking `data-class: Vars` won't let the whole struct equiv a serialized [Line],
   but it's giving (de)constructors&[Var.type] so data outside [Ary],[KV<Str,*>],[Set] sendable via [IO]
   like [JSON] make(T,"{pairs} or [items]"), btw. use [Type.vars] for get/make-set objkeys, [Vars] is mostly inlined only */

@@ -137,4 +137,3 @@ class-insta WasDestruct N:
     else:
       po.k.v = Math.log(n)/Math.log(po.n)
 
-

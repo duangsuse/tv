@@ -52,10 +52,10 @@ Slide.c={chk:默认值} //标准组件定义
 `Slide.x("")`|功能|另
 :--|:--|--:
 btn|添加 `.slide .L,.R` 两项、`.slide[i=0][i=end]`|默认淡按钮。支持（键盘)RTL/纵向
-wheel|使用滚轮翻页 `.slide[wheel,i="<"][i=overflow]`|等待动画。`anim.at` CSS类更新=重配
+wheel|使用滚轮/拖拽翻页 `.slide[i="<"][i=overflow] {_gesture:touch wheel free=no-snap}`|等待动画。`anim.at` CSS类更新=重配
 pad|`ul{box-sizing: content-box; padding:0 5%}`|计算不变
-page drag|nav按页选择(`c.l=3` 每页)、保留拖拽位置,还有 _noovf 位旗|`transition:order 1s` 代表1s/页 自动滑移，移入暂停*
 thumb|与父元素按 `i` 关联|且聚焦 `doc.url.hash` 所指 id 的项
+page drag|nav按页选择(`c.l=3` 每页)、保留拖拽位置,还有 _noovf 位旗|`transition:order 1s` 代表1s/页 自动滑移，移入暂停*
 
 *: `onAnimCancel=({elapsedTime})=>`。`chk=0b100` 不吸附拖拽
 
@@ -454,7 +454,7 @@ e=>{
   })
   Vec2.pMouse(P, tap=>{})
 },
-  el.hr(wSty({pos:["absolute",P,V(wid,wid)] }))
+  el.hr(wSty({pos:["absolute",P:Tpos,V(wid,wid)?] }))
 )
 
 let ux,T0=it.time(),T; wOp(ux={tap:$Y})(e)

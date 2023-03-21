@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<input pattern="\d{0,8}" id=phone><input id=star type="color">
+<script>
+/*下落水滴、追光标特效、擦拭/黑底转透明
+- moveSteps(e, 'move', XY=>[kf/reset], 100px/1s); newA(N,)
+- URL.svg`${[8,8]}<rect rx${2}>`
+- 选B. url仅白=imgPix(im,g,'gray inv', bwThres(tBri=0,depth=1))
+
+工具
+- putDupBg(e)
+- CSS.addVar('u0~8')
+- 选B. CSS.Paint(fn erase(g,{t,d}){})
+
+引文
+SVG基础-二分混成(blur,mask) https://codepen.io/SitePoint/pen/peBaBo
+https://svgfilters.com/
+https://www.smashingmagazine.com/2015/05/why-the-svg-filter-is-awesome/
+https://css-tricks.com/gooey-effect/
+*/
+doc=document
+Object.prototype.let=function(f){return f.call?(f(this),this): Object.assign(this,f) }
+
+
+maskInput=(e,v="")=>{
+  e.oninput=()=>{e.checkValidity()? (v=e.value):(e.value=v)}
+};maskInput(phone)
+
+onload=()=>{
+moveIn(doc.body,imgAlsoCSS(doc.body,URL.svg`${[8,8]}<circle r='4' opacity='.5' cx='4' cy='4'/>`),'mousemove',
+  P=>({translate:P}) )
+
+// moveIn(doc.body,star,['0 100px'], P=>(star.getClientRects()[0].y<doc.body.offsetHeight? {translate:P[0], backgroundColor:['red','yellow'], composite:['replace','add']} : 0))
+
+pgm.style.let({height:'100%', background:'radial-gradient(circle 100vw at var(--xy),#000,#0000) no-repeat', filter:'url(#ers)'})
+moveIn(doc.body,pgm=pgm,'mousemove', P=>(pgm.style.setProperty('--xy',P), []) )
+
+ani=CSS.Paint(doc.body,pgm ) //, (e=>ptry.lastChild.replaceWith(e)) ;ptry.append("")
+// CSS.Paint($0, function my(g,[w,h], {c='red',y='',d=''}){g.fillStyle=c; g.fillRect(0,y,w,h+d) }  )
+// CSS.Paint($0, 'shadertoyID', 'background', {in0:'element()', lntFloat_OrVec } )
+// ani({'--t':1}, {duration:5000})
+
+/* ASM https://mandelbrotandco.com/en.index.html
+Workers https://mandelbrot.silversky.dev/
+GL https://icefractal.com/mandelbrot
+
+Rust https://rust-mandelbrot.netlify.app/
+Palette https://deep-mandelbrot.js.org/
+URL https://github.com/lovasoa/mandelbrot
+https://developer.mozilla.org/en-US/docs/Web/Demos#2d_graphics
+*/
+}
+
+
+URL.svg=(s,[W,H],...a)=>`data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='${W}' height='${H}'%3E${encodeURI(s[1]+a.map((x,i)=>s[2+i]+`="${x}"`).join(''))}%3C/svg%3E`
+CSS.prop=(e,k)=>(k='--'+k, v=>e.style.setProperty(k,v) )
+
+imgAlsoCSS=(e, u)=>(
+  CSS.prop(e,'imDot')(`url("${u}")`),
+  e.appendChild(new Image().let({id:'ptr', src:u}))
+)
+moveIn=(e0, e,ev,step)=>{
+  let speed=()=>e.computedStyleMap().get('animation-delay').to('ms').value, T=()=>performance.now(),t=0,bug=(t0=t)=>(t=T(),t-t0),
+    f=x=>(kf=step(x), kf?(an=e.animate(kf, {duration:speed(),fill:'forwards'})) : (e.style.cssText='',t=0,an.play(),an) ), re,an,kf
+  ev.substr? e0.addEventListener(ev,({x,y})=>{f(`${x}px ${y}px`)}) : (re=()=>{if(an&&(bug()-an.currentTime)<10 )an.commitStyles();f(ev);an.onfinish=re})()
+}
+{let/*I need get*/
+jsArgs=f=>eval('('+/,\s*({.*?})/.exec(''+f)[1].replace(/=/g,':')+')' ),
+cssArg=(k,v)=>v.type&&v.type().length? v.to('px').value : 'a'==k[0]? (v=v+'').trim().split(v.includes(')')? /(?<=\))/:' ')  : v,
+Worker=(f,typ={})=>{
+  let c=f.call?jsArgs(f):f, k,ks=Object.keys(c),s=JSON.stringify
+  try{for(k of ks)if(c[k]!=='')CSS.registerProperty({name:'--'+k,syntax:`<${'l'==k[0]?"length":typ[k]||typ.of||''}>`.replace('<>','*'),initialValue:c[k],inherits:/.y$/.test(k)})} catch{return}
+  f.call&& importJS(CSS.paintWorklet,`registerPaint(${s(f.name)}, class { static inputProperties=${s(ks.map(k=>'--'+k))}
+    paint(g,l,kw){(${f})(g,[l.width,l.height], new Proxy(kw,{get:(o,k,v)=>(${cssArg})(k,o.get('--'+k)) }))
+    } })`)
+},
+//=> e.style[k] / k:callback img(for GL,etc.)
+drawSVG=(o,k, mime,v,e)=>!k.call?(o[k]=`url(data:${mime},${v})`) : (o=new Image,CSS.drawWH(e,o),o.src=`data:${mime},${v}`,o.decode().then(()=>k(o)))
+CSS.drawWH=(a,b,k=1)=>{
+  let [w,h]=[a.offsetWidth,a.offsetHeight]; [b.width,b.height]=[k*w,k*h]
+}
+/*e0: CSS --{x,y,n}: 1px,rgb(); --a:rgbs
+  e: ImgvOrSvgyHTML | window[idGLSL]&k0=vars | (g,WH,{cssVar=''})=>void
+  svg: --{x:0} predef */
+CSS.Paint=(e0,e, k0="background",svg=this.svcss)=>{
+  let f/*Upd or*/,gl, css=k=>px(''+e0.computedStyleMap().get(k)), px=s=>'c'==s[0]? CSSMathSum.parse(s).values[0]+'' : s
+  if(!e.nodeType)
+    if(e.substr){Worker(k0,svg); if(!e){return} if(!this.ShaderToy)patchGL(); gl=new ShaderToy(e0,0, {appendChild(){}}); e=this[e];gl.Load(e.text?sToy(e.text):e,0); f=getVec(Object.keys(k0),gl,gl.mEffect.mPasses[k0.forI||0],css)}
+    else{Worker(e,svg); e0.style[k0]=`paint(${e.name})`; return e0.animate.bind(e0)}
+  let//fill --vars => setHTML => DataURL
+  up=getTo(svg), eHObj=f?0: (e.id='',e.setAttribute('xmlns',e.namespaceURI),
+    f=e.decode||e.play? ()=>{ if(false===e.seeking){let v=(A,B,k)=>{e[B]=k*css(A)}; v('--t','currentTime',e.duration);v('--kt','playbackRate',1);v('--n1','volume',1)} k0&&createImageBitmap(e).then(k0) }
+    :()=>{up(css); eHObj.firstChild.replaceWith(E=e.cloneNode(1));e.onCopy&&e.onCopy(E); drawSVG(e0.style,k0,'image/svg+xml',escape(svg.outerHTML),e0)}
+  ,svg.children[0]), E,
+  oConn,o=new MutationObserver(()=>{o.disconnect();f();oConn()})
+  ;(oConn=()=>o.observe(e0, {attributes:1,subtree:1}))()
+  return async(a,c)=>{
+    a=e0.animate(a,c);let rF=requestAnimationFrame,q=1; rF(c=()=>{f(); if(q)rF(c)})
+    await a.finished;q=0
+  }
+}
+importJS=(T,f)=>T.addModule(URL.createObjectURL(new Blob([f], {type:'text/javascript'})))
+function*map(a,f,x){for(x of a)yield f(x)}
+let getTo=(e,vs=[...new Set(map(/(\w+)=/g[Symbol.matchAll](e.innerHTML), m=>m[1]))].flatMap(k=>[...map(e.querySelectorAll(`[${k}^="--"]`),e=>(e=e.getAttributeNode(k),e.k=e.value,e)) ])
+) =>src=>{for(let v of vs)v.value=src(v.k)  }
+//vec1~4 (rgba,iMouse,.), texture cam|html
+getVec=(ks, gl,{mRenderer:c,mInputs:aTex},css, hr0='',
+  _=(c.SetShaderConstant4F=(...a)=>c.SetShaderConstant4FV(a),
+  //c.UpdateTextureFromImage(aTex[i].globject, $0)
+  ks.forEach(k=>{
+    if(k.startsWith('in_'))aTex[+k.slice(3)].video=assign(e, {videoWidth,videoHeight,currentTime}) })
+  )
+)=>()=>{
+  let k,vs,N,M ,s,v,i, hdr=[]
+  for(k of ks){vs=cssArg('a',css('--'+k)); hdr.push(`uniform vec${M=vs[0].length}${(N=vs.length)==1?'':`[${N}]`} ${k};`)
+    i=0;for(v of vs){v=(-1!==(s=v.indexOf('('))? v.slice(s+1,-1).split(' '): Array(M).fill(v));
+    v.unshift(k+(N==1?'': `[${i++}]`));c[`SetShaderConstant${M}F`].apply(c,v) }
+  }
+  (s=hdr.join('')+`#define vec1 float\n#define forI(a,T) T it;for(int i=0;(it=a[i], i<a.length());i++)\n`)
+    !=hr0? gl.mEffect.Compile(0,()=>{hr0=s}) : 0
+  gl.startRendering()
+},
+sToy=s=>({ver:'0.1',info:{date:'js'},"renderpass":[{"inputs":[],"outputs":[],"code":s,"type":"image"}]}),
+patchGL=()=>{
+  this.eval((ShaderToy+'').replace(/(this\.mCanvas =)/, '$1 parentElement||'))
+  {let f=document.getElementById, e=document.currentScript
+  document.getElementById=k=>/^myUnitC/.test(k)? Object.assign(new OffscreenCanvas(0,0),{offsetWidth:10,offsetHeight:10}) :
+  /^my|texture|editor|tab|numC|compilationTime|uiFontSelector/.test(k)||/Controls|Button$/.test(k)?e :  f.call(document,k)  }
+  gShaderToy.mEffect.RequestAnimationFrame=()=>{}
+  getRealTime=()=>t
+}
+
+CSS.Paint(new Image, '', {x:0,y:0,w:'100px',h:'100px',d:'3px',x0:0,y0:0},{of:'length'})
+CSS.Paint(new Image, '', {n:3, t:0,kt:1,n1:1},{of:'number'})
+CSS.cubes=e=>{}
+}
+
+rbRoll=(g,[w,h],{l=`90px`,lAng=`50px`,abg=`red`})=>{
+  g.globalCompositeOperation='destination-over'
+  g.translate(0,-l)
+  let n=h/l >>0,pa=new Path2D;[[0,0], [w,0], [w,l+lAng], [0,l]].forEach(([x,y])=>pa.lineTo(x,y) );
+  for(;n-->0;){g.fillStyle=abg[n%abg.length]||`hsl(${Math.random()}turn 60% 70%)`
+    g.fill(pa); g.translate(0,l) }
+}
+</script>
+<style>/*按下,可点,默认*/
+body:is(:active, :not(:hover)) #ptr{--l:0px}
+body:has(:enabled:hover,:link:hover) #ptr {--l:40px;opacity:.2}
+#ptr {--l:16px;opacity:.5; transition:.4s cubic-bezier(0.18, 0.89, 0.32, 1.28); animation-delay: .7s;}
+
+:read-only {cursor:var(--imDot)4 4,auto}
+#ptr{ width: var(--l); height: var(--l); pointer-events:none; z-index:100;
+position:fixed; top:calc(-.5 * var(--l));left:calc(-.5 * var(--l)) }
+
+#svcss {position: fixed; left: 0}
+.full {width:100%;height:100%;}
+
+body{height:100vh; margin:0; }
+#star{animation-delay: .6s;}
+#star:hover{animation-delay: 3s;}
+
+#pgm {background:conic-gradient(from 90deg at var(--xy),#000,#0000) no-repeat}
+body { --dp: 255; --dpInv:calc(1/var(--dp)); --t:-1e-7}
+</style>
+<div class="full" style="background: radial-gradient(ellipse at top, #e66465, transparent),
+radial-gradient(ellipse at bottom, #4d9f0c, transparent); "></div>
+<div id="ptry"></div>
+<script type="glsl">
+//以圆心遮罩，擦拭以渐变底首视频
+vec4 ers(vec4 v, ivec2 td){return
+  vec4((int(v*255.) -td.x +td.y)/td.y*td.y )/255.
+;}
+
+void mainImage(out vec4 bg, vec2 P) {
+  vec2 p=P/iResolution.xy;
+  vec4 c=texture(iChannel0, p), c1=texture(iChannel1, p),
+  bw=ers(mix(vec4(0),vec4(1.), length(p-vec2(.5,.5))*1.4 ), //radial modify
+    ivec2(255.*iMouse.xy/iResolution.xy) );
+  c=(c.g > .4 && c.r < .4 ? vec4(0):c); //GreenBg
+  bg = mix(c.a>.5? c:c1, c1, bw); //c.alpha=bw
+}
+</script>
+<svg id="svcss" xmlns="http://www.w3.org/2000/svg">
+  <foreignObject width="100%" height="100%"><hr></foreignObject>
+  <filter id="ers">
+    <feComponentTransfer><feFuncA type="linear" intercept="--t" >
+    </feFuncA></feComponentTransfer>
+    <feComponentTransfer><feFuncA type="linear" slope="--dpInv" >
+    </feFuncA></feComponentTransfer>
+    <feComponentTransfer><feFuncA type="linear" slope="--dp">
+    </feFuncA></feComponentTransfer>
+  </filter>
+</svg>
+<use hidden>
+  <div id="pgm"></div>
+</use>
+

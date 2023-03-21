@@ -148,6 +148,8 @@ for<T> eval thing Args where Ary<T>
 /** `fun pair(:ArgsName<Str, 2 to "ab"> )` */
 for<TK>(K: eval, K: Pair<Int,Str>) eval thing ArgsName where Args<T>
 
+ArgsOf
+
 for<This> impl?? thing Enum
   same-type made(name: String, ordinal: Int) were CanSort:
   same-insta:
@@ -225,4 +227,66 @@ for<T> fun requireNot(value: T, msgr: Fn0<Str>, it: T?)=it.let: require(msgr,{!=
 for<T> fun checkNot(value: T?, msgr: Fn0<Str>, it: T?)=it.let: check(msgr,{!=value})
 
 
+可为 可同 可变
+像队 像栈 像链 可多//指针
+像树T 像树根 像图E(dot,自)
 
+言级语法和括号树雷同-以逆波兰带[参数组]保存，但若判/空则 可含 此停下[^0起] 形式流控：正如 你=我[^1]。 a?去f? 提为变量,译为连续if,最后转嵌套if。事 编译(算式)：另语式
+
+言单是值的子集&“恒量” 数文空字真假 。`字("UTF16")：同一` 以编码，""去行 以切分， `文，re'.*\n'于'g'。 ("输入")?首` 以正则，也有文.换(到)/切(计)。re 类同ES6的反引号调用
+
+
+事量物例类 公私族组内
+储标例判造 既可未终定
+令滤序带叠 行表组集列
+记作变量表 恒判存函续
+
+物如狗、门户、车辆为大类，类如可写、可闭、可比为小类。 类型指明了至少要拥有的事和量
+- __物thing、例insta、物事thing-fun(innerclass)__ 皆为类型，可继承1大类 N小类，默认自值、至断止
+- __类class__ 可混合N小类，事量皆“未定”或 `=默认` 而可定。 `未定的物` 才能含此种事量(要继承可见性,或公开)
+- __同名例samename-insta__ 的 `事 受调用` 是 `狗("旺财")` 等new调用的本质
+- “静态方法”有强类型。 `对何<T>(T：可闭) 量 T.「$」读，同名例<T>去闭。` ， `对何<我> 类 可比.. 事「<」(：我)：真假`
+- `物 T(x：T0)：值继承<T0>(x)` 宏展开为“T0事量由x代理”，`量 lateinit：数=值晚` 断言非空。 `值懒，lazy。 值改，“可改<T>变更通知”。`
+
+对于子类创建，绝句提供2种语法糖，前者在“不继承数据”时好用
+- `物 Main Activity()` ，去掉'：' 就可以不加大类名后缀 。函数签名自动继承类型和默认值
+- `物事 点2D.矩形(wh：俩量)` 的大类默认为 `点2D(同名变量)` ，内部语句集至 `事 受初用`
+
+对于初始化，有3层语法糖
+- `事 受造` 即 `class A{/**/ {this.x=1;}}` init块。以 `我去作<值>去造于` super调用
+- `造于(：数)=造于("$此数")` made构造器，只能写等号而不同于 `量= “或”量 读，。`
+- `物 A “造于”(x=0)`  主构造器（先调大类 造于()，故大类造于里 不应访问可定事量）
+
+在实现上
+- `函0~8<写A、...、读R“可选”>` 仅读写性(形变)有默认。也可用在 `组<写数>`、`对何<读A读B>储物 俩项`
+- `造行(1+2L、"")` 通过将TypeVar() `<T>` 并集获知加法于数8、行于值。交集靠 `对何<T>(T：A、T：B、T：值?)`
+- `量x=可变()` 代理 `x的值` 的读写函数，函数的闭包量也为 `可变.外<数4>()` 形式。如捕获 `(1~2)令，[i]fs添函「i」。` i变量
+- `其中[^2]` 为上2个事添加书级定义，不独立作用域：__量/读写加在函数体头部，事 物事强制内联，对何<>别名=T 全局。禁止其他__
+
+判你与判物
+- `列Seq,可添CanAdd` 标记行表集可读/写，`改行RwLine` 和 `行` 属于 `_行<T>` 
+- 匹配细分 `判是， a到b、判，a>0` 重复 回()
+
+
+物事面向对象
+- `物事 Activity.Main` 不利用 构造参数自动填写，则生成 `MainActivity` 与受初用
+- `物事 Point2D.Rect(w_h：组参<数>)` 添加子类
+- `物事 LList.作：迭<T>` 以“内部类”而不使用匿名对象
+
+既有OOP的条理紧凑，又有FP的简洁明确和 struct trait-impl 的双边易扩充
+
+cat cut
+load dump
+decode encode
+
+$ juec (in out?'.'ext)*
+$ juec (inMay':' )?js  '.'py?
+default: py_zh_CN
+inMay: file '-' w watch http
+ver: 1.0 Node 19.3 pip 21.3
+langs: ju js py kt rb cs ts_es5 java dryrun server
+cultures: zh zh_CN en ja S s
+cp: ~/.local/lib/jueju:/lib/jueju
+env:
+  - cc,cxx, web
+  - JUE_DB: no

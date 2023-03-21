@@ -23,8 +23,11 @@ def makeSrt(s,t=lambda x,k:srt.timedelta(seconds=x[k])):
   wz=chain.from_iterable(s)
   return (srt.Subtitle(i, t(x,"start"), t(x,"end"), x["word"]).to_srt() for i,x in enumerate(wz))
 
+#import jieba,re
+#CHI=[*jieba.cut(open("a.txt").read()) ] #,*(re.sub("(.)","\\1 ", x)for x in set(open("a.txt").read().split("\n")))
+
 nSamp,nSec=map(int,argv[2:]); nBlk=int((nSec:=nSec/4)* nSamp*2)#sampWidth
-rec=vosk.KaldiRecognizer(vosk.Model(argv[1]),nSamp); rec.SetWords(True) #timing, or FinalResult["text"]
+rec=vosk.KaldiRecognizer(vosk.Model(argv[1]),nSamp); rec.SetWords(True); 1 or rec.SetGrammar(json.dumps(CHI,ensure_ascii=0)) #timing, or FinalResult["text"]
 for x in makeSrt(recog(lambda:fIn.read(nBlk),rec)): fOut.write(x);fOut.flush()
 ' $VOSK_MOD $N_SAMP $qsec
 }
@@ -66,7 +69,7 @@ for i,x in enumerate(zipTakeWhile(inSameLine,lineSrt(stdin))):
 }
 
 if [ $0 == ./arecog.sh ];then
-[ -f a.srt ]&&srtMerg $1 'usersub(rmspc(x))' <a.srt >b.srt  ||srtSTT 1 -i $1 1>a.srt
+[ -f a.srt ]&&srtMerg $1 'usersub(rmspc(x))' <a.srt >b.srt  ||srtSTT 10 -i $1 1>a.srt
 fi
 #usage: arecog audfile  >a.srt|max_dist_sec a>b.srt
 #lib: srtSTT 1 -f alsa -i default a.wav|srtMerg 0.18 'userchk(rmsp(x))'
