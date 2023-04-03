@@ -34,7 +34,7 @@ moveIn(doc.body,imgAlsoCSS(doc.body,URL.svg`${[8,8]}<circle r='4' opacity='.5' c
 pgm.style.let({height:'100%', background:'radial-gradient(circle 100vw at var(--xy),#000,#0000) no-repeat', filter:'url(#ers)'})
 moveIn(doc.body,pgm=pgm,'mousemove', P=>(pgm.style.setProperty('--xy',P), []) )
 
-ani=CSS.Paint(doc.body,pgm ) //, (e=>ptry.lastChild.replaceWith(e)) ;ptry.append("")
+ani=CSS.Paint(doc.body,pgm ) //, (e=>ptry.lastChild.replaceWith(e)) ;ptry.append("icon")
 // CSS.Paint($0, function my(g,[w,h], {c='red',y='',d=''}){g.fillStyle=c; g.fillRect(0,y,w,h+d) }  )
 // CSS.Paint($0, 'shadertoyID', 'background', {in0:'element()', lntFloat_OrVec } )
 // ani({'--t':1}, {duration:5000})
@@ -78,19 +78,20 @@ drawSVG=(o,k, mime,v,e)=>!k.call?(o[k]=`url(data:${mime},${v})`) : (o=new Image,
 CSS.drawWH=(a,b,k=1)=>{
   let [w,h]=[a.offsetWidth,a.offsetHeight]; [b.width,b.height]=[k*w,k*h]
 }
-/*e0: CSS --{x,y,n}: 1px,rgb(); --a:rgbs
-  e: ImgvOrSvgyHTML | window[idGLSL]&k0=vars | (g,WH,{cssVar=''})=>void
+/*e0: CSS var --{x,y,n}: 1px,rgb(); --a:rgbs
+  e: ImgvidOrSvgyHTML&k0=fRepaint | window[idGLSL]&k0=vars | (g,WH,{cssVar=''})=>void
   svg: --{x:0} predef */
 CSS.Paint=(e0,e, k0="background",svg=this.svcss)=>{
   let f/*Upd or*/,gl, css=k=>px(''+e0.computedStyleMap().get(k)), px=s=>'c'==s[0]? CSSMathSum.parse(s).values[0]+'' : s
   if(!e.nodeType)
-    if(e.substr){Worker(k0,svg); if(!e){return} if(!this.ShaderToy)patchGL(); gl=new ShaderToy(e0,0, {appendChild(){}}); e=this[e];gl.Load(e.text?sToy(e.text):e,0); f=getVec(Object.keys(k0),gl,gl.mEffect.mPasses[k0.forI||0],css)}
+    if(e.substr){Worker(k0,svg);if(!e){return} if(!this.ShaderToy)patchGL(); gl=new ShaderToy(e0,0, {appendChild(){}}); e=this[e];gl.Load(e.text?sToy(e.text):e,0); f=getVec(Object.keys(k0),gl,gl.mEffect.mPasses[k0.forI||0],css)}
     else{Worker(e,svg); e0.style[k0]=`paint(${e.name})`; return e0.animate.bind(e0)}
   let//fill --vars => setHTML => DataURL
   up=getTo(svg), eHObj=f?0: (e.id='',e.setAttribute('xmlns',e.namespaceURI),
     f=e.decode||e.play? ()=>{ if(false===e.seeking){let v=(A,B,k)=>{e[B]=k*css(A)}; v('--t','currentTime',e.duration);v('--kt','playbackRate',1);v('--n1','volume',1)} k0&&createImageBitmap(e).then(k0) }
     :()=>{up(css); eHObj.firstChild.replaceWith(E=e.cloneNode(1));e.onCopy&&e.onCopy(E); drawSVG(e0.style,k0,'image/svg+xml',escape(svg.outerHTML),e0)}
   ,svg.children[0]), E,
+  //pause when render
   oConn,o=new MutationObserver(()=>{o.disconnect();f();oConn()})
   ;(oConn=()=>o.observe(e0, {attributes:1,subtree:1}))()
   return async(a,c)=>{
@@ -101,16 +102,19 @@ CSS.Paint=(e0,e, k0="background",svg=this.svcss)=>{
 importJS=(T,f)=>T.addModule(URL.createObjectURL(new Blob([f], {type:'text/javascript'})))
 function*map(a,f,x){for(x of a)yield f(x)}
 let getTo=(e,vs=[...new Set(map(/(\w+)=/g[Symbol.matchAll](e.innerHTML), m=>m[1]))].flatMap(k=>[...map(e.querySelectorAll(`[${k}^="--"]`),e=>(e=e.getAttributeNode(k),e.k=e.value,e)) ])
-) =>src=>{for(let v of vs)v.value=src(v.k)  }
-//vec1~4 (rgba,iMouse,.), texture cam|html
+) =>src=>{for(let v of vs)v.value=src(v.k)  },
+//params for1Pass: vec1~4 (rgba,iMouse,iTime,.), in0~3:texture cam|htmlID, cache:600,no Mouse/tex
 getVec=(ks, gl,{mRenderer:c,mInputs:aTex},css, hr0='',
   _=(c.SetShaderConstant4F=(...a)=>c.SetShaderConstant4FV(a),
   //c.UpdateTextureFromImage(aTex[i].globject, $0)
-  ks.forEach(k=>{
-    if(k.startsWith('in_'))aTex[+k.slice(3)].video=assign(e, {videoWidth,videoHeight,currentTime}) })
+  ks=ks.flatMap(k=>{
+    if(k!='forI'&&k!='cache') {
+      if(k.startsWith('in_'))aTex[+k.slice(3)].video=assign(e, {videoWidth,videoHeight,currentTime})
+      else return [k]
+    }return [] })
   )
 )=>()=>{
-  let k,vs,N,M ,s,v,i, hdr=[]
+  let k,vs,N,/*vecM*/M, /*rgb()..*/s,v ,/*vec2[N]*/i, hdr=[]
   for(k of ks){vs=cssArg('a',css('--'+k)); hdr.push(`uniform vec${M=vs[0].length}${(N=vs.length)==1?'':`[${N}]`} ${k};`)
     i=0;for(v of vs){v=(-1!==(s=v.indexOf('('))? v.slice(s+1,-1).split(' '): Array(M).fill(v));
     v.unshift(k+(N==1?'': `[${i++}]`));c[`SetShaderConstant${M}F`].apply(c,v) }

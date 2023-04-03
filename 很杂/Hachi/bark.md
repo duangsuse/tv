@@ -84,19 +84,19 @@ TTS 可输入vtt流-遇空时长词时吐句，基于停顿 `科大[p500]讯飞`
 [Tesseract](https://digi.bib.uni-mannheim.de/tesseract/?C=M;O=D)|png|↑ _pdf2docx_/pdf|l:Tes,need;`TESSDATA_PREFIX=/usr..`|LSTM,[Apps](https://tesseract-ocr.github.io/tessdoc/User-Projects-%E2%80%93-3rdParty.html) Ver5 2021.11.30|2007|109||unix
 [AliOCR](https://alynx-saas.alifanyi.com/saas/mt.html)|png/doc/mp4|translated|l:Ali|OCR only here. XF的接口又乱又难调我索性不做|2021|0
 [TP-SMM.](github.com/yoyo-nb/Thin-Plate-Spline-Motion-Model#web-demo-for-animation)|png,id / faceA,mp4|__B.mp4__(if pre=face2D) paste A|idA, Pt=vox. try pre=rmback|Thin-Plate Spline Motion Model for Image Animation|2022|384|✔|[清华](https://cloud.tsinghua.edu.cn/d/30ab8765da364fefa101/)
-[SadTalker]()|. see civitAI,D_ID
+[TuneAVi](https://tuneavideo.github.io/)|mp4|mp4|tag|One-Shot Tuning of Image Diffusion Models for Text-to-Video Generation|2022|TBD|
 [AnimeGAN](https://huggingface.co/spaces/akhaliq/AnimeGANv2)|png|png|sty|Landscape photos/videos to anime. [Paddle ver](https://github.com/PaddlePaddle/PaddleGAN/blob/develop/docs/zh_CN/tutorials/animegan.md)|2018|TBD
-[realeSRGAN](https://kgithub.com/xinntao/Real-ESRGAN/blob/master/README.md#portable-executable-files-ncnn)|pre=png|png|'+'x4plus (+face),k=4. [Bili lab](https://real-cugan.animesales.xyz/)|ncnn,Training Real-World Blind Super-Resolution with Pure Synthetic Data|2021|47||[zip](https://github.com/xinntao/Real-ESRGAN#portable-executable-files-ncnn)
+[SadTalker]()|png,kpFaces|png||. see civitAI,[D_ID](chat.d-id.com)
 [rmback](https://github1s.com/nadermx/backgroundremover/blob/HEAD/backgroundremover/utilities.py#L167-L169)|png|png/gif/ mask.flv|kFast=2,fps=10; gb=#00ff00|[U^2-Net](https://kgithub.com/xuebinqin/U-2-Net#updates-): Going Deeper with Nested U-Structure for Salient Object Detection|2020|337||G
+[realeSRGAN](https://kgithub.com/xinntao/Real-ESRGAN/blob/master/README.md#portable-executable-files-ncnn)|pre=png|png|'+'x4plus (+face),k=4. [Bili lab](https://real-cugan.animesales.xyz/)|ncnn,Training Real-World Blind Super-Resolution with Pure Synthetic Data|2021|47||[zip](https://github.com/xinntao/Real-ESRGAN#portable-executable-files-ncnn)
 [GFPGAN](github.com/TencentARC/GFPGAN)|face.png|png|v3, k=2|see also: PULSE FastPhotoStyle FaderNetworks pix2pix|2021|332||[gh](https://github.com/xinntao/Real-ESRGAN/blob/5ca1078535923d485892caee7d7804380bfc87fd/inference_realesrgan.py#L145)
 [RIFE](https://github.com/nihui/rife-ncnn-vulkan#download)|1,3.png|2.png|rife-anime,k=2|ncnn,Real-Time Intermediate Flow Estimation for Video Frame Interpolation|2020|411||zip
 [GPT](prompts.ai)|`[">!sys","ask",]`|`">answer"`|v=3.5|ChatGPT|2023|0
+[YOLOv5](github.com/ultralytics/yolov5#predict)|mp4|box|sureAt=.25,yolov5s|world's most loved vision AI|2020|16|👍
 [FFmpeg](https://ffmpeg.org/)|_any/stream_|_any/rtmp,._|`c:v=vcodec, vf=lavfi,` [v360](https://jiras.se/ffmpeg/mono.html),[stereo3d](https://trac.ffmpeg.org/wiki/Stereoscopic),..|unix,A complete, cross-platform solution to record, convert and stream audio and video. WebM in:|2010|37|👍
 [face-align.](github.com/1adrianb/face-alignment/issues/286)|png|box,kpFaces.npy|d=2|world's most accurate network, capable of points in both 2D and 3D|2017|91|👍|[gh]()
-[YOLOv5](github.com/ultralytics/yolov5#predict)|mp4|box|sureAt=.25,yolov5s|world's most loved vision AI|2020|16|👍
 [StyleGAN](github.com/a312863063/generators-with-stylegan2)||png|emotions,age|NV,face generators, 2018:v1. [Anime ver](github.com/jayleicn/animeGAN),also:[SD-webui](https://guide.novelai.dev/guide/install/sd-webui)|2020|TBD
-[TuneAVi](https://tuneavideo.github.io/)|mp4|mp4|tag|One-Shot Tuning of Image Diffusion Models for Text-to-Video Generation|2022|TBD|
-[F2F^ρ](github.com/NetEase-GameAI/Face2FaceRHO)|mp4 mp4|mp4,3DMM*2||speed=9*SOTA, >460M. [more](https://m.thepaper.cn/baijiahao_19128242)|2022|TBD
+[F2F^ρ](github.com/NetEase-GameAI/Face2FaceRHO)|mp4 face.mp4|mp4,3DMM*2||speed=9*SOTA, >460M. [more](https://m.thepaper.cn/baijiahao_19128242)|2022|TBD
 [RMPPE.](github.com/ZheC/Realtime_Multi-Person_Pose_Estimation)|mp4|bones.npy||bottom-up approach for realtime multi-person pose estimation. [more.DensePose 4 WIFI](https://kgithub.com/geekfeiw/wifiperson/issues) |2017|TBD|✔
 
 >再次感谢 [Nihui](https://github.com/nihui) [腾讯优图] 打包诸多nCNN应用的电脑端，用户运行很方便！
