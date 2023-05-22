@@ -1,48 +1,53 @@
 pkg jueju
 
+(\S* ?\S*[事物类例] ?)(.*)[ ]为
+((for(.*))?\S*(fun|thing|class|insta) ?)(.*):(?=\n)
+(.*? =).. fun
+fun (?=.)(.*)
+
 /** Any value(!=null) provided to fun-[Args]ument and val/vars, maybe const literal, system registry or user input.
   expr and its subexpr/vars comes with 1 value&type. types are implicitly `:(extends) Any` and canBe(it's subtype) [Break] */
 /**: 事参数和变量接受的任意(非空)值，可能由常量字面、系统登记或人类输入。
   算式及其子式/末端单量都有1值和其类型。任何物类隐式 `：(属于) 值` 且可为(即有子类) [断止] */ 
-impl? thing Any:
+Any.. impl? thing 
   /** Test content equality(provided any!=NO), see [CanSort]: math rules, [Vars]: memAddr equality */
   /**: 实现内容相等性，任何值!=空，数学性质见 [可序], 内存地址相等见 [变量集] */
   @_("是") @CopyInfix(_("不是 en !="))
-  fun `==`(:This): Bool = VMOp.eq
+  `==`(:This): Bool = VMOp.eq
   /** Brief obj(&inners), rarely used outside debugging (except [StrBuild]). Add :[CanSend] for load/dump */
   /**: 简述对象和其内项数据，很少在调试外有用（除在 [文拼]）。导入导出请加 :[CanSend] */
-  fun Str: Str = VMOp.objStr
+  Str: Str = VMOp.objStr
   /** Pregrouping key for optimizing [==] lookup, must pure(equals->sameHash)
     or [KV.get] becomes UB. Hashes are sparse like pseudo-[Random] */
   /**: 优化“靠 [==] 查表”的预分组线索，必须纯（相等->散列相同）
     否则 [表.取] bug。相邻值散列不扎堆这点像伪[随机] */
-  fun Hash: Int = VMOp.objID
+  Hash: Int = VMOp.objID
 
   /** `Any` canBe `Str,Int,Ary`,. (`"" is Any`), if provided value implements([is]) [T] e.g. Str&you can't change type signature(e.g. Any), cast `any.as<Str>` is efficient
     for `int1.as<Int4>` widen, `int.as<Int1>` lose precision it's C-like(& lit-int=>float,Char!=Int2). for JVM APIs autoboxing `Ary<Int> == int[]` supported (slower). see [WasConvert] */
   /** 值可为文,数,组,. 也即 `"" 属于 值`。若提供的值有实现([is]) [T] 如=[文]，且你不能精确化类型签名如[值]，强转 `此值去作<文>` 不慢
     对数1作数4 宽化、数4作数1 精度丢失属C语言族（但只有字面int=>float、[字]!=[数2]）。对JVM接口，支持略慢自动装箱如 `组<数> == int[]`。见 [WasConvert] */
-  for<T> impl! eval fun as: T = VMOp.checkcast
-  /** Check if typeof this inherits [T], or have `class-insta T This`. `class: samename-insta where XX: ` inherits, like [Empty]
+  for<T> impl! eval as: T = VMOp.checkcast
+  /** Check if typeof this inherits [T], or have `class-insta T This`. `class: samename-insta : XX: ` inherits, like [Empty]
     Such [Bool] infix supports `!is` and `when x is:` syntax. "type" is statically(compiler-time) known part whatever (func)value, or "def" order is, faster&safer */
   /** 检查值的类型是否继承[T]的全员，或有 `类例 T 我类型`。 类的无名同名例会被继承如 [值空]。
     类似真假函数支持 `不属于` 和 `判x属于，` 语法。值的类型/型参静态(编译器)已知。无论值由谁何时提供，更快速而安全  */
   @_("属于")
-  for<T> impl! eval fun `is`: Bool = VMOp.instanceof
+  for<T> impl! eval `is`: Bool = VMOp.instanceof
 
 @Below(4+3, '''eval ''')
-for<T> fun Any.asMay = is<T>.way(`as<T>`, NO)
+for<T> Any.asMay = is<T>.way(`as<T>`, NO)
 @_("存于")
-for<T> fun T.`in`(set:CanSee<T>) = set.contains(this)
-for<N> fun `-`(:N): N = VMOp.neg
-for<N> fun `+`(:N) = n //later def N=Vec,Sort
+for<T> T.`in`(set:CanSee<T>) = set.contains(this)
+for<N> `-`(:N): N = VMOp.neg
+for<N> `+`(:N) = n //later def N=Vec,Sort
 @Below(3, '''@CopyInfix''')
 @_("非")
-fun `!`(q:Bool) = q.not //del "!!"
+`!`(q:Bool) = q.not //del "!!"
 /**: 只能 `1不>2` 而无“1不大2”。否运算lteq "<=" */
-for<N> fun N.`>`(:N): Bool = VMOp.gt
+for<N> N.`>`(:N): Bool = VMOp.gt
 /** [>] */
-for<N> fun N.`<`(:N): Bool = VMOp.lt
+for<N> N.`<`(:N): Bool = VMOp.lt
 
 /** Any?=Any+NO: `null`, nullptr or None */
 insta NO: Any?
@@ -58,43 +63,43 @@ same-pkg impl?? thing VMT
 impl! thing Break
 
 // scope fun
-for<T> fun T.takeIf(p:FnTest<T>) = p(this).way(this,NO)
+for<T> T.takeIf(p:FnTest<T>) = p(this).way(this,NO)
 
 // helper
-eval fun TODO(reason:Str="I'm tired"): Break = throw ErrNoImpl(reason)
-fun error(msg:Str): Break = throw ErrVars(msg)
+eval TODO(reason:Str="I'm tired"): Break = throw ErrNoImpl(reason)
+error(msg:Str): Break = throw ErrVars(msg)
 
-fun require(q:Bool, msgr: Fn0<Str>):
+require(q:Bool, msgr: Fn0<Str>).. fun 
   if !q: throw ErrArg(msgr())
-for<T> fun requireNot(it: T?, value: T?, msgr: Fn0<Str>): T
-for<T> fun requireNotNO
+for<T> requireNot(it: T?, value: T?, msgr: Fn0<Str>): T.. fun
+for<T> requireNotNO.. fun
 
 /** See [assert] for testing */
-fun check(q:Bool, msgr: Fn0<Str>)
-for<T> fun checkNot(it: T?, value: T?, msgr: Fn0<Str>): T
+check(q:Bool, msgr: Fn0<Str>).. fun
+for<T> checkNot(it: T?, value: T?, msgr: Fn0<Str>): T.. fun
 
-for<R> fun trys(:Fn0<R>) = try { Res.Ok(fn()) } catch(CanThrow) { Res.Err(you) }
+for<R> trys(:Fn0<R>) = try { Res.Ok(fn()) } catch(CanThrow) { Res.Err(you) }
 
 /** Switch `$Y` or `$N` (true|false) */
 /**: 在 `真` 和 `假` 间选择 */
-thing Bool where CanSort:
+Bool : CanSort.. thing 
   /** use [!] instead */
-  fun not: Bool = VMOp.not
+  not: Bool = VMOp.not
   @_("且")
-  fun `&`(:Bool): Bool = VMOp.and
+  `&`(:Bool): Bool = VMOp.and
   @_("或")
-  fun `|`(:Bool): Bool = VMOp.or
+  `|`(:Bool): Bool = VMOp.or
   /** Only 1 Bool true? see [Int.xor] */
   /**: 只有一个真值？见 [数.xor] */
-  fun xor(:Bool): Bool = VMOp.xor
+  xor(:Bool): Bool = VMOp.xor
 
 @Compiled("bidir(-1,MinAt0,Eq,MaxAt0)")
-enum-thing Sort(sign:Int):
+Sort(sign:Int).. enum-thing 
   MinAt0(-1); MaxAt0(+1); Eq(0)
   //min,max
 /** Type with comparator. to sort [compareTo] must: 0. not random (pure) 1. a=b&b=c&a=c (refl,identical & transitive) 2. a>b & b<a (!symmetric) */
-for<This>class CanSort:
-  fun `compareTo`(:This): Sort
+<This>.. for<This>class 
+  `compareTo`(:This): Sort.. fun
   //by rev nullsFirst  thenBy
 
 
@@ -103,120 +108,120 @@ for<> Bool3 = Bool?
 
 for<AB> A.`to`(:B) = Pair(this,b)
 /** Typical data with 2 [Vars]. use [PairOf] for (type)A=B, [Vec] for numeric Ary指针也是用a到ks,取(k) 表示 */
-for<get A get B> data-thing Pair(A:A,B:B) where CanSend:
-  impl fun toStr="$A:$B"
-for<get A get B get C> data-thing Pair3(A:A,B:B,C:C) where CanSend:
-  impl fun toStr="$A,$B,$C"
+<get A get B> data-.. for<get A get B> data-thing 
+  impl toStr="$A:$B".. fun
+<get A get B get C> data-.. for<get A get B get C> data-thing 
+  impl toStr="$A,$B,$C".. fun
 for<T> PairOf=Pair<T,T>
 for<T> PairOf3=Pair3<T,T,T>
 
-for<N> when-thing RangeHalf(A:N) where CanSee<N>:
-  fun contains(:N) = n!<A
-  fun see(:Fn1<N>) = (this step 1).see(fn)
-  fun gotSize(it:Sized) = A~it.size
+<N> when-.. for<N> when-thing 
+  contains(:N) = n!<A
+  see(:Fn1<N>) = (this step 1).see(fn)
+  gotSize(it:Sized) = A~it.size
 
-for<N> thing Range(A:N, B:N) where RangeHalf(A):
-  fun contains(:N) = n!<A & n!>B
-  fun see(:Fn1<N>) = (this step 1).see(fn)
-  fun moveAndPad(:Int,n:Cnt)
+<N> .. for<N> thing 
+  contains(:N) = n!<A & n!>B
+  see(:Fn1<N>) = (this step 1).see(fn)
+  moveAndPad(:Int,n:Cnt).. fun
 
 for<N> RangeSub=PairOf<Range<N>?>
 
 for<TR> PairOf<T?>.joinOr(v0:T, :Fn2<T,T,R>) = fn(A?:v0, B?:v0)
 
-for<N> fun N.`~`(:NO) = RangeHalf(this)
-for<N> fun N.`~`(last:N) = Range(this,last)
-for<N> fun N.`~+`(right:N) = Range(this,this+right)
+for<N> N.`~`(:NO) = RangeHalf(this)
+for<N> N.`~`(last:N) = Range(this,last)
+for<N> N.`~+`(right:N) = Range(this,this+right)
 /** `0~+-5` = ±5 */
-for<N> fun N.`~+-`(pad:N) = Range(this-pad,this+pad)
-for<N> fun RangeHalf<N>.`step`(d:N) = RangeStep(this,d)
-for<N> fun RangeHalf<N>.`div`(:N) = this step (B-A)/n
+for<N> N.`~+-`(pad:N) = Range(this-pad,this+pad)
+for<N> RangeHalf<N>.`step`(d:N) = RangeStep(this,d)
+for<N> RangeHalf<N>.`div`(:N) = this step (B-A)/n
 
 /** `0~10 step 2`. [d]: delta, increment */
-for<N> thing RangeStep(rn:RangeHalf, d:N) where CanSee<N>:
-  fun see(:Fn1<N>):
+<N> .. for<N> thing 
+  .. fun 
     var N: i A; n B-1
     val fwd:Fn0<Bool> = (rn is Range).way( (b.remDiv(d).A==0).way(`i!=n`, `i<n`), `$Y`)
     loop if fwd(): fn(i); i=i+d
-  fun contains(:N) = (n in rn)& n.remDiv(d).A==0
+  contains(:N) = (n in rn)& n.remDiv(d).A==0
 
-thing Char where CanSort,Zeros,CKase:
-  fun Int = as<Int>
-  fun `+`(:Int) = (as<Int> + i).Char
+.. thing 
+  Int = as<Int>
+  `+`(:Int) = (as<Int> + i).Char
 
-  samename-insta:
+  .. samename-insta
     eval val surrogate=(56320~57343).seen{Char} to (55296~56319).seen{Char}
     impl val N_BYTE = 2
     impl val sign = $N
 
 
-for<This> class CKase:
+<This> .. for<This> class 
   var noCase=$N
-  fun equals(:This)
-  fun retype(need:Case, lo:Locale) = when need:
+  equals(:This).. fun
+  .. fun 
     Upcase: uppercase(lo)
     Lowcase: lowercase(lo)
     Title: titlecase(lo)
-  fun contains(:Chars): Bool
-  fun contains(:Regex): Bool
-  fun split(:Args<Str>, n:Cnt=-1)
-  fun split(:Args<Char>, n:Cnt=-1)
+  contains(:Chars): Bool.. fun
+  contains(:Regex): Bool.. fun
+  split(:Args<Str>, n:Cnt=-1).. fun
+  split(:Args<Char>, n:Cnt=-1).. fun
 
-  fun filter(p:FnTest<Char>) = filter<StrBuild>(p).Str
+  filter(p:FnTest<Char>) = filter<StrBuild>(p).Str
 
-  class Posited:
-    fun with(sub:Str): Bool
-    fun without(sub:Str)
-    fun pad(n:Cnt, :Char)
-    fun padLines(n:Cnt, :Char, lf=CKase.LF)
+  .. class 
+    with(sub:Str): Bool.. fun
+    without(sub:Str).. fun
+    pad(n:Cnt, :Char).. fun
+    padLines(n:Cnt, :Char, lf=CKase.LF).. fun
     /** reverses [pad] */
-    fun trim: Str
-    fun trimMargin(before: Str): Str
+    trim: Str.. fun
+    trimMargin(before: Str): Str.. fun
     val pad2pad
     maxOf
 
-  enum-thing Case:
+  .. enum-thing 
     Upcase; Lowcase; Title
 
-  samename-insta:
-    for<R> fun ignore(msdos:Fun1<CNoKase,R>) = CNoKase.msdos
+  .. samename-insta
+    for<R> ignore(msdos:Fun1<CNoKase,R>) = CNoKase.msdos
 
 /** `"string文", "abc"` consts are of this type: [Chars] with Unicode, uppercase, sort support  */
-thing Str where Chars,CKase,CanSort:
-  fun BGets(:Charset=UTF_8)
+.. thing 
+  BGets(:Charset=UTF_8).. fun
 
   /** `sel=i~+1` for surrogate pair(UTF16) */
-  fun UnicodeN(sel:Range<Idx>)
-  fun UnicodeAt(:Idx)
+  UnicodeN(sel:Range<Idx>).. fun
+  UnicodeAt(:Idx).. fun
 
 
-  fun lines
+  lines.. fun
 
 
-  fun Trie
+  Trie.. fun
 
 
 
 /** `add("1"[0~1]).add(*'a'~'z')` */
-class StrBuild:
-  @Below(3, ''' fun _:This = VMOp.xx''')
-  fun add(: Args<Chars?>)
-  fun addLn(: Chars) fun addLn
+.. class 
+  @Below(3, ''' _:This = VMOp.xx''')
+  add(: Args<Chars?>).. fun
+  addLn(: Chars) fun addLn.. fun
 
 /** See immutable [Str], [StrBuild] */
-class Chars where Ary<Char>
+Chars : Ary<Char>..class
   /** Use `Regex.Flag.empty()-G` for only-first matching */
-  fun replace(:Regex, :Fn1<Regrp,Str>)
-  fun replace(:Range<Idx>, :Str)
-  fun split
-  fun `like`(:Regex)
+  replace(:Regex, :Fn1<Regrp,Str>).. fun
+  replace(:Range<Idx>, :Str).. fun
+  split.. fun
+  `like`(:Regex).. fun
   /** get substr for [Y](range or full), others for [N], then concat back. "a.2".partition(`first('.')?~NO`, `it`, "")=="2" */
-  fun partition(:Fun1<Str,RangeHalf<Idx>?>, Y:FnNew<Str>, N:FnNew<Str>)
+  partition(:Fun1<Str,RangeHalf<Idx>?>, Y:FnNew<Str>, N:FnNew<Str>).. fun
   /** [partition], if no match then `N(this)` */
-  fun partition(:Regex, Y:FnNew<Str>, N:FnNew<Str>)
+  partition(:Regex, Y:FnNew<Str>, N:FnNew<Str>).. fun
 
-for<N> fun Range<N>.`+`(:N) = Range(A+n,B+n)
-for<N> fun Range<N>.`-`(inner:Range<N>): Ary<Range<N>>
+for<N> Range<N>.`+`(:N) = Range(A+n,B+n)
+for<N> Range<N>.`-`(inner:Range<N>): Ary<Range<N>>.. fun
 
 
 Chars.notBlank
@@ -225,110 +230,110 @@ Chars.notBlank
 
 
 
-fun Cnt.`**`(repeated: Fn0):
+.. fun 
   var n this
   loop if n!=0: repeated(); n=n-1
 
-fun Str?.`+`(orEmpty: Any?) = (this?:"")+(orEmpty?.Str ?:"")
+Str?.`+`(orEmpty: Any?) = (this?:"")+(orEmpty?.Str ?:"")
 
 enum-thing TermColor
 
 for<> TermBicolor = Word_On<TermColor, TermColor>
 
-fun Str.wasCall(c:) = LinkLn(this to c)
+Str.wasCall(c:) = LinkLn(this to c)
 
-class-insta WasConvert LinkLn<Pair<Str,TermBicolor>>:
-  fun as were Str:
+.. class-insta 
+  .. fun 
     var*: lA; lB
     return joinStr(end=TermColor.glass.esc):[==s to (A on B)]
       B.esc.ifNew(lB)+A.esc.ifNew(lA)+s
   where
-    fun Str.ifNew(:Var<Str>)=(this==var).way("") : var.v=this; this
-class-insta WasConvert TermColor:
-  fun as=this on glass
+    Str.ifNew(:Var<Str>)=(this==var).way("") : var.v=this; this.. fun
+.. class-insta 
+  as=this on glass.. fun
 
-thing Flag:
-  samename-insta:
-    for<E>(E:Enum) fun all()
-    for<E>(E:Enum) fun get(name:Str)
+.. thing 
+  .. samename-insta
+    for<E>(E:Enum) all().. fun
+    for<E>(E:Enum) get(name:Str).. fun
 
   impl? thing Bit(name: String, ordinal: Int, mask=2**ordinal)
 
-for<This> impl?? thing Enum(name: String, ordinal: Int) where CanSort
+for<This> impl?? thing Enum(name: String, ordinal: Int) : CanSort
 
 
 
 /** Ranged data, no get() or see() funs for [Set], [weak.Set] with only a size */
-class Sized:
+.. class 
   val size: Cnt
   val `empty` = size==0
 val Ary<*>.lastIdx: Idx = size-1
 val Ary<*>.fullIdx = 0~lastIdx
 @_("无则")
-for<T>(T:Sized) fun T.`ifEmpty`(vzero: T) = empty.way(vzero,this)
-for<T>(T:Sized) fun T.`ifEmptyOr`(forbids:FnTest<T>, vzero: T) = (empty|forbits(this)).way(vzero,this)
-for<T>(T:Sized) fun T?.ifEmptyOrNO = ifEmptyOr(NO).as<T>
+for<T>(T:Sized) T.`ifEmpty`(vzero: T) = empty.way(vzero,this)
+for<T>(T:Sized) T.`ifEmptyOr`(forbids:FnTest<T>, vzero: T) = (empty|forbits(this)).way(vzero,this)
+for<T>(T:Sized) T?.ifEmptyOrNO = ifEmptyOr(NO).as<T>
 
-fun Chars.`ifBlank`(vzero: T) = isBlank.way(vzero,this)
-fun Chars.`ifBlankOr`(forbids:FnTest<T>, vzero: T) = (isBlank|forbits(this)).way(vzero,this)
-fun T?.ifBlankOrNO = ifBlankOr(NO).as<T>
+Chars.`ifBlank`(vzero: T) = isBlank.way(vzero,this)
+Chars.`ifBlankOr`(forbids:FnTest<T>, vzero: T) = (isBlank|forbits(this)).way(vzero,this)
+T?.ifBlankOrNO = ifBlankOr(NO).as<T>
 
 @_("空作0项")
-for<T>(T:Empty) fun T?.`orEmpty` = this?:empty()
+for<T>(T:Empty) T?.`orEmpty` = this?:empty()
 
 /** `NO` means str "No xxx" */
-eval fun Var<Any?>.noAsNO(no=_("空 en No")) = when this:
+eval .. fun 
   Var.V: "$no $name"
   Var.I: "$no #$i+1"
   Var.K: '$no "$k"'
 
 /** [Line] with fixed size, not actually "Array" in JVM or tuple(`Ary<get T>`) in Py. see: unboxed [AryN], [Args] */
-for<T This> impl? thing Ary where Sized,CanSee<T>, Copy,Vars<T>:
-  fun get(:Idx): T
+<T This> impl? .. for<T This> impl? thing 
+  get(:Idx): T.. fun
   /** Try to make 0-copy viewport(`subList`,.), or do [slice] */
-  fun get(sel:Range<Idx>): This
-  fun set(:Idx, x:T)
-  fun set(sel:Range<Idx>, vs: Seq<T>) = vs.toIdx.see: [==x to i] this[i]=x
-  fun set(sel:Range<Idx>, fill: T) = set(seq, Seq.repeat(fill))
+  get(sel:Range<Idx>): This.. fun
+  set(:Idx, x:T).. fun
+  set(sel:Range<Idx>, vs: Seq<T>) = vs.toIdx.see: [==x to i] this[i]=x
+  set(sel:Range<Idx>, fill: T) = set(seq, Seq.repeat(fill))
   /** for JDK:[System.arraycopy] */
-  fun set(sel:Range<Idx>, vs: Ary<Var<T>>) = (vs[0] to vs.getN(-1)!!).seen<Var.I>:
+  .. fun 
     System.arraycopy(a,A.i, this,0,B.i-A.i)
-  impl fun see(op: Fn1<T>): fullIdx.see { op(this[it]) }
-  samename-insta Impl:
+  impl see(op: Fn1<T>): fullIdx.see { op(this[it]) }.. fun
+  .. samename-insta 
     /** Native impl for `T[]` type&VM operators. */
-    for<T>(T:Empty) fun wasCall(n:Cnt, init: Fn1<Idx, T>): AryN<T> = aryOfZeros(n).let:
+    <T>(T:Empty) .. for<T>(T:Empty) fun 
       fullIdx.see: set(it, init(it))
 
   @Below(4, '''@SafeVariance("set T") ''')
-  fun sort(ord:Sort=MinAt0, cmp:Fn2<T,T,Sort>)
-  fun reverse
+  sort(ord:Sort=MinAt0, cmp:Fn2<T,T,Sort>).. fun
+  reverse.. fun
   /** sequence randomly shuffled */
-  fun shuffle(ran=Random())
+  shuffle(ran=Random()).. fun
   val vars = seenLine: this[it].as<Var>
   /** defaults to 0-copy. but for [filter], even dup2 is better than *inplace* Bubble Sort's slow */
-  fun seen(set:FnNew<T>) = let:
+  .. fun 
     toIdx.see:[==x to i] this[i]=x.set()
 
-for<TR>(R:CanSort) fun Ary<T>.sortBy(ord:Sort=MinAt0, key:Fn1<T,R>) = sort(ord):[a,b] key(a).compare(key(b))
-for<T>(T:CanSort) fun Ary<T>.sort(ord:Sort=MinAt0) = sortBy(ord,noOp)
+for<TR>(R:CanSort) Ary<T>.sortBy(ord:Sort=MinAt0, key:Fn1<T,R>) = sort(ord):[a,b] key(a).compare(key(b))
+for<T>(T:CanSort) Ary<T>.sort(ord:Sort=MinAt0) = sortBy(ord,noOp)
 
-for<T> fun Ary<T>.getN(ineg:Int) = lets:
+<T> .. for<T> fun 
   val i=(ineg<0).way(size+i, i)
   (i<size).way(`this[i]`, NO)
-for<TA>(A: CanAdd<T>) eval fun CanSee<T>.copyTo(a=empty<A>()) = a.let { you.see: add(it) }
+for<TA>(A: CanAdd<T>) eval CanSee<T>.copyTo(a=empty<A>()) = a.let { you.see: add(it) }
 
 /** May asList(for int[] do copy) to `Ary<T>`. On JVM [get] returns `int`, not `Integer` boxed,
   `Ary<Int>` can't do this for it can be a [Line]. Supports JVM `Object[]`, or [T]: Int,. for typed array */
-for<T> impl? eval thing AryN where Ary<T>
+for<T> impl? eval thing AryN : Ary<T>
 /** Compile-time known expr list, use it for const expansion or destruct */
-for<T> eval thing Args where Ary<T>
-/** `fun pair(:ArgsName<Str, 2 to "ab"> )` */
-for<TK>(K: eval, K: Pair<Int,Str>) eval thing ArgsName where Args<T>
+for<T> eval thing Args : Ary<T>
+/** `pair(:ArgsName<Str, 2 to "ab"> )` */.. fun
+for<TK>(K: eval, K: Pair<Int,Str>) eval thing ArgsName : Args<T>
 
 
 /** means `Fn1<Flag<E>>` canBe `Fn1<Line<E>>`. NOTE member in class-insta implicts 'eval impl' */
-for<E> class-insta WasConvert Ary<Flag.Bit<E>>:
-  fun as: Flag<E> = copyTo() // this(Fold.To(Flag<E>()): add(it) )
+<E> class-.. for<E> class-insta 
+  as: Flag<E> = copyTo() // this(Fold.To(Flag<E>()): add(it) )
 
 @_("可变")
 Var
@@ -378,43 +383,43 @@ cat 抓
 cut 裁
 oncat 抓做
 ’
-对何<AB> 类 可同 为
+可同。对何<AB> 类 
   事 抓（：A）：B
   事 裁（：B）：A
 
   事 抓做(：A、改=函新<B>，它。)=裁(改(抓(a)))
   事 抓做(：A、改=函1<B 待<B>>，它。 )=待，裁(改(抓(a))! )。
 
-  同名例 为
+ 。 同名例
     恒事 受调用(pipe：组参<可同<* *>>)：类型递归<pipe>
     私下恒事 类型递归(项：组<类型>) = 项[0]的参[0] 令为，[A]
       类型.参(可同、A、项去叠(A)，[a b] b的参[0]可为a；b的参[1]。)
 
     物 数(进制：计)：可同<文 数>
-    物 UTF(字符集=默认)：可同<字节 文> 为
-      同名例 为
+   UTF(字符集=默认)：可同<字节 文>。 物 
+     。 同名例
         量 支持：集<文>
         量 别名：表组<文 文>
         变文 默认="utf8"
-    例 Base 为
+   Base。 例 
       事 取(k：计)：可同<文 字节>
       量 码表：改表<计 文>
       变文 pad="="
 
-对何<AB> 物事「!」(原：可同)：可同<B A> 为
+「!」(原：可同)：可同<B A>。对何<AB> 物事
   !事 抓（：B）=原去裁(b)
   !事 裁（：A）=原去抓(a)
 
 对何<AB> 事 A.「到」(对应：B)=俩项(我、对应)
-对何<读A读B> 储物 俩项(首：A、次：B) 为
+俩项(首：A、次：B)。对何<读A读B> 储物 
   !事 文="($首 $次)"
-对何<读A读B读C> 储物 俩项3(首：A、次：B、末：C) 为
+俩项3(首：A、次：B、末：C)。对何<读A读B读C> 储物 
   !事 文="($首 $次 $末)"
 
-对何<读A读B读C> 判物 可为3 为
+可为3。对何<读A读B读C> 判物 
   A(值：A)；B(值：B)；C(值：C)
 
-对何<读A读B> 判物 可为 为
+可为。对何<读A读B> 判物 
   A(值：A)；B(值：B)
   对何<R> 事 令(成：函1<B R>) = 令，B(它)。
   对何<R> 事 或(败：函1<A R>) = 路(败、无事)
@@ -426,16 +431,16 @@ oncat 抓做
 对何<AB> 事「!」(况：可为) = 况去路(可为「B」、可为「A」)
 
 
-对何<R> 可定物 待 为
+待。对何<R> 可定物 
   事「!」(：函续)
-  同名例 为
+ 。 同名例
     对何<R>事 受调用(：函1<函续>)
     对何<R>事 全(：组参<待>)：组<R>
     对何<R>事 首(：组参<待>)：R
     量 Main：协程上文
     量 IO：协程上文
 
-对何<R> 物 待完结：待 为
+待完结：待。对何<R> 物 
   事 入队
   事 撤队
   事「限时」
@@ -548,13 +553,13 @@ i=0；重复再若i<10，i移右。 “i=10. 但若有 i++, i完成时是11”
 本周 令，
   "江小白"问好+"马东梅"问好
 
-例物 周 为
+周。例物 
   一；二；三；四
   五；六；日
   事 作="$名"；事 作=号+1
 
 对何<数>
-事 列<数>.统计：仨<数> 为
+列<数>.统计：仨<数>。事 
   变，a +极大；b -极大；c 0
   其令，
     判，
@@ -562,22 +567,22 @@ i=0；重复再若i<10，i移右。 “i=10. 但若有 i++, i完成时是11”
     c=c+它
   回仨(a、b、c)
 
-事『15』：数 为
+『15』：数。事
   变数y初0；加()；回y
 其中，
   事 加=令， y=「它+5」。
 
-事 累加器(acc=0令，说("好加!")。、n：数、：参颗粒化<1 1>)：数 为
+累加器(acc=0令，说("好加!")。、n：数、：参颗粒化<1 1>)：数。事 
   acc=acc+n；回acc
 
-物 累加器(变acc=0令，说("好加!")。)：函1<数 数> 为
-  事 受调用(n：数)：数 为
+累加器(变acc=0令，说("好加!")。)：函1<数 数>。物 
+ 受调用(n：数)：数。 事 
     acc=acc+n；回acc
 
 累加器()令，
   我(7)必是7；我(3)必是10
 
-对何<T>私下事 列.存匹配(：函试)：真假 为
+列.存匹配(：函试)：真假。对何<T>私下事 
   令，
     若此函试(我)，回真。
   回假
@@ -599,17 +604,17 @@ i=0；重复再若i<10，i移右。 “i=10. 但若有 i++, i完成时是11”
     当前用户令(用户服务「取资料」)令(传输)
     空则，抛下Business错("")。
 
-对何<T>(T：可序) 事 组.冒泡排序 为
+组.冒泡排序。对何<T>(T：可序) 事 
   满针 其令，[i]
     (0~i)其令，
       若我[它]不<我[i]，交换(i、它)。
       “交换(我[i]、我[它])”
 
-对何<T> 事 组.交换(A：针、B：针) 为
+组.交换(A：针、B：针)。对何<T> 事 
   我[A]=我[B]；我[B]=a
 其中，量a=我[A]
 
-对何<T> 事 交换(A：可变、B：可变) 为
+交换(A：可变、B：可变)。对何<T> 事 
   A的值=B；B的值=a
 其中，量a=A
 
@@ -618,7 +623,7 @@ i=0；重复再若i<10，i移右。 “i=10. 但若有 i++, i完成时是11”
 文本变量，
   函1，说妖精("白骨精"、原型=枯骨 、降服人=孙悟空 、能耐=它)。(百般变化)
 
-例 随机生成：App 为
+随机生成：App。例 
   !事 启动 = 听去提("输入数目：")去数 其令，[n]
     随机数集的首(n)去凑(" ")令(说)
     说("<==以上$n 个")
@@ -656,15 +661,15 @@ i=0；重复再若i<10，i移右。 “i=10. 但若有 i++, i完成时是11”
   量歌者=播放器()令，加载("大象.wav")；时=0；态=播放。
   1去文令，"+"+我。必 "+1"
 
-例 冰箱 为
-  例 门：有开闭 为
+冰箱。例 
+ 门：有开闭。 例 
     !事 关闭=说
     事 开=我
 
   事 有开闭.「塞入」=说
   “事 有开闭.「塞入」=令，说；关闭()。”
 
-事 启动(：组<文>) 为
+启动(：组<文>)。事 
   恒量N=1_000
   量 亲=组(N、0)
   (0~<N)其令， 亲[它]作<可变>的值=它 。
@@ -677,10 +682,10 @@ i=0；重复再若i<10，i移右。 “i=10. 但若有 i++, i完成时是11”
       若i是c，x的值=a。
     说({b c}去凑)
 
-例物 喜爱程度 为
+喜爱程度。例物 
   爱；很爱；非常爱；私生饭
 
-公开事 娱乐.夸夸群 为
+娱乐.夸夸群。公开事 
   明星令，
     话=判我多爱你，
       爱，"爱你！"。很爱，"永远给$名 打call！"。
@@ -697,11 +702,11 @@ i=0；重复再若i<10，i移右。 “i=10. 但若有 i++, i完成时是11”
   列()?去展(至={fp})，它去find(fp)。空则{fp}
 
 对何<T>符=函2<T T T>
-对何<T>判物 式 为
+式。对何<T>判物 
   Op(a：T、b：T、f：符)；N(：T)
   事 值=判我，
     N(x)，x。Op(a、b、f)，f(a去值、b去值)。
-  同名例 为
+ 。 同名例
     对何<数>事 数.「+」是封「+」
     对何<T>恒事 封(：符)=函2<T T Op>，[a b] Op(a、b、此符)。
 
@@ -711,11 +716,11 @@ i=0；重复再若i<10，i移右。 “i=10. 但若有 i++, i完成时是11”
 for<T>符=Fn2<T T T>
 for<T>when-thing 式 were
   Op(a:T,b:T, f:符); N(:T)
-  fun 值=when this:
+  .. fun 
     N(x):x  Op(a,b,f):f(a.值,b.值)
   -insta were
-    for<N>fun N.`+`== 封`+`
-    for<T>eval fun 封(：符)=Fn2<T T Op>，[a b] Op(a,b,此符)。
+    for<N>N.`+`== 封`+`.. fun
+    for<T>eval 封(：符)=Fn2<T T Op>，[a b] Op(a,b,此符)。.. fun
 
 式 let:
   (1+2+3).值
@@ -725,7 +730,7 @@ for<T>when-thing 式 were
 
 书 com.example.jueju
 
-事 启动 为
+启动。事 
   量foo=10
   变，bar 10。bar=20
   量fooL：数8=10
@@ -807,7 +812,7 @@ for<T>when-thing 式 were
   事 narg(n：组参<数>)=n的长
   对何<T>量 函1<T 真假>.反=「非 我去受调用(它)」
 
-  物 某(x：数) 为
+ 某(x：数)。 物 
     事「+」(：数)=x+此数
     事 受调用(：数)=x*此数
     
@@ -821,19 +826,19 @@ for<T>when-thing 式 were
     
   事 文.除(：字)=滤，[c]c不是此字。去文
   
-  例物 Enum 为
+ Enum。 例物 
     A；B；C
-  例物 Enum(值：数) 为
+ Enum(值：数)。 例物 
     A(2)；B(3)；C(3)
     事 说=:"$值 $号"
   
-  例 Obj 为
+ Obj。 例 
     事 文="${类型<Obj>的名}"
     
-  储物 计数(变ac=0) 为
+ 计数(变ac=0)。 储物 
     事 移右=令，ac移右。
     事「+」(n：可为<数 计数>)=令，ac+n去路(「它」、「它的ac」)。
     事 有(它：计数)=ac是它dac
-    事 受写(i：针、x：数) 为
+   受写(i：针、x：数)。 事 
       ac=i+x
   事「-」(它：计数)=它令，ac=-ac。

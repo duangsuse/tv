@@ -347,6 +347,17 @@ el.Rn={
   area={xywh/s, has([e,i]) },
   xy(vec)={ei,e,es} //caretPosition/Range FromPoint
 }
+
+Rn={
+  set_now={e|[e0,i0,i?],[e,i] } getRange0,
+  mvI("move|extend",iDeg),isI,text, //char,word, ^v line,paragraph, ±3=full 
+  copy(s?),sysClipTo(rv, dt=1),
+
+  copyNode(mode="|cut|surr|ins",tag?).qs`fromFragImport`  ,
+  setHL(k),
+  area={xywh/s, has},
+  xy(v)={ei, es} //caretPosition,FromPoint
+}
 ```
 
 > mark: `CSS.highlights.set(k, new HL(...rn))` 启用 `::highlight(k){bg: cyan}`
