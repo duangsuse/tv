@@ -1,13 +1,14 @@
 ```js
+el.count=({n=0} )=>(
+  my.add=()=>n.v++ ,
+  div(p(n), button(wOp({tap:my.add}), n,"+1") )
+)
+
 let app={n:0}
 main=()=>(say(`count from ${app.n}`),
   el.button(wOp(
     {tap(){ app.n++ } }),
   "Count: ",app.it.n) //n=ref()
-)
-el.count=({n=0} )=>(
-  my.add=()=>n.v++ ,
-  div(p(n), button(wOp({tap:my.add}), n,"+1") )
 )
 
 main=(N=app.it.n
@@ -39,39 +40,45 @@ doc.body.let=el(
 ```
 
 Eqv 是克制的框架联邦。囊括 界面/传输/巧语 三界
-
-EQ让算法与模式相乘，而不是争锋同场。「凝聚的代码，连样貌也能超越」
 - el.OSDARR CSSanim
 - qs.HISTPM
 - it.refVec
 
-非null(NO)值 都有 let(f)得自身 lets(f)得f结果。f支持 `el.let(_=>{优化的 with(el) })`, my限全局域
+EQ让算法与模式相乘，而不是争锋同场。「凝聚的代码，连周期也能超越」
+
+非null(NO)值 都有 let(f)得自身 lets(f)得f结果。f支持 `el.let(_=>{优化的 with(el) })`
 
 wOSK 如 `doc.let=el(wOp({tap/2s: ev=>say('$this好') }), wXX,, ...child)`
 - `wOp({, edit:$N即NO,acty:$Y,stop}, 'li, only once stop/! first')` 冒泡参数可选
-- `wSty('.css'?, { ,pos,inview})`, wSty\`css${$Y}` 表示 div_css$idSSR() 类的有无
+- `wSty('.css'?, { ,pos,inscr})`, wSty\`css${$Y}` 表示 div_css$idSSR() 类的有无
 - `wKV({ ,v,slot:[父容器,需全屏]}, 'data/aria')`, `wKV.i18n/css.T='tw-'` 是简写
   - wKV `wOp(fns={my:1}) ({e:Node}); fns.my(触发={})` 可监听
+  - `pt=({x=2,y})=> el.div( Eqv.fmt'${x},${y}'/.json.v)` 可编辑
   - `pos=[xy,wh监听,abs'!'含框]`; `Fshadow:[x,y,], _myVar,__moz等XX`
   - `wSty().wSty()` 支持 `&:sub`
 
 另有树绑定
 - see(a,fe) 绑定列表, sees(cfe,fk=`o.type`)/If非空判定
-- say(,danger=0~3), ask(inert=NO|body|e横中心)(rv,form)/YN/str 填框和弹框, `sel(rv_i18n,[v]{k:jsonV}rn,{of:'many',chk:1使用box2下拉})`
+- say(,danger=0~3), ask(inert=NO|body|e横中心).YN/str/(rv,form) 填框和弹框, `sel(rv_i18n,[v]{k:jsonV}rn,{of:'many',chk:1使用box2下拉})`
+
+界面
+- Only1(sel=[N=0~Inf], e_rv=attrOpen, vs=$Y$N冲突换色)
+  - see(sel,by copyNode); N=-N (长按)显示拖选 /初0禁用
+  - S-区间增选 C-反增选 A-Esc
 
 EQ基于 tree pattern 读写DOM：
 - `el(无tag,wXX,)` 和 `get((a,b, !modify,rv)=>body(el('*', wKV(a))) )` 树都返回函数
-- `doc.let=el(...pre, it/parent(), ...tail)` 调用它 完成插入/爬取
+- `doc.let=el(...pre, it/parent(css__n)={}, ...tail)` 调用它 完成插入/爬取
   - see则据ul参, sees据{k:fn}内异常爬
-  - see优化: `a.make(a=>a.sort, {io})` 时 `Eqv.diff(a,b)=[splice(2,2),(0,0,刚才=2 或[新项]) ]`；有 `wbr~* {hide缓存}` 和 list[eqN/K=] 方便上色
+  - see优化: `a.make(a=>a.sort, {io})` 时 `Eqv.diff(a,b)=[splice(0,-1),(2,+2),(0,[新] 或要移位+2项) ]`；有 `wbr~* {hide缓存}` 和 list[eqN/K=] 方便上色
   - qs\`${e0} tag\${}` 同样会监听tag[attr/v0, str/child] 如.pintop.Vscroll
   - qs\`@media,net,dpi` via qs.on.net
   - `a1.it({a:2}).it` .a 编辑函数+取ref ；可Row化 `o.it {key,()=vs,(vSwp, af?)}`
-- `pt=({x=2,y})=> el.div( Eqv.fmt'${x},${y}'/.json.v)` 可编辑(el.和el.my组件)
 - `see([{id:'X',age:18}], o=>同上,  ()=>ul(wOp{draghovE:[起,落]/f_it }), li)` 拖放(Tab^B)前悬停，返$Y禁用
-  - [Vec2.xyPtr]和wSty{pos} 可拖放和撤销
+  - wSty{pos}的[Vec2.xyPtr] 可拖放和撤销
+- `el.prototype` 定义 `my.el({}=>) = el.DSL(get_f, set私有组件)` 
 
-只有 `e.pos={e0,e,eHide, L,R, css:'div'/chk,n:NO,deep:2 ,fskip}`
+只有 `e.pos={e0,e/copy,eHide, L,R, css:'div'/chk,n:NO,deep:2 ,fskip}`
 
 ## 贰
 
@@ -83,12 +90,18 @@ ScrOff={now:01切走, acty:0从不 1熄屏时 2切走时-游戏 3毫秒后-锁�
 
 ## 叁
 
+如同 `el.组件=(my={n=0})=>`, `Eqv.of({可改量,}, _=>响应式)`, `VecN({},四则)`
+
+`o.let(_=>x)` 作用域在运行期暂把o内变量覆盖到全局，eqvjs编译后则只添加 `_.x`
+
+也即 `let=evaly((o,f,kw)=> [{_:kw[0]=='_'? o, f}, '(f)(_)' ] )` 代码生成+内联参数
+
 ```js
 o={x:1, a:[2], f(){}}
 o.it={
   key: ss`x a`
   x: {v:1,onmod:v=>{} }
-  a: {v:[2], it:{onadd,onpop,sort:by, [0],} },
+  a: {v:[2], it:{onmod,ondiff,sort:By, [0],} },
 }
 
 Eqv(谈cat,吐cut=cat)
@@ -96,11 +109,10 @@ Eqv(谈cat,吐cut=cat)
 pad(+1, 2) //+1,*2
 pipe(...eqf) of(eq,arg,$Y)
 way({v:1, _VK: })
-of({v}, _=>响应式)
 o.it.x=o.a.it[0] //x=2 双绑,如对URL
 ```
 - `noOp.v(f,x)` EQ f都兼容常数，`heredoc.v(JSON),ss,href包引用, win=global, doc, isA,n,newA{非空列;wOp流},rn{cut/cycle/has/rand}`
-- `it.unit(CSS=>{ 1..s.then, rate/Lim(f,0~3) })` 可做进度条隐藏
+- `it.unit(CSS=>{ 1..s.then, rate{onmod}/Lim(f,0~3) })` 可做进度条隐藏
 - sel支持color/RE逐字/tel Picker 和loadK(*异步进度)
 - Trie deep Sum Vec2~N(Vn,Va)
 

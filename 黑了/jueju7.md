@@ -126,13 +126,14 @@ PowerMode
 - 人脸挂件和ID,Speech和vosk
 - 杨辉三角,Z字G字排序,所有日期9
 - MyWM窗口/排版, 流量管道
+- 录音驴 扇叶LED
 
 无相
 - 散点线-傅里叶简化
 - 粒子-kDT, 几何扫帚组
-- Bezier与速率线-pol座标系
+- Bezier与速率线-pol座标系, 热力图
 - Mandelbrot集-隐函数heatmap
-- 正交3D画法,BL插件-变声驴
+- 正交3D旋转画,BL插件-变声驴
 - shader图形加速
 - 混成,剪辑渐变特效 翻页钟
 - Mesh,重力
