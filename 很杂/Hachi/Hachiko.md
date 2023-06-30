@@ -57,7 +57,7 @@ Bark 界面另一趣点：WebVTT 的显隐是CSS缓动的、还带吐字级进�
 
 
 - Carbon向CPMU 4个公开剪贴板(上传以复制+拖图) `form[method="post"]{code&l=lang/id_lexer/id_syntax/'postform-format'&act=run }.submit()` main>:not(.page)； 或向JSBin,RunKit/new,OneCompiler,godbolt.org 执行  .ace_editor,[role=code],[tabindex="0"] ('[title^="Full"]').click() ,onlinesequencer
-- 在 asciiflow,textpaint.net 字绘，或funcplot,desmos,ShaderToy，recordscreen.io,screenity,asciinema.org 录制和重放，或利用github1s/io
+- 在 asciiflow,textpaint.net 字绘，或funcplot,desmos,ShaderToy，recordscreen.io,screenity,asciinema.org 录制和重放(+内嵌/tab弹窗)，或利用github1s/io
 - 以 sketchviz.com 编辑doc粘贴标题树(以md格式 "- H1.." /导入processOn.右键折叠或格式化,-连词,onmsg=ul 加载其htm)
 - 打开 doc/ppt/xslX ,md,dot,csv,mp3,cast,frag(GLSL); 或内插 shadertoy.com/view/ltffzl?ss&to&idoc:anyCode=#66ccff 的缓存.webm ，收发[i,Blob]作为iChan0；实通过 --ss:sec 和 transition 绑定参数 (mPasses Compile,NewTexture,resetTime)
 

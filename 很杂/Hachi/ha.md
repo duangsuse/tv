@@ -16,7 +16,7 @@ Duktape.Thread.yield(HUP)/resume(cb=CONT) Async
 - OSD config='-c min_characters_to_try=1',output_type='dict'  若script_conf<1取全语中orientation_conf 最大的
 - `let [L,R]=top; vec(R,L,(a,b)=>a-b, ([x,y])=>-(Math.atan2(-y,x)/(2*Math.PI) ) ); vec=(A,B,f,F)=>F(A.map((x,i)=>f(x,B[i])))`
 
-demix(Voc/drum/bass/others(piano) /all/live,2-denoiserUI pipe to ASR. nice -g py -n -10)
+demix(Voc/drum/bass/others(piano) /all/live,2-karaokeUI pipe to ASR. nice -g py -n -10)
 
 ```pwsh
 $fpS=onSSD,chunk_max=2GB
