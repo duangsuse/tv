@@ -30,7 +30,7 @@ Bark
    [demix]: sp(u ytdl you-get as)? as
    s5p: sp,f0? eq_nPit, vtt? zipKNN(1)
    vtt: Intl.split(lrc granularity:"word") feedCuts(16k1ch,lrc.times,(wav,txt)=>vosk lang:ts) punc
-   mid,f0: f0(float32 every 10ms. 50~550)
+   mid,f0: f0(float32 every 10ms. 50~550), fs(wav2png,png2mid)
    ASR: ts=?,, sp=live/2
  ocr(u|mp4|pdf,
   png2x='4,realesrgan-x4plus|rmback' |face('[23]D'|'2face,id'|'2hdr') by u2net,f2f,PULSE

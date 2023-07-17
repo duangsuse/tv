@@ -1,0 +1,312 @@
+pkg ju
+use ju.expr
+
+'ABC'(get) when- as() Send Data
+  Pair(A:A,B:B) Pair3(A:A,B:B,C:C)
+'T'PairOf=Pair<T T>
+'T'PairOf3=Pair3<T T T>
+
+/*  `from traceback_with_variables import activate_by_import` */
+'F'Decorate=Fn0<F>
+
+'N'at! PairOf<N>.min
+
+- say(:Str, to=File.`#>`,end="\n")
+
+'AB'(get) when- Either
+  A(v:A); B(v:B)
+  -'R' way(err:Fn1<A>, ok:Fn1<B>) = when this:
+    A:err(v);; B:ok(v)
+  /* used in async [Err]s *//,= way(A) : B(ok()),/
+  -'R' let(ok:Fun1<B R>)=lets: B?{B(it.ok)} or this
+  - flip=way(B,A)
+  at A=asMay<A> at B=asMay<B>
+
+
+'T'data- T as
+  -! letLn(:Fun1) T
+    fn(); return this
+  -! let(:Fun1)=letLn(fn)
+
+  -'R' `lets`(:Fun1)=fn()
+  -'R' `if`(:Fun1)=fn().way(this,NO)
+  -'B' `to`(:B)=this to b
+
+  - as=Either.A(this)
+  - as=Either.B(this)
+
+
+
+data Break made()
+type Type
+  type d
+    - Str Str
+    ^named TYPE Type
+      -! wasAngled(types: Args<Send.TYPE?>)=Type.P(types):
+      types:[T] this[T.name]=T
+
+data Any() @impl? Type.d
+  - `==`(:Any?) @impl? Bool
+  - Hash @impl? Int
+
+  ^named
+    -'T' let(v:T)=T.TYPE
+  named Mem
+    - `==`
+    /* made() call this *///
+    - init=TODO
+    /* your finializer *///
+    - deinit=TODO
+
+-'KV' FnKV(kv=Rw:mkKV, ways=Rw:mkSet<Fn1<K V?>>, mode="lru")
+  - get(:T)=kv[it]or ways.firstNotNO:let(it)
+-'TV'! Rw.KV<Type<T> V>.add(:V)=set(T,v)
+
+'T'type Var
+  var v: T
+  - as=v
+  -! `=`tightR0 (:T)
+  ^named Here
+    /* see [kOf.o] */
+    -'T'! let(name:Str) Var
+    'T'data- fnCell(v:T) Var
+    /* K=Int,Str(getset) is supported */
+    'TK'impl? data- kOf(o:T, :K) Var
+
+    -'T'! _swap(a:Var,b:Var)
+      at A=a;a=b.v;b=A
+    /, 1.let:[var_n] swap(cfg.xx,n) ,/
+    'TR'! data- swap(a:Var,b:Var, :Fn0) Closes
+      swap(a,b)
+      -! close
+        swap(a,b)
+  
+type Closes
+  - close
+  type Buf Closes
+    - closeBuf
+  -!'TR' lets(:Fn1)R
+    at r=fn(); close(); return r
+
+'this'type Made
+  - empty
+  - let(/*copy*/) this
+  ^named
+    at defaults:KV<Str Any?>
+
+/* Only instances of this class can [throw]n or caught. *///
+data Thrown(message: Str?, cause: Throwy?=null) @impl?
+  made(cause)=made("$cause",)
+
+/* add [Made] for default-VALUEs. can be made([TYPE.empty]) no-arg,
+  becareful repeated(or circular) references(may be cached). add `pkg your @Must` to validate quantity types for [Send]
+  [TYPE.sendName] will be KV/Ln/Ary/Set, or single-char for int,long,. default: [Type.name.full]
+  [types]=NO for Singleton
+  in JS, only validate&set-prototype *///
+'this'type Send
+  ^named
+    - empty this
+    - get(:this,k:Str) Any?
+    - set(:this,k:Str,v:Any?)
+    at typed: FnKV<Str Serde>
+    at typedArg: Rw.KV<Str Fn<Args<Serde> Serde> >
+    
+    at sendName: Str
+
+  data NO() Mark
+  data NoDefault() Mark
+  data By(name:Str, eqv:Send.TYPE?=NO) Mark
+
+  named er as
+    at vals: KV<Str Pair3<Serde T Idx>>
+    at typedTag: FnKV<Type Rw.KV<Any Serde>> {Rw.ofKV}
+    at cfg:Rw.KV<Str Any?>
+
+
+'this'type _When Send
+  ^named
+    at all: Ln<this>
+    - get(name:Str)this
+
+'this'type Sort
+  at sort: Fn<this>
+  -! `<`(x:this)=sort(x)==MinAt0
+  -! `>`(x:this)=sort(x)==MaxAt0
+  ^- `==`(x:this)=lessThan(x)==Eq
+  'T'type Fn
+    - T let(with:T) Sorts
+  ^named
+    - as=Sorts.MinAt0
+
+'this'data When made(name:Str,v:Int) @impl?? ByAPtr<Sort>(v) _When
+  made(name,v=0)@ourtype =made(name, (v!=0).way(v): idx goesR)
+  ^- Str=name
+  ^- Hash=v.Hash
+  ^- clone @impl! = error("whens are const")
+  ^named
+    at idx: @our now 0
+    - init
+      idx=0
+
+
+/** any+Inf<NaN,-0<+0; [Eq] gives nullsLast Asc order. */
+when- Sorts()
+  MinAt0;MaxAt0; Eq
+  - onAsc(a:Ln<*>)=(this!=MaxAt0).way(a): a.flip
+
+  ! ^- `==`(v:Any?) = (v in Int).way{ (v==0).way(EQ):(v>0).way(MaxAt0):MinAt0 }: as<super>==v
+
+  'TR'(R Sort) - let(key:Fun1)=when this:
+    MinAt0:
+      Sort.Fn:[a b] key(a).sort(key(b))
+    MaxAt0:
+      Sort.Fn:[a b] key(b).sort(key(a))
+    Eq:
+      Sort.Fn {[a b]when:
+        a==NO: MinAt0 //a->left
+        b==NO: MaxAt0
+        else: key(b).sort(key(a)) }
+  'T'(T Sort) -! let=let(T.sort)
+  ^named
+    for<T> - let(:Fun2<Sorts Ln<Sort.Fn>>) = fn()(Sum: as<Comparable>.thenComparing(it))
+
+
+'T'type PosLR两侧
+  at `posL`: T
+  at `posR`: T
+  -'R'! twoside(:Fn2<this this>)=fn(posL,posR)
+'T'(T PosLR) data- Var as
+  -! `goesL`=lets: v=v posL; v
+  -! `goesR`=lets: v=v posR; v
+
+
+'this'when- Bool() PosNeg<Bool> Sort
+  $N;$Y
+  -'R' way(Y:Fn0, N:Fn0) = if this{Y()}or{N()}
+  - flip=way($N,$Y)
+  - `&`(then:E<Bool>) = way(then,$N)
+  - `|`(or:E<Bool>) = way($Y,or)
+  - xor(:Bool)
+  ^- Str=way("$Y","$N")
+
+''CntM1=OptInt<Cnt?>
+''Bool3=OptInt<Bool?>
+
+-'T' T as=Fn0:this
+-'T' T as=Fn1<*>:this
+
+pkg ju.nums
+
+- `!`(q:Bool)=q.flip
+-'R' `-`(q:PosNeg)=q.flip
+'R'type PosNeg
+  - flip R
+  - abs R
+
+'this'type NumOp Sort
+  - has(:this) Bool
+  data- bits() PosNeg
+    - let(shlr:Int)
+    - `&`(:this)
+    - `+`(:this)
+    - xor(:this)
+    at `#2**?`: Bool
+    data- zeros() PosLR<Cnt>
+      at size: Cnt
+  ^named
+    at `#0` this at `#1` this
+    at Rn Rn<this>
+
+when- MathOp
+  floor round ceil trunc
+  sqrt ln exp2 exp log2 log10
+
+
+'N'data Nd(shape:Args<Cnt>) Sized NumOp Send Make
+  - let(shape)Nd
+  -'T' let(shape, :Type)Nd
+
+  - `++`(:Nd)=concat
+
+
+pkg ju.text
+
+- Str in(re:Regex) = re.exec(this)
+- Str.let(re:Regex, to:Fn1<Regex.Paren Str>, n:CntM1=NO) = re.replace(this,to,n)
+- Str.let(all:Regex)
+
+data Regex(pattern:Str) InfSet Send
+  -! as=Test<Str>: has it
+  -! by(flag:Str)
+  ^- has(:Str) Bool
+  ^- as Set=TODO
+  - split(:Str, n:CntM1=NO) Seq<Str>
+  ourpkg - exec(:Str) Paren?
+  ourpkg - replace(:Str, :Fn1<Paren Str>,:Cnt) Str
+  ourpkg - findAll(:Str) Seq<Paren>
+
+  type Paren
+    at $: Ln<Str>
+    - Rn(span:Idx=0) Idxs
+    ^- Str=$[0]
+
+  when Mode(flag=' ', name,v) ChkBox
+    IGNORE_CASE('i'); MULTILINE('m'); DOTALL('s')
+    ONLY_STR; ONLY_LF; COMMENT
+    /* split 令和 but emojis. baNaNa,  *///
+    NORM_NEMOJI
+
+
+pkg ju.mark
+
+/** `juec -c 'v:0.9'` fail for `@SinceStd("1.0") val` */
+data Since(min:Semver) Mark
+
+/** Allow `at x:Pair=(1 2)` outside `[]` */
+data DataRows() Mark({PKG})
+
+data Suppress(names: Args<Str>) Mark()
+data Deprecated(msg:Str, :DoReplace? = NO, :.Level=Warn)
+  when Level
+    Warn Err Hide
+data DoReplace(uses:Str, expr:Str) Mark()
+
+/** Repeat items, change name$1$2 and "$1" (embed code: atRow$0 & `- atRow0~1..`). see [Arg]*/
+data For(rows:Str) Mark
+  ^named
+    -! let(:E<Str>)=For()
+
+/** *//, @ForBelow(1)/,- _suffix:@Mark,/ ,/
+data ForBelow(nDef:Cnt, defnOrMark:Str) Mark
+  ^named
+    -! let(:E<*>)=ForBelow()
+
+data FunInterface() Mark({data})
+
+
+/** [runtime]: (noCodegen, noReflect, yes) *///
+data Mark(:.Target.s=empty, runtime:Bool3=$N, repeat=$N, docs=$Y) @impl?
+  /**: [T] 是类型参数，[TYPE] [E] 等是引用处
+    量[var]隔离JVM字段, 语法为 @prop @both@get@set */
+  when Target() ChkBox Send:
+    data; Mark; T
+    `#var`; `#var=`; vars; Arg; made
+    `#fun`; get; set
+    TYPE; E; PKG
+    ^named
+      ^at empty={data `#var` vars Arg made `#fun` get set}.ChkBox
+
+pkg ju.expr
+
+/** Infer `- T as XX,YY` from defs' name, just like in Go,Rust,. */
+data AsImpls() Mark({PKG})
+
+/** Disable "you" in scope with two `DslMarker`-ed "this" */
+data MarksDSL() Mark({Mark})
+
+/** Hight (arguments) with [Type.name] */
+data Hilight() Mark({T})
+
+/** Don't use *T, that implies copying T in Go,Rust,. */
+'T'New=Var:$N
+-'T' Hilight<T> as Old=must<Old>

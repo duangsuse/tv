@@ -464,6 +464,8 @@ EQ分三界：界面、传输、语巧，'Eqv可同' 'Query查询' 二字则每�
 - 说选问 `say(); sel(); ask()`
 - see/s If `see([1,2], x=>li("Food",x)); seeIf(user.vip, v=>'等级'+v.level, '可开通'); sees({type:user,..}, {user:x=>"是用户", else:i("请更新客户端")})`
 
+disabled、hidden、required、checked、selected、readonly,open
+
 观念要改。打印变量请 `alert(("a"+1).let(say) )` 或以 `says(alert)("a"+1)` 直接截获看函数/对象的参数与返回。 `d=$0, db={table:1}` 则详细显示 `d('dir',console); dif=isBreak_; dm('',/char/)`，靠 `say.dbg` 启用
 
 `f={}.it(keys?)` 则 `rows=f(); f(rows)` 令对象为sql行。也有 `.it(key_swap, k__f)`

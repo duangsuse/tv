@@ -43,6 +43,43 @@ for<> Parsenum=NumberFormatException
 for<> CtrlC=InterruptedException
 for<> Calc=ArithmeticException
 
+AnnotationFormatError：当注解解析器试图读取一个注解时，发现注解的格式不正确，抛出此错误。
+BootstrapMethodError：当调用一个引导方法时，发现引导方法无法定位或执行，抛出此错误。
+ClassCircularityError：当初始化一个类或接口时，发现类或接口的超类或超接口依赖于该类或接口的初始化，抛出此错误。
+ClassFormatError：当Java虚拟机试图读取一个类文件并确定其格式无效时，抛出此错误。
+ExceptionInInitializerError：当初始化一个类时，发生了一个异常，并且该异常没有被捕获，抛出此错误。
+FactoryConfigurationError：当实现了Service Provider Interface的工厂无法配置正确时，抛出此错误。
+GenericSignatureFormatError：当泛型签名格式不正确时，抛出此错误。
+IllegalAccessError：当应用程序试图访问或修改一个字段或调用一个方法，但是当前执行线程没有访问权限时，抛出此错误。
+IncompatibleClassChangeError：当执行某个类的定义发生了不兼容的改变时，抛出此错误。
+InstantiationError：当应用程序试图使用new操作符创建一个抽象类或接口的实例时，抛出此错误。
+InternalError：当Java虚拟机遇到了一个内部错误时，抛出此错误。
+LinkageError：当链接一个类或接口发生了某种不一致性时，抛出此错误。这是一个抽象类，有以下几个子类：
+  NoClassDefFoundError：当Java虚拟机或者类加载器试图加载一个类的定义，但是找不到该类的定义时，抛出此错误。
+  ExceptionInInitializerError
+  IllegalAccessError
+  NoSuchFieldError：当应用程序试图访问或修改一个字段，但是该字段在当前执行的类中不存在时，抛出此错误。
+  NoSuchMethodError：当应用程序试图调用一个方法，但是该方法在当前执行的类中不存在时，抛出此错误。
+  UnsatisfiedLinkError：当Java虚拟机无法找到或加载本地代码库（如.dll文件）时，抛出此错误。
+  IncompatibleClassChangeError：serialVersionUID发生变化，
+  BootstrapMethodError：MethodHandle 指定的静态方法不正确
+  VerifyError：当Java虚拟机试图验证一个类文件，并确定其字节码不符合逻辑时，抛出此错误。
+  ClassFormatError
+  ClassCircularityError,InstantiationError
+
+ServiceConfigurationError：当服务提供者配置文件违反了规范或者无法被读取或解析时，抛出此错误。
+StackOverflowError：当应用程序递归调用过深导致栈溢出时，抛出此错误。
+OutOfMemoryError：当Java虚拟机没有足够的内存来分配给一个对象或数组时，抛出此错误。
+ThreadDeath：当调用Thread.stop方法终止线程时，抛出此错误。这是唯一一个可以被捕获和处理的 Error 类型。
+
+UnsupportedClassVersionError：当Java虚拟机试图读取一个类文件，并确定其版本号不被当前版本的Java虚拟机支持时，抛出此错误。
+VirtualMachineError：当Java虚拟机遇到了无法恢复的内部错误时，抛出此错误。这是一个抽象类，有以下几个子类：
+  InternalError
+  OutOfMemoryError
+  StackOverflowError
+  UnknownError
+
+
 
 /** Add to multipart JuFile with [JvmName] */
 /**: 添加到多文件class [Jvm名] */

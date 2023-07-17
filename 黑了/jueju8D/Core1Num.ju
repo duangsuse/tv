@@ -40,6 +40,13 @@ thing NumLike:
       2: Vec2; 3: Vec3; 4: Vec4
       else: VecN
 
+'this'type CalcEachN Num
+  - get(:Idx) Num
+  ^now
+    - num(:Type, k:Str)=when k.size:
+      1:good
+      or: bad
+
 for<This>class Num were Sum,Flip,Sibling,NumEmpty:
   @Below(3,'_(:This):This')
   fun `*`0=VMOp

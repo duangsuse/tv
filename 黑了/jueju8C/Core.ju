@@ -361,8 +361,8 @@ htmls:[s]
 
 
 data Bond
-  -named
-    var price=5
+  ^named
+    at here price=5
 
   - sell=TYPE lets:
     if price!<10: return $N
@@ -406,8 +406,7 @@ type Geo
 type Draw
   fun draw(:Graph)
 
-samepkg impl?
-- Point(:Arg<"xy"N>)
+- Point(:Arg<"xy"N>)@ourpkg impl?
   !fun Str="$x,$y"
 - Rect(x,y, :Arg<"wh"N>) Point()
   !fun Str=as<super>.Str+"+$w,$h"
@@ -442,6 +441,128 @@ type Rect struct {Point; w,h int}
 
 - 数.它(：正书)=(-1)去它
 - 数.它(：数)=0
+
+'AB'(get) data Pair(:A,:B) Data Send
+'ABC'(get) when- as
+  Pair(:A,:B) Pair3(:A,:B,:C)
+
+- lerp 'ABt'(:N)= (t)*B+(1-t)*A
+
+at x: Either<Rw.Set<Int> Int> = [3 2 ]()
+x.A?.let: add 1
+Must:
+  Pair(2+3, 6).let(B=5).B==5
+
+-'T' T as=Either.A(this)
+'AB'when- Either
+  A(v:A) B(v:B)
+  at A /*get*/=mayAs<A>?.v
+  - flip=way(B,A)
+  'R'- way(A:Fn1<A>,B:Fn1<B>)
+
+把data和 type(instance) 解偶就不需要子类关系 而能实现type，但真的很不模块化
+我喜欢后者：
+
+when- Calc
+  N(:N)
+  Op(:PairOf<Calc>,k="+")
+
+- `+`(e:Calc)=when e:
+  N: e.n
+  Op(a to b, "+"): +a + +b
+
+data- Calc.Op1(k="-")
+  “不支持 {+}”
+
+这是 1事:N物(N定死了)，而 1物:N事 为
+
+when- Calc
+  - eval N
+  N(:N)
+    ^- eval=n
+  Op(:PairOf<Calc>,k="+")
+    ^- eval=when k: "+": +a + +b
+
+data- Calc.Op1(k="-")
+  ^- eval=when k: "-": -(+you) 
+
+把eval 改成 visit(:子类重载)R, 或者说 fun Op.seen():Int 就能解偶
+把R改成Eval接口就能用新类型添加操作，也就像
+
+type Eval
+  - eval N
+'R'when- Calc
+  Op(PairOf<R>); N
+
+type EvalX Eval
+  - Str Str
+data- Calc.Op<EvalX> as EvalX
+  ^- eval=折叠两次eval
+
+这样只添子类，也可以定义(新)操作。也可以在编译期，虽然不实用
+Str lets: Op(N(2), N(0))
+
+'R'type Exp
+  - N(:N)R
+  - Op(:PairOf<R>,k="+")R
+
+data- N.TYPE as Exp<N>
+  - N(n)=n
+  - Op(e, k)=e.lets: A+B
+data- Str.TYPE as Exp<Str>
+  - N(n)="$n"
+  - Op(e, k)=e.lets: "$A${k}$B"
+
+- You<KtFileScope KtFile> addTypeExt(:Str)@ourpkg = whileAdding(str, T1):
+  buildFn.lets(KtFunctionInfo)
+  .lets(GeneratedTypeSpecExtension)
+  .let:[T]
+    addFunction(T.typeName):
+      T.parameters.let{addParameter}
+      addScopeLambdaBlock(T1)
+      returnStatement<TypeSpec>(T.typeBuilderStatement)
+
+    addFunction(T.funcNameAddType):
+      receiver(T1.generatedClass)
+      T.parameters.let{addParameter} “删掉这个,fn(T)就能是this”
+      addScopeLambdaBlock(T1)
+      returnStatement(T.addTypeStatment)
+-now
+  at T1=Generated.TYPE
+  at buildFn=you.get<KtClass>!.companionObjects.first
+  .Seq.asOnly<KtNamedFunction>.only: modifierList?.has PUBLIC
+  .only: typeFqName == "com.squareup.kotlinpoet.TypeSpec.Builder"
+  
+  - You<KtFileScope KtFunction>.addBy'str add'= addFunction(str):
+    T.parameters.let{addParameter}; add()
+
+data GeneratedTypeSpecExtension(typeBuilder:Str, param:Ln<ParamDef>) Data
+    made:
+      typeID typeBuilder('Builder$',to="Type")
+      paramStr param.Str
+      fnAdd typeID.to(Capitalize)
+      stmtAdd "$typeName(${ paramStr.may{!isEmpty}? +"," }block).let()"
+
+use! org jline
+use! jline reader terminal
+use! java.nio.charset.Charset
+
+- main
+  lets:
+    at ln=s.readLine("中文>")
+    s.printAbove("= $ln")
+    loop()
+^now
+  at:
+    s  TerminalBuilder.terminal() lets:
+      LineReaderBuilder.builder().terminal(this).build()
+    cfg Pair??(Env["file.encoding"], defaultCharset.name)
+    chcp nt?.GetConsoleCP ??()
+
+at nt=com.sun.jna.platform.win32.Kernel32.INSTANCE .may: "Windows" in Env["os.name"]
+
+named Env
+  - get==System.getProperty
 
 
 [网见]
@@ -524,8 +645,8 @@ oncat 谈做
 对何<AB> -「!」(况：可为) = 况去路(可为「B」、可为「A」)
 
 
-对何<R> 可定物 待
-  -「!」(：函续)
+'R'物 待 @可定
+  -「!」(：函续) @可定
   同名例
     对何<R>- 受调用(：函1<函续>)
     对何<R>- 全(：组参<待>）组<R>
@@ -615,7 +736,7 @@ oncat 谈做
 文本变量，
   {名字 追求 喜爱颜色}到
   {玄奘 真经 空}
-去令其，[是问题到答案]
+去令其，[问题到答案]
   问题带答案 ，
     说("你的${首}是什么？答曰，$次")
 
@@ -675,7 +796,7 @@ i=0；重复再若i<10，i移右。 “i=10. 但若有 i++, i完成时是11”
 累加器()，
   我(7)必是7；我(3)必是10
 
-对何<T>私下- 列 存匹配(：函试）真假
+对何<T>- 列 存匹配(：函试）@私下 真假
   我，
     若此函试()，回真。
   回假
@@ -778,7 +899,7 @@ i=0；重复再若i<10，i移右。 “i=10. 但若有 i++, i完成时是11”
 例物 喜爱程度
   爱；很爱；非常爱；私生饭
 
-公开- 娱乐.夸夸群
+- 娱乐.夸夸群 @公开
   明星，
     话=判我多爱你，
       爱，"爱你！"。很爱，"永远给$名 打call！"。
@@ -1003,3 +1124,84 @@ ClassFile: [u4 magic, u2 minor_version, u2 major_version, u2 constant_pool_count
 field_info: [u2, u2 iName, u2 iDesc, ['*',u2, attribute_info]]
 method_info: 
 attribute_info: [u2 attribute_name_index, u4 attribute_length, info[attribute_length]]
+
+
+
+factor N
+|N=1,1
+|N>0, factor(N-1)*N
+
+
+
+kv(jack peter)
+kv(peter jack)
+
+friend K V
+|kv(K V), kv(V K)
+
+mother X M
+|a(child M X), female(M)
+
+单恋 A B
+|a(loves A B), !a(loves B A)
+
+friend [
+  [john julia]
+  [john jack]
+]
+friend(julia)
+  [sam molly]
+
+friend(john V)
+
+a(color)[red green blue]
+cv X| a(color X)
+
+colorify A B C D E
+|cv(A), cv(B), cv(C), cv(D), cv(E),
+! A=B, ! A=C, ! A=D, ! A=E,
+! B=C, ! C=D, ! D=E
+
+
+a(man)[george john robert]
+a(woman)[barbara christine yolanda]
+
+a(loc)[bath dining kitchen livin pantry study]
+a(weapon)[bag firearm gas knife poison rope]
+
+Pantry=Gas, Pantry=X, Gas=X,
+
+a(man Kitchen), 
+!Kitchen in [Rope Knife Bag Firearm]
+
+a(woman Bath), a(woman Study),
+barbara=Bath, yolanda=Study
+
+a(woman Rope), Rope=Study,
+
+man(Livingroom), \+Livingroom=robert,
+\+Knife=Dining,
+\+yolanda=Pantry, \+yolanda=Study,
+Firearm=george,
+
+
+\+barbara=Bag, \+george=Bag, 
+\+Bag=Bathroom, \+Bag=Dining,
+
+
+one X| a(man X)|a(women X)
+
+uniq_pplace A B C D E F
+|one(A), one(B), one(C), 
+ one(D), one(E), one(F),  
+!A=B, !A=C, !A=D, !A=E, !A=F, 
+!B=C, !B=D, !B=E, !B=F, 
+!C=D, !C=E, !C=F, 
+!D=E, !D=F, 
+!E=F
+
+murder X
+|uniq_pplace[
+  [Bath Dining Kitchen Livin Pantry Study]
+  [bag firearm gas knife poison rope]
+]

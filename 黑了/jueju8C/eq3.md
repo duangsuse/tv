@@ -12,14 +12,14 @@ main=()=>(say(`count from ${app.n}`),
 )
 
 main=(N=app.it.n
-, _=anim.at(N).let({dur:1}) //:hover{--N:new,animation:js} OR wSty()-only
+, _=anim.at(N).lets({dur:1}) //:hover{--N:new,animation:js} OR wSty()-only
 )=>el(
   b("已收集",N,"票"),
   input(N(倍率(1.5)),"助力一下")
 )
 倍率=k=>Eqv(x=>x*rn(1,k).rand()).fcat//仅读入
 rep=(txt,n)=>ul(...
-  rn(1,n).lets(i=>li(txt)) //see?
+  rn(1,n).let(i=>li(txt)) //let?
 )
 
 main=({words=[], sp=[' ','.']}
@@ -32,7 +32,7 @@ main=({words=[], sp=[' ','.']}
 
 let app={v:{major:3, minor:1, upd:NO}}
 el.更新=({v})=>p(v.major,".", small(v.minor),
-  seesIf(v.upd, v=>sup(wSty`color:green on wheat`, "^",v.major,".",v.minor)) )
+  way(v.upd, v=>sup(wSty`color:green on wheat`, "^",v.major,".",v.minor)) )
 el(doc.body,
   h3("听书",更新(app),
   btn((检查更新,更新,完成)=>{ app.v.let(v=>(检查更新)? (v.upd={...v, minor:2,upd:NO}) :(更新)? v.let(v.upd) ); return 更新+1 })
@@ -40,43 +40,47 @@ el(doc.body,
 ```
 
 Eqv 是克制的框架联邦。囊括 界面/传输/巧语 三界
-- el.OSDARR CSSanim
-- qs.HISTPM
-- it.refVec
+- el.TOADRR CSSanim
+- qs.HISTPM /hi-cmdarg , flush(Encode)
+- it/QN
 
 EQ让算法与模式相乘，而不是争锋同场。「凝聚的代码，连周期也能超越」
 
 正常软件功能膨胀，不是解耦合术语膨胀
 
-非null(NO)值 都有 let(f)得自身 lets(f)得f结果。f支持 `el.let(_=>{优化的 with(el) })`
+非null(NO)值 都有 lets(f)得自身 let(f)得f结果。f支持 `el.let(_=>{优化的 with(el) })`
 
 wOSK 如 `el(doc, wOp({tap/2s: ev=>say('${ev.e}好') }),  eApp)`
-- `wOp({, edit:$N即NO,acty:$Y,stop}, 'li, only once stop/! first')` 冒泡参数可选
-- `wSty('.css'?, { ,pos,inscr})`, wSty\`css${$Y}` 表示 div$css_cls__idSSR() 类的有无
+- `wOp({, edit:$N即NO,inscr,acty:$Y,stop}, 'li, only once stop/! first')` 冒泡参数可选
+- `wSty('.css'?, { ,pos})`, wSty\`css${$Y}` 表示 div$css_cls__idSSR() 类的有无
 - `wKV({ ,v,slot:[父容器,需全屏]}, 'data/aria')`, `wKV.i18n/css.T='tw-'` 是简写
   - wKV `wOp(fns={my:1}); fns.冒泡my({})` 可监听
   - `pos=[xy,wh监听,abs'!'含框]`; `Fshadow:[x,y,], _myVar,__moz等XX`
 
 另有树绑定
-- see(a,fe) 绑定列表, seen(v,cfe,fk=`o.type`)/If非空判定
+- let(a,fe_x) 绑定列表, lets(x,br,or, fk=`o.type`) way非空判定
+  - a={reload(){async的[]/进度条流},clear:div()/NO }
   - `a.make(a=>a.sort, {io})` 时 `Eqv.diff(a,b)=[splice(0,-1),(2,+2),(0,[新] 或要移位+2项) ]`
   - 有 `wbr~* {hide缓存}` 和 list[eqN/K=] 方便上色； 移动画:先posabs,排序,赋pos.i
 - say(,danger=0~3), ask(inert=NO|body|e横中心).YN/str/(rv,form) 填框和弹框, `sel(rv_i18n,[v]{k:jsonV}rn,{of:'many',chk:1使用box2下拉})`
 
 界面
-- Only1(sel=[N=0~Inf], e_rv=attrOpen, vs=$Y$N冲突换色)
-  - see(sel,by copyNode); N=-N (长按)显示拖选 /初0禁用
-  - S-区间增选(仅异边) C-反增选 A-Esc
+- Only1(sel=[N=0~Inf], e_rv=.it.open, vs=$Y$N冲突换色)
+  - .on.phone (长按)显示拖选 /初0禁用
+  - S-区间增选(仅异边) C-反增选 A-Esc, Shift滚轮=换tab
+    - EQDE 主页=控件板(dock分屏,滚轮), 新工作区=App表控件, 热区=左…位置日期app(drop笔记) 右消息开关, 滚轮抖动win=概览(-1区);跨区拖放;层叠动效
+    - 截屏/冷藏 ,UI值类型(rand,滚轮),pin菜单 右键模态栏化 关窗=中键(右日期)
 
 EQ基于 tree pattern 读写DOM：
 - `el(doc|qs, ..wXX, ..pre, it/parent(css__n)={}, ..tail)` 调用内部"模式" 实现插入
-  - `body($app(it, 右))`,its((x,y, if!modify)=>`body(el('*query子项', wKV(a), Eqv.fmt'${x},${y}'/Eqv.json ))` ) 组件是爬虫模式
-- see则据ul参, sees据{k:fn}内异常爬
-  - qs\`${e0} tag\${}` 同样会监听tag[attr/v0, str/child] 如.pintop.headroom.Vscroll ; 以及 el.D. pages,forms
-  - qs\`@media,net,dpi` 同样via qs.on.net
+  - `body($app(it, 右))`,el.its((x,y, if!modify)=>`body(el('*query子项', wKV(a), Eqv.fmt'${x},${y}'/Eqv.json ))` ) 是爬虫模式
+  -  `div(html(str))` 是爬绑HTML, `$wtf(lets(rn(10), el.html(p(), p()) ))` 加10次到.wtf
+- let尾随ul参, lets据{k:fn}内CSS/匹配爬虫
+  - qs\`${e0} tag\${}` 会监听tag[attr/v0, str/child] 如.pintop.headroom.Vscroll ; 以及 el.D. pages,forms
+  - qs\`@media,net,dpi` via qs.on.net/phone
   - `a1.it({a:2}).it` .a 编辑函数+取ref ；可Row化 `o.it {key,()=vs,(vSwp, af?)}`
-- `see([{id:'X',age:18}], o=>同上,  ()=>ul(wOp{draghovE:[起,落]/f_it }), li)` 拖放(Tab^B)前悬停，返$Y禁用
-  - wSty{pos}的[Vec2.xyPtr] 可拖放和撤销
+- `let([{id:'X',age:18}], o=>同上,  ()=>ul(wOp{draghovE:[起,落]/f_it }), li)` 拖放(Tab^B)前悬停，返$Y禁用
+  - wSty{pos}的[N2.xyPtr] 可拖放和撤销
 
 只有 `e.pos={e0,e/copy,eHide, L,R, css:'div'/chk,n:NO,deep:2 ,fskip}`
 
@@ -88,15 +92,23 @@ Scr={_root,err(ev){},
 }
 ScrOff={now:01切走, acty:0从不 1熄屏时 2切走时-游戏 3毫秒后-锁屏 , unload:NO }
 
+HI支持 .line=[]
+
 ## 叁
 
-如同 `el.组件=({n=0}, my=el.DSL(get, set私有组件/公开函/默认,NS=svg))=>`, `Eqv.at(ret?,{可改量,}, _=>响应式)`, `VecN((A,B)=>四则)`
+如同 `el.组件=({n=0}, my=el.DSL(get, set私有组件/公开函/默认,NS=svg))=>`, `Eqv.at(ret?,{可改量,}, _=>响应式)`, `Nd((A,B)=>四则)`
 
 组件只访问全局量。也可 `el.it({NotGlobal: f=>c=>f({...c, api: }) })` ；`el.暴露容器=({e=1})=>e.v=div()`
 
 `T=({age})=>my.check={age:[0,100]}` 把信息暴露在T.prototype{同default}=age.T上，.it.load([])=赋值+复制
 
-  ref(need) //el.评论板=see(strs, x=>评论(x))
+  ref(need) //el.评论板=lets(strs, x=>评论(x))
+
+ fref(f=>以f递归 ).v() //v默认自身, 尾递归优化
+ evalFun(this_=NO, sf) //sf的函数式参数f, f.args可含参数名和{k=v,} 的默认表; 用于let_ 和Eq.at
+ cache(f,c__f), //同参数只算1次
+ 
+ hook o.f 请用 `o.it({f:f=>(...a)=>f(...a), f1:logs })`;
 
 `o.let(_=>x)` 作用域在运行期暂把o内变量覆盖到全局，eqvjs编译后则只添加 `_.x`
 
@@ -112,22 +124,23 @@ o.it={
 
 Eqv(谈cat,吐cut=cat)
   oncat(x, af); flip
-pad(+1, 2) //+1,*2
+num(+1, 2)//2x+1
 pipe(...eqf) of(eq,arg,$Y)
 way({v:1, _VK: })
 o.it.x=o.a.it[0] //x=2 双绑,如对URL
 
 Str.it=let_ reC: 支持fn(get)和Eqv(fcat=get,fcut=set)
 ```
-- `noOp.v(f,x)` EQ f都兼容常数，`heredoc.v(JSON),ss,Rn(A?,B) ,href包和css引用, win=global, doc, isA,n,newA{非空列;wOp流},rn{cut/cycle/has/rand}`
-- `it.unit(CSS=>{ 1..s.then, rate{onmod}/Lim(f,0~3) })` 可做进度条隐藏
+- `noOp.v(f,x)` EQ f都兼容常数，`heredoc.v(JSON),ss,Rn(A?,B) ,href包或css调用, win=global, doc, isA,n,newA{非空列;wOp流},rn{cut/cycle/has/rand}`
+- `it.unit(CSS=>{ 1..s.then, rate{onmod}/Lim(f,{slow:0~3,rep}) })` 可做进度条隐藏
 - sel支持color/RE逐字/tel Picker 和loadK(*异步进度)
-- Trie deep Sum Vec2~N(Vn,Va)
+- Trie(v,Dir) deep Sum N2~N(Vn,Va)
 
 Paint(f)支持淡化和弹性动画, 注册_var
 
 - anim(v01,fx) `.rep(1, ok,stopr)={dur:1,fps:10/1s, t0,ease, call(t)}`
 - anim(t0,Infinity, f_dt); xywhs
+- .at .posMod=(e,i)=>
 
 - `URL=[s,'title', {}, Eqv.form]` UA=`{env:ss'Chromium 105.0.5195.102 ...', os: ss'Linux x86_64 5.19.6', vnd:[$Y, "iPhon"]}` credentials
 
@@ -153,6 +166,24 @@ RPC负责给包里static的词(new,enum,.)或实例做编址-pin，实现 (o.f).
 - `List(Str) (size)` 需要类型参: Ty.send[T]=(ISON,EArg)-> 利用 Ary(E){x->} KV 读取器创建T
 - .subtype[Str][Blob]=(0) 就可以让调用(接受filePath,) 。[T=Obj]下 0#num,0. 为Int,Double; [],[=]为list和map
 - JDK提供ListT,MapKV 的反射，兼容到 Args,Obj 方便由弱类型修改. `ju://vm/TYPE:objID/$ISON(加#代表深拷)`; 配置 ju{url,onThen=catch, showACC='priv'}
+
+之前 vs 统一用语
+
+k|重赋值|遍历
+:-:|:--|:--
+Ju|lets|let
+EQ|sees|see
+旧EQ|when|ary
+PRR|make|seen(visit)
+
+
+功能|EQ|Svelte|Vue|React
+:-:|:--|:--|:--|:--
+UI|el树模式|MD|ElementUI|自家的MD库
+State|qs.ST|自带|Vuex|Redux
+Route|qs.HI|[spa-router](https://github.com/ItalyPaleAle/svelte-spa-router)|router|[BrowserRouter](https://reactrouter.com/en/main/start/tutorial)
+预渲染|el树模式|kit|pre-SSR|prerender
+测试|wOp树模式|[testing](https://testing-library.com/docs/svelte-testing-library/example)|@vue/test-utils|Jest
 
 
 apple: vo=ca vf=s,tri,circ,quad  scr

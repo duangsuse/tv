@@ -80,6 +80,7 @@ TTS 可输入vtt流-遇空时长词时吐句，基于停顿 `科大[p500]讯飞`
 
 名|入|出|参(or"no")|描述(torch)|年|默认体积/MB|实时流|离线包
 :--|--:|:--|:--|:--|:-:|:-:|:-:|:-:
+[rmback](https://github1s.com/nadermx/backgroundremover/blob/HEAD/backgroundremover/utilities.py#L167-L169)|png|png/gif/ mask.flv|kFast=2,fps=10; gb=#00ff00|[U^2-Net](https://kgithub.com/xuebinqin/U-2-Net#updates-): Going Deeper with Nested U-Structure for Salient Object Detection. see [SAM by fb](segment-anything.com/demo)|2020|337||G
 [Paddle](https://kgithub.com/PaddlePaddle/PaddleOCR#-visualization-more)|ocr=png/pdf|docx / htm+box(json strXywhRi)|l,_need=box pdf_<br>picture `ruby{trans;sca;rot;}`|Baidu,multilingual OCR toolkits(support 80+ languages, provide tools,IoT)|2020|37|✔
 [MMLab](https://github.com/open-mmlab/mmocr)|ocr||
 [Tesseract](https://digi.bib.uni-mannheim.de/tesseract/?C=M;O=D)|png|↑ _pdf2docx_/pdf|l:Tes,need;`TESSDATA_PREFIX=/usr..`|LSTM,[Apps](https://tesseract-ocr.github.io/tessdoc/User-Projects-%E2%80%93-3rdParty.html) Ver5 2021.11.30|2007|109||unix
@@ -88,7 +89,6 @@ TTS 可输入vtt流-遇空时长词时吐句，基于停顿 `科大[p500]讯飞`
 [TuneAVi](https://tuneavideo.github.io/)|mp4|mp4|tag|[注册试用](https://runwayml.com),[素材](https://najoast.github.io/t/quark.html).One-Shot Tuning of Image Diffusion Models for Text-to-Video Generation|2022|TBD|
 [DragGAN]()|png|pngs|vec2x2
 [AnimeGAN](https://huggingface.co/spaces/akhaliq/AnimeGANv2)|png|png|sty|Landscape photos/videos to anime. [Paddle ver](https://github.com/PaddlePaddle/PaddleGAN/blob/develop/docs/zh_CN/tutorials/animegan.md)|2018|TBD
-[rmback](https://github1s.com/nadermx/backgroundremover/blob/HEAD/backgroundremover/utilities.py#L167-L169)|png|png/gif/ mask.flv|kFast=2,fps=10; gb=#00ff00|[U^2-Net](https://kgithub.com/xuebinqin/U-2-Net#updates-): Going Deeper with Nested U-Structure for Salient Object Detection. see [SAM by fb](segment-anything.com/demo)|2020|337||G
 [realeSRGAN](https://kgithub.com/xinntao/Real-ESRGAN/blob/master/README.md#portable-executable-files-ncnn)|pre=png|png|'+'x4plus (+face),k=4. [Bili lab](https://real-cugan.animesales.xyz/)|ncnn,Training Real-World Blind Super-Resolution with Pure Synthetic Data|2021|47||[zip](https://github.com/xinntao/Real-ESRGAN#portable-executable-files-ncnn)
 [GFPGAN](github.com/TencentARC/GFPGAN)|face.png|png|v3, k=2|see also: PULSE FastPhotoStyle FaderNetworks pix2pix|2021|332||[gh](https://github.com/xinntao/Real-ESRGAN/blob/5ca1078535923d485892caee7d7804380bfc87fd/inference_realesrgan.py#L145)
 [SadTalker]()|png,kpFaces|png||. see leiapix,ModelScope,civitAI,fliki,[D_ID](chat.d-id.com),[AIvoice](https://www.youtube.com/watch?v=yUuS-oTDSD4)
