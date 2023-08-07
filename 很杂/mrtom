@@ -4,6 +4,72 @@ windings ascii[indexOf(ocr)]
 chunked(2).map(pipe(int16,plus,chr))
 pipe(ord,plus-,hex).join %20
 
+itera=f=>(...a)=>[...f(...a)]
+fthis=f=>function(...a){return f(this,...a)}
+newA=(n,f)=>Array(n).fill(0).map(f)
+Type=(x,T)=>(
+  Object.keys(T).forEach(k=>T[k]=fthis(T[k])),
+  T.__proto__=x.__proto__,
+  Object.setPrototypeOf(x,T)
+)
+Eqv=(A,B=A)=>Type([A,B], {oncat:(o,x,f=x=>x)=>o.cut(f(o.cat(x))), flip:([A,B])=>Eqv(B,A),
+  cat:([F,f],x)=>F(x),cut:([f,F],y)=>F(y) })
+
+pipe=(...ab)=>ab.reduce((a,b)=>Eqv(x=>b.cat(a.cat(x)), y=>a.cut(b.cut(y))) )
+
+chunk=itera(function*(a,Nd, f2=a=>a,i=0) {let n=a.length,nR,[f,fR/*est*/,fE/*EOF*/]=f2.map?f2:[f2,0,0], [N,d]=Nd.map?Nd:[Nd,Nd]
+  if(fR&&(nR=n%N))a=a.substr? a+fR(N-nR).join(''):[...a,...fR(N-nR)]
+  for(n-=fE?fE.d||d :0 ;i<n;i+=d)yield f(a.slice(i,i+N))
+  if(fE)yield fE(a.slice(i,a.length))
+})
+
+
+UTF=(k='utf8', A=new TextEncoder(k),B=new TextDecoder(k))=>
+  Eqv(x=>x.buffer?x:A.encode(x), y=>y.length? B.decode(new Uint8Array(y[0].toFixed?y: y.map(Number))) :'' )
+
+
+reCGrp=([s,sr=''], b=UTF())=>chunk(b.cat(s),2, ([A,B])=>b.cut(newA(B+1-A, (x,i)=>A+i)) ).join('')+sr
+reTrim=(s,at='$', re=RegExp(`${s||'\s'}+`+at,'g'))=>s=>s.replace(re,'')
+
+//eg([0xFF],8, 6,64-1)
+bits=(a,bN, bn,bi)=>{let b=x=>x, i=bn.toFixed&&bN.toFixed?0x00: (b=BigInt, bn=b(bn),bN=b(bN),bi=b(bi),0n),x
+  for(x of a){i=i<<bN|b(x)} return ()/*pop*/=>(x=i&bi,i=i>>bn, x)
+}
+
+{
+let enc=(K,R64)=>{let bn=Math.log2(K), tm=reTrim(base.pad/*=*/), charz=(N,z/*Deco*/, j,f)=>
+    (s,EQ,r)=>(r=j(chunk(z&&q2?tm(s):s,N, [f, n=>(EQ=-( (z?Math.round(n*kA): n/kA>>0)), newA(n,_=>z)), eof=>f(eof).slice(0,EQ)] )), z?r:r+base.pad.repeat(q2?-EQ:0) ),
+  [A,B]= (5==bn?[(bn=5n,5),8] : 4==bn?[1,2] : R64.ratio) || [3,4], q2=Number(bn)%1==0, kA=K!=32?1: A/B
+  return Eqv(
+  charz(A,0, b=>b.join(''), u=>{let a,s="",i=B; if(q2){
+    a=bits(u,8, bn,K-1) ;while(i-->0){s=R64[a()]+s} } else {
+    a=bits(u,8, 32,0xFFFFFFFF)(); for(;i-->0;a=a/K>>0)s=R64[a%K]+s
+    }
+    return s
+  }),
+  charz(B,R64.at(-1), b=>b.flat(), u=>{u=u.split('').map(x=>R64.indexOf(x)); let a,s=[],i=A; if(q2){
+    a=bits(u,bn ,8,0xFF) ;while(i-->0){s.unshift(a())} } else {
+    a=0; u.forEach(di=>a=a*K+di); for(;i-->0;a=a>>8)s.unshift(a&0xFF)
+    }
+    return s
+  })
+  )
+},rt=(t,k)=>Object.assign(reCGrp(t),{ratio:k}),
+  a=[64,'u64',16,32,'u32',2, 85,'z85'], tb=[["AZaz09",'+/'],["AZaz09",'_-'], ['09AF'],['AZ','234567'], ['09AV'] ,rt(["01"],[1,8]),rt(["!u"],[4,5]),rt(["09azAZ",".-:+=^!/*?&<>()[]{}@%$#"],[4,5]) ]
+
+base={ofChars:enc, pad:'='}
+a.forEach((k,i)=> base[k]=pipe(UTF(),enc(+k?k:k.slice(1), tb[i].map?reCGrp(tb[i]):tb[i] )) )
+}
+
+
+
+// a=['abc', 'caty', 'catsy','goodgy','slamiiyz','a','ab']
+a=[...reCGrp(["AN"])].map(k=>[...reCGrp([`A${k}`])].join('') ) 
+fs=[base.u64,base.u32,base[85],base[16]]
+console.table(a.map(x=>[x,...(r=fs.map(f=>f.cat(x) )), r.map((y,i)=>fs[i].cut(y)).join()] ))
+//for s in `cat`; do for f in base{64,32hex}; do echo -n $s|basenc --$f; done done
+
+
 pipe=fn-editor, s.substr((t=dT/dur)*n)
 https://github.com/gre/bezier-easing/blob/master/src/index.js
 svg canvas https://www.zhangxinxu.com/wordpress/2013/08/%e8%b4%9d%e5%a1%9e%e5%b0%94%e6%9b%b2%e7%ba%bf-cubic-bezier-css3%e5%8a%a8%e7%94%bb-svg-canvas/

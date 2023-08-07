@@ -6,9 +6,8 @@ uses ju.lists:Ro
 ''(-named i) Idx=Cnt
 'T'Args=Ary<get T>
 
-impl?? when- Str() Ln<Char>
-  /* real String(not CharSequence), default at get-side *///
-  JVM()
+data Str() rw.GetStr
+  - as=Ln<Char>
 
 /* OK for [Rw.Str] */
 ourpkg 'T'To=Set
@@ -21,8 +20,8 @@ ourpkg 'T'To=Set
   - first(:T) Try<Rw.Seq<get>>
   - last(:T) Try<Rw.Seq<get>>
 
-  -named
-    'T'- let(:Cnt, fill:Fn1<Idx T>)Ln
+^named
+  'T'- let(:Cnt, fill:Fn1<Idx T>)Ln
 
 'KV'(get V)type KV Set<Pair>
   - get(:K) V?
@@ -60,15 +59,15 @@ ourpkg 'T'To=Set
 
 type Ary Ln
 
-named Rw
-  data Str(init="") Ro.Str AddStr
+named rw
+  data Str(init="") Ro.Str Str.Add
     made(maybe:Cnt)
 
   type Set Made Ro.Set
     'T'type Uniq Set
     - as SeqDel
     - `add`tight0 (:@T InferAddType)
-    - pop (:T)
+    - pop (:T, or:T?=NO)
     - add(tail:Ro.Set) Cnt
     - pop(del:Ro.Set) Cnt
     - `&`(:Ro.Set) = letLn: as<SeqDel> { if it !in set: pop }
@@ -100,13 +99,13 @@ named Rw
   /* RwEqv are inherited, to compose [T] from [S]treams */
   'TS' impl?? data Eqv(var_backer:S) Closes.Buf
     - Eqv<S>.cat Int
-    here ourtype:
+    ^now ourtype:
       - read S
       - read(:Ary<set Int>, at:Idx=0,:Cnt=-1) Cnt
       data- modeR
         - as Int4
     - Eqv<S>.cut(:InferAddType<T>)
-    here ourtype:
+    ^now ourtype:
       - dump(:Int)
       - dump(:Ary<get Int>, at:Idx=0,:Cnt=-1) Cnt
       data- modeW
@@ -118,12 +117,6 @@ named Rw
   'AB'when- as() Send Data
     Pair(var_A:A,B:B)
       - as=A to B
-
-  type AddStr
-    - `+`(:Str) this
-    - `+`(:Char) this
-    !- say(ln:Str)=let:+"$ln\n"
-    !- `+`(:Rn<Char>)=let:rn.Str(to=this)
 
   data Ins(:Idx)
   'T'type SeqDel Ro.Seq
@@ -148,6 +141,14 @@ named Rw
   'R'- let(mutex=$N, :-0<Rw>)=let:
     fn()
 
+  /* real String(not CharSequence), default at get-side *///
+  type GetStr()
+  type AddStr
+    - `+`(:Str) this
+    - `+`(:Char) this
+    !- say(ln:Str)=let:+"$ln\n"
+    !- `+`(:Rn<Char>)=let:rn.Str(to=this)
+
 'R'- Rw.Seq.let.add=let:add(NO)
 
 'GR'!- Coro let(:-2<Coro Cont>, retTo:Cont)=fn(retTo)
@@ -165,8 +166,10 @@ data- Ln as
 'N'data Rn(`posL`:N, posR:N) InfSet
   at size=posR-posL at isEmpty=size>0
   ^- has(it)=posL!<it & it!<posR
+  - may(:N)=may{has(n)}.must "in bounds"
   - cut(:N)=when:
-    n<posL:posL ;; n>posR:posR ;; n
+    n<posL:posL ;; n>posR:posR ;; or:n
+  - cycle(:N)=(n<posL).way(posL): posL+ n%posR.posR
   - as=Seq:
     var N: i posL
     repeat if i!<posR: add i; i goesR

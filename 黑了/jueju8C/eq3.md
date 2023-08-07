@@ -12,21 +12,21 @@ main=()=>(say(`count from ${app.n}`),
 )
 
 main=(N=app.it.n
-, _=anim.at(N).lets({dur:1}) //:hover{--N:new,animation:js} OR wSty()-only
+, _=Efx.at(N).lets({dur:1}) //:hover{--N:new,animation:js} OR wSty()-only
 )=>el(
   b("已收集",N,"票"),
   input(N(倍率(1.5)),"助力一下")
 )
-倍率=k=>Eqv(x=>x*rn(1,k).rand()).fcat//仅读入
+倍率=k=>Eq(x=>x*rn(1,k).rand()).fcat//仅读入
 rep=(txt,n)=>ul(...
   rn(1,n).let(i=>li(txt)) //let?
 )
 
 main=({words=[], sp=[' ','.']}
-, ws=i=>words(Eqv.of(Eqv.sep,sp[i])) )=>_app(
+, ws=i=>words(Eq.of(Eq.sep,sp[i])) )=>_app(
   input(sp[0]),"vs.",input(sp[1])
   grid(1,2,
-    textarea(ws(0)), div(wOp({edit:$Y}), ws(1)(Eqv.each(Eqv.fmt`${0}!`)) )
+    textarea(ws(0)), div(wOp({edit:$Y}), ws(1)(Eq.each(Eq.fmt`${0}!`)) )
   )
 )
 
@@ -39,10 +39,14 @@ el(doc.body,
 ))
 ```
 
-Eqv 是克制的框架联邦。囊括 界面/传输/巧语 三界
-- el.TOADRR CSSanim
-- qs.HISTPM /hi-cmdarg , flush(Encode)
+Eq 是克制的框架联邦。囊括 界面/传输/巧语 三界
+- el.TOADHIRE CSSanim
+- qs.STPM  , flush(Encode)
 - it/QN
+
+快速&可扩展、简明&可规范、易用&可评测 (复用 工程 健壮)
+
+Good things come in small packages.
 
 EQ让算法与模式相乘，而不是争锋同场。「凝聚的代码，连周期也能超越」
 
@@ -52,19 +56,20 @@ EQ让算法与模式相乘，而不是争锋同场。「凝聚的代码，连周
 
 wOSK 如 `el(doc, wOp({tap/2s: ev=>say('${ev.e}好') }),  eApp)`
 - `wOp({, edit:$N即NO,inscr,acty:$Y,stop}, 'li, only once stop/! first')` 冒泡参数可选
-- `wSty('.css'?, { ,pos})`, wSty\`css${$Y}` 表示 div$css_cls__idSSR() 类的有无
+- `wSty('.css'?, { ,pos,&:})`, wSty\`css${$Y}` 表示 div$css_cls__idSSR() 类的有无
 - `wKV({ ,v,slot:[父容器,需全屏]}, 'data/aria')`, `wKV.i18n/css.T='tw-'` 是简写
   - wKV `wOp(fns={my:1}); fns.冒泡my({})` 可监听
-  - `pos=[xy,wh监听,abs'!'含框]`; `Fshadow:[x,y,], _myVar,__moz等XX`
+  - `pos=[xy,wh监听,abs'!'含框]` -plen类型; `Fshadow:[x,y,], _myVar,__moz等XX`
 
 另有树绑定
-- let(a,fe_x) 绑定列表, lets(x,br,or, fk=`o.type`) way非空判定
+- let(a,fe) 绑定列表, lets(x,ce,or, fk=`o.type`) way非空判定
   - a={reload(){async的[]/进度条流},clear:div()/NO }
-  - `a.make(a=>a.sort, {io})` 时 `Eqv.diff(a,b)=[splice(0,-1),(2,+2),(0,[新] 或要移位+2项) ]`
+  - `a.make(a=>a.sort, {io})` 时 `Eq.diff(a,b)=[splice(0,-1),(2,+2),(0,[新] 或要移位+2项) ]`
   - 有 `wbr~* {hide缓存}` 和 list[eqN/K=] 方便上色； 移动画:先posabs,排序,赋pos.i
 - say(,danger=0~3), ask(inert=NO|body|e横中心).YN/str/(rv,form) 填框和弹框, `sel(rv_i18n,[v]{k:jsonV}rn,{of:'many',chk:1使用box2下拉})`
 
 界面
+- Tabs(e0, {i:0,rn:ei=>e.title, ease,corner,kbd:_4way, url:'#'}) //--anim: i rate(); atline:i; snap
 - Only1(sel=[N=0~Inf], e_rv=.it.open, vs=$Y$N冲突换色)
   - .on.phone (长按)显示拖选 /初0禁用
   - S-区间增选(仅异边) C-反增选 A-Esc, Shift滚轮=换tab
@@ -73,7 +78,7 @@ wOSK 如 `el(doc, wOp({tap/2s: ev=>say('${ev.e}好') }),  eApp)`
 
 EQ基于 tree pattern 读写DOM：
 - `el(doc|qs, ..wXX, ..pre, it/parent(css__n)={}, ..tail)` 调用内部"模式" 实现插入
-  - `body($app(it, 右))`,el.its((x,y, if!modify)=>`body(el('*query子项', wKV(a), Eqv.fmt'${x},${y}'/Eqv.json ))` ) 是爬虫模式
+  - `body($app(it, 右))`,el.body((x,y, if var已变)=>`el('*query子项', wKV(a), Eq.fmt'${x},${y}'/Eq.json )` ,body) 是爬虫模式
   -  `div(html(str))` 是爬绑HTML, `$wtf(lets(rn(10), el.html(p(), p()) ))` 加10次到.wtf
 - let尾随ul参, lets据{k:fn}内CSS/匹配爬虫
   - qs\`${e0} tag\${}` 会监听tag[attr/v0, str/child] 如.pintop.headroom.Vscroll ; 以及 el.D. pages,forms
@@ -87,16 +92,16 @@ EQ基于 tree pattern 读写DOM：
 ## 贰
 
 Scr={_root,err(ev){},
-  focus,inFull,inPic,lockPtr,lockWake
-  iDeg: 2=横右 -2=横左 1=纵下，±1时i=0。-1 换横竖，负号镜像
+  focus,asFull,asPic,lockPtr,lockWake
+  i_deg: 2=横右 -2=横左 1=纵下，±1时i=0。-1 换横竖，负号镜像
+  acty:01切走, actyMode:0从不 1熄屏时 2切走时-游戏 3毫秒后-锁屏 , unload:NO
 }
-ScrOff={now:01切走, acty:0从不 1熄屏时 2切走时-游戏 3毫秒后-锁屏 , unload:NO }
 
-HI支持 .line=[]
+HI支持 .story=[], cmdarg, if(card)ret el()
 
 ## 叁
 
-如同 `el.组件=({n=0}, my=el.DSL(get, set私有组件/公开函/默认,NS=svg))=>`, `Eqv.at(ret?,{可改量,}, _=>响应式)`, `Nd((A,B)=>四则)`
+如同 `el.组件=({n=0}, my=el.DSL(get, set私有组件/公开函/默认,NS=svg))=>`, `Eq.at({可改量,}, _=>响应式 ,it.type1)`, `Nd((A,B)=>四则)`
 
 组件只访问全局量。也可 `el.it({NotGlobal: f=>c=>f({...c, api: }) })` ；`el.暴露容器=({e=1})=>e.v=div()`
 
@@ -105,12 +110,12 @@ HI支持 .line=[]
   ref(need) //el.评论板=lets(strs, x=>评论(x))
 
  fref(f=>以f递归 ).v() //v默认自身, 尾递归优化
- evalFun(this_=NO, sf) //sf的函数式参数f, f.args可含参数名和{k=v,} 的默认表; 用于let_ 和Eq.at
+ evalFun(cg) //用一段据参数生成的(可缓存)代码实现函数，'this域'或在arg0。 cg的函数式参数f, f.args可含参数名和{k=v,} 的默认表; 用于let_, el域 和 Eq.at unit Nd/{}
  cache(f,c__f), //同参数只算1次
  
  hook o.f 请用 `o.it({f:f=>(...a)=>f(...a), f1:logs })`;
 
-`o.let(_=>x)` 作用域在运行期暂把o内变量覆盖到全局，eqvjs编译后则只添加 `_.x`
+`o.let(_=>x)` 作用域在运行期暂把o内变量覆盖到全局，Eqjs编译后则只添加 `_.x`
 
 也即 `let=evaly((o,f,kw)=> [{_:kw[0]=='_'? o, f}, '(f)(_)' ] )` 代码生成+内联参数
 
@@ -120,19 +125,20 @@ o.it={
   key: ss`x a`
   x: {v:1,onmod:v=>{}可多项 }
   a: {v:[2], it:{onmod,ondiff,sort:By, [0],} },
+  _RWX_key: 'readonly !configurable !enumerable'
 }
 
-Eqv(谈cat,吐cut=cat)
+Eq(谈cat,吐cut=noOp)
   oncat(x, af); flip
 num(+1, 2)//2x+1
 pipe(...eqf) of(eq,arg,$Y)
 way({v:1, _VK: })
 o.it.x=o.a.it[0] //x=2 双绑,如对URL
 
-Str.it=let_ reC: 支持fn(get)和Eqv(fcat=get,fcut=set)
+Str.it=let_ reC: 支持fn(get)和Eq(fcat=get,fcut=set)
 ```
-- `noOp.v(f,x)` EQ f都兼容常数，`heredoc.v(JSON),ss,Rn(A?,B) ,href包或css调用, win=global, doc, isA,n,newA{非空列;wOp流},rn{cut/cycle/has/rand}`
-- `it.unit(CSS=>{ 1..s.then, rate{onmod}/Lim(f,{slow:0~3,rep}) })` 可做进度条隐藏
+- `noOp.v(f,x)` EQ f都兼容常数，`heredoc.v(JSON),ss,Rn(A?,B), data(class Tag,{T:()=>class{made} }) ,href包或css调用, win=global, doc, isA,n,newA{非空列;wOp流},rn{cut/cycle/has/rand}`
+- `Nd.unit(CSS=>{ 1..s.then, rate{onmod}/Lim(f,{slow:0~3,rep}) })` 可做进度条隐藏
 - sel支持color/RE逐字/tel Picker 和loadK(*异步进度)
 - Trie(v,Dir) deep Sum N2~N(Vn,Va)
 
@@ -140,9 +146,9 @@ Paint(f)支持淡化和弹性动画, 注册_var
 
 - anim(v01,fx) `.rep(1, ok,stopr)={dur:1,fps:10/1s, t0,ease, call(t)}`
 - anim(t0,Infinity, f_dt); xywhs
-- .at .posMod=(e,i)=>
+- .at .posMod=(e,i)=>, $EQid
 
-- `URL=[s,'title', {}, Eqv.form]` UA=`{env:ss'Chromium 105.0.5195.102 ...', os: ss'Linux x86_64 5.19.6', vnd:[$Y, "iPhon"]}` credentials
+- `URL=[s,'title', {}, Eq.form]` UA=`{env:ss'Chromium 105.0.5195.102 ...', os: ss'Linux x86_64 5.19.6', vnd:[$Y, "iPhon"]}` credentials
 
 ## Pjs失败的前作
 
@@ -279,3 +285,274 @@ fref=(need ,v,f=(...a)=>v(...a))=>(v=need(f),v.v=V=>v=V, v)
 // 100==fref(f=> x=>x?f(x-1)+1 : 0)(100)
 
 ```
+
+
+
+如果SQL函数从过滤 table(row,,) 转为DFS搜索“x-解 集”，就能实现类似线代的解方程
+解的个数:
+1: x=1; a=b; x<1
+0: x=y,y=2,x=0 //1: 删x=y
+1: 1=y, (y=2|y=1) //2: 改为1=x
+响应式: a=b,b=c, c=a
+
+所以函数的参数是“变量”。它也在全局解集添量,用于模式匹配；以执行'=,|'(unify and or)滤流
+unification 是指cut(深解赋值), 如 [1 x]=[y 2] 执行后 cat(深建构)出解集: [3 x]=[y [5 y]]
+[1]+x =[1 2 3]
+append([1], x, [1 2 3])
+
+解集是可以缓存。看看关系式的实例：
+类型，是在编译期创建的列表。this把全局函数按首参::分组。推导 "Box.let"(Box<Int>, (T)->R) 是关系式:
+let A B等arg
+|A=[Box T], B=[Fn T R], 函数体(R变量)或已知'R关于args'的类型函数
+|A=[Box T], T
+此刻，
+  fun<T,R> Box<T>.let(f:(T)->R) = f(this.item)
+  Box<T>.let=item
+
+A B 都是“解”提及的变量，因此，cat得到的竟然是“类型函数”(关于 A B)
+'|'表现的是重载,(子类)隐式转换可以在 n=Int4,N=Int2, N'='n 里给前者打标
+不是只用查询单独的 I2->I4，因为 Fn<set I4> 有 Fn<I2> 要兼容
+
+3写法链表append:
+(+) a b
+|a=[], b
+|a=[x A], [x (A+b)]
+
+appendo a b r
+|a=[], r=b
+|(xA) a=[x A], r=[x R], append(A b R)
+
+a+b=[1 2 3 4]
+#code tca.github.io/veneer/editor.html
+(define (appendo a b r) (conde
+  ((== a '()) (== b r))
+  ((fresh(x A R) (== a `(,x . ,A)) (== r `(,x . ,R))
+    (appendo A b R)
+  ))
+))
+(appendo a b '(1 2 3 4))
+
+:- use_module(library(clpfd)). %区间整数求解
+solve(X, Y) :-
+  X + Y #= 14,
+  2 * X + 4 * Y #= 38.
+solve(X, Y),
+  X in 0..14.
+
+
+- Str symbol, .lit=add constant  +`,`=raw CodeBlock
+- Typed=Pair<Str Type>, +`,`=get names
+- Fun=Pair<List<Type> List<Str>> +`,`=reference::fn
+- Import("pkg")["item"]
+
+
+Trie(ways={a,b..},end?) 键值是用于前缀补齐、批量字串替换的树，“单字符文件夹”也是git,apt 等管理hashed数据的方法
+
+其优化AC机(KMP)通过 ab'c'.way['']='bc'd.. 避免了"".indexOf(ss) 时的 `ss[i],s[i-=失配回退]` ，Trie的压缩 后缀树/Radix树用途也很广泛，类似有Huffman树与lz压缩、加权图与输入法，不可谓不好用。
+
+我的PRR 对+-*/,对中文的分词可能要靠字典，本来想靠 pri pro => pr/{i,o} 的后缀树，但"pr"是无法逐字符或单遍读取
+
+如果只是用 Trie，那要1次读取最长的键，性能还不如{}["public"]，毕竟树主要是前缀查找的，对解析器鸡肋
+
+我还是妥协在了 Trie+单后缀懒Map-AC, pri pro pubg=> p/{r/{i,o}, u/bg} ，这样比 [strs].find,filter(startsWith) 优雅很多，主要是提供了高频的(关键词/解析期变量编址/类型期.括号) 补齐/优化、str替换API
+
+[+, {运算符KV},/变量名/] 实现了"a添2"等分词。Chk(kv)会维护对应的正则，读名=向前peek变量名并寻找'添'的位置。消耗二者并下次返回'添'
+
+
+#tech 有些常见的解析器，如 h1~h6 的标题树、MSWord乃至YAML的缩进列表，以及 1+2*3 => [1 2 3 * +]
+
+若想把 "Hello "+name+"!" 优化为模板，也要先读为 [+ "H" name "!"] 的N参调用树 ##1
+
+读法，比如混乱的左递归、逆波兰算符重排(就是上面 1 2 * ;等效于AST树)。
+
+幸运的是 Lua 提供了基于 Op(x,sep) (层S, 内项>S则停止)递归法，此法易支持 (Expr),也能 'k to (2 to 3)' 这样右优先级更大
+
+- x(流s)='1'
+- ·x, ·失败:返回, ·的级比S  大:返回 中:替换S 小:递归(新S) , 结束前add(S)
+- 比如，S(+) S(*) 会导致加法最后add，类似遇到'=' 会跳回再上面的S(=) 那层，继续读完 x=x+1/2 到[$x x 1 2 / + =]
+
+嵌套的["", ["h2",]]同理：每一行都是 ·(缩进级)文本、<hN>文本 ，所以它和 #1 的调用树同构，只是不靠[1 2].reduce(+)==3 来执行而已
+
+业界里更复杂，一般 !x.fn()!! 都是读取 unaryNot 再读 x.()[]!! 的括号链，'=' > Or > And ，还有 (1 as? Int + 1) 这些微妙的设计
+
+#js #code 能输入HTML、缩进文本、1+2*3 的解析器
+
+
+花了一周的这件事让我体验了眼高手低，我对自己「开悟后」的代码段有股莫名的自信，忽视了Eq等一打框架仍需简化的现况 ##1
+
+其实呢，对“最后一块补满N,结果去尾”的操作 chunk(N,each,fillFn) 整零不分，对base32的公式滥用if，z85的特殊读写逻辑被压行， Eqv(a=>b, b=>a) 的设计喧宾夺主
+
+在数据流算法上，我没整理好类型和次序，却搞一堆共享变量的“高阶函数”
+
+当时我就觉得，这js虽短虽强，但极其晦涩(比如j=join 这种以前我深恶痛绝的无类型)，问题不少，只是临时没精力继续； 后来竟记得它很优雅
+
+“免费的最贵”。字面短的、符号化的算式，往往意味着样板代码，真的只是堆脚本时省事，想逃避心智模型的复用。
+短只是思维通顺的副作用，不是复杂度的解药。
+
+但，创作一种种新方法真的很难。“守恒的解法”考验设计者永恒的积淀。 且不说不同的人对“定义式编程”的理解偏差可能比Vue和Elm 还大， 往往就是一些简单的思考会卡你两三天
+
+对未知的恐惧，在失去新鲜感后拔地而出，从0到1是与知识与资本都无关的。你也可以一直当一个“练习生”，做些不涉模型的重命名创作，
+但我见过CS人“重新定义XXX” 真的太多了。我懒得加入这种边解题边造坑的狂欢。
+
+我追求的就是绝对的真理，这样我对代码的评价两极分化；但我是真不相信 ffmpeg; pandoc; numpy 这样的神级抽象，没有让一切开箱即用、取代一切的潜力。
+我最看重的是“思维益生元”式的语言接口、是高于问题与语法的存在，不是何时做都雷同的解谜游戏
+--
+#1 “三不解”。不解决问题，换掉改掉耍戏精的框架；不关心解法，只问相似问题，问到心智模型一眼见底；不解析代码，只用通用API表达思路
+不学习问答和代码，那我干什么？写我爱写的东西。
+
+```kt
+inout=("in ","out ")
+param=range(0,22+1)
+
+Kt("""
+package kotlin.jvm.functions
+
+{param,N:,} doc
+interface Function{N}<{range(1,it), inout[0]+"P"+it, ","}, R>:Function<R> {
+  {N==0,}/** Invokes the function. */
+  {OR,}/** Invokes the function with the specified arguments. */
+  operator fun invoke({range(1,it),j: "p%: P%"%(j)}): R
+}
+
+{R=inout[1]+"R"}
+{doc=,}/** A function that takes {N} argument{""if N==1 else "s"}. */
+""")
+
+
+Kt{
+"""
+class 物(val 造量) {
+  fun 事() {
+    println(你好 +", $name")
+  }
+}
+
+fun main(args) = 物(a0).事()
+""" to kvOf("物 事 你好 造量 args a0",
+  "greeter","greet", "Hello".lit, listOf("name".to<String>),
+  listOf(Kt.MOD.vararg+"args".to<String>)
+)
+}
+
+
+Kt{
+"""
+class X_Builder(private var vars) {
+  vs{[v T] fun set_v(to:T)=apply {v=to } }
+  fun build()=X(vs,)
+}
+""" to kvOf("X vs vars",
+  T, T.vars, T.vars.map{ "$it?" `=` null }
+)
+}
+
+fun ktSum(rn=10..20)=Kt("control"){
+"""
+fun main()=print(f(i))
+
+fun sum$f()=let{
+  var total = 0
+  for (i in rn) {
+    total op i
+  }
+  return i
+}
+""" to kvOf("0 rn f", 0,rn, rn.run{"${first}to$last"})
+}
+
+Kt{
+"""
+class Hello {
+  fun $0()="$0"
+  MOD val v
+}
+"""to kvOf("fun MOD v",
+  Fun(rows="slimShady eminem marshall\$Mathers".split().map{listOf(it)} ),
+  MOD.private, "android".to<String> `=` "Oreo v.".lit+ 8.1
+)
+}
+
+Kt{
+"""
+package com.example
+
+fun print(ary) {
+  println("${日()} These are the $a0: \${a0.f()}")
+}
+
+typealias Ta
+"""to kvOf("ary a0 f 日 Ta",
+  listOf("digi".to<IntArray>),"digi",
+  Import("kotlin.collections")["contentToString"], Date::class ),
+  mapOf("Word".to<String>, "FileTable<K>"to"Map<K,Set<File>>", "Predicate<T>" to "(T) -> Boolean")
+}
+
+Kt{
+"""
+fun f(b: Int): String {
+  val result = CharArray(2) { i -> hex((b ushr (1-i)*4) and 0xf) }
+  result[0] = hex((b ushr 4) and 0xf)
+  result[1] = hex(harg,)
+  return String(result)
+}
+
+fun hex(i: N) =
+ (if (i < 10) i + '0'.to_N() else i - 10 + 'a'.to_N()).toChar()
+
+fun N.square(): N {
+  val s = this * this
+  return s
+}
+fun abs(x: N) = if (x < 0) -x else x
+
+"""to kvOf("hex N f harg",
+  "hexDigit", Int::class, "byte->hex", "i=b and 0xf"
+}
+
+
+Kt{
+"""
+class HelloWorld {
+  fun beyond(): List<T> {
+    val result = ArrayList<T>()
+    _times { result += T() }
+    return result
+  }
+
+  fun print_E(_E: Array<out _E>) {
+    println(_E)
+  }
+
+  fun print_K(_K<*>) {
+    println(_K)
+    val taco = createTaco()
+    println(taco.isVegan, cake.samename)  
+  }
+  private var vs
+}
+
+"""to kvOf("T E K _times vs", Pkg("com.mattel")/"Hoverboard" ,
+  Long::class, KClass<*>::class, 1..3,
+  listOf("java".to<String?> `=` null, "kotlin".to<String>)
+)to kvOf("createTaco isVegan samename",
+  ::createTaco, ::isVegan, Pkg("com.mattel")/"isVegan"
+)
+}
+fun createTaco()=""
+fun String.isVegan()=true
+```
+
+
+pls manually import  Pkg/`-=` (KOperator.MINUS_ASSIGN),. or use a formatter on generated code
+
+supported automatically:
+- Modifiers, ParameterizedType, `@file:Test` s
+- sealed/fun interface, data class/object
+- inner class, enum{ XX{overrride}}
+
+weird combination of "hardcoded AST"(by Builder.add!?) + String.format
+
+those struct are !belonging to bussiness logics anymore, they are just boilerplates
+
+why using complicated tools to "magically" generates complicated boilerplates?
+

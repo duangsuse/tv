@@ -9,6 +9,9 @@ use ju.expr
 /*  `from traceback_with_variables import activate_by_import` */
 'F'Decorate=Fn0<F>
 
+/*游标*/
+''Idx=Cnt
+
 'N'at! PairOf<N>.min
 
 - say(:Str, to=File.`#>`,end="\n")
@@ -48,15 +51,14 @@ type Type
 data Any() @impl? Type.d
   - `==`(:Any?) @impl? Bool
   - Hash @impl? Int
-
-  ^named
-    -'T' let(v:T)=T.TYPE
   named Mem
     - `==`
     /* made() call this *///
     - init=TODO
     /* your finializer *///
     - deinit=TODO
+^named
+  -'T' let(v:T)=T.TYPE
 
 -'KV' FnKV(kv=Rw:mkKV, ways=Rw:mkSet<Fn1<K V?>>, mode="lru")
   - get(:T)=kv[it]or ways.firstNotNO:let(it)
@@ -66,33 +68,34 @@ data Any() @impl? Type.d
   var v: T
   - as=v
   -! `=`tightR0 (:T)
-  ^named Here
-    /* see [kOf.o] */
-    -'T'! let(name:Str) Var
-    'T'data- fnCell(v:T) Var
-    /* K=Int,Str(getset) is supported */
-    'TK'impl? data- kOf(o:T, :K) Var
+^named Here
+  /* see [kOf.o] */
+  -'T'! let(name:Str) Var
+  'T'data- fnCell(v:T) Var
+  /* K=Int,Str(getset) is supported */
+  'TK'impl? data- K(o:T, :K) Var
 
-    -'T'! _swap(a:Var,b:Var)
-      at A=a;a=b.v;b=A
-    /, 1.let:[var_n] swap(cfg.xx,n) ,/
-    'TR'! data- swap(a:Var,b:Var, :Fn0) Closes
+  -'T'! _swap(a:Var,b:Var)
+    at A=a;a=b.v;b=A
+  /, 1.let:[var_n] swap(cfg.xx,n) ,/
+  'TR'! data- swap(a:Var,b:Var, :Fn0) Closes
+    swap(a,b)
+    -! close
       swap(a,b)
-      -! close
-        swap(a,b)
-  
+
 type Closes
   - close
-  type Buf Closes
-    - closeBuf
   -!'TR' lets(:Fn1)R
     at r=fn(); close(); return r
+^named
+  type Buf Closes
+    - closeBuf
 
 'this'type Made
   - empty
   - let(/*copy*/) this
-  ^named
-    at defaults:KV<Str Any?>
+^named
+  at defaults:KV<Str Any?>
 
 /* Only instances of this class can [throw]n or caught. *///
 data Thrown(message: Str?, cause: Throwy?=null) @impl?
@@ -104,15 +107,6 @@ data Thrown(message: Str?, cause: Throwy?=null) @impl?
   [types]=NO for Singleton
   in JS, only validate&set-prototype *///
 'this'type Send
-  ^named
-    - empty this
-    - get(:this,k:Str) Any?
-    - set(:this,k:Str,v:Any?)
-    at typed: FnKV<Str Serde>
-    at typedArg: Rw.KV<Str Fn<Args<Serde> Serde> >
-    
-    at sendName: Str
-
   data NO() Mark
   data NoDefault() Mark
   data By(name:Str, eqv:Send.TYPE?=NO) Mark
@@ -121,12 +115,20 @@ data Thrown(message: Str?, cause: Throwy?=null) @impl?
     at vals: KV<Str Pair3<Serde T Idx>>
     at typedTag: FnKV<Type Rw.KV<Any Serde>> {Rw.ofKV}
     at cfg:Rw.KV<Str Any?>
+^named
+  - empty this
+  - get(:this,k:Str) Any?
+  - set(:this,k:Str,v:Any?)
+  at typed: FnKV<Str Serde>
+  at typedArg: Rw.KV<Str Fn<Args<Serde> Serde> >
+  
+  at sendName: Str
 
 
-'this'type _When Send
-  ^named
-    at all: Ln<this>
-    - get(name:Str)this
+'this'type _Enum Send
+^named
+  at all: Ln<this>
+  - get(name:Str)this
 
 'this'type Sort
   at sort: Fn<this>
@@ -135,14 +137,23 @@ data Thrown(message: Str?, cause: Throwy?=null) @impl?
   ^- `==`(x:this)=lessThan(x)==Eq
   'T'type Fn
     - T let(with:T) Sorts
-  ^named
-    - as=Sorts.MinAt0
+^named
+  - as=Sorts.MinAt0
 
-'this'data When made(name:Str,v:Int) @impl?? ByAPtr<Sort>(v) _When
-  made(name,v=0)@ourtype =made(name, (v!=0).way(v): idx goesR)
-  ^- Str=name
-  ^- Hash=v.Hash
-  ^- clone @impl! = error("whens are const")
+data Cond
+  -!'T' open= T.modifiers !has ACC_FINAL
+  type T
+    at cond0: Type<*>
+
+  'this'data All made(name:Str,v:Int) @impl?? ByAPtr<Sort>(v) _Enum
+    made(name,v=0)@ourtype =made(name, (v!=0).way(v): idx goesR)
+    ^- Str=name
+    ^- Hash=v.Hash
+    ^- clone @impl! = error("whens are const")
+
+    'T'data Raw(v:T)
+      -!as=v
+
   ^named
     at idx: @our now 0
     - init
@@ -167,8 +178,8 @@ when- Sorts()
         b==NO: MaxAt0
         else: key(b).sort(key(a)) }
   'T'(T Sort) -! let=let(T.sort)
-  ^named
-    for<T> - let(:Fun2<Sorts Ln<Sort.Fn>>) = fn()(Sum: as<Comparable>.thenComparing(it))
+^named
+  for<T> - let(:Fun2<Sorts Ln<Sort.Fn>>) = fn()(Sum: as<Comparable>.thenComparing(it))
 
 
 'T'type PosLR两侧
@@ -213,9 +224,9 @@ pkg ju.nums
     at `#2**?`: Bool
     data- zeros() PosLR<Cnt>
       at size: Cnt
-  ^named
-    at `#0` this at `#1` this
-    at Rn Rn<this>
+^named
+  at `#0` this at `#1` this
+  at Rn Rn<this>
 
 when- MathOp
   floor round ceil trunc
@@ -278,8 +289,8 @@ data For(rows:Str) Mark
 
 /** *//, @ForBelow(1)/,- _suffix:@Mark,/ ,/
 data ForBelow(nDef:Cnt, defnOrMark:Str) Mark
-  ^named
-    -! let(:E<*>)=ForBelow()
+^named
+  -! let(:E<*>)=ForBelow()
 
 data FunInterface() Mark({data})
 
@@ -293,8 +304,8 @@ data Mark(:.Target.s=empty, runtime:Bool3=$N, repeat=$N, docs=$Y) @impl?
     `#var`; `#var=`; vars; Arg; made
     `#fun`; get; set
     TYPE; E; PKG
-    ^named
-      ^at empty={data `#var` vars Arg made `#fun` get set}.ChkBox
+  ^named
+    ^at empty={data `#var` vars Arg made `#fun` get set}.ChkBox
 
 pkg ju.expr
 
@@ -303,6 +314,9 @@ data AsImpls() Mark({PKG})
 
 /** Disable "you" in scope with two `DslMarker`-ed "this" */
 data MarksDSL() Mark({Mark})
+
+/** unify types from fun call */
+data InferItsAdd() Mark({fun})
 
 /** Hight (arguments) with [Type.name] */
 data Hilight() Mark({T})

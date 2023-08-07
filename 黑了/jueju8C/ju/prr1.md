@@ -13,6 +13,15 @@
 - lex+YaCC 冗长，手写递归下降烦于 nextChar()
 - 混杂的左递归,FP组合子; 功能缺失的PEG(算符,注释,)
 
+
+Send{Made; As格式; Char读写}
+- `typed[T], typedArg[List](sendStr)` 定义了类型的读写(cat cut)器，靠As(json,csv.)来编码Char流
+- 数据类列化: 读empty()+set(0,read)+set 以 As.T,_T(obj,:Made) 读写。校验 `cols=FnKV.const("age" to (typed[Int], 18 or nodef, 0))`
+- List<*> 的开放T^按{}[]0~9 接口的注册, 或 `conds: FnKV<Made Str>?` 创建 ^常量优化 get,of反查,forEach
+- T(:Send/Pair) 在n==-1时流写入，否则生成[]{}. Str<-Date,File; Chars<-boolEnum,1L 1f
+  - ^格式只需实现 As.Pair(cols)->mI+mX ; surr="{:,}[]"
+  - cond 除cols="type" 也支持 `[:x 0 Either[:A [:v 1]] ]`
+
 ## JSON read
 
 解析 "[1 [2 3]]" 到 [1,[2,3]] 只需对流前缀应用 A=`(\d+) | '['A* ']'` 两条“吃文吐数”的规则。JSON也如此
@@ -94,8 +103,6 @@ ISON(Interchange Str Obj Num) 表示层：
 
 从语言层建模了强类型static vars 与 Send.typedArg[List]={impl(Targ[0]) as RwEq SendT }
 无需新建class ，就能支持新格式。只覆盖 Pair<KV>, Send.Idx<T> 的读写逻辑，且自带流式读写
-
-
 
 ### ISON
 

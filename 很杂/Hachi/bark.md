@@ -88,6 +88,7 @@ TTS 可输入vtt流-遇空时长词时吐句，基于停顿 `科大[p500]讯飞`
 [TP-SMM.](github.com/yoyo-nb/Thin-Plate-Spline-Motion-Model#web-demo-for-animation)|png,id / faceA,mp4|__B.mp4__(if pre=face2D) [paste A](https://github.com/s0md3v/roop)|idA, Pt=vox. try pre=rmback|Thin-Plate Spline Motion Model for Image Animation|2022|384|✔|[清华](https://cloud.tsinghua.edu.cn/d/30ab8765da364fefa101/)
 [TuneAVi](https://tuneavideo.github.io/)|mp4|mp4|tag|[注册试用](https://runwayml.com),[素材](https://najoast.github.io/t/quark.html).One-Shot Tuning of Image Diffusion Models for Text-to-Video Generation|2022|TBD|
 [DragGAN]()|png|pngs|vec2x2
+[DINOv2](https://vra.github.io/2023/07/14/dinov2-retrieval/)|pngs|png|
 [AnimeGAN](https://huggingface.co/spaces/akhaliq/AnimeGANv2)|png|png|sty|Landscape photos/videos to anime. [Paddle ver](https://github.com/PaddlePaddle/PaddleGAN/blob/develop/docs/zh_CN/tutorials/animegan.md)|2018|TBD
 [realeSRGAN](https://kgithub.com/xinntao/Real-ESRGAN/blob/master/README.md#portable-executable-files-ncnn)|pre=png|png|'+'x4plus (+face),k=4. [Bili lab](https://real-cugan.animesales.xyz/)|ncnn,Training Real-World Blind Super-Resolution with Pure Synthetic Data|2021|47||[zip](https://github.com/xinntao/Real-ESRGAN#portable-executable-files-ncnn)
 [GFPGAN](github.com/TencentARC/GFPGAN)|face.png|png|v3, k=2|see also: PULSE FastPhotoStyle FaderNetworks pix2pix|2021|332||[gh](https://github.com/xinntao/Real-ESRGAN/blob/5ca1078535923d485892caee7d7804380bfc87fd/inference_realesrgan.py#L145)
@@ -100,6 +101,7 @@ TTS 可输入vtt流-遇空时长词时吐句，基于停顿 `科大[p500]讯飞`
 [face-align.](github.com/1adrianb/face-alignment/issues/286)|png|box,kpFaces.npy|d=2|world's most accurate network, capable of points in both 2D and 3D|2017|91|👍|[gh]()
 [StyleGAN](github.com/a312863063/generators-with-stylegan2)||png|emotions,age|NV,face generators, 2018:v1. [Anime ver](github.com/jayleicn/animeGAN),[笔记](https://www.seeprettyface.com/research_notes.html),also:[SD-webui](https://guide.novelai.dev/guide/install/sd-webui)|2020|TBD
 [F2F^ρ](github.com/NetEase-GameAI/Face2FaceRHO)|mp4 face.mp4|mp4,3DMM*2||speed=9*SOTA, >460M. [more](https://m.thepaper.cn/baijiahao_19128242)|2022|TBD
+[HQTrack](https://github.com/jiawen-zhu/HQTrack)|||
 [RMPPE.](github.com/ZheC/Realtime_Multi-Person_Pose_Estimation)|mp4|bones.npy||bottom-up approach for realtime multi-person pose estimation. [more.DensePose 4 WIFI](https://kgithub.com/geekfeiw/wifiperson/issues) |2017|TBD|✔
 
 >再次感谢 [Nihui](https://github.com/nihui) [腾讯优图] 打包诸多nCNN应用的电脑端，用户运行很方便！

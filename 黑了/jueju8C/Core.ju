@@ -435,6 +435,30 @@ type Geo interface{func area() int}
 type Point struct {x,y int}
 type Rect struct {Point; w,h int}
 
+/*去水果店买苹果
+
+  - 先得看看店是不是在营业
+  - 如果有苹果的话，就买 1 个
+  - 如果钱不够，就回家取钱再来*///
+
+- Nerd buyFriut(:Store)
+  store.isOpen or: "closed"!
+  store["apple"] !isEmpty or: "no apples"!
+  store["apple"]*1 let:
+    you.canAfford(this).way {
+      store["apple"] =: -1
+    }: goHome();getMoney(this)
+
+^now
+  - Str`!`=error(this)
+  ''StoreOpen=Store: it.isOpen
+
+- Nerd buyFriut(:StoreOpen)
+  store["apple"].must("have apples")*1 let:[$]
+    if canAfford($):
+      store["apple"] =: -1
+    or: goHome();getMoney($)
+
 - 数.它=判我，
   正书，(-1)去它。
   或，0。
@@ -564,6 +588,63 @@ at nt=com.sun.jna.platform.win32.Kernel32.INSTANCE .may: "Windows" in Env["os.na
 named Env
   - get==System.getProperty
 
+- Ary<Int> mergeSort=go(0~lastI)
+^now
+  - Ary<Int> go(:Rn<Idx>) = rn.div2:[I]
+    at now:
+      //a,b 半都指向升序
+      a (rn(B=I-1):go(this)).Seq
+      b (rn(A=I):go(this)).Seq
+      i rn.A
+    loop if a.posR & b.posR:
+      this[i:goesR]=popMin(a,b){get}
+      a: this[i:goesR]=get(it)
+      b: this[i:goesR]=get(it)
+  -'NR' Rn.div2(:Fn1<Idx>)
+    (size/2).may{it!=0}:fn(it)
+  
+  -'TR'(R Sort) popMin(a:Seq,b:Seq,key:Fn1) = key(a) to key(b) lets:
+      if A<B: a goesR; A
+      or: b goesR; B
+
+- Ary<Int> mergeSort=go(0~lastI)
+^now
+  - Ary<Int> go(:Rn<Idx>) = rn.size/2 lets:[d2]
+    if d2==0: return
+    at now:
+      i rn.A
+      N i+d2
+      a (rn(B=N-1):go(this)).Seq
+      b (rn(A=N):go(this)).Seq
+      //a,b 半都指向升序
+
+    loop if a.posR & b.posR:
+      this[i]=get(a) to get(b) lets:
+        if A<B: a goesR; A
+        or: b goesR; B
+      i goesR
+    a: this[i]=get(it); i goesR
+    b: this[i]=get(it); i goesR
+//or “简化”代码
+    loop if a.posR or b.posR: this[i:goesR]=when:
+      !a.posR: get(b:goesR) ;;  !b.posR: get(a:goesR)
+      or: get(a) to get(b) lets:
+        if A<B: a goesR; A
+        or: b goesR; B
+
+
+- Ary<Int> qsort(:Rn<Idx>) = rn:
+  if A!<B: return
+  at now:
+    a=A; b=B
+    mid this[A]
+  loop if a<b:
+    loop if a<b& get(b)>mid: b goesL
+    this[a]=b //选中太小的b. 下同
+    loop if a<b& get(a)<mid: a goesR
+    this[b]=a
+  this[A]=mid
+  qsort(a~A-1); qsort(A+1~b)
 
 [网见]
 绝地
@@ -1128,10 +1209,14 @@ attribute_info: [u2 attribute_name_index, u4 attribute_length, info[attribute_le
 
 
 factor N
-|N=1,1
+|1,1 #单参省略,
 |N>0, factor(N-1)*N
 
-
+def db/use (xx)
+def User(id Str age Int)
+a(User)| (0 18) ()
+$getU == User(id 关键字参数), id=$0, MaxAt0(id)
+CRUD(User, id)
 
 kv(jack peter)
 kv(peter jack)
@@ -1144,6 +1229,9 @@ mother X M
 
 单恋 A B
 |a(loves A B), !a(loves B A)
+
+单恋 A
+|loves(A R), !loves(R A)
 
 friend [
   [john julia]
@@ -1161,6 +1249,7 @@ colorify A B C D E
 |cv(A), cv(B), cv(C), cv(D), cv(E),
 ! A=B, ! A=C, ! A=D, ! A=E,
 ! B=C, ! C=D, ! D=E
+
 
 
 a(man)[george john robert]
