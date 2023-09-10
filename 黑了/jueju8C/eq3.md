@@ -1,14 +1,40 @@
 ```js
-el.count=({n=0}, my)=>(
-  my.add=()=>n.v++ ,
-  div(p(n), button(wOp({tap:my.add}), n,"+1") )
+ee.count=({n=0}, my)=>
+  (my.add=()=>n.v++ ,
+div(p(n),
+  button(wOp({tap:my.add}), n,"+1") ))
+
+ee.Count=({n=0}, add=x=>x+1)=>
+div(p(n(add)),
+  button(wOp({tap:n}), n,"+1"))
+
+ee.Voteup=({N=1}, 倍率=k=>x=>x*rn(1,k).pick() )=>
+html(
+  b(`已收集${N}票`),
+  sel(N.as(倍率(1.5))), `助力一下`
 )
+
+ee.Sep=({words=[], sp=['\n',' ']}, ws=i=>words(Eq.sep(sp[i])))=>
+$app(
+  as(sp, x=>sel(x) ),
+  grid({of:'1,2'},
+    textarea(ws(0)), sel(ws(1))
+  )
+)
+
+ee.Upd=({major=3, minor=1, upd=NO, it, iB=0}, chkUp, doUp, done,
+  ver=x=>html`${x.major}.${x.minor}`)=>
+html(
+  h3("听书", ver(it),
+    sup(wKV({if:upd}), wSty({fg:green,bg:wheat}), `^`,ver(upd) )),
+  btn(iB, chkUp(_=> upd.v={...it._, minor:2,upd:NO}), doUp(_=> it._.to(upd.v)), done(_=>0))
 
 let app={n:0}
 main=()=>(say(`count from ${app.n}`),
+  Eq.at(n1, {n}, _=>n+1)
   el.button(wOp(
     {tap(){ app.n++ } }),
-  "Count: ",app.it.n) //n=ref()
+  "Count: ",app.it.n, " next:",n1) //n=ref()
 )
 
 main=(N=app.it.n
@@ -59,7 +85,7 @@ wOSK 如 `el(doc, wOp({tap/2s: ev=>say('${ev.e}好') }),  eApp)`
 - `wSty('.css'?, { ,pos,&:})`, wSty\`css${$Y}` 表示 div$css_cls__idSSR() 类的有无
 - `wKV({ ,v,slot:[父容器,需全屏]}, 'data/aria')`, `wKV.i18n/css.T='tw-'` 是简写
   - wKV `wOp(fns={my:1}); fns.冒泡my({})` 可监听
-  - `pos=[xy,wh监听,abs'!'含框]` -plen类型; `Fshadow:[x,y,], _myVar,__moz等XX`
+  - `pos=[[xy,wh],监听,abs'!'含框]` -plen类型; `Fshadow:[x,y,], _myVar,__moz等XX`, N2.ptr(ev|{move=tap(z在按下时=0),e})偏移
 
 另有树绑定
 - let(a,fe) 绑定列表, lets(x,ce,or, fk=`o.type`) way非空判定
@@ -72,9 +98,6 @@ wOSK 如 `el(doc, wOp({tap/2s: ev=>say('${ev.e}好') }),  eApp)`
 - Tabs(e0, {i:0,rn:ei=>e.title, ease,corner,kbd:_4way, url:'#'}) //--anim: i rate(); atline:i; snap
 - Only1(sel=[N=0~Inf], e_rv=.it.open, vs=$Y$N冲突换色)
   - .on.phone (长按)显示拖选 /初0禁用
-  - S-区间增选(仅异边) C-反增选 A-Esc, Shift滚轮=换tab
-    - EQDE 主页=控件板(dock分屏,滚轮), 新工作区=App表控件, 热区=左…位置日期app(drop笔记) 右消息开关, 滚轮抖动win=概览(-1区);跨区拖放;层叠动效
-    - 截屏/冷藏 ,UI值类型(rand,滚轮),pin菜单 右键模态栏化 关窗=中键(右日期)
 
 EQ基于 tree pattern 读写DOM：
 - `el(doc|qs, ..wXX, ..pre, it/parent(css__n)={}, ..tail)` 调用内部"模式" 实现插入
@@ -89,19 +112,21 @@ EQ基于 tree pattern 读写DOM：
 
 只有 `e.pos={e0,e/copy,eHide, L,R, css:'div'/chk,n:NO,deep:2 ,fskip}`
 
+
+
 ## 贰
 
 Scr={_root,err(ev){},
   focus,asFull,asPic,lockPtr,lockWake
   i_deg: 2=横右 -2=横左 1=纵下，±1时i=0。-1 换横竖，负号镜像
-  acty:01切走, actyMode:0从不 1熄屏时 2切走时-游戏 3毫秒后-锁屏 , unload:NO
-}
+  acty:01切走, actyMode:0从不 1熄屏时 2切走时-游戏 3毫秒后-锁屏 
+}, quit:NO
 
 HI支持 .story=[], cmdarg, if(card)ret el()
 
 ## 叁
 
-如同 `el.组件=({n=0}, my=el.DSL(get, set私有组件/公开函/默认,NS=svg))=>`, `Eq.at({可改量,}, _=>响应式 ,it.type1)`, `Nd((A,B)=>四则)`
+如同 `el.组件=({n=0}, my=el.DSL(get, set私有组件/公开函/默认,NS=svg))=>`, `Eq.at({可改量,}, _=>响应式 ,it.type1)`, `Nd(({A,B})=>四则)`
 
 组件只访问全局量。也可 `el.it({NotGlobal: f=>c=>f({...c, api: }) })` ；`el.暴露容器=({e=1})=>e.v=div()`
 
@@ -110,7 +135,7 @@ HI支持 .story=[], cmdarg, if(card)ret el()
   ref(need) //el.评论板=lets(strs, x=>评论(x))
 
  fref(f=>以f递归 ).v() //v默认自身, 尾递归优化
- evalFun(cg) //用一段据参数生成的(可缓存)代码实现函数，'this域'或在arg0。 cg的函数式参数f, f.args可含参数名和{k=v,} 的默认表; 用于let_, el域 和 Eq.at unit Nd/{}
+ evalFun(cg) //用一段据参数生成的(可缓存)代码实现函数，'this域'或在arg0。 cg的函数式参数f, f.args可含参数名和{k=v,} 的默认表; 用于let_, el域 和 Eq.at unit Nd
  cache(f,c__f), //同参数只算1次
  
  hook o.f 请用 `o.it({f:f=>(...a)=>f(...a), f1:logs })`;
@@ -126,7 +151,9 @@ o.it={
   x: {v:1,onmod:v=>{}可多项 }
   a: {v:[2], it:{onmod,ondiff,sort:By, [0],} },
   _RWX_key: 'readonly !configurable !enumerable'
+  ::fn
 }
+it.copy(, f=dfs,of=isA.obj)
 
 Eq(谈cat,吐cut=noOp)
   oncat(x, af); flip
@@ -183,19 +210,13 @@ EQ|sees|see
 PRR|make|seen(visit)
 
 
-功能|EQ|Svelte|Vue|React
-:-:|:--|:--|:--|:--
-UI|el树模式|MD|ElementUI|自家的MD库
-State|qs.ST|自带|Vuex|Redux
-Route|qs.HI|[spa-router](https://github.com/ItalyPaleAle/svelte-spa-router)|router|[BrowserRouter](https://reactrouter.com/en/main/start/tutorial)
-预渲染|el树模式|kit|pre-SSR|prerender
-测试|wOp树模式|[testing](https://testing-library.com/docs/svelte-testing-library/example)|@vue/test-utils|Jest
 
 
 apple: vo=ca vf=s,tri,circ,quad  scr
 2048: snake-360,renju,quest ,linuxgames,funcplot
 qsort: bars ,ring-popxy
 scrcat: floatOCR-edit obs snap subtitle,move
+胞亲 哥姐爸妈  男+女 我是“”
 
 jsju不实现的语义：
 - 类/物的格局
@@ -378,27 +399,7 @@ Trie(ways={a,b..},end?) 键值是用于前缀补齐、批量字串替换的树�
 #js #code 能输入HTML、缩进文本、1+2*3 的解析器
 
 
-花了一周的这件事让我体验了眼高手低，我对自己「开悟后」的代码段有股莫名的自信，忽视了Eq等一打框架仍需简化的现况 ##1
 
-其实呢，对“最后一块补满N,结果去尾”的操作 chunk(N,each,fillFn) 整零不分，对base32的公式滥用if，z85的特殊读写逻辑被压行， Eqv(a=>b, b=>a) 的设计喧宾夺主
-
-在数据流算法上，我没整理好类型和次序，却搞一堆共享变量的“高阶函数”
-
-当时我就觉得，这js虽短虽强，但极其晦涩(比如j=join 这种以前我深恶痛绝的无类型)，问题不少，只是临时没精力继续； 后来竟记得它很优雅
-
-“免费的最贵”。字面短的、符号化的算式，往往意味着样板代码，真的只是堆脚本时省事，想逃避心智模型的复用。
-短只是思维通顺的副作用，不是复杂度的解药。
-
-但，创作一种种新方法真的很难。“守恒的解法”考验设计者永恒的积淀。 且不说不同的人对“定义式编程”的理解偏差可能比Vue和Elm 还大， 往往就是一些简单的思考会卡你两三天
-
-对未知的恐惧，在失去新鲜感后拔地而出，从0到1是与知识与资本都无关的。你也可以一直当一个“练习生”，做些不涉模型的重命名创作，
-但我见过CS人“重新定义XXX” 真的太多了。我懒得加入这种边解题边造坑的狂欢。
-
-我追求的就是绝对的真理，这样我对代码的评价两极分化；但我是真不相信 ffmpeg; pandoc; numpy 这样的神级抽象，没有让一切开箱即用、取代一切的潜力。
-我最看重的是“思维益生元”式的语言接口、是高于问题与语法的存在，不是何时做都雷同的解谜游戏
---
-#1 “三不解”。不解决问题，换掉改掉耍戏精的框架；不关心解法，只问相似问题，问到心智模型一眼见底；不解析代码，只用通用API表达思路
-不学习问答和代码，那我干什么？写我爱写的东西。
 
 ```kt
 inout=("in ","out ")

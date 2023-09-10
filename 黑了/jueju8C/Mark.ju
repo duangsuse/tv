@@ -58,6 +58,9 @@ eval-thing UnsafeVariance
 @Target({THING})
 eval-thing Typeclass
 
+/**: 只允许1物:1类 */
+@Target({TYPE})
+eval-thing AssocType
 
 
 /** typealias==new-thing. @prefix: file,get,set,(noun)var */

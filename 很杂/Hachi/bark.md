@@ -51,6 +51,7 @@ TTS 可输入vtt流-遇空时长词时吐句，基于停顿 `科大[p500]讯飞`
 [VOSK](https://alphacephei.com/)|speech,lrc?|vtt|l=e.g. en/ja/zh|Offline ASR for Android,RPi,iOS,servers|2019|528|👍
 [SpeechReco.](https://github1s.com/Uberi/speech_recognition/blob/HEAD/speech_recognition/__init__.py#L1700-L1704)|wav|txt, vtt(`sp=live` only)|l:Cuts, to=azure|`key=(your API)` / l=undef in env if err |many|43|↓↓|pip
 [Paddle](github.com/PaddlePaddle/PaddleSpeech/tree/develop/demos)|speech(16k1ch)|vtt/^4 csv/nthSpk.npy|l:PP. zh_CN:PP for larger model|Baidu, for a variety of critical tasks in speech and audio|2021|950|✔
+[SeamlessM4T](https://github.com/facebookresearch/seamless_communication)
 [XFyun](https://www.xfyun.cn/doc/asr/voicedictation/API.html#%E6%8E%A5%E5%8F%A3%E8%B0%83%E7%94%A8%E6%B5%81%E7%A8%8B)|speech|vtt|l:XF|need WeChat,500call/day limit,multilanguage|2001~|0|60s
 [Aliyun](https://ai.aliyun.com/nls/trans)|speech|vtt|l:Ali|Alibaba, free 3mo(need Alipay)|2016~|0|👍
 [Paddle](https://paddlespeech.readthedocs.io/en/latest/tts/demo.html#multi-speaker-tts)|zh_en.txt|24k.wav,__vtt,f0__|l,idSpk. am=FastSpeech2_aishell3/vctk,vo=pwgan_|单语种推导,靠3处py补丁才截获vtt的音素时长,g2p无停顿记号|2021|1.6G
@@ -81,18 +82,20 @@ TTS 可输入vtt流-遇空时长词时吐句，基于停顿 `科大[p500]讯飞`
 名|入|出|参(or"no")|描述(torch)|年|默认体积/MB|实时流|离线包
 :--|--:|:--|:--|:--|:-:|:-:|:-:|:-:
 [rmback](https://github1s.com/nadermx/backgroundremover/blob/HEAD/backgroundremover/utilities.py#L167-L169)|png|png/gif/ mask.flv|kFast=2,fps=10; gb=#00ff00|[U^2-Net](https://kgithub.com/xuebinqin/U-2-Net#updates-): Going Deeper with Nested U-Structure for Salient Object Detection. see [SAM by fb](segment-anything.com/demo)|2020|337||G
+[TP-SMM.](github.com/yoyo-nb/Thin-Plate-Spline-Motion-Model#web-demo-for-animation)|png,id / faceA,mp4|__B.mp4__(if pre=face2D) [paste A](https://github.com/s0md3v/roop)|idA, Pt=vox. try pre=rmback|Thin-Plate Spline Motion Model for Image Animation|2022|384|✔|[清华](https://cloud.tsinghua.edu.cn/d/30ab8765da364fefa101/)
+[Make-It-3D](https://github.com/junshutang/Make-It-3D)|png|gif|
 [Paddle](https://kgithub.com/PaddlePaddle/PaddleOCR#-visualization-more)|ocr=png/pdf|docx / htm+box(json strXywhRi)|l,_need=box pdf_<br>picture `ruby{trans;sca;rot;}`|Baidu,multilingual OCR toolkits(support 80+ languages, provide tools,IoT)|2020|37|✔
 [MMLab](https://github.com/open-mmlab/mmocr)|ocr||
 [Tesseract](https://digi.bib.uni-mannheim.de/tesseract/?C=M;O=D)|png|↑ _pdf2docx_/pdf|l:Tes,need;`TESSDATA_PREFIX=/usr..`|LSTM,[Apps](https://tesseract-ocr.github.io/tessdoc/User-Projects-%E2%80%93-3rdParty.html) Ver5 2021.11.30|2007|109||unix
 [AliOCR](https://alynx-saas.alifanyi.com/saas/mt.html)|png/doc/mp4|translated|l:Ali|OCR only here. XF的接口又乱又难调我索性不做|2021|0
-[TP-SMM.](github.com/yoyo-nb/Thin-Plate-Spline-Motion-Model#web-demo-for-animation)|png,id / faceA,mp4|__B.mp4__(if pre=face2D) [paste A](https://github.com/s0md3v/roop)|idA, Pt=vox. try pre=rmback|Thin-Plate Spline Motion Model for Image Animation|2022|384|✔|[清华](https://cloud.tsinghua.edu.cn/d/30ab8765da364fefa101/)
 [TuneAVi](https://tuneavideo.github.io/)|mp4|mp4|tag|[注册试用](https://runwayml.com),[素材](https://najoast.github.io/t/quark.html).One-Shot Tuning of Image Diffusion Models for Text-to-Video Generation|2022|TBD|
 [DragGAN]()|png|pngs|vec2x2
 [DINOv2](https://vra.github.io/2023/07/14/dinov2-retrieval/)|pngs|png|
 [AnimeGAN](https://huggingface.co/spaces/akhaliq/AnimeGANv2)|png|png|sty|Landscape photos/videos to anime. [Paddle ver](https://github.com/PaddlePaddle/PaddleGAN/blob/develop/docs/zh_CN/tutorials/animegan.md)|2018|TBD
 [realeSRGAN](https://kgithub.com/xinntao/Real-ESRGAN/blob/master/README.md#portable-executable-files-ncnn)|pre=png|png|'+'x4plus (+face),k=4. [Bili lab](https://real-cugan.animesales.xyz/)|ncnn,Training Real-World Blind Super-Resolution with Pure Synthetic Data|2021|47||[zip](https://github.com/xinntao/Real-ESRGAN#portable-executable-files-ncnn)
-[GFPGAN](github.com/TencentARC/GFPGAN)|face.png|png|v3, k=2|see also: PULSE FastPhotoStyle FaderNetworks pix2pix|2021|332||[gh](https://github.com/xinntao/Real-ESRGAN/blob/5ca1078535923d485892caee7d7804380bfc87fd/inference_realesrgan.py#L145)
+[GFPGAN](github.com/TencentARC/GFPGAN)|face.png|png|v3, k=2|see also: [emoji](https://replicate.com/fofr/sdxl-emoji) PULSE FastPhotoStyle FaderNetworks pix2pix|2021|332||[gh](https://github.com/xinntao/Real-ESRGAN/blob/5ca1078535923d485892caee7d7804380bfc87fd/inference_realesrgan.py#L145)
 [SadTalker]()|png,kpFaces|png||. see leiapix,ModelScope,civitAI,fliki,[D_ID](chat.d-id.com),[AIvoice](https://www.youtube.com/watch?v=yUuS-oTDSD4)
+[Color-diff](https://github.com/ErwannMillon/Color-diffusion)|png|png
 [Colorize](https://github.com/PySimpleGUI/PySimpleGUI-Photo-Colorizer)|bw.png|png||output image that represents the semantic colors and tones of the input. [PaletteFM](palette.fm)|2016|125
 [RIFE](https://github.com/nihui/rife-ncnn-vulkan#download)|1,3.png|2.png|rife-anime,k=2|ncnn,Real-Time Intermediate Flow Estimation for Video Frame Interpolation|2020|411||zip
 [GPT](prompts.ai)|`[">!sys","ask",]`|`">answer"`|v=3.5|ChatGPT|2023|0
