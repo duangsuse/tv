@@ -227,6 +227,64 @@ for<T> fun requireNot(value: T, msgr: Fn0<Str>, it: T?)=it.let: require(msgr,{!=
 for<T> fun checkNot(value: T?, msgr: Fn0<Str>, it: T?)=it.let: check(msgr,{!=value})
 
 
+- main
+  say("")
+  say(add(40,2))
+^now
+  - add'ab'=a+b
+
+- main(n=30)
+  say("$n 以内质数")
+  (2~n):[x]
+    (2~log2(x)) { x%this!=0}:
+      say(this, end=(!=n-1) {", "}{""})
+
+
+- main
+  N2(.07,.15).delta: plot(0+~1.5 dx, 0+~1.5 dy):[x y]
+    at a=x*x+y*y -1
+    a**3<x**2+y**3
+^now
+  - plot(X:Rn,Y:Rn, fn:Fn2<N N Bool>)
+    Y:[y]say(); X:[x]say(end=fn(x,y) {"@"}{""})
+
+data BF(code="",pc=0, mem=Ary<Int1>(3_0000),pos=0)
+  - as()
+    at n=code.len
+    loop pc!=n:
+      when code [pc.goesR]:
+        '>': pos={+1} ; '<': pos={-1}
+        '+': mem[pos]={+1} ; '-': mem[pos]={-1}
+        '[': mem[pos]==0{cont(+1)}
+        ']': mem[pos]==0{cont(-1)}
+        '.': say(mem[pos].AZ)
+        ',': TODO"read byte"
+  - cont(inc=1) @our
+    at now: i inc
+    loop i!=0:
+      pc={+inc}
+      when code[pc+inc]:
+        '[':i.goesR ; ']':i.goesL
+        
+
+data S1(a:Int)
+data S2(a:Int)
+  
+type In1
+  - f
+  
+data- S1 as In1
+  - f=say(a)
+data- S2 as In1
+  - f=say(a)
+  
+- main
+  S1(13).f
+  S1(42).f
+  at fn=Fun1<In1>: f()
+  S1(42).fn
+
+
 可为 可同 可变
 像队 像栈 像链 可多//指针
 像树T 像树根 像图E(dot,自)

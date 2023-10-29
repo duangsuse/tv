@@ -10,3 +10,5 @@ a.srt
 b.srt
 x
 .jekyll-cache/
+META-INF/
+*.class

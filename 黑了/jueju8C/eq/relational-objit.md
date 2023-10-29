@@ -158,7 +158,7 @@ __diff和efx，则按以下流程完成__
 
 ## 为啥要编译
 
-只基于JS属性的UI框架 [Knockout](https://knockoutjs.com/documentation/observables.html)，早在2010就颇具人气(10k)，[Svelte, S.js](https://github.com/adamhaile/S) 和 [轻过 Preact 的 van](https://github.com/vanjs-org/van#why-vanjs) 也有2k
+只基于JS属性的UI框架 [Knockout](https://knockoutjs.com/documentation/observableArrays.html)，早在2010就颇具人气(10k)，[Svelte, S.js](https://github.com/adamhaile/S) 和 [轻过 Preact 的 van](https://github.com/vanjs-org/van#why-vanjs) 也有2k
 
 它们都在某些方向上，选择了EQ的DSL和响应式方案，以至于“生产力大爆炸”，但没有足够全面、自然的API，以至于选择了离根源问题很远、效益很低的奇技淫巧。
 

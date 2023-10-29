@@ -18,10 +18,10 @@ impl? data Any()
     否则 [表.取] bug。相邻值散列不扎堆这点像伪[随机] */
   fun Hash: Int = VMOp.objID
 
-  /** `Any` canBe `Str,Int,Ary`,. (`"" is Any`), if provided value implements([is]) [T] e.g. Str&you can't change type signature(e.g. Any), cast `any.as<Str>` is efficient
-    for `int1.as<Int4>` widen, `int.as<Int1>` lose precision it's C-like(& lit-int=>float,Char!=Int2). for JVM APIs autoboxing `Ary<Int> == int[]` supported (slower). see [WasConvert] */
-  /** 值可为文,数,组,. 也即 `"" 属于 值`。若提供的值有实现([is]) [T] 如=[文]，且你不能精确化类型签名如[值]，强转 `此值去作<文>` 不慢
-    对数1作数4 宽化、数4作数1 精度丢失属C语言族（但只有字面int=>float、[字]!=[数2]）。对JVM接口，支持略慢自动装箱如 `组<数> == int[]`。见 [WasConvert] */
+  /** `Any` canBe `Str,Int,Ary`,. (`"" is Any`), if provided value implements([is]) [T] e.g. Str&you can't change type signature(e.g. Any), cast `any.as[Str]` is efficient
+    for `int1.as[Int4]` widen, `int.as[Int1]` lose precision it's C-like(& lit-int=>float,Char!=Int2). for JVM APIs autoboxing `Ary[Int] == int[]` supported (slower). see [WasConvert] */
+  /** 值可为文,数,组,. 也即 `"" 属于 值`。若提供的值有实现([is]) [T] 如=[文]，且你不能精确化类型签名如[值]，强转 `此值去作[文]` 不慢
+    对数1作数4 宽化、数4作数1 精度丢失属C语言族（但只有字面int=>float、[字]!=[数2]）。对JVM接口，支持略慢自动装箱如 `组[数] == int[]`。见 [WasConvert] */
   'T'impl! eval fun as: T = VMOp.checkcast
   /** Check if typeof this inherits [T], or have `class-named T This`. `class: named as XX: ` inherits, like [Empty]
     Such [Bool] infix supports `!is` and `when x is:` syntax. "type" is statically(compiler-time) known part whatever (func)value, or "def" order is, faster&safer */
@@ -31,9 +31,9 @@ impl? data Any()
   'T'impl! eval fun `is`: Bool = VMOp.instanceof
 
 @Below(4+3, '''eval ''')
-'T'fun Any.asMay = is<T>.way(`as<T>`, NO)
+'T'fun Any.asMay = is[T].way(`as[T]`, NO)
 @_("存于")
-'T'fun T.`in`(set:CanSee<T>) = set.contains(this)
+'T'fun T.`in`(set:[CanSee T]) = set.contains(this)
 'N'fun `-`(:N): N = VMOp.neg
 'N'fun `+`(:N) = n //later def N=Vec,Sort
 @Below(3, '''@CopyInfix''')
@@ -51,29 +51,29 @@ eval val Omit=NO
 
 /** Instrinic stub, impls are inlined */
 samepkg impl?? data VMOp
-/** TO distinguish int & Integer(e.g. how Ary<Int> => Integer[]) , var on VMT changes */
+/** TO distinguish int & Integer(e.g. how Ary[Int] => Integer[]) , var on VMT changes */
 samepkg impl?? data VMT
 /** typeof `throw` or [Exec.exit], never has value so anydata canBe Break. `Any?<T<Break` in memberSet */
 /**: `抛下` 和 [进程.结束] 的类型，不返回值故任何类型可为断止。词(成员)数上 `值?<T<断止` */
 impl! data Break
 
 // scope fun
-'T'fun T.takeIf(p:FnTest<T>) = p(this).way(this,NO)
+'T'fun T.takeIf(p:[FnTest T]) = p(this).way(this,NO)
 
 // helper
 eval fun TODO(reason:Str="I'm tired"): Break = throw ErrNoImpl(reason)
 fun error(msg:Str): Break = throw ErrVars(msg)
 
-fun require(q:Bool, msgr: Fn0<Str>):
+fun require(q:Bool, msgr: Fn0[Str]):
   if !q: throw ErrArg(msgr())
-'T'fun requireNot(it: T?, value: T?, msgr: Fn0<Str>): T
+'T'fun requireNot(it: T?, value: T?, msgr: Fn0[Str]): T
 'T'fun requireNotNO
 
 /** See [assert] for testing */
-fun check(q:Bool, msgr: Fn0<Str>)
-'T'fun checkNot(it: T?, value: T?, msgr: Fn0<Str>): T
+fun check(q:Bool, msgr: Fn0[Str])
+'T'fun checkNot(it: T?, value: T?, msgr: Fn0[Str]): T
 
-'R'fun trys(:Fn0<R>) = try { Res.Ok(fn()) } catch(CanThrow) { Res.Err(you) }
+'R'fun trys(:Fn0[R]) = try { Res.Ok(fn()) } catch(CanThrow) { Res.Err(you) }
 
 /** Switch `$Y` or `$N` (true|false) */
 /**: 在 `真` 和 `假` 间选择 */
@@ -107,42 +107,42 @@ data Bool() CanSort
   impl fun toStr="$A:$B"
 'ABC'(get A B C) - Pair3(A:A,B:B,C:C) Send:
   impl fun toStr="$A,$B,$C"
-'T'PairOf=Pair<T,T>
-'T'PairOf3=Pair3<T,T,T>
+'T'PairOf=[Pair T T]
+'T'PairOf3=Pair3[T,T,T]
 
-'N'-when RangeHalf(A:N) as CanSee<N>:
+'N'-when RangeHalf(A:N) as CanSee[N]:
   fun contains(:N) = n!<A
-  fun see(:Fn1<N>) = (this step 1).see(fn)
+  fun see(:Fn1[N]) = (this step 1).see(fn)
   fun gotSize(it:Sized) = A~it.size
 
 'N'data Range(A:N, B:N) as RangeHalf(A):
-  fun contains(:N) = n!<A & n!>B
-  fun see(:Fn1<N>) = (this step 1).see(fn)
+  fun contains(:N) = n![A & n!]B
+  fun see(:Fn1[N]) = (this step 1).see(fn)
   fun moveAndPad(:Int,n:Cnt)
 
-'N'RangeSub=PairOf<Range<N>?>
+'N'RangeSub=PairOf[Range[N]?]
 
-'TR'PairOf<T?>.joinOr(v0:T, :Fn2<T,T,R>) = fn(A?:v0, B?:v0)
+'TR'PairOf[T?].joinOr(v0:T, :Fn2[T,T,R]) = fn(A?:v0, B?:v0)
 
 'N'fun N.`~`(:NO) = RangeHalf(this)
 'N'fun N.`~`(last:N) = Range(this,last)
 'N'fun N.`~+`(right:N) = Range(this,this+right)
 /** `0~+-5` = ±5 */
 'N'fun N.`~+-`(pad:N) = Range(this-pad,this+pad)
-'N'fun RangeHalf<N>.`step`(d:N) = RangeStep(this,d)
-'N'fun RangeHalf<N>.`div`(:N) = this step (B-A)/n
+'N'fun RangeHalf[N].`step`(d:N) = RangeStep(this,d)
+'N'fun RangeHalf[N].`div`(:N) = this step (B-A)/n
 
 /** `0~10 step 2`. [d]: delta, increment */
-'N'data RangeStep(rn:RangeHalf, d:N) as CanSee<N>:
-  fun see(:Fn1<N>):
+'N'data RangeStep(rn:RangeHalf, d:N) as CanSee[N]:
+  fun see(:Fn1[N]):
     var N: i A; n B-1
-    val fwd:Fn0<Bool> = (rn is Range).way( (b.remDiv(d).A==0).way(`i!=n`, `i<n`), `$Y`)
+    val fwd:Fn0[Bool] = (rn is Range).way( (b.remDiv(d).A==0).way(`i!=n`, `i<n`), `$Y`)
     loop if fwd(): fn(i); i=i+d
   fun contains(:N) = (n in rn)& n.remDiv(d).A==0
 
 data Char() Zeros CKase CanSort:
-  fun Int = as<Int>
-  fun `+`(:Int) = (as<Int> + i).Char
+  fun Int = as[Int]
+  fun `+`(:Int) = (as[Int] + i).Char
 
   -named:
     eval val surrogate=(56320~57343).seen{Char} to (55296~56319).seen{Char}
@@ -159,10 +159,10 @@ data Char() Zeros CKase CanSort:
     Title: titlecase(lo)
   fun contains(:Chars): Bool
   fun contains(:Regex): Bool
-  fun split(:Args<Str>, n:Cnt=-1)
-  fun split(:Args<Char>, n:Cnt=-1)
+  fun split(:Arg[Str], n:Cnt=-1)
+  fun split(:Args[Char], n:Cnt=-1)
 
-  fun filter(p:FnTest<Char>) = filter<StrBuild>(p).Str
+  fun filter(p:FnTest[Char]) = filter[StrBuild](p).Str
 
   type Posited:
     fun with(sub:Str): Bool
@@ -179,14 +179,14 @@ data Char() Zeros CKase CanSort:
     Upcase; Lowcase; Title
 
   -named:
-    'R'fun ignore(msdos:Fun1<CNoKase,R>) = CNoKase.msdos
+    'R'fun ignore(msdos:Fun1[CNoKase,R]) = CNoKase.msdos
 
 /** `"string文", "abc"` consts are of this type: [Chars] with Unicode, uppercase, sort support  */
 data Str() Chars CKase CanSort:
   fun BGets(:Charset=UTF_8)
 
   /** `sel=i~+1` for surrogate pair(UTF16) */
-  fun UnicodeN(sel:Range<Idx>)
+  fun UnicodeN(sel:Range[Idx])
   fun UnicodeAt(:Idx)
 
 
@@ -200,23 +200,23 @@ data Str() Chars CKase CanSort:
 /** `add("1"[0~1]).add(*'a'~'z')` */
 type StrBuild:
   @Below(3, ''' fun _:This = VMOp.xx''')
-  fun add(: Args<Chars?>)
+  fun add(: Args[Chars?])
   fun addLn(: Chars) fun addLn
 
 /** See immutable [Str], [StrBuild] */
-type Chars Ary<Char>
+type Chars Ary[Char]
   /** Use `Regex.Flag.empty()-G` for only-first matching */
-  fun replace(:Regex, :Fn1<Regrp,Str>)Str
-  fun replace(:Range<Idx>, :Str)
+  fun replace(:Regex, :Fn1[Regrp,Str])Str
+  fun replace(:Range[Idx], :Str)
   fun split
   fun `like`(:Regex)
   /** get substr for [Y](range or full), others for [N], then concat back. "a.2".partition(`first('.')?~NO`, `it`, "")=="2" */
-  fun partition(:Fun1<Str,RangeHalf<Idx>?>, Y:FnNew<Str>, N:FnNew<Str>)
+  fun partition(:Fun1[Str]-RangeHalf[Idx]?, Y:FnNew[Str], N:FnNew[Str])
   /** [partition], if no match then `N(this)` */
-  fun partition(:Regex, Y:FnNew<Str>, N:FnNew<Str>)
+  fun partition(:Regex, Y:FnNew[Str], N:FnNew[Str])
 
-'N'fun Range<N>.`+`(:N) = Range(A+n,B+n)
-'N'fun Range<N>.`-`(inner:Range<N>) Ary<Range<N>>
+'N'fun Range[N].`+`(:N) = Range(A+n,B+n)
+'N'fun Range[N].`-`(inner:Range[N]) Ary[Range<N]>
 
 
 Chars.notBlank
@@ -233,17 +233,17 @@ fun Str?.`+`(orEmpty: Any?) = (this?:"")+(orEmpty?.Str ?:"")
 
 -enum TermColor
 
-''TermBicolor = Word_On<TermColor, TermColor>
+''TermBicolor = Word_On[TermColor, TermColor]
 
 fun Str.wasCall(c:) = LinkLn(this to c)
 
--fun LinkLn<Pair<Str,TermBicolor>> as:
+-fun LinkLn[]-Pair[Str,TermBicolor] as:
   fun as were Str:
     var*: lA; lB
     return joinStr(end=TermColor.glass.esc):[==s to (A on B)]
       B.esc.ifNew(lB)+A.esc.ifNew(lA)+s
   where
-    fun Str.ifNew(:Var<Str>)=(this==var).way("") : var.v=this; this
+    fun Str.ifNew(:Var[Str])=(this==var).way("") : var.v=this; this
 fun-data TermColor:
   fun as=this on glass
 
@@ -262,60 +262,60 @@ data Flag:
 type Sized
   val size: Cnt
   val `empty` = size==0
-val Ary<*>.lastIdx Idx = size-1
-val Ary<*>.fullIdx = 0~lastIdx
+val Ary[*].lastIdx Idx = size-1
+val Ary[*].fullIdx = 0~lastIdx
 @_("无则")
 'T'(T:Sized) fun T.`ifEmpty`(vzero: T) = empty.way(vzero,this)
-'T'(T:Sized) fun T.`ifEmptyOr`(forbids:FnTest<T>, vzero: T) = (empty|forbits(this)).way(vzero,this)
-'T'(T:Sized) fun T?.ifEmptyOrNO = ifEmptyOr(NO).as<T>
+'T'(T:Sized) fun T.`ifEmptyOr`(forbids:FnTest[T], vzero: T) = (empty|forbits(this)).way(vzero,this)
+'T'(T:Sized) fun T?.ifEmptyOrNO = ifEmptyOr(NO).as[T]
 
 fun Chars.`ifBlank`(vzero: T) = isBlank.way(vzero,this)
-fun Chars.`ifBlankOr`(forbids:FnTest<T>, vzero: T) = (isBlank|forbits(this)).way(vzero,this)
-fun T?.ifBlankOrNO = ifBlankOr(NO).as<T>
+fun Chars.`ifBlankOr`(forbids:FnTest[T], vzero: T) = (isBlank|forbits(this)).way(vzero,this)
+fun T?.ifBlankOrNO = ifBlankOr(NO).as[T]
 
 @_("空作0项")
 'T'(T:Empty) fun T?.`orEmpty` = this?:empty()
 
 /** `NO` means str "No xxx" */
-eval fun Var<Any?>.noAsNO(no=_("空 en No")) = when this:
+eval fun Var[Any?].noAsNO(no=_("空 en No")) = when this:
   Var.V: "$no $name"
   Var.I: "$no #$i+1"
   Var.K: '$no "$k"'
 
-/** [Line] with fixed size, not actually "Array" in JVM or tuple(`Ary<get T>`) in Py. see: unboxed [AryN], [Args] */
-'T this'impl? data Ary() Sized Copy CanSee<T> Vars<T>
+/** [Line] with fixed size, not actually "Array" in JVM or tuple(`Ary[get T]`) in Py. see: unboxed [AryN], [Args] */
+'T this'impl? data Ary() Sized Copy CanSee[T] Vars[T]
   fun get(:Idx): T
   /** Try to make 0-copy viewport(`subList`,.), or do [slice] */
-  fun get(sel:Range<Idx>): This
+  fun get(sel:Range[Idx]): This
   fun set(:Idx, x:T)
-  fun set(sel:Range<Idx>, vs: Seq<T>) = vs.toIdx.see: [==x to i] this[i]=x
-  fun set(sel:Range<Idx>, fill: T) = set(seq, Seq.repeat(fill))
+  fun set(sel:[Rn Idx], vs: Seq[T]) = vs.toIdx.see: [==x to i] this[i]=x
+  fun set(sel:Range[Idx], fill: T) = set(seq, Seq.repeat(fill))
   /** for JDK:[System.arraycopy] */
-  fun set(sel:Range<Idx>, vs: Ary<Var<T>>) = (vs[0] to vs.getN(-1)!!).seen<Var.I>:
+  fun set(sel:Range[Idx], vs: Ary[Var<T]>) = (vs[0] to vs.getN(-1)!!).seen[Var.I]:
     System.arraycopy(a,A.i, this,0,B.i-A.i)
-  impl fun see(op: Fn1<T>): fullIdx.see { op(this[it]) }
+  impl fun see(op: Fn1[T]): fullIdx.see { op(this[it]) }
   -named Impl:
     /** Native impl for `T[]` type&VM operators. */
-    'T'(T:Empty) fun wasCall(n:Cnt, init: Fn1<Idx, T>): AryN<T> = aryOfZeros(n).let:
+    'T'(T:Empty) fun wasCall(n:Cnt, init: Fn1[Idx, T]): AryN[T] = aryOfZeros(n).let:
       fullIdx.see: set(it, init(it))
 
   @Below(4, '''@SafeVariance("set T") ''')
-  fun sort(ord:Sort=MinAt0, cmp:Fn2<T,T,Sort>)
+  fun sort(ord:Sort=MinAt0, cmp:Fn2[T,T]-Sort)
   fun reverse
   /** sequence randomly shuffled */
   fun shuffle(ran=Random())
-  val vars = seenLine: this[it].as<Var>
+  val vars = seenLine: this[it].as[Var]
   /** defaults to 0-copy. but for [filter], even dup2 is better than *inplace* Bubble Sort's slow */
-  fun seen(set:FnNew<T>) = let:
+  fun seen(set:FnNew[T]) = let:
     toIdx.see:[==x to i] this[i]=x.set()
 
-'TR'(R:CanSort) fun Ary<T>.sortBy(ord:Sort=MinAt0, key:Fn1<T,R>) = sort(ord):[a,b] key(a).compare(key(b))
-'T'(T:CanSort) fun Ary<T>.sort(ord:Sort=MinAt0) = sortBy(ord,noOp)
+'TR'(R:CanSort) fun Ary[T].sortBy(ord:Sort=MinAt0, key:Fn1[T,R]) = sort(ord):[a,b] key(a).compare(key(b))
+'T'(T:CanSort) fun Ary[T].sort(ord:Sort=MinAt0) = sortBy(ord,noOp)
 
-'T'fun Ary<T>.getN(ineg:Int) = lets:
+'T'fun Ary[T].getN(ineg:Int) = lets:
   val i=(ineg<0).way(size+i, i)
   (i<size).way(`this[i]`, NO)
-'TA'(A: CanAdd<T>) eval fun CanSee<T>.copyTo(a=empty<A>()) = a.let { you.see: add(it) }
+'TA'(A: CanAdd[T]) eval fun CanSee[T].copyTo(a=empty[A]()) = a.let { you.see: add(it) }
 
 'T'(T Sort) fun Ary selectionSort
   (0~lastI):[i]
@@ -324,17 +324,17 @@ here:
   'T'(T Sort)fun Var `must<`(r:Var)
     if v !< r.v: Any.swap(this,r)
 
-/** May asList(for int[] do copy) to `Ary<T>`. On JVM [get] returns `int`, not `Integer` boxed,
-  `Ary<Int>` can't do this for it can be a [Line]. Supports JVM `Object[]`, or [T]: Int,. for typed array */
-'T'impl? eval data AryN() Ary<T>
+/** May asList(for int[] do copy) to `Ary[T]`. On JVM [get] returns `int`, not `Integer` boxed,
+  `Ary[Int]` can't do this for it can be a [Line]. Supports JVM `Object[]`, or [T]: Int,. for typed array */
+'T'impl? eval data AryN() Ary[T]
 /** Compile-time known expr list, use it for const expansion or destruct */
-'T'eval data Args () Ary<T>
-/** `fun pair(:ArgsName<Str, 2 to "ab"> )` */
-'TK'(K: eval, K: Pair<Int,Str>) eval data ArgsName as Args<T>
+'T'eval data Args () Ary[T]
+/** `fun pair(:ArgsName[Str, 2 to "ab"] )` */
+'TK'(K: eval, K: Pair[Int,Str]) eval data ArgsName as Args[T]
 
 
-/** means `Fn1<Flag<E>>` canBe `Fn1<Line<E>>`. NOTE member in class-named implicts 'eval impl' */
-'E'fun Ary<Flag.Bit<E>> as: Flag<E> = copyTo() // this(Fold.To(Flag<E>()): add(it) )
+/** means `Fn1[Flag<E]>` canBe `Fn1[Line<E]>`. NOTE member in class-named implicts 'eval impl' */
+'E'fun Ary[Flag.Bit[]-E] as: Flag[E] = copyTo() // this(Fold.To(Flag[E]()): add(it) )
 
 @_("可变")
 Var
@@ -357,7 +357,7 @@ at:
 
 at num=Rw.PairOf(0,0)
 htmls:[s]
-  ('http(s?)://' has s).way<Var>(num.A,num.B) goesR
+  ('http(s?)://' has s).way[Var](num.A,num.B) goesR
 
 
 data Bond
@@ -369,22 +369,38 @@ data Bond
     price goesR
     return $Y
     
-    - main(:Ary<Str>)
+    - main(:[Ary Str])
       (1~3):
         Bond().sell
       say(price)
       
       
 
+- main 
+  at story Fun1[Animal]: speak()
+  at c Animal.Cat
+  c.story
+  c.水豚.story
 
 type Animal
-  fun speak Str
-- Dog(name:Str)
-- Cat
--fun Dog as Animal
-  !fun speak="good $name"
--fun Cat as Animal
-  !fun speak="meow"
+  - speak Str
+when-- as
+  Cat; Dog(name:Str)
+
+when- Dog.to Animal
+^now
+  - speak "good $name"
+when- Cat.to Animal
+^now
+  - speak "meow"
+
+when- Animal 水豚
+^now
+  - speak "..."
+
+when--'AB' Way2 “Either”
+  A(:A); B(:B)
+
 
 type Animal
   - speak Str
@@ -406,10 +422,10 @@ type Geo
 type Draw
   fun draw(:Graph)
 
-- Point(:Arg<"xy"N>)@ourpkg impl?
+- Point(:Arg["xy"N])@ourpkg impl?
   !fun Str="$x,$y"
-- Rect(x,y, :Arg<"wh"N>) Point()
-  !fun Str=as<super>.Str+"+$w,$h"
+- Rect(x,y, :Arg["wh"N]) Point()
+  !fun Str=as[super].Str+"+$w,$h"
 /*Smooth line
   better than polyline?
 */
@@ -417,7 +433,7 @@ type Draw
 /, it.draw(app.view) ,/ is correct
 /, PrtScr(it{draw}) ,/ is good
 /, dasdas ,/
-- Spline(ps:Args<Point>) Draw
+- Spline(ps:Args[Point]) Draw
   !fun draw(g)
     ps.for1st {g.moveTo(it)}: g.lineTo(this)
     ps.zipWithNext:[==A to B] g.line(A,B)
@@ -425,7 +441,7 @@ type Draw
 -fun Rect as Geo
   !fun area=w*h
 
-val kv = JSON.cat<KV<Str Any>>(buffer.Str)
+val kv = JSON.cat[KV[Str]-Any](buffer.Str)
 kv: [==str to obj]
   say("name = $str\tvalue= $obj")
 
@@ -472,7 +488,7 @@ type Rect struct {Point; w,h int}
 
 - lerp 'ABt'(:N)= (t)*B+(1-t)*A
 
-at x: Either<Rw.Set<Int> Int> = [3 2 ]()
+at x: Either[Rw.Set[Int]]-Int = [3 2 ]()
 x.A?.let: add 1
 Must:
   Pair(2+3, 6).let(B=5).B==5
@@ -480,16 +496,16 @@ Must:
 -'T' T as=Either.A(this)
 'AB'when- Either
   A(v:A) B(v:B)
-  at A /*get*/=mayAs<A>?.v
+  at A /*get*/=mayAs[A]?.v
   - flip=way(B,A)
-  'R'- way(A:Fn1<A>,B:Fn1<B>)
+  'R'- way(A:Fn1[A],B:Fn1[B])
 
 把data和 type(instance) 解偶就不需要子类关系 而能实现type，但真的很不模块化
 我喜欢后者：
 
 when- Calc
   N(:N)
-  Op(:PairOf<Calc>,k="+")
+  Op(:PairOf[Calc],k="+")
 
 - `+`(e:Calc)=when e:
   N: e.n
@@ -504,7 +520,7 @@ when- Calc
   - eval N
   N(:N)
     ^- eval=n
-  Op(:PairOf<Calc>,k="+")
+  Op(:PairOf[Calc],k="+")
     ^- eval=when k: "+": +a + +b
 
 data- Calc.Op1(k="-")
@@ -516,11 +532,11 @@ data- Calc.Op1(k="-")
 type Eval
   - eval N
 'R'when- Calc
-  Op(PairOf<R>); N
+  Op(PairOf[R]); N
 
 type EvalX Eval
   - Str Str
-data- Calc.Op<EvalX> as EvalX
+data- [Calc.Op EvalX] as EvalX
   ^- eval=折叠两次eval
 
 这样只添子类，也可以定义(新)操作。也可以在编译期，虽然不实用
@@ -528,23 +544,23 @@ Str lets: Op(N(2), N(0))
 
 'R'type Exp
   - N(:N)R
-  - Op(:PairOf<R>,k="+")R
+  - Op(:PairOf[R],k="+")R
 
-data- N.TYPE as Exp<N>
+data- N.TYPE as Exp[N]
   - N(n)=n
   - Op(e, k)=e.lets: A+B
-data- Str.TYPE as Exp<Str>
+data- Str.TYPE as Exp[Str]
   - N(n)="$n"
   - Op(e, k)=e.lets: "$A${k}$B"
 
-- You<KtFileScope KtFile> addTypeExt(:Str)@ourpkg = whileAdding(str, T1):
+- You[KtFileScope KtFile] addTypeExt(:Str)@ourpkg = whileAdding(str, T1):
   buildFn.lets(KtFunctionInfo)
   .lets(GeneratedTypeSpecExtension)
   .let:[T]
     addFunction(T.typeName):
       T.parameters.let{addParameter}
       addScopeLambdaBlock(T1)
-      returnStatement<TypeSpec>(T.typeBuilderStatement)
+      returnStatement[TypeSpec](T.typeBuilderStatement)
 
     addFunction(T.funcNameAddType):
       receiver(T1.generatedClass)
@@ -553,14 +569,14 @@ data- Str.TYPE as Exp<Str>
       returnStatement(T.addTypeStatment)
 -now
   at T1=Generated.TYPE
-  at buildFn=you.get<KtClass>!.companionObjects.first
-  .Seq.asOnly<KtNamedFunction>.only: modifierList?.has PUBLIC
+  at buildFn=you.get[KtClass]!.companionObjects.first
+  .Seq.asOnly[KtNamedFunction].only: modifierList?.has PUBLIC
   .only: typeFqName == "com.squareup.kotlinpoet.TypeSpec.Builder"
   
-  - You<KtFileScope KtFunction>.addBy'str add'= addFunction(str):
+  - You[KtFileScope KtFunction].addBy'str add'= addFunction(str):
     T.parameters.let{addParameter}; add()
 
-data GeneratedTypeSpecExtension(typeBuilder:Str, param:Ln<ParamDef>) Data
+data GeneratedTypeSpecExtension(typeBuilder:Str, param:Ln[ParamDef]) Data
     made:
       typeID typeBuilder('Builder$',to="Type")
       paramStr param.Str
@@ -588,9 +604,9 @@ at nt=com.sun.jna.platform.win32.Kernel32.INSTANCE .may: "Windows" in Env["os.na
 named Env
   - get==System.getProperty
 
-- Ary<Int> mergeSort=go(0~lastI)
+- Ary[Int] mergeSort=go(0~lastI)
 ^now
-  - Ary<Int> go(:Rn<Idx>) = rn.div2:[I]
+  - [Ary Int] go(:[Rn Idx]) = rn.div2:[I]
     at now:
       //a,b 半都指向升序
       a (rn(B=I-1):go(this)).Seq
@@ -600,16 +616,16 @@ named Env
       this[i:goesR]=popMin(a,b){get}
       a: this[i:goesR]=get(it)
       b: this[i:goesR]=get(it)
-  -'NR' Rn.div2(:Fn1<Idx>)
+  -'NR' Rn.div2(:Fn1[Idx])
     (size/2).may{it!=0}:fn(it)
   
   -'TR'(R Sort) popMin(a:Seq,b:Seq,key:Fn1) = key(a) to key(b) lets:
       if A<B: a goesR; A
       or: b goesR; B
 
-- Ary<Int> mergeSort=go(0~lastI)
+- Ary[Int] mergeSort=go(0~lastI)
 ^now
-  - Ary<Int> go(:Rn<Idx>) = rn.size/2 lets:[d2]
+  - Ary[Int] go(:Rn[Idx]) = rn.size/2 lets:[d2]
     if d2==0: return
     at now:
       i rn.A
@@ -633,18 +649,111 @@ named Env
         or: b goesR; B
 
 
-- Ary<Int> qsort(:Rn<Idx>) = rn:
+- Ary[Int] qsort(:Rn[Idx]) = rn:
   if A!<B: return
   at now:
     a=A; b=B
     mid this[A]
   loop if a<b:
-    loop if a<b& get(b)>mid: b goesL
+    loop if a[b& get(b)]mid: b goesL
     this[a]=b //选中太小的b. 下同
     loop if a<b& get(a)<mid: a goesR
     this[b]=a
   this[A]=mid
   qsort(a~A-1); qsort(A+1~b)
+
+- qsort(x:Ary[Int], A:Idx,B:Idx)
+  at: p x[(A+B)/2]
+  at: sep2 Fn2:[A B]
+    loop x[a]<p: a=:+1
+    loop x[b]>p: b=:-1
+    loop(a!>b, a+1,b-1)
+    Var.swap(x[a],x[b])
+
+    (a<B):qsort(x,a,B)
+    (b>A):qsort(x,A,b)
+  sep2(A,B)
+
+- id(now,a=0,b=0)=as:
+  loop(a!=0, a-1,b+1)
+  b
+
+-'T'(T Sort) Ary.quickSort=on(this,0,iLast)
+^now
+  - on(:Ary, A:Idx,B:Idx)
+    A<B:
+      at p=partition()
+      on(A,p.posL); on(p.posR,B)
+  ^now
+    at partition=Fn0:
+      at now: i A+1 j B
+      at mid=ary[A]
+      as:
+        loop i!>B, ary[i]<mid: i.goesR
+        loop j![A, ary[j]]mid: j.goesL
+        loop(i!<j)
+        Var.swap(ary[i],ary[j])
+      Var.swap(ary[A],ary[j])
+      j
+
+-'T'(T Sort) Ary qsort(rn=iEach)
+  rn: sep2(this):[p] qsort(A,p-1); qsort(p+1,B)
+^now
+  - Rn[Idx] sep2(it:Ary)
+    at mid=it[A]
+    at now: a A+1 b B
+    as:
+      loop a!>B, it[a]<mid: a.goesR
+      loop b![A, it[b]]mid: b.goesL
+      loop(a!=b)
+      less(a,b)
+    less(A,b)
+    return b
+  ^now
+    at less=Fn2:[A B]Var.swap(it[A],it[B])
+
+- Ln[Int] qsort=zero{this}:
+  this[0]:[p]
+    (this{<p}+this{!<p}).qsort
+- main
+  d=[2 3 6 8 1 4].qsort
+
+-- qsort(it:[Ary Int],range=iEach)=range: (A<B): “two”
+  at now:
+    mid this[A]
+    a A+1; b B
+  as:
+    a!>B, it[a]<mid loop: a.goesR
+    b!<A, it[b]>mid loop: b.goesL
+    loop(a!=b)
+    less(a,b) “交换逆序ab”
+  less(A,b“min”)
+  qsort(it,A~b-1); qsort(it,b+1~B)
+^now
+  at less=Fn2:[A B]Var.swap(it[A],it[B])
+
+-'KVR'(K Sort) KV.values(fn: Fn2[V K]-R) = rw.KV[K R]()|:[res]
+  this:[k|v] res[k]=fn(v,k)
+
+-'AB' zip2(a:Ln[A],b:Ln[B]) Ln[Pair]
+
+at accurateLrc=PLAYER!"not exist":
+  at: path when identity():
+    "mpv":say.W("");NO
+    "ElectronNCM","Qcm":
+      getSongID:[meta] “get可以外提”
+        meta["trackid"]!.Str.posR.sep(2,'/')[1]
+        .as:[songID]
+          songID|NeteaseLyricProvider()
+    "YesPlayMusic":
+      getSongID: it.url().strip("/trackid/")
+    
+    "feeluown":
+      getSongID:
+        it.url()?.strip("fuo:") {this|Use.Netease()}:
+          strip("qq:") {this|Use.QQLyrics()}: NO
+    or:NO  
+
 
 [网见]
 绝地
@@ -677,61 +786,61 @@ cat 谈
 cut 吐
 oncat 谈做
 ’“”
-对何<AB> 类 可同
+对何[AB] 类 可同
   - 谈（：A）：B
   - 吐（：B）：A
 
-  !- 谈吐下(：A、改=函新<B>，它。)=吐(改(谈(a)))
+  !- 谈吐下(：A、改=函新[B]，它。)=吐(改(谈(a)))
   - 谈吐(a、改)=谈吐下(a、改)()
-  ‘’- 谈吐(：A、改=函1<B 待<B>>，它。 )=待，吐(改(谈(a))! )。
+  ‘’- 谈吐(：A、改=函1[B 待<B]>，它。 )=待，吐(改(谈(a))! )。
 
   同名例
-    恒- 受调用(pipe：组参<可同<* *>>）类型递归<pipe>
-    私下恒- 类型递归(项：组<类型>) = 项[0]的参[0] 令其，[A]
+    恒- 受调用(pipe：组参[可同[_ _]]）类型递归[pipe]
+    私下恒- 类型递归(项：组[类型]) = 项[0]的参[0] 令其，[A]
       类型.参(可同、A、项去叠(A)，[a b] b的参[0]可为a；b的参[1]。)
 
-    物 数(进制：计）可同<文 数>
-    物 UTF(字符集=默认）可同<字节 文>
+    物 数(进制：计）可同[文 数]
+    物 UTF(字符集=默认）可同[字节 文]
       同名例
-        量 支持：集<文>
-        量 别名：表组<文 文>
+        量 支持：集[文]
+        量 别名：表组[文 文]
         变文 默认="utf8"
     例 Base
-      - 取(k：计）可同<文 字节>
-      量 码表：改表<计 文>
+      - 取(k：计）可同[文 字节]
+      量 码表：改表[计 文]
       变文 pad="="
 
-对何<AB> 物-「!」(原：可同）可同<B A>
+对何[AB] 物-「!」(原：可同）可同[B A]
   !- 谈（：B）=原去吐(b)
   !- 吐（：A）=原去谈(a)
 
-对何<AB> - A.「到」(对应：B)=俩项(我、对应)
-对何<读A读B> 储物 俩项(首：A、次：B)
+对何[AB] - A.「到」(对应：B)=俩项(我、对应)
+对何[读A读B] 储物 俩项(首：A、次：B)
   !- 文="($首 $次)"
-对何<读A读B读C> 储物 俩项3(首：A、次：B、末：C)
+对何[读A读B读C] 储物 俩项3(首：A、次：B、末：C)
   !- 文="($首 $次 $末)"
 
-对何<读A读B读C> 判物 可为3
+对何[读A读B读C] 判物 可为3
   A(值：A)；B(值：B)；C(值：C)
 
-对何<读A读B> 判物 可为
+对何[读A读B] 判物 可为
   A(值：A)；B(值：B)
-  对何<R> - 令(成：函1<B R>) = ，B(它)。
-  对何<R> - 或(败：函1<A R>) = 路(败、无-)
-  对何<LR> - 令(成：函1<B 可为<L R>>) = 路(无-)，成(它)。
+  对何[R] - 令(成：函1[B R]) = ，B(它)。
+  对何[R] - 或(败：函1[A R]) = 路(败、无-)
+  对何[LR] - 令(成：函1[B]-可为[L R]) = 路(无-)，成(它)。
 
-  对何<ab> - 路(a：函1<A a>、b：函1<B b>) = 况 令其，
+  对何[ab] - 路(a：函1[A a]、b：函1[B b]) = 况 令其，
     判我属于，
       A，a(值)。B，b(值)。
-对何<AB> -「!」(况：可为) = 况去路(可为「B」、可为「A」)
+对何[AB] -「!」(况：可为) = 况去路(可为「B」、可为「A」)
 
 
 'R'物 待 @可定
   -「!」(：函续) @可定
   同名例
-    对何<R>- 受调用(：函1<函续>)
-    对何<R>- 全(：组参<待>）组<R>
-    对何<R>- 首(：组参<待>）R
+    对何[R]- 受调用(：函1[函续])
+    对何[R]- 全(：组参[待]）组[R]
+    对何[R]- 首(：组参[待]）R
     量 Main：协程上文
     量 IO：协程上文
 
@@ -740,9 +849,9 @@ oncat 谈做
   - 撤队
   -「限时」
 
-对何<R>- 待完(：函1<函续>）R
+对何[R]- 待完(：函1[函续]）R
 
-对何<R>- 待完(loop：协程队?、：函1<函续>）待完结
+对何[R]- 待完(loop：协程队?、：函1[函续]）待完结
 
 量 数.「阶乘」=(我是1)去路(1)，我左阶乘*我。
 ‘=(1~我)去叠算「*」的值 ’
@@ -766,7 +875,7 @@ oncat 谈做
 量，
   整数 70
   小数 70.0
-  显小 .1去作<浮4>
+  显小 .1去作[浮4]
 
   名 "宽度"；值 94
   标签 名+值去文
@@ -786,8 +895,8 @@ oncat 谈做
   '${可缺是空} ${可缺!!}'
   '${(2~<100)的末}'
 
-量 空组：组<文>=空白
-量 空字典=造表<文 文>
+量 空组：组[文]=空白
+量 空字典=造表[文 文]
 
 变数 得分初0
 {75 43 103 87 12}，[分数]
@@ -797,7 +906,7 @@ oncat 谈做
 0~<10 步2 令(说)
 
 变，
-  名 "鸟不拉斯基"作<文?>；问候 "吃了么"
+  名 "鸟不拉斯基"作[文?]；问候 "吃了么"
 名?，问候=名+问候。
 
 文本变量，
@@ -843,7 +952,7 @@ i=0；重复再若i<10，i移右。 “i=10. 但若有 i++, i完成时是11”
 
 (0~<4)去叠(0)，首+次。
 
-- 有你<文 文>.「问好」="($你) 吃了么$我"
+- 有你[文 文].「问好」="($你) 吃了么$我"
 量本周：周=二
 本周 ，
   "江小白"问好+"马东梅"问好
@@ -853,12 +962,12 @@ i=0；重复再若i<10，i移右。 “i=10. 但若有 i++, i完成时是11”
   五；六；日
   - 作="$名"；- 作=号+1
 
-对何<数>
-- 列<数>统计：仨<数>
+对何[数]
+- 列[数]统计：仨[数]
   变，a +极大；b -极大；c 0
   我，[它]
     判，
-      它<a，a=它。它>b，b=它。
+      它[a，a=它。它]b，b=它。
     c=c+它
   回仨(a、b、c)
 
@@ -867,17 +976,17 @@ i=0；重复再若i<10，i移右。 “i=10. 但若有 i++, i完成时是11”
 其中，
   - 加=令， y=「它+5」。
 
-- 累加器(acc=0，说("好加!")。、n：数、：参颗粒化<1 1>)数
+- 累加器(acc=0，说("好加!")。、n：数、：参颗粒化[1 1])数
   acc=acc+n；回acc
 
-物 累加器(变acc=0，说("好加!")。)函1<数 数>
+物 累加器(变acc=0，说("好加!")。)函1[数 数]
   - 受调用(n：数）数
     acc=acc+n；回acc
 
 累加器()，
   我(7)必是7；我(3)必是10
 
-对何<T>- 列 存匹配(：函试）@私下 真假
+对何[T]- 列 存匹配(：函试）@私下 真假
   我，
     若此函试()，回真。
   回假
@@ -894,26 +1003,26 @@ i=0；重复再若i<10，i移右。 “i=10. 但若有 i++, i完成时是11”
 “=(它%d)+(它/d是0)去路(""、「重复(它/d)」)”
 其中，量d=进制的长。
 
-量 资料：标<传输 身份要求<"消费者">>
+量 资料：@传输 身份要求["消费者"]
   读，
     当前用户(用户服务「取资料」) (传输)
     空则，抛下Business错("")。
 
-对何<T>(T：可序) - 组.冒泡排序
+对何[T](T：可序) - 组.冒泡排序
   满针 ，[i]
     (0~i)，
       若我[它]不<我[i]，交换(i、它)。
       “交换(我[i]、我[它])”
 
-对何<T> - 组.交换(A：针、B：针)
+对何[T] - 组.交换(A：针、B：针)
   我[A]=我[B]；我[B]=a
 其中，量a=我[A]
 
-对何<T> - 交换(A：可变、B：可变)
+对何[T] - 交换(A：可变、B：可变)
   A的值=B；B的值=a
 其中，量a=A
 
-- 说妖精(：参名组<"妖精 能耐 原型 降服人" 文>)=说("尽管精进$能耐，${妖精}仍被${降服人}制服，变回$原型")
+- 说妖精(：参名组["妖精 能耐 原型 降服人" 文])=说("尽管精进$能耐，${妖精}仍被${降服人}制服，变回$原型")
 
 文本变量，
   函1，说妖精("白骨精"、原型=枯骨 、降服人=孙悟空 、能耐=它)。(百般变化)
@@ -933,13 +1042,12 @@ i=0；重复再若i<10，i移右。 “i=10. 但若有 i++, i完成时是11”
 - 说(：值?) = 文件的std[1]，添此值去文；添"\n"。
 量 说点=文件的std[1]「添」
 
-量 配置=(文件/"hello" 到"text/*")去读去泡 作<文>
+量 配置=(文件/"hello" 到"text/*")去读去泡 作[文]
 
-对何<T>恒- 造行(项：组参)=项去行 ‘项的满针 令其，项[我]。’
+对何[T]恒- 造行(项：组参)=项去行 ‘项的满针 令其，项[我]。’
 
-- 素数筛(n=20)=组(n、真) 令其，
-  量，
-    半 n/2；选 2~<半
+- 素数筛(n=20) 组(n、真) 令其，
+  在 半 n/2；选 2~<半
   选，[a]
     选，[b]
       量c=a*b
@@ -950,7 +1058,7 @@ i=0；重复再若i<10，i移右。 “i=10. 但若有 i++, i完成时是11”
     (i是末针)必假
     i取否「我[i]」
 
-- 起点 = 冰箱，
+- 起点  冰箱，
   门去开 塞入大象；门去关闭
   “冰箱的门“()” 塞入大象”
   量歌者=播放器()，加载("大象.wav")；时=0；态=播放。
@@ -958,22 +1066,22 @@ i=0；重复再若i<10，i移右。 “i=10. 但若有 i++, i完成时是11”
 
 例 冰箱
   例 门 有开闭
-    !- 关闭=说
-    - 开=我
+    !- 关闭 说
+    - 开 我
 
-  - 有开闭.「塞入」=说
-  “- 有开闭.「塞入」=令，说；关闭()。”
+  - 有开闭.「塞入」说
+  “- 有开闭.「塞入」令，说；关闭()。”
 
-- 起点(：组<文>)
-  恒量N=1_000
-  量 亲=组(N、0)
-  (0~<N)，[i] 亲[i]作<可变>的值=i 。
+- 起点(：组[文])
+  恒量N 1_000
+  量 亲 组(N、0)
+  (0~[N)，[i] 亲[i]作<可变]的值=i 。
   “亲=组(N)「i」”
   变数，b；c。
   重复若听(b、c)，
-    量a=亲[b]
+    量a 亲[b]
     若亲[c]是a，停次。
-    亲去作<组<可变>>带号 ，[是x到i]
+    亲去作[组[]-可变]带号 ，[是x到i]
       若i是c，x的值=a。
     说({b c}去凑)
 
@@ -990,32 +1098,32 @@ i=0；重复再若i<10，i移右。 “i=10. 但若有 i++, i完成时是11”
   列去乘((1~头)、(1~头) )“阶乘Xuniq” 去首，足是首*2+次*4。
   去令其，:"$首 鸡 $次 兔" 。
 
-- 双主语<文 文件>.find="$你/$名" ，
+- 双主语[文 文件].find="$你/$名" ，
   你去列()?去展(至={我})，它去find。空则{我}
 
 - 文件.find(：文)="$此文/$名" ，[fp]
   列()?去展(至={fp})，它去find(fp)。空则{fp}
 
-对何<T>符=函2<T T T>
-对何<T>判物 式
+对何[T]符=函2[T T]-T
+对何[T]判物 式
   Op(a：T、b：T、f：符)；N(：T)
   - 值=判我，
     N(x)，x。Op(a、b、f)，f(a去值、b去值)。
   同名例
-    对何<数>- 数.「+」是封「+」
-    对何<T>恒- 封(：符)=函2<T T Op>，[a b] Op(a、b、此符)。
+    对何[数]- 数.「+」是封「+」
+    对何[T]恒- 封(：符)=函2[T T Op]，[a b] Op(a、b、此符)。
 
 式，
   (1+2+3)去值
 
-'T'符=Fn2<T T T>
+'T'符=Fn2[T T T]
 'T'-when 式
   Op(a:T,b:T, f:符); N(:T)
   fun 值=when this:
     N(x):x  Op(a,b,f):f(a.值,b.值)
   -named
     'N'fun N.`+`== 封`+`
-    'T'eval fun 封(：符)=Fn2<T T Op>，[a b] Op(a,b,此符)。
+    'T'eval fun 封(：符)=Fn2[T T Op]，[a b] Op(a,b,此符)。
 
 式 let:
   (1+2+3).值
@@ -1037,12 +1145,12 @@ i=0；重复再若i<10，i移右。 “i=10. 但若有 i++, i完成时是11”
       baz"$foo\t耶"
     {foo bar baz} (说)
   
-  量raw='
+  量raw'
     我
     很多行
   '
   变文?，nul "abc"。
-  量any：值=Obj
+  量any：值 Obj
   说(nul?的长)；nul=空
   说(nul?的长 空则-1)
   
@@ -1102,20 +1210,20 @@ i=0；重复再若i<10，i移右。 “i=10. 但若有 i++, i完成时是11”
     0、21
     1~20
   
-其中，
-  - hello(名="明")="你好，$名！"
-  - narg(n：组参<数>)=n的长
-  对何<T>量 函1<T 真假>.反=「非 我去受调用(它)」
+此刻，
+  - hello(名="明") "你好，$名！"
+  - narg(n：组参[数]) n的长
+  对何[T]量 函1[T 真假].反 「非 我去受调用(它)」
 
   物 某(x：数)
-    -「+」(：数)=x+此数
-    - 受调用(：数)=x*此数
+    -「+」(：数) x+此数
+    - 受调用(：数) x*此数
     
-  储物 某点(：组参名<"xyz" 数>)
+  储物 某点(：组参名["xyz" 数])
   
-  储物 改某点(变x：数、：组参名<"yz" 数>)
+  储物 改某点(变x：数、：组参名["yz" 数])
   
-  - cast(x：值)=判x，
+  - cast(x：值) 判x，
     真假，x。数，x>0。
     文，x不为空。否则，假。
     
@@ -1128,30 +1236,30 @@ i=0；重复再若i<10，i移右。 “i=10. 但若有 i++, i完成时是11”
     - 说=:"$值 $号"
   
   例 Obj
-    - 文="${类型<Obj>的名}"
+    - 文="${类型[Obj]的名}"
     
   储物 计数(变ac=0)
     - 移右=，ac移右。
-    -「+」(n：可为<数 计数>)=，ac+n去路(「它」、「它的ac」)。
+    -「+」(n：可为[数 计数])=，ac+n去路(「它」、「它的ac」)。
     - 有(它：计数)=ac是它dac
     - 受写(i：针、x：数)
       ac=i+x
   -「-」(它：计数)=它，ac=-ac。
 
-对何<R>类 Exp
-  - Op(：俩<Exp>）R；- N(：数）R
+对何[R]类 Exp
+  - Op(：俩[Exp]）R；- N(：数）R
 
 “提早到编译期DSL,”
-可定物 ExpA：Exp<数>
+可定物 ExpA：Exp[数]
   !- Op是函1，[是a到b] a+b。
   !- N(：数)=此数
 
-可定物 ExpB：Exp<文>
+可定物 ExpB：Exp[文]
   !- Op是函1，[是a到b] "$a+$b"。
   !- N(：数)="$此数"
 
 “双向扩展, 构造侧Visitor 能随便添子类/返回值”
-对何<R>类 ExpN1：Exp
+对何[R]类 ExpN1：Exp
   - N1(：数)
 
 可定物 ExpAN1：ExpA ExpN1
@@ -1160,10 +1268,17 @@ i=0；重复再若i<10，i移右。 “i=10. 但若有 i++, i完成时是11”
   !- N1(：数)=-此数
 
 “要实现AB间互换 只需替换 ExpN1的实现”
-对何<R> ExpN1.求= Op(N(1), N1(2))
+对何[R] ExpN1.求= Op(N(1), N1(2))
 
 “也可以让 R=Eval, 但依旧是把构造式当数据”
-对何<> Eval=函0<数>
+对何[] Eval=函0[数]
+
+
+type'AB'(set A) Foo
+  - apply(:A)B
+  -'AR' map(:Fn1) [A R Foo]
+  -'BR' chain(:[B R Foo]) [A R Foo]
+
 
 
 ACC_PUBLIC (0x0001)
@@ -1208,9 +1323,9 @@ attribute_info: [u2 attribute_name_index, u4 attribute_length, info[attribute_le
 
 
 
-factor N
-|1,1 #单参省略,
-|N>0, factor(N-1)*N
+factor
+|1|1 #单参省略,
+|N|N>0, [factor N-1]*N
 
 def db/use (xx)
 def User(id Str age Int)
@@ -1218,32 +1333,47 @@ a(User)| (0 18) ()
 $getU == User(id 关键字参数), id=$0, MaxAt0(id)
 CRUD(User, id)
 
-kv(jack peter)
-kv(peter jack)
+User
+|Int Str
+|age id
+|18 0
+-- age
+User, id=0
 
-friend K V
-|kv(K V), kv(V K)
+Add
+|[[] y] y
+|[[x0 x] y] [x0 [Add x y]]
 
-mother X M
-|a(child M X), female(M)
+friends
+|gigity peter
 
-单恋 A B
-|a(loves A B), !a(loves B A)
+friend
+|[friends A B]|[friends B A]
+
+mother _ M
+|[child M _], [female M]
+
+单恋
+|[loves A B], ![loves B A]
 
 单恋 A
 |loves(A R), !loves(R A)
 
-friend [
-  [john julia]
-  [john jack]
-]
-friend(julia)
-  [sam molly]
+friends
+|john julia
+|john jack
 
-friend(john V)
+-- julia
+friends|sam molly
 
-a(color)[red green blue]
-cv X| a(color X)
+[friend john V]
+
+v
+|color 0
+|wolf 1
+-- color
+v|red green blue
+cv X| [db X 0]
 
 colorify A B C D E
 |cv(A), cv(B), cv(C), cv(D), cv(E),
@@ -1251,12 +1381,19 @@ colorify A B C D E
 ! B=C, ! C=D, ! D=E
 
 
-
-a(man)[george john robert]
-a(woman)[barbara christine yolanda]
-
-a(loc)[bath dining kitchen livin pantry study]
-a(weapon)[bag firearm gas knife poison rope]
+v
+|woman 0
+|man 1
+|loc 2
+|weapon 3
+-- man
+v|george john robert
+-- woman
+v|barbara christine yolanda
+-- loc
+v|bath dining kitchen livin pantry study
+-- weapon
+v|bag firearm gas knife poison rope
 
 Pantry=Gas, Pantry=X, Gas=X,
 
@@ -1294,3 +1431,70 @@ murder X
   [Bath Dining Kitchen Livin Pantry Study]
   [bag firearm gas knife poison rope]
 ]
+
+
+| 名字 | 相关语言 | 注释 |
+| --- | --- | --- |
+| Alan Perlis | ALGOL 和 APL | 语言设计的贡献者 |
+| Gerald Sussman | Scheme | 编程语言的联合设计师（与 Guy Steele 一起），是 SICP 第一版和第二版的 Lisp 方言 |
+| Daniel Friedman | Scheme | 杰出贡献者，也是许多编程教科书的作者 |
+| Matthias Felleisen | Racket | Friedman 的学生，也是一个名为 Racket 的计划版本的共同设计者，该版本旨在用于实现编程语言 |
+| Alan Kay | Smalltalk 和 Squeak | 联合设计师 |
+| Mitchel Resnick | Scratch | 儿童编程语言的联合设计师 |
+| Robert Bruce Findler,Matthew Flatt,Shriram Krishnamurthi | Racket | Felleisen 的学生、Racket 的共同开发者，并与他合着了《如何设计程序：编程和计算简介 (HtDP) 7》  ，该书旨在解决他们在教授 SICP 时发现的许多问题文本 |
+| Casey Reas, Ben Fry | Processing | 架构师 |
+| Lauren McCarthy | P5.js | 设计师 |
+| Seymour Papert | Logo | Sussman 的论文导师和共同设计者，与 Wally Feurzeig 和 Cynthia Solomon 一起设计了 Logo（一种儿童语言），Abelson 也对此做出了贡献 |
+| John Kemeny,Thomas Kurtz | BASIC | 发明人
+
+
+data Flock(n“seagulls”:Cnt)
+  - conjoin(:Flock) this|:
+    n=: +it.n
+  - breed(:Flock) this|:
+    n=: *it.n
+
+- main
+  at:
+    a Flock(4); b Flock(2); c Flock(0)
+  a.conjoin(c).breed(b) .conjoin(a.breed(b)).n
+  “(4+0)*2 + 4*2”
+
+  at:
+    A 4; B 2; C 0
+  conjoin(breed(conjoin(A,C), B), breed(A,B)):
+    this==B*(A+A) “by [rules]”
+^now
+  - conjoin'ab' a+b
+  - breed'ab' a*b
+
+- rules'xyz'
+  x+y==y+x
+  (x+y)+z==x+(y+z)
+  x+0==x
+  x*(y+z)==(x*y+x*z)
+
+at:
+  hi Fn1:[name]'Hi {name}'
+  _greeting Fn1:hi(it)
+  greeting hi
+
+-'T' [Seq T?] compact if{it!=NO}
+
+- pureSlices
+  at: xs [1 2 3 4 5]
+  1~3:
+    xs[0~2]
+  1~3:
+    xs.pop(0~~3)
+
+  at _checkAge Fn1:[age] age!<min
+  at checkAge Fn1:[age]
+    at min 21
+    age!<min
+^now
+  at min 21
+
+
+- add'x' Fn1[Int]:[y] x+y
+

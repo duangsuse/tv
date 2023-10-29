@@ -3,27 +3,27 @@ use ju.expr
 
 'ABC'(get) when- as() Send Data
   Pair(A:A,B:B) Pair3(A:A,B:B,C:C)
-'T'PairOf=Pair<T T>
-'T'PairOf3=Pair3<T T T>
+'T'PairOf=Pair[T T]
+'T'PairOf3=Pair3[T T T]
 
 /*  `from traceback_with_variables import activate_by_import` */
-'F'Decorate=Fn0<F>
+'F'Decorate=Fn0[]:F
 
 /*游标*/
 ''Idx=Cnt
 
-'N'at! PairOf<N>.min
+'N'at! PairOf[N].min
 
 - say(:Str, to=File.`#>`,end="\n")
 
 'AB'(get) when- Either
   A(v:A); B(v:B)
-  -'R' way(err:Fn1<A>, ok:Fn1<B>) = when this:
+  -'R' way(err:Fn1[A], ok:Fn1[B]) = when this:
     A:err(v);; B:ok(v)
   /* used in async [Err]s *//,= way(A) : B(ok()),/
-  -'R' let(ok:Fun1<B R>)=lets: B?{B(it.ok)} or this
+  -'R' let(ok:Fun1[B R])=lets: B?{B(it.ok)} or this
   - flip=way(B,A)
-  at A=asMay<A> at B=asMay<B>
+  at A=asMay[A] at B=asMay[B]
 
 
 'T'data- T as
@@ -45,7 +45,7 @@ type Type
   type d
     - Str Str
     ^named TYPE Type
-      -! wasAngled(types: Args<Send.TYPE?>)=Type.P(types):
+      -! wasAngled(types: Args[Send.TYPE?])=Type.P(types):
       types:[T] this[T.name]=T
 
 data Any() @impl? Type.d
@@ -60,9 +60,9 @@ data Any() @impl? Type.d
 ^named
   -'T' let(v:T)=T.TYPE
 
--'KV' FnKV(kv=Rw:mkKV, ways=Rw:mkSet<Fn1<K V?>>, mode="lru")
+-'KV' FnKV(kv=Rw:mkKV, ways=Rw:mkSet[Fn1[K V?]], mode="lru")
   - get(:T)=kv[it]or ways.firstNotNO:let(it)
--'TV'! Rw.KV<Type<T> V>.add(:V)=set(T,v)
+-'TV'! Rw.KV[Type[T] V].add(:V)=set(T,v)
 
 'T'type Var
   var v: T
@@ -95,7 +95,7 @@ type Closes
   - empty
   - let(/*copy*/) this
 ^named
-  at defaults:KV<Str Any?>
+  at defaults:KV[Str Any?]
 
 /* Only instances of this class can [throw]n or caught. *///
 data Thrown(message: Str?, cause: Throwy?=null) @impl?
@@ -112,26 +112,26 @@ data Thrown(message: Str?, cause: Throwy?=null) @impl?
   data By(name:Str, eqv:Send.TYPE?=NO) Mark
 
   named er as
-    at vals: KV<Str Pair3<Serde T Idx>>
-    at typedTag: FnKV<Type Rw.KV<Any Serde>> {Rw.ofKV}
-    at cfg:Rw.KV<Str Any?>
+    at vals: KV[Str ]-Pair3[Serde T Idx]
+    at typedTag: FnKV[Type Rw.KV<Any Serde]> {Rw.ofKV}
+    at cfg:Rw.KV[Str Any?]
 ^named
   - empty this
   - get(:this,k:Str) Any?
   - set(:this,k:Str,v:Any?)
-  at typed: FnKV<Str Serde>
-  at typedArg: Rw.KV<Str Fn<Args<Serde> Serde> >
+  at typed: FnKV[Str Serde]
+  at typedArg: Rw.KV[Str]-Fn1[Args[Serde]]-Serde
   
   at sendName: Str
 
 
 'this'type _Enum Send
 ^named
-  at all: Ln<this>
+  at all: Ln[this]
   - get(name:Str)this
 
 'this'type Sort
-  at sort: Fn<this>
+  at sort: Fn[this]
   -! `<`(x:this)=sort(x)==MinAt0
   -! `>`(x:this)=sort(x)==MaxAt0
   ^- `==`(x:this)=lessThan(x)==Eq
@@ -143,9 +143,9 @@ data Thrown(message: Str?, cause: Throwy?=null) @impl?
 data Cond
   -!'T' open= T.modifiers !has ACC_FINAL
   type T
-    at cond0: Type<*>
+    at cond0: Type[*]
 
-  'this'data All made(name:Str,v:Int) @impl?? ByAPtr<Sort>(v) _Enum
+  'this'data All made(name:Str,v:Int) @impl?? ByAPtr[Sort](v) _Enum
     made(name,v=0)@ourtype =made(name, (v!=0).way(v): idx goesR)
     ^- Str=name
     ^- Hash=v.Hash
@@ -163,9 +163,9 @@ data Cond
 /** any+Inf<NaN,-0<+0; [Eq] gives nullsLast Asc order. */
 when- Sorts()
   MinAt0;MaxAt0; Eq
-  - onAsc(a:Ln<*>)=(this!=MaxAt0).way(a): a.flip
+  - onAsc(a:Ln[*])=(this!=MaxAt0).way(a): a.flip
 
-  ! ^- `==`(v:Any?) = (v in Int).way{ (v==0).way(EQ):(v>0).way(MaxAt0):MinAt0 }: as<super>==v
+  ! ^- `==`(v:Any?) = (v in Int).way{ (v==0).way(EQ):(v>0).way(MaxAt0):MinAt0 }: as[super]==v
 
   'TR'(R Sort) - let(key:Fun1)=when this:
     MinAt0:
@@ -179,32 +179,32 @@ when- Sorts()
         else: key(b).sort(key(a)) }
   'T'(T Sort) -! let=let(T.sort)
 ^named
-  for<T> - let(:Fun2<Sorts Ln<Sort.Fn>>) = fn()(Sum: as<Comparable>.thenComparing(it))
+  for[T] - let(:Fun2[Sorts Ln[Sort.Fn]]) = fn()(Sum: as[Comparable].thenComparing(it))
 
 
 'T'type PosLR两侧
   at `posL`: T
   at `posR`: T
-  -'R'! twoside(:Fn2<this this>)=fn(posL,posR)
+  -'R'! twoside(:Fn2[this this])=fn(posL,posR)
 'T'(T PosLR) data- Var as
   -! `goesL`=lets: v=v posL; v
   -! `goesR`=lets: v=v posR; v
 
 
-'this'when- Bool() PosNeg<Bool> Sort
+'this'when- Bool() PosNeg[Bool] Sort
   $N;$Y
   -'R' way(Y:Fn0, N:Fn0) = if this{Y()}or{N()}
   - flip=way($N,$Y)
-  - `&`(then:E<Bool>) = way(then,$N)
-  - `|`(or:E<Bool>) = way($Y,or)
+  - `&`(then:E[Bool]) = way(then,$N)
+  - `|`(or:E[Bool]) = way($Y,or)
   - xor(:Bool)
   ^- Str=way("$Y","$N")
 
-''CntM1=OptInt<Cnt?>
-''Bool3=OptInt<Bool?>
+''CntM1=OptInt[Cnt?]
+''Bool3=OptInt[Bool?]
 
 -'T' T as=Fn0:this
--'T' T as=Fn1<*>:this
+-'T' T as=Fn1[*]:this
 
 pkg ju.nums
 
@@ -222,42 +222,66 @@ pkg ju.nums
     - `+`(:this)
     - xor(:this)
     at `#2**?`: Bool
-    data- zeros() PosLR<Cnt>
+    data- zeros() PosLR[Cnt]
       at size: Cnt
 ^named
   at `#0` this at `#1` this
-  at Rn Rn<this>
+  at Rn Rn[this]
 
 when- MathOp
   floor round ceil trunc
   sqrt ln exp2 exp log2 log10
 
 
-'N'data Nd(shape:Args<Cnt>) Sized NumOp Send Make
+'N'data Nd(shape:Args[Cnt]) Sized NumOp Send Make
   - let(shape)Nd
   -'T' let(shape, :Type)Nd
 
   - `++`(:Nd)=concat
 
 
+
+'se'Concat="{S}{E}"
+
+'sz'(s [head tail,.] ) Prepends
+=[Ln [Concat z head] [Prepends tail z],. ]
+'sz'(s [head]) Prepends
+=[]
+
+- main
+  at: item when Vehicle.random():
+    Car(fg,type): "{fg} {type} car."
+    Plane:"plane"
+    Train(n): "train with {capacity} seats."
+  say("You got a {item}")
+
+when- Vehicle
+  Car(color:Str, type:Str)
+  Plane; Train(capacity:Int8)
+
+- Vehicle.TYPE random when Math.random():
+  x,x<.333: Car("Black", "BMW")
+  x,x<.666: Plane
+  or: Train(5000)
+
 pkg ju.text
 
 - Str in(re:Regex) = re.exec(this)
-- Str.let(re:Regex, to:Fn1<Regex.Paren Str>, n:CntM1=NO) = re.replace(this,to,n)
+- Str.let(re:Regex, to:Fn1[Regex.Paren Str], n:CntM1=NO) = re.replace(this,to,n)
 - Str.let(all:Regex)
 
 data Regex(pattern:Str) InfSet Send
-  -! as=Test<Str>: has it
+  -! as=Test[Str]: has it
   -! by(flag:Str)
   ^- has(:Str) Bool
   ^- as Set=TODO
-  - split(:Str, n:CntM1=NO) Seq<Str>
+  - split(:Str, n:CntM1=NO) Seq[Str]
   ourpkg - exec(:Str) Paren?
-  ourpkg - replace(:Str, :Fn1<Paren Str>,:Cnt) Str
-  ourpkg - findAll(:Str) Seq<Paren>
+  ourpkg - replace(:Str, :Fn1[Paren Str],:Cnt) Str
+  ourpkg - findAll(:Str) Seq[Paren]
 
   type Paren
-    at $: Ln<Str>
+    at $: Ln[Str]
     - Rn(span:Idx=0) Idxs
     ^- Str=$[0]
 
@@ -276,7 +300,7 @@ data Since(min:Semver) Mark
 /** Allow `at x:Pair=(1 2)` outside `[]` */
 data DataRows() Mark({PKG})
 
-data Suppress(names: Args<Str>) Mark()
+data Suppress(names: Args[Str]) Mark()
 data Deprecated(msg:Str, :DoReplace? = NO, :.Level=Warn)
   when Level
     Warn Err Hide
@@ -285,12 +309,12 @@ data DoReplace(uses:Str, expr:Str) Mark()
 /** Repeat items, change name$1$2 and "$1" (embed code: atRow$0 & `- atRow0~1..`). see [Arg]*/
 data For(rows:Str) Mark
   ^named
-    -! let(:E<Str>)=For()
+    -! let(:E[Str])=For()
 
 /** *//, @ForBelow(1)/,- _suffix:@Mark,/ ,/
 data ForBelow(nDef:Cnt, defnOrMark:Str) Mark
 ^named
-  -! let(:E<*>)=ForBelow()
+  -! let(:E[*])=ForBelow()
 
 data FunInterface() Mark({data})
 
@@ -323,4 +347,4 @@ data Hilight() Mark({T})
 
 /** Don't use *T, that implies copying T in Go,Rust,. */
 'T'New=Var:$N
--'T' Hilight<T> as Old=must<Old>
+-'T' Hilight[T] as Old=must[Old]

@@ -202,6 +202,18 @@ stdbuf -o0 hexdump /dev/input/mice -e '3/1 "%d ""\n"'|awk -v kx=$((COLUMNS / LIN
 set -a
 declare -g a b
 echo a b|read -d\0 a b #export绝对继承不到子shell的变量
+
+import sys, numpy as np #array('b', )
+
+P = np.array([0,0]); dk = np.array([.6 ,-.4])
+L = np.array(sys.argv[1:]).astype(float)
+
+while True:
+  btn,*dP = np.frombuffer(sys.stdin.buffer.read(3), np.byte)
+  P=np.clip(0,(P+dP*dk),L); x,y=P.astype(int)
+  print('\x1b[',flush=True, end=f'{y};{x}H')
+
+
 ```
 
 方波tone `sed -r 's/-l (\S+) -f (\S+) -D (\S+) /(\2,\1),(0,\3)/g;s/-n /,/g'` 将beep 替换为 hz-dt 序列. 若dt代表起始时差, t0=0,t=t左
