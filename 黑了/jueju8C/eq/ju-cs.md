@@ -27,15 +27,19 @@
 0.无类型/asm,bytes二进制
 1.按类型/C,VB,PHP
 2.子类型/Java,C#,JSPy
-3.类型期编程/TS泛型,模式匹配,SQL-Prolog
+3.类型查询语言/TS泛型,模式匹配,SQL-Prolog
 
-类型签名的多少，与实质上的强弱，与编译/解释型其实都无关。 
+类型是针对{对象}的“正则表达式”，它能让你为数据的格式、程序员的分工思考。 类型签名的多少，与实质上的强弱，与编译/解释型其实都无关。
 
 一般，弱类型=调用时转换；强类型=(编译器转换, 1+"1"等“不强的转换”被改为重载)。 在你靠解释和编译来区分语言的强弱前，看看 C,Py,Flash(ActionScript3) 这些怪胎，
 
 C乃强类型弱检查(比JS还弱,C“对象”皆无类型. `int[]->int*` 越界了,被骇了还能跑)，Py则把弱类型强检查(“渐强类型”gradient typed 也是静态检查)
 
-Kotlin等新语言是带推导的强类型，Flash和JS+V8是编译型“脚本语言”，性能++。 坊间传闻雷军大学时写过一个x86解释器。各种“语言之父”能遥遥落后吗？
+编程范式，就是「如何把数据和代码绑在一起」。 OOP用“类”来封装共用“模块级变量”的多个函数，FP用函数(bind参数)来生成闭包函数。没有优劣，多范式融合才是未来的方向，kotlin新语言、python都不需要单例模式或原型链，就能实现产业级的功能
+
+编程语言和英语是平级的。好的算法是现在进行时的记叙文体，而好代码比记流水帐简单点，比如用调用链/函数队列 表达层层滤镜，比如SQL就是“非执行式”语言
+
+Kotlin是带推导的强类型，Flash和JS+V8是编译型“脚本语言”，性能++。 坊间传闻雷军大学时写过一个x86解释器。各种“语言之父”能遥遥落后吗？
 
 被戏称为C++框架的CPython,开发了GH的Ruby,游戏常用的Lua,跨平台Flutter 都配套一种种类似JVM的虚拟机。甚至luaV的局部寄存器，还更像安卓的Dalvik字节码,或 x86,arm等常见CPU指令集
 
@@ -45,11 +49,21 @@ Kotlin等新语言是带推导的强类型，Flash和JS+V8是编译型“脚本�
 - FAh 是单位写法，如Java的 1.5f,1L 的数值+类型。汇编里类型是'ax,eax,rax'等寄存器或内存读写运算的专利
 - 0xFA 则对应了命名不能以数字开头。它更像JSON5,HTML,.文档树语言里，基本值的写法
 
+如果把汇编作为基本，编程的发展就是从零碎、无意义的算术指令和混乱的(指针非0?)跳转，变到有算式和数据集语意的(){}结构。 数学电子AI，哪个领域不能从无意义被赋予上语意或惯用法呢？
+
 而随着类型的清晰，我们对问题和职业领域的把握，也会逐渐形成跨语言、跨算法的心智模型。
 
-如果执行Java,js线程的循环叫JVM,Node，C线程的“Node”就是Linux内核；如果序列化,分配Py对象的叫Pickle,GC；Linux文件树和长休眠的靠就是Ext4和页面Swap；如果主机,OS间的调用靠“收发线”socket-fd和协议，进程级,数据库间的调用就靠RPC和Bus。USB的'B'，就能传输文件读写等调用
+安卓开发从Activity+Intent传参向Fragment发展，Web从多页php向单页js+路由器fetch(免刷新重载) 发展，曾经的XML+style都被组件化Reactive/Compose替换
 
-如果调度线程的叫CPU，完成协程任务的就是主循环(平行vs并发)；假如死等函数return的叫调用栈和局部，等待事件触发|回调的就叫协程栈和闭包；如果绘制安卓view的叫[Canvas](https://developer.android.com/reference/android/graphics/package-summary)，近70年最强大的单页/排版框架就叫DOM,SVG和GL(sdRect,.)。
+如果执行Java,js线程的循环叫JVM,Nodejs，C线程的循环就是Linux内核；如果序列化,分配Py对象的叫Pickle,GC；Linux文件树和长休眠的靠就是Ext4和页面Swap；如果主机,OS间的调用靠“收发线”socket-fd和协议，进程级,数据库间的调用就靠RPC和Bus。USB的'B'，就能传输文件读写等调用
+
+如果中断和触发线程的叫CPU，让协程结束await的就是主循环(平行vs并发)；假如死等函数return的叫调用栈和局部，等待事件触发|回调的就叫协程栈和闭包；如果绘制安卓view的叫[Canvas](https://developer.android.com/reference/android/graphics/package-summary)，近70年最强大的单页/排版框架就叫DOM,SVG和GL(sdRect,.)。
+
+栈是后调先返的链表。对单线出杯的奶茶店，return(叫号)前不走/叫号回调都一样，但线程只能是封装服务的，员工和秒表要占用栈来通信。 取奶茶应该先返回等叫号(await)，再由主循环在某CPU触发回调链表
+
+这就像由浏览器代理鼠标键盘和下载，才能多文档；由操作系统分时CPU，才不像DOS(cmd)容易卡死
+
+比如Python的画布API，提供了 `while True: cv2.waitKey(ms=1)` 的“轮询”(poll,watch=select=epoll) 响应事件，但对大的程序，需要易组装、0门槛的返回前等待或事件冒泡(而不是new Task,setListener)
 
 OS和Compilers 的术语对应得像刀叉般紧密，以至于 Qt,MSYS2,r2和frida 等框架的作者，能无师自通各种OS的生态。谷歌甚至为JS,Dart创建了ChromeOS,Fuschia 乃至其硬件周边
 
@@ -62,8 +76,6 @@ OS和Compilers 的术语对应得像刀叉般紧密，以至于 Qt,MSYS2,r2和fr
 在写后端时，按User,.类型拆分代码，分模块时不只能把对象当成字典
 
 有趣的是，在1.和2. (FP vs OOP)之间有 React/Vue,Rust,Go 等现代语言和框架，Rust和TS则同时支持3.
-
-如何选择函数式和面向对象？
 
 先怀旧下，C里没有匿名函数，假如你想在段错误时(“内存不能be READ”)手动退出，`signal()` 接受函数指针和一个“回调参数”，也就是this
 
@@ -87,50 +99,85 @@ a=1
 def main(a: List[Str]):
   a #?
 
+```js
+# 匹配左右括号
+_c01 = {'(':')', '[':']', '{':'}'}
+def eat(s,c1):
+  for c in s:
+      # 如果是左括号，就把它压入栈中
+      if (c1:=_c01[c]): ifErr='行号'; eat(s,c1)
+      elif c==c1:return # 如果是右括号，左括号便与之匹配
+      else: assert'','多余项而栈空' #仅支持纯括号文本, 否则要_c10,反向
+  assert c0=='eof','栈尚不为空'
+-S表达式
+
+ (https://t.me/dsuses/5223)optab={[';']:-1, "=;+ -;* /"}
+exp=(s/*token o算符x单项*/, l/*evels 大则紧,深 *<+ */)=>{
+  let o,x=()=>add(Number(s())), ord=[],add=x=>ord.push(x),
+  at=O=>{let A,B; x()
+    for(o=s();(A=l[o])>=(B=l[O]);)if(A!=B)at(o);else{add(O);x(); O=o;o=s()}  add(O)
+  }
+  at(";");return ord
+}
+```
+
 动态作用域就是parser嵌套的表（键值原型链）。在吃到def时，要吐出 `reflect.Method` 那样的树节点，来被class之类“列表块”组装
 
 不过，树主要是计算器级别的语意。在吃def时，参数-引用 被查找到局部Var(v) 默认保存了$0这样的编号。在调用时，从栈上取，放回运算结果就能实现调用链乃至递归
 
-而外部的this变量，就是匿名函数的另一个全局表，叫“闭包”。 它和调用栈、全局导入 构成了函数的运行时。
-- 闭包 `栈转堆`。把外层局部 `(a,b)=> ()=>` ，创建私下对象。如查找 b=第i个this的编号变量j, b=i0.j1
-- 协程 `栈转堆`。把外层return `()=>delay(1)`，弄成回调时函续。对浏览器栈呢，返回键就是回调-回去赋值
-- 对象 `共同读写构造期局部的多函数`，支持private可见性,open final等函定性, 函数就是有 invoke() 的对象
+非局部的变量"this"，就是匿名函数的另一种全局表，叫“闭包”。 它和调用栈、全局import 构成了函数的运行期。
+- 为什么 `nonlocal _; global x; x=1` 执行能免调试看变量？应用如 `from traceback_with_variables import activate_by_import`
+- 闭包 `栈转堆`。把外层局部 `(a,b)=> ()=>` ，创建函数对象。如查找 b=第i个this的编号变量j, b=i0.j1
+- 协程 `栈转堆`。把外层return `()=>delay(1)`，弄成回调时函续。对浏览器栈呢，返回键就是回调-赋值再跳转回链接
+- `对象是共享构造期局部的“多方法函数”`，如js的定义get/set，以支持private可见性,final等函定性。函数就是有 invoke() 的对象
 
 接口对于算法，就像USB对于数码设备。 换个算法，就像文件换个网盘，程序员刷操作系统，并不会造成麻烦，但设计得狭隘或难插拔的接口，除了妨碍新功能 新用户，更会让框架有代沟，产生node_modules等众多碎片化和依赖地狱
 
-API和语法、语意学的重要性一直被低估了，以至于一个"Pythonic"就能让数理库大爆发，虽然py对函数与组合式DSL的支持，被框在filter,map,@wrap def 和numpy模式里 而难以扩展
+API和语法、语意学的重要性一直被低估了，以至于一个"Pythonic"就能让数理库大爆发，虽然py对函数与组合式DSL的支持，被框在filter,map,@wrap def 和numpy(基拟Matlab)模式里 而难以扩展
 
 - 前后端 通过HTTP路径/?参数/Header环境变量 `实现RPC调用`，和模板表单或两边校验。这个传参模式 很像命令行CLI
 - 数据库 按行列过滤的 `提速版Excel`。特性支持比照术语:{数组 文档型  能循链接 图QL Vec2(2量同算) 向量}
 - CRUD 对列表a: `a.push({age}), a.find(x=>x.age<10), a.find().age++, a.pop`, 后3项共用ORM
 - Cookie 会话"句柄",会话号。酷卡是在登录页 被后端设置的限期token，指向其{用户名数据,.}对象；用集群的私钥签发此对象-防纂改，就叫JWT。QR登录也靠`共享对象号`
-- 注入 依上文字典`(向参数)赋值`，以提供代码没写明的配置
+- 注入 依上文字典`(向参数)赋值`，以提供代码没写明的配置；就是照默认值去new，再按照类型树去赋值
+- AJAX-PJAX 免刷新重载，不会清空js内存，方便由前端主导UX体验
+- 桌面端
+  - 快捷键 onkeyup Ctrl/Alt/Shift-普通按键名(ArrowUp,.) 时触发组件全局的动作，如右键菜单
+  - 菜单栏/操作钮栏和状态栏 全局的动作和注释。 Alt/F6选中菜单，Tab切换焦点，Escape关闭弹框,焦点,即选区
+  - Ctrl意为控制，W,Q退出 T,N新建 L地址 空格代码补齐
+  - Alt意为转意符，+回车=属性 +空格=窗口属性 +Tab切窗口 。 Win+V多剪贴，方向键分屏 F11全屏
+  - 剪贴板和DnD(拖拽) 能同时传输 `text/uri-list, image/*` 等多种类型的数据，能在js读写文件夹
 
 新特性、[老砷尝“谭”](https://code.golf/)
 - 指针 int32(4byte)等`变数的地址`。函数局部/数组/struct 里的名都是不打*(x)的指针和加法乘法，所以读 `*(void*)0` 会触发内核，CtrlC掉你的线程
   - 引用 含变数的值，因为不可变引用叫值，编译期值叫类型或const。想栈上分配省GC？先内联函数,即宏
+  - 匹配解构 `unify(模式=[1,x],值=[1,2])` 遍历检查以让变数x.v=值2
   - 高性能 别和JIT编译器内卷谁聪明，多用numpy等定义式框架，做>3ms 的PGO跑分优化
   - GC,Rc 复用 `malloc(sizeof struct{x,y})` 的被引数跟踪，为0时才可free。对象图越小越块
-- 强类型 用编译期能“运行”的语法，写函数/类签名，不能有if: class: 等元编程，序列化和调试很难
+- 强类型 用编译期能“运行”的语法，写函数/类签名，不能有if: class: vars() 等元编程，序列化和调试很难
   - 装箱 int补上Class标签。ListT不是 `template<>` 代码复制式实现，不能赋原始类型给调参：Integer可为null
-  - 序列化 递归读写变数(组)或多情况类型，只是`给字典补上标签`
+  - 序列化 dump={for(k in it)dump(it[k])} 成扁平序列, 读时 `给字典补上类型`，以便递归读写对象(组)或Number等多情况类型
+  - 元编程 更了解语言，而不是编程框架，这样才能从根源替换设计模式
   - 解释器 见到一种结构=做一种转换。 `printf`, 深拷贝就是这类算法，用 `['Sum',1,2]` 能模拟子类型
-- 模式匹配 `unify([1,x],[1,2])` 遍历检查以让“变数”.v=值
-- 关系式 组合变数间'等且或=,|'成立的解集，做DFS、类型推导(即重载查找)
+- 关系式 组合变数间'等且或=,|'成立的解集，做DFS，支持匹配解构和响应式
+- 逻辑式 ts类型推导(即重载查找),apt版本管理-SAT,数模求解-SMT(CLP)。如Prolog是无尽式SQL,是据变数关系查表的DFS语言。 
+- 瓶颈 你能交互填写的，都不叫瓶颈，不需要奇技淫巧来优化
+- 并行 调用间不相干,平行(如2D向量'+'数)
+- 并发 调用分时复用一个CPU或调度器的栈(如apt-get的加锁)。它必须密封为Task-传回调，但支持IO信号和UI异步触发、线程池(分布式)扩容
 - 栈 调用层叠.“非常容易做GC”的堆 引用:可变数(不取值) 闭包捕获:x(栈变量转堆对象),内联:return转赋值
-
+- AOP 如安卓方法替换。链接函数时jvm通过签名查ClassLoader，C++通过dlopen(PLT), 即py cffi
 
 FP
-- 纯函数 能支持memo KV缓存,懒求值(is&&print),并行化的算式及Effect
+- 纯函数 能支持memo KV缓存,懒求值(is&&print),并行化的算式及Effect。 实践效果不及直接上numpy,PGO的1%
+- 不可变  用定义取代单次赋值。 Docker式的静态文件树，“注册表清理”，就能避免安装-卸载界面的麻烦
+- 伪递归:改参再循环 纯数据:把堆里的变量放栈上来重赋值,就像{x: f(x)},=>1+1=2 
 - 协程 Promise.then就是 `async()=>` 的“函续”Continuation，调用者负责设为回调。`yield x` 保留函续后，才能“多次返回”、next(发送) 和过深递归
-- 状态机 就是 `A: if()goto A` 等流控,DFA
-- 伪递归 :改参再循环 纯数据:把堆里的变量放栈上来重赋值,就像y=f(),=>1+1=2 
-- 编译 浅先遍历,解析TWRP结构,检查类型,以把变数-引用查成节点图IR 再深先, -或者直接解释
-- 解析 用正则分词,递归吃流前缀,吐TWRP树: Tuple When Repeat Paren/逆波兰排序 是AST和“序列化器”的类型。下一条，正波兰
-- lambda演算 S-Expr(括(号) 树) 的纸笔计算, 传单参“颗粒化”curry的好处如 `o.key` 语法可解读为 `(ijVar,key, locals)=>`, 在编译期求值了2参
+- 状态机 就是 `A: if()goto A` 等流控,正则DFA也可理解为 文本[i++]
+- 编译 未使用调用栈。浅先遍历,解析TWRP结构,检查类型,以把变数-引用查成赋值图IR 再深先, -或者直接解释
+- 解析 用正则分词,递归吃流前缀,吐TWRP树: Tuple When Repeat Paren/逆波兰排序 是AST和“序列化器”的类型。下一条是正波兰
+- lambda演算 S-Expr(括(号) 树) 的纸笔计算, 传单参“颗粒化”curry的用处如 `o.key` 语法可解析为 `(locals,key, stack)=>`, 在编译期求值了前2参
 - 词法域 `C函数为何仅全局`。对比 Lua-Upval, [Py-cellvar](https://juejin.cn/post/7286670786563244090#:~:text=co_cellvars), Rb-capture
-- 逻辑式 Prolog等,据变数关系的DFS搜索语言。 ts类型推导,apt版本管理-SAT,数模求解-SMT
-- Monad 用函续(自动回调)来规避赋值，实现[堆上流控和异常](https://magic.huohuo.moe/html/Continuation.html)并美名"代数+工程"
+- Monad 用函续(自动回调)来规避赋值，实现[堆上流控和异常](https://magic.huohuo.moe/html/Continuation.html)并美名"代数+工程"。它是Functor(盒子)上的一种有零点链表
 - Y组合子 YCombinator.com , 致敬匿名递归: `Y=c=>(f=>c(f(f))) (f=>c(f(f)))`, 需包一层懒x=>`f(f)`(x)
 - 停机问题 证明NP完全--比多项式'大O(复杂度)'还慢的代码，是否是死循环。
 

@@ -81,7 +81,7 @@ p({edit:$Y}, html`Page title: ${pageTitle}`) // span>""+var
 
 
 ww.Time=({time=""},
-  useRate=(v,dt,upd)=>clearInterval.it.fn(  // called in as(), e.remove()
+  useRate=(v,dt,upd)=>clearInterval.var.fn(  // called in as(), e.remove()
     setInterval(()=>(v.v=upd(), v()), dt.as('ms')) // no diff
   )
 )=>
@@ -229,10 +229,10 @@ ww.App=()=>h1('Hello world')
 import{App}from 'main'
 
 ww.$=({A=NO})=>
-body$(it.parent(), // body(found), keep Scrape Child
+body$(is.parent(), // body(found), keep Scrape Child
   App__app(A, /*now Unify Child, env.x.A<->existing node*/)
 )
-1||App({}.it)(window.app) // Append Child (env=window, default)
+1||App({}.var)(window.app) // Append Child (env=window, default)
 2||App({})(['<body>',]) // MHTML Child
 
 pkgs=[
@@ -623,3 +623,42 @@ html(
   html({},text.as(marked))
 )
 
+
+
+ww.Switch=({checked=$Y},
+wUI=`
+`
+)=>
+$switch(our,
+  wUI({checked}),
+  wOp({tap:checked(x=>!x)}),
+  span$slider()
+)
+
+ww.Eventy=({count=0})=>
+html(
+  button(wOp({tap:count(x=>x+1)})),
+  div(html`count:${count}`)
+)
+
+ww.$=({txt})=>body(
+  __target(html("good")),
+  __target(txt),
+  __target$(it.parent(`main`), 'add'),
+  __target$(ww[`*`]())
+)
+
+
+- CounterMessage'n username'
+  at:
+    times n.{1 "once" 2 "twice" or "{n} times"}
+    name (username? zero or $Y)("Anonymous", username)
+  return div:
+    'Hello {name}, you clicked me {n.Times}'
+
+ww.App=({count=0,username="Anonymous"})=>
+div({edit:1},
+  html`Username: ${username}`,
+  button(wOp({tap:count(x=>x+1)}), `Click me`)
+  menu({Reset:count(to=>0) })
+)

@@ -22,7 +22,7 @@ EQ希望成为网页应用的『基础』。基础有两种含义：技巧匮乏
 - 合一「反正挂载」到新增或(完整)既存的子节点，wOSK后深至文本级爬取-替换，稍后让被 {age}=app.it 选出的键量: age(新值) 带变量合一，不操心 `$(onvar,x=>upd)`。不向代码里[注水](https://svelte.dev/blog/virtual-dom-is-pure-overhead)，不求靠大佬[复苏](https://www.builder.io/blog/hydration-is-pure-overhead#a-note-on-memory-usage)
 - 联络。一个JS世界，一种调用语言，跨越会话和SSR的界限，对同名的功能说HI。把文件读写/音频SVG滤镜图反映在配置字典里，把每格的变量放进Dtable row。编程乐在创造，而非当翻译、造轮子！
 
-键量能选中
+键量能选中 多模板0样板
 页面能联络
 瞌睡有枕头
 
@@ -52,6 +52,8 @@ UI怎么写？或许我们要看看“原生开发”：从数据创建View，�
 在向消费者和Geek提供更多元、更及时的漂亮界面时，多个好手 强过多个对手。
 
 EqvJS 欢迎[Vue](https://cn.vuejs.org/guide/essentials/computed.html#computed-caching-vs-methods),[Van](https://vanjs.org/tutorial#api-state)专家贡献文档、案例和(新技术需求)，也包括Svelte等[操作DOM的框架](https://component-party.dev/)、TS的爱好者，但React不(因为hooks太难看了)
+
+OOP强迫你把UI里的变数和函数弄成class，EQ试图把class组件限制在数据验证的职责内，同时以非黑盒API让Reactive能与JS变量重合。「如非必要，勿增实体」
 
 对于“种田”这样的基础领域（没有在应用编程），竞争其实是要避免的。 大家都应该有性格，是适者生存，不是强者生存
 

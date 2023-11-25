@@ -5,9 +5,10 @@
 typealias Dict=MutableMap<Str, Any>//eg List,Enum,x:Bool/fun x() /main:Ln<Str> , r(Cyan bg Red){}
 typealias Argv=Array<out Str>
 typealias Ln<T>=MutableList<T>
+typealias YN=Boolean
+typealias Str=String
 const val NO=null
 
-typealias Str=String
 typealias MvEq<T>=Eq<Str/*path*/,T>
 data class Eq<A,B>(val cat:(A)->B, val cut:(B)->A) {
   companion object {
@@ -100,8 +101,8 @@ v enable verbose mode(or .env)??
     out.Eq("") {it+source.joinToString()} //append
   }
 }
-
-fun main(a:Argv)=a.Dict<KtCompiler>()
+NAME<App>(Sav).cat(a.seq)
+fun main(a:Argv)=a.Sav <KtCompiler>(/*call*/)
 enum class OutputFormat(val defaultSuffix: String) {
 	EXECUTABLE(
 		if (System.getProperties().getProperty("os.name").contains("Windows", true)) ".exe"
@@ -172,3 +173,143 @@ ab- group
 - 支持Enum,File,Ln=List, 把0参fun视为Bool(s=-1); 禁止Any,Num,.情况类型
 - `--k=v orV -bools_kV orV --` 赋值为Ln/Str，最后赋值args。 -hi 所安装的补齐查找 -enum '??', 未来愿支持 py:rich
 - 纯交互可以用 `p=Ftp().to{url=""} p-"Name:.*", p+"user"` 来写
+
+
+Dict<T>()就能用默认值，创建子命令树，用var by实现子命令解析。 但这种不隔离值与类型的Dict，无法支持简单的 List<BoxInt>，而且把var全建模为对象是很用完即扔的语法糖
+
+那一周鬼打墙的是， Int值类型在用Eq(from,toStr), User引用在用Var(v="str"or ["args"])， 最后把试图融合二者的我搞炸了。当时以为字典遍历赋值都需要class Unix解析工具
+
+当时以为能给Int.static 外扩接口就完工，最后知道还要最优雅的Str流读写。 而且还没有统一单参0参和var set
+
+
+class printer(
+  var input:File,
+  var output:File?,
+  var fmt:Format=Format.CSV,
+  var strFmt:Ln<Format>=listOf(),
+  var eps:Double=.01,
+  //var arg:Ln<File> //for positional
+) {
+  companion object:CLI("""printer app
+  f Format for output file
+  ?iof File IO
+  sf Choose one as for output
+  d Turn on debug mode
+  eps Observational error
+  """, "eps")
+  fun main() {
+    val str=input.readText()
+    val res=calculate(str)
+    fmt.forEach{produce(res,it)}
+  }
+  fun _debug(){}
+  enum class Format{html,csv,pdf}
+
+  fun calculate(data:Str)=listOf<Double>()
+  fun produce(res:Ln<Double>,it:Format)=TODO("output, res,it")
+}
+
+class hello /*:CliktCommand */ (
+  var name:Str,
+  var count:Int=1,
+  var source:Ln<File>,
+  var out:File,
+  var v:YN=false,
+) {
+  companion object:CLI("""
+  c Number of greetings
+  id The person to greet?Your name?
+  v enable verbose mode(or .env)?
+  """, "name id")
+  fun main() {
+    (1..count).forEach{ r("Hello $name") }
+      ""(out.Eq) {it+source.joinToString{ it.Eq.cat("") }} //append
+  }
+}
+
+class numeric(
+  var out0:File,
+) {
+  companion object:CLI("""Use subcmds
+  s Calculate summary
+  m Multiply
+  """)
+  class sum(var invert:YN=false):Adds("""
+  i Invert results
+  main Addendums
+  """)
+  class mul():Adds("""
+  main Numbers
+  """)
+  
+  open class Adds(s:Str, var arg:Ln<Int>) {
+    protected var result=0
+    fun main() = "$arg"
+  }
+}
+
+class kt_compiler(
+  var output:File,
+  var arg:Ln<File>,
+  var format:Outputs=Outputs.EXECUTABLE,
+  var target:String="",
+  var optLevel:Int=0,
+) {
+  companion object:CLI("""kt-compiler
+  arg [source.kt ..]
+  o the path to place compiling output
+  f the output format of the compiling result
+  t the target triple used by LLVM
+  O code optimization level (0~3)
+  pt print time consumed by each process of compiling
+  """, "optLevel O; -- ALL t")
+  //no short for ALL vs in sh<>("bin"(,file to"o")), prefer --target X. -hD k=v ARE -h -D STR
+
+  fun main() {}
+  fun _printTime(){}
+
+  enum class Outputs(val defaultSuffix: String) {
+    OBJECT(".o"), ASSEMBLY(".asm"), IR(".ll"), BITCODE(".bc"),
+    EXECUTABLE(
+      if ("Windows"in System["os.name"]) ".exe" //.getProperties().getProperty
+      else ".out"
+    )
+  }
+}
+
+class cli(
+  var username: Str?,
+  var count:Int=1,
+  var arg: Ln<Str>,
+  var destination: Str
+) {
+  companion object:CLI("""
+  v enable verbose mode
+  u name of the user
+  n number of the widgets
+  arg source filenames
+  o destination
+  """, "count n; destination o")
+  fun _v(){}
+  fun main() = "Hello, $name!"+
+    "Moving $count widgets from $source to $destination."
+}
+
+class Cli : CliktCommand() {
+  val v: Boolean by option(help = "enable verbose mode").flag()
+  val username: String? by option(help = "name of the user")
+  val count: Int? by option(help = "number of the widgets").int()
+  val source: List<String> by argument(help = "source filenames").multiple()
+  val destination: String by argument(help = "destination")
+  override fun run() {
+      println("Hello, $name!")
+      println("Moving $count widgets from $source to $destination.")
+  }
+}
+
+Fire.kt only|Fire.py only
+:--|:--
+fun _flag, vars:File/Typed,inherit|vararg==posarg,eval()s
+statics: CLI("help","alias"), auto -sHORT|all docstr
+class cli{fun main()} new-inject|global:def cli(*), also with subcmd=chain,dictkey
+cli.sh(unparse), -he envedit,-hii shcomp,.|`python -m fire a.py`, chain reorder, --interactive,.

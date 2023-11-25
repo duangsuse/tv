@@ -373,8 +373,7 @@ data Bond
       (1~3):
         Bond().sell
       say(price)
-      
-      
+
 
 - main 
   at story Fun1[Animal]: speak()
@@ -398,7 +397,7 @@ when- Animal 水豚
 ^now
   - speak "..."
 
-when--'AB' Way2 “Either”
+type 'AB'Way2 “Either”
   A(:A); B(:B)
 
 
@@ -450,6 +449,12 @@ data Stud(name:Str, age:Int, birth:Date)
 type Geo interface{func area() int}
 type Point struct {x,y int}
 type Rect struct {Point; w,h int}
+
+?? Geo
+  x Int; y Int
+  - area Int
+  Point()
+  Rect'wh'(_:Int)
 
 /*去水果店买苹果
 
@@ -553,7 +558,7 @@ data- Str.TYPE as Exp[Str]
   - N(n)="$n"
   - Op(e, k)=e.lets: "$A${k}$B"
 
-- You[KtFileScope KtFile] addTypeExt(:Str)@ourpkg = whileAdding(str, T1):
+- addTypeExt(:[KtFileScope KtFile You], :Str)@ourpkg = whileAdding(str, T1):
   buildFn.lets(KtFunctionInfo)
   .lets(GeneratedTypeSpecExtension)
   .let:[T]
@@ -606,8 +611,8 @@ named Env
 
 - Ary[Int] mergeSort=go(0~lastI)
 ^now
-  - [Ary Int] go(:[Rn Idx]) = rn.div2:[I]
-    at now:
+  - [Int Len] go(:[Idx Rn]) = rn.div2:[I]
+    now:
       //a,b 半都指向升序
       a (rn(B=I-1):go(this)).Seq
       b (rn(A=I):go(this)).Seq
@@ -648,7 +653,36 @@ named Env
         if A<B: a goesR; A
         or: b goesR; B
 
+'S'Arr=[S Len]
 
+-'S'Arr qsort(A=0,B=n-1)
+  A<B \: over
+  sep2:[p]
+    qsort(A,p-1)
+    qsort(p+1,B)
+^name
+  - sep2 as:
+    pv me.A
+    now: i A+1; j B
+    now $Y:
+      now i<B  me.i<pv: i.goR
+      now j>A  me.j>pv: j.goL
+      i>j: over^2
+      Var.swap(me.i,me.j)
+    Var.swap(me.A,me.j)
+    j
+  - sep2(i=A+1,j=B) me.A:[pv]
+    j>A  me.j\>pv: now(i,j-1)
+    i<B  me.i\<pv: now(i+1,j)
+    i<j : Var.swap(me.i,me.j); now()
+    Var.swap(me.A,me.j) // [1 0 2]=>?
+    j
+
+- 'S'Arr qsort n>2 \{me} :
+  me:[[p {xs}]] xs.is{<p}.qsort add [p] add xs.is{\>p}.qsort
+
+- [Int Len] qsort(:[Idx Rn]) = rn:
+- qsort(:[Ln You], :[Idx Rn]) = rn:
 - Ary[Int] qsort(:Rn[Idx]) = rn:
   if A!<B: return
   at now:
@@ -662,7 +696,7 @@ named Env
   this[A]=mid
   qsort(a~A-1); qsort(A+1~b)
 
-- qsort(x:Ary[Int], A:Idx,B:Idx)
+- qsort(x:[[Int Len] You], A:Idx,B:Idx)
   at: p x[(A+B)/2]
   at: sep2 Fn2:[A B]
     loop x[a]<p: a=:+1
@@ -678,7 +712,7 @@ named Env
   loop(a!=0, a-1,b+1)
   b
 
--'T'(T Sort) Ary.quickSort=on(this,0,iLast)
+-'T'(T Sort) quickSort(:[Ary You])=on(this,0,iLast)
 ^now
   - on(:Ary, A:Idx,B:Idx)
     A<B:
@@ -718,8 +752,8 @@ named Env
 - main
   d=[2 3 6 8 1 4].qsort
 
--- qsort(it:[Ary Int],range=iEach)=range: (A<B): “two”
-  at now:
+- qsort(it:[Int Len],range=iEach)=range: (A<B): “two”
+  now:
     mid this[A]
     a A+1; b B
   as:
@@ -737,8 +771,8 @@ named Env
 
 -'AB' zip2(a:Ln[A],b:Ln[B]) Ln[Pair]
 
-at accurateLrc=PLAYER!"not exist":
-  at: path when identity():
+accurateLrc  PLAYER!"not exist":
+  path identity() .:
     "mpv":say.W("");NO
     "ElectronNCM","Qcm":
       getSongID:[meta] “get可以外提”
@@ -902,6 +936,7 @@ oncat 谈做
 {75 43 103 87 12}，[分数]
   得分=得分+判分数 存于，
     0~50，1。否则，3。
+    (0~50)(score). {$Y 1 $N 3}
 
 0~<10 步2 令(说)
 
@@ -1047,10 +1082,10 @@ i=0；重复再若i<10，i移右。 “i=10. 但若有 i++, i完成时是11”
 对何[T]恒- 造行(项：组参)=项去行 ‘项的满针 令其，项[我]。’
 
 - 素数筛(n=20) 组(n、真) 令其，
-  在 半 n/2；选 2~<半
+  半 n/2；选 2~~半
   选，[a]
     选，[b]
-      量c=a*b
+      c a*b
       我[c-1]=c不>a ，
         若我“太大”，停下。
       “若c>a，停下。我[c-1]=假”
@@ -1112,6 +1147,14 @@ i=0；重复再若i<10，i移右。 “i=10. 但若有 i++, i完成时是11”
   同名例
     对何[数]- 数.「+」是封「+」
     对何[T]恒- 封(：符)=函2[T T Op]，[a b] Op(a、b、此符)。
+
+?? 'T'Expr
+  Op(A:T,B:T,sym:Str)
+  N(x:T)
+  - eval me .:
+    N: x
+    Op sym .:
+      "+": A.eval+B.eval
 
 式，
   (1+2+3)去值
@@ -1234,7 +1277,6 @@ i=0；重复再若i<10，i移右。 “i=10. 但若有 i++, i完成时是11”
   例物 Enum(值：数)
     A(2)；B(3)；C(3)
     - 说=:"$值 $号"
-  
   例 Obj
     - 文="${类型[Obj]的名}"
     
@@ -1321,6 +1363,13 @@ field_info: [u2, u2 iName, u2 iDesc, ['*',u2, attribute_info]]
 method_info: 
 attribute_info: [u2 attribute_name_index, u4 attribute_length, info[attribute_length]]
 
+Builder 匿名单例 模板方法|type配置词典,name配置词器 扩展函数
+适配器 装饰/代理 抽象类桥接|加构器 补充器
+共享元 Context Factory(抽象)|加构器 type..OS协议工厂
+单例 策略,外观,Controller 责任链,命令,组合|被函数、模块和事件式编程取代: 如静态^name, F.a1:[x]
+Iter 观察者|被Rx和yield取代: Saw(0)=., Inc(0):+1
+状态模式 Visitor模式|.:表,AStor
+copy原型,备忘录|纯函数
 
 
 factor
@@ -1338,23 +1387,23 @@ User
 |age id
 |18 0
 -- age
-User, id=0
+User  id=0
 
 Add
 |[[] y] y
 |[[x0 x] y] [x0 [Add x y]]
 
 friends
-|gigity peter
+,gigity peter
 
 friend
-|[friends A B]|[friends B A]
+,[friends A B] [friends B A]
 
 mother _ M
-|[child M _], [female M]
+,[child M _]  [female M]
 
 单恋
-|[loves A B], ![loves B A]
+,[loves A B]  [\loves B A]
 
 单恋 A
 |loves(A R), !loves(R A)
@@ -1364,7 +1413,7 @@ friends
 |john jack
 
 -- julia
-friends|sam molly
+friends,sam molly
 
 [friend john V]
 
@@ -1447,21 +1496,27 @@ murder X
 | Seymour Papert | Logo | Sussman 的论文导师和共同设计者，与 Wally Feurzeig 和 Cynthia Solomon 一起设计了 Logo（一种儿童语言），Abelson 也对此做出了贡献 |
 | John Kemeny,Thomas Kurtz | BASIC | 发明人
 
+- 九九
+  td ["{b}{a}={a*b}" (a==b)("\n","")] .:
+    (1~9)(a)
+    (1~a)(b)
+    //1~9:[a] 1~a:[b] ""
+  say: '{td.Str(" ")}'
 
-data Flock(n“seagulls”:Cnt)
+
+
+func Flock(n“seagulls”:Cnt)
   - conjoin(:Flock) this|:
     n=: +it.n
   - breed(:Flock) this|:
     n=: *it.n
 
 - main
-  at:
-    a Flock(4); b Flock(2); c Flock(0)
+  a Flock(4); b Flock(2); c Flock(0)
   a.conjoin(c).breed(b) .conjoin(a.breed(b)).n
   “(4+0)*2 + 4*2”
 
-  at:
-    A 4; B 2; C 0
+  A 4; B 2; C 0
   conjoin(breed(conjoin(A,C), B), breed(A,B)):
     this==B*(A+A) “by [rules]”
 ^now
@@ -1482,7 +1537,7 @@ at:
 -'T' [Seq T?] compact if{it!=NO}
 
 - pureSlices
-  at: xs [1 2 3 4 5]
+  xs [1 2 3 4 5]
   1~3:
     xs[0~2]
   1~3:
@@ -1498,3 +1553,284 @@ at:
 
 - add'x' Fn1[Int]:[y] x+y
 
+
+- id'ab'(b=0) as:
+  now(a+1,b-1) : b==0
+  a
+
+- id(a:Int,b=0)
+  now b!=0: a=a+1; b=b-1
+  return a
+
+id(a,b)=b if a==0 else id(a-1,b+1)
+a\=0 {b}: id(a-1,b+1)
+
+?? Nat
+  Zero; Inc(:Nat)
+
+- Nat `+`(b:Nat) b .:
+  Zero: you
+  Inc(B): Inc(you)+B
+
+-'T'(T PosNeg) `-`(:T) it.not
+?? 'u'PosNeg
+  - not u
+  - abs u
+
+?? 'u'Num
+  - `*`(:u)u
+  - `+`sep`*`
+  - `~`sep`+`
+  - `<`sep`+`
+
+?? Any
+  - `==`sep`<` (:Any?)YN
+- 'T'Var `=`sep`or`
+  
+?? YN
+  - `,`sep`<` //默认
+  - `or`sepR`,`  (:YN)
+
+
+- http_error'stat' stat .:
+  400: "Bad"
+  404: say:'..'; "Not found"
+  401 403: "Not allow"
+  or: "Net wrong"
+
+-'T' Ln cons(:Ln) ln .:
+  []: me; [x {xs}]: (me add [x]).cons(xs)
+
+point .:
+  0|0:"Origin"
+  0|y:"Y{y}"
+  x|0:"X{x}"
+  x|y:"{x},{y}" 
+
+?? RGB
+  R;G;B
+
+[RGB.R]: me.{
+  R"Red" or"Good"
+}
+?? Tree
+  Sum(:[Tree Pairs])
+  N(:N); Zero
+- `+`(e:Tree)N e .:
+  Zero: 0; N(n).: n!=0:n
+  Sum(es): es(Sum(0): A+(+B))
+
+"$ abc" .:
+  (RE:'$ {s.[Str too]}'): s
+  (RE:'$ {i.[Int too]}'): i
+
+[1~35]*2 .:
+  x!=0 .:
+    x+y==35,4*x+2*y==94: say:'鸡{x}兔{y}'
+
+[users posts] .:
+  u.id<10, u==po.owner: "LEFT JOIN, not us[po.id]"
+
+[x y] .:
+  x+y==35
+  4*x+2*y==94
+  (1~35)(x,y)
+
+[I] .:
+  s[i]==me[I+i]
+  s==me[I~~I+s.n]
+  (0~~n-s.n)(I)
+
+- Str sub(:Str) std.[IdxM1 as]:
+  (0~n-s.n):[I]
+    s.iEach:[i]
+      s[i]\=me[I+i]: return^2
+    return I
+  return -1
+
+    
+
+
+at now: i 0
+at addr (1~10):
+  i= :+ 1
+  x= :max y
+  at use  Fn.[Int Str Int a2]:[x] x+i
+- use(x:Int,:Str)
+
+
+- main /??/
+func App(home="", fs=(FS.ROOT /[etc mtab])) CLI('home ??')
+  - main(:[Str Ln]) ln.n>0: say:'{ln[0]} {home}'
+  - exist CPU.exit(fs zero{1}:0)
+  - test(:FS) CPU.exit(Try{fs .r; 0} or 1)
+  - os
+    (CoFS:'false') .r:
+      say: '{me.exited("failed","done")}'
+  - sed(:FS)
+    ""(fs): it(RE:'#.*', "")
+
+- main
+  a 1; b 2
+  say: '{a}+{b}={a+b}'
+  [[1] [2] [3]] .:
+    a+b==c: say:'good ALU'
+
+  [a.eachI]*2 .:
+    i0\<i, s[i0+i]==s[i], i==n: say:'{i}'
+
+  ints:[x] x .:
+   x>3: 
+   x==NO: 
+  [ints] .:
+    x!=NO: 
+    x>3: 
+- bmiTell(x:N) x:me .:
+  >18.5: "underweight range"
+  >25.0: "normal range"
+  >30.0: "overweight range"
+  or: "obese range"
+
+- max'ab' a .:
+  a>b: a ; or: b
+- cmp'ab' a .:
+  a<b: -1 ; a==b: 0 ; a>b: 1
+
+- fact'nr'(r=1) as:
+  now(n-1, n*n) : n==0
+  r
+
+- fib'nab'(b=1) as:
+  now(n-1, b,a+b) : n==0
+  b
+
+- fib'n' n.{
+  0 0 1 1 or fib(n-1)+fib(n-2)
+}
+- fib2'nab'(a=0,b=1) as:
+  now(n-1,b,a+b) : n==0
+  a
+
+sum_of_bigger_than_2([{1~5}])
+- sum_of_bigger_than_2(A:[Int Len]) as:
+  now: i 0; sum 0
+  now( i \< A.n):
+    A[i]\>2 {sum =:+ A[i]}; i=i+1
+  sum
+
+- init
+  double Fn.[Int A1]: *2
+  small-than Fn.[Int a1]: Fn.[Int Bool a1]:[B] B<A 
+
+  ls (1~5).Ln (double)(small-than(9))
+  sum ls(Sum(0):A+B)
+  len ls.Len
+  dd=ls
+  dd=sum; dd=len
+
+?? 'T'Any
+  Li(x:T, xs:Li?)
+
+-'T' concat(:[Li? me], u:Li) me .:
+  NO: u ; Li(x,rs): Li(x, rs.concat(u))
+
+-'TR' map(:[Li? me], :Fn.a1) me .:
+  NO: NO
+  Li(x,rs): Li(fn(x), Fn.a2.map(rs,fn))
+
+- levenshtein(ab:[Str Pairs])Int (ab:n):[n|m]
+  at s (ab:Len(n+1, 0)).Len
+  //for(j in 1..m) { s[0][j]=j }
+  (1~m):[j] s[0][j]=j
+  (1~n):[i] S(i,0)=i; (1~m):[j]
+    S(i,j) = (ab.A[i-1]==ab.B[j-1]).{$N 1+pose $Y S(i-1,j-1)}
+  s[1][j]
+^name
+  - S'ij' s[i.rem/2][j]
+  - pose [S(i-1,j-1) S(i,j-1) S(i-1,j)](Sum: min(A,B))
+
+- min'ab'(_:Int) (a\<b)(a,b)
+
+at:
+  a T(0) ; b T(2)
+dd=(a+b).x
+type Any
+  T(x:Int)
+    - `+`(other:T) T: -x x+other.x
+
+at now T.A: a ; b B
+say:
+  'Hello a: {a} & b: {b} -- wow~'
+  at: 🤣 "string" add " to" add " append"
+  '{🤣}'
+
+type T
+  A ; B
+  - Str me.{A"A" B"B"}
+
+ary [1 3 6 8 20]
+res ary.bsearch(20)
+say: '{res}'
+
+-'S' [S Ln] bsearch(:S) as:
+  n==0 {-1}: find(0,iLast)
+  return -1
+names
+  - find'AB' as:
+    mid A+(B-A)/2
+    S.sortFn(me[mid],u) .:
+       0: return mid
+       1: now(A,B-1)
+      -1: now(A+1,B)
+
+type User
+  id seat.[Int too]
+type User
+  EmailUser(id:Int, email:[our Str]="")
+  ^name
+    - as(x0:Var, x1:Var) as:
+      id==x0, email==x1
+
+funcs Person(name:Str)
+  children Inc.[Person Ln]
+  - setSuper say:''
+^name
+  - as(name,parent:Person) as(name) : parent.children add me
+
+now Student("",{}):
+  stu ("San" {"语文"98})
+?? Data
+  Student(name:Str, testScore:[Str Int KV])
+
+data'T' Inc.Set LogCollection()
+  - add(:T) add(u) : say:'{u}'
+
+- Person countryName std.[val as]: company?.address?.country \: "UNK"
+(0~10 sep-1).Str:"{me},"
+msg Message(): -recever "" -title ""
+msg.send: d=me
+
+d Dog("Zeus").doTricks
+c Cat("Rusty").doTricks
+- Pet doTricks as: walk();speak()add comeToMaster()
+
+func Pet(name:Str)
+  - walk say:
+    'walking, {speak()}'
+^??
+  - speak "Yo"
+  - comeToMaster
+
+data Pet Dog()
+  - speak "Woof"
+  - comeToMaster "Hi"
+
+data Pet Cat
+  - speak "Meow"
+  - comeToMaster "Nope"
+
+name MyPet Pet
+  now [our]: nLegs 4
+  now: actuallyLikesPeople $N
+^type
+  furColor Str
