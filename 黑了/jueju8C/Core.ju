@@ -282,7 +282,7 @@ eval fun Var[Any?].noAsNO(no=_("空 en No")) = when this:
   Var.I: "$no #$i+1"
   Var.K: '$no "$k"'
 
-/** [Line] with fixed size, not actually "Array" in JVM or tuple(`Ary[get T]`) in Py. see: unboxed [AryN], [Args] */
+「 [Line] with fixed size, not actually "Array" in JVM or tuple(`Ary[get T]`) in Py. see: unboxed [AryN], [Args] 」
 'T this'impl? data Ary() Sized Copy CanSee[T] Vars[T]
   fun get(:Idx): T
   /** Try to make 0-copy viewport(`subList`,.), or do [slice] */
@@ -558,6 +558,19 @@ data- Str.TYPE as Exp[Str]
   - N(n)="$n"
   - Op(e, k)=e.lets: "$A${k}$B"
 
+?? Exp
+  Lit(n:Int)
+  Add'ab'(_:Exp)
+
+- eval(e:Exp) e :.
+  Lit: n
+  Add: eval(a)+eval(b)
+
+?? 'R'Exp.Vis
+  - lit(n:Int)R
+  - add'ab'(_:R)R
+
+
 - addTypeExt(:[KtFileScope KtFile You], :Str)@ourpkg = whileAdding(str, T1):
   buildFn.lets(KtFunctionInfo)
   .lets(GeneratedTypeSpecExtension)
@@ -672,9 +685,9 @@ named Env
     Var.swap(me.A,me.j)
     j
   - sep2(i=A+1,j=B) me.A:[pv]
-    j>A  me.j\>pv: now(i,j-1)
-    i<B  me.i\<pv: now(i+1,j)
-    i<j : Var.swap(me.i,me.j); now()
+    j>A  me.j\>pv: inc(i,j-1)
+    i<B  me.i\<pv: inc(i+1,j)
+    i<j : Var.swap(me.i,me.j); inc()
     Var.swap(me.A,me.j) // [1 0 2]=>?
     j
 
@@ -772,7 +785,7 @@ named Env
 -'AB' zip2(a:Ln[A],b:Ln[B]) Ln[Pair]
 
 accurateLrc  PLAYER!"not exist":
-  path identity() .:
+  path identity() :.
     "mpv":say.W("");NO
     "ElectronNCM","Qcm":
       getSongID:[meta] “get可以外提”
@@ -1151,9 +1164,9 @@ i=0；重复再若i<10，i移右。 “i=10. 但若有 i++, i完成时是11”
 ?? 'T'Expr
   Op(A:T,B:T,sym:Str)
   N(x:T)
-  - eval me .:
+  - eval me :.
     N: x
-    Op sym .:
+    Op sym :.
       "+": A.eval+B.eval
 
 式，
@@ -1172,7 +1185,7 @@ i=0；重复再若i<10，i移右。 “i=10. 但若有 i++, i完成时是11”
   (1+2+3).值
 
 “没有单行注释”
-‘文档 **粗体** `示例` ’
+「文档 **粗体** `示例` 」
 
 书 com.example.jueju
 
@@ -1266,9 +1279,9 @@ i=0；重复再若i<10，i移右。 “i=10. 但若有 i++, i完成时是11”
   
   储物 改某点(变x：数、：组参名["yz" 数])
   
-  - cast(x：值) 判x，
-    真假，x。数，x>0。
-    文，x不为空。否则，假。
+  - cast(x：值) x :.
+    真假: x。数: x>0。
+    文: x不为空。 \: 假。
     
   - 文.除(：字)=滤，[c]c不是此字。去文
   
@@ -1291,7 +1304,7 @@ i=0；重复再若i<10，i移右。 “i=10. 但若有 i++, i完成时是11”
 对何[R]类 Exp
   - Op(：俩[Exp]）R；- N(：数）R
 
-“提早到编译期DSL,”
+「提早到编译期DSL,」
 可定物 ExpA：Exp[数]
   !- Op是函1，[是a到b] a+b。
   !- N(：数)=此数
@@ -1300,7 +1313,7 @@ i=0；重复再若i<10，i移右。 “i=10. 但若有 i++, i完成时是11”
   !- Op是函1，[是a到b] "$a+$b"。
   !- N(：数)="$此数"
 
-“双向扩展, 构造侧Visitor 能随便添子类/返回值”
+「双向扩展, 构造侧Visitor 能随便添子类/返回值」
 对何[R]类 ExpN1：Exp
   - N1(：数)
 
@@ -1497,7 +1510,7 @@ murder X
 | John Kemeny,Thomas Kurtz | BASIC | 发明人
 
 - 九九
-  td ["{b}{a}={a*b}" (a==b)("\n","")] .:
+  td ["{b}{a}={a*b}" (a==b)("\n","")] :.
     (1~9)(a)
     (1~a)(b)
     //1~9:[a] 1~a:[b] ""
@@ -1505,7 +1518,7 @@ murder X
 
 
 
-func Flock(n“seagulls”:Cnt)
+??- Row Flock(n“seagulls”:Cnt)
   - conjoin(:Flock) this|:
     n=: +it.n
   - breed(:Flock) this|:
@@ -1555,7 +1568,7 @@ at:
 
 
 - id'ab'(b=0) as:
-  now(a+1,b-1) : b==0
+  inc(a+1,b-1) : b==0
   a
 
 - id(a:Int,b=0)
@@ -1568,7 +1581,7 @@ a\=0 {b}: id(a-1,b+1)
 ?? Nat
   Zero; Inc(:Nat)
 
-- Nat `+`(b:Nat) b .:
+- Nat `+`(b:Nat) b :.
   Zero: you
   Inc(B): Inc(you)+B
 
@@ -1592,16 +1605,16 @@ a\=0 {b}: id(a-1,b+1)
   - `or`sepR`,`  (:YN)
 
 
-- http_error'stat' stat .:
+- http_error'stat' stat :.
   400: "Bad"
   404: say:'..'; "Not found"
   401 403: "Not allow"
   or: "Net wrong"
 
--'T' Ln cons(:Ln) ln .:
+-'T' Ln cons(:Ln) ln :.
   []: me; [x {xs}]: (me add [x]).cons(xs)
 
-point .:
+point :.
   0|0:"Origin"
   0|y:"Y{y}"
   x|0:"X{x}"
@@ -1616,27 +1629,27 @@ point .:
 ?? Tree
   Sum(:[Tree Pairs])
   N(:N); Zero
-- `+`(e:Tree)N e .:
-  Zero: 0; N(n).: n!=0:n
+- `+`(e:Tree)N e :.
+  Zero: 0; N(n):. n!=0:n
   Sum(es): es(Sum(0): A+(+B))
 
-"$ abc" .:
+"$ abc" :.
   (RE:'$ {s.[Str too]}'): s
   (RE:'$ {i.[Int too]}'): i
 
-[1~35]*2 .:
-  x!=0 .:
+[1~35]*2 :.
+  x!=0 :.
     x+y==35,4*x+2*y==94: say:'鸡{x}兔{y}'
 
-[users posts] .:
+[users posts] :.
   u.id<10, u==po.owner: "LEFT JOIN, not us[po.id]"
 
-[x y] .:
+[x y] :.
   x+y==35
   4*x+2*y==94
   (1~35)(x,y)
 
-[I] .:
+[I] :.
   s[i]==me[I+i]
   s==me[I~~I+s.n]
   (0~~n-s.n)(I)
@@ -1660,7 +1673,7 @@ at addr (1~10):
 
 
 - main /??/
-func App(home="", fs=(FS.ROOT /[etc mtab])) CLI('home ??')
+??- [CLI]('home ??')  App(home="", fs=(FS.ROOT /[etc mtab]))
   - main(:[Str Ln]) ln.n>0: say:'{ln[0]} {home}'
   - exist CPU.exit(fs zero{1}:0)
   - test(:FS) CPU.exit(Try{fs .r; 0} or 1)
@@ -1673,48 +1686,48 @@ func App(home="", fs=(FS.ROOT /[etc mtab])) CLI('home ??')
 - main
   a 1; b 2
   say: '{a}+{b}={a+b}'
-  [[1] [2] [3]] .:
+  [[1] [2] [3]] :.
     a+b==c: say:'good ALU'
 
-  [a.eachI]*2 .:
+  [a.eachI]*2 :.
     i0\<i, s[i0+i]==s[i], i==n: say:'{i}'
 
-  ints:[x] x .:
+  ints:[x] x :.
    x>3: 
    x==NO: 
-  [ints] .:
+  [ints] :.
     x!=NO: 
     x>3: 
-- bmiTell(x:N) x:me .:
+- bmiTell(x:N) x:me :.
   >18.5: "underweight range"
   >25.0: "normal range"
   >30.0: "overweight range"
   or: "obese range"
 
-- max'ab' a .:
+- max'ab' a :.
   a>b: a ; or: b
-- cmp'ab' a .:
+- cmp'ab' a :.
   a<b: -1 ; a==b: 0 ; a>b: 1
 
 - fact'nr'(r=1) as:
-  now(n-1, n*n) : n==0
+  inc(n-1, n*n) : n==0
   r
 
 - fib'nab'(b=1) as:
-  now(n-1, b,a+b) : n==0
+  inc(n-1, b,a+b) : n==0
   b
 
 - fib'n' n.{
   0 0 1 1 or fib(n-1)+fib(n-2)
 }
 - fib2'nab'(a=0,b=1) as:
-  now(n-1,b,a+b) : n==0
+  inc(n-1,b,a+b) : n==0
   a
 
 sum_of_bigger_than_2([{1~5}])
 - sum_of_bigger_than_2(A:[Int Len]) as:
   now: i 0; sum 0
-  now( i \< A.n):
+  inc( i \< A.n):
     A[i]\>2 {sum =:+ A[i]}; i=i+1
   sum
 
@@ -1731,10 +1744,10 @@ sum_of_bigger_than_2([{1~5}])
 ?? 'T'Any
   Li(x:T, xs:Li?)
 
--'T' concat(:[Li? me], u:Li) me .:
+-'T' concat(:[Li? me], u:Li) me :.
   NO: u ; Li(x,rs): Li(x, rs.concat(u))
 
--'TR' map(:[Li? me], :Fn.a1) me .:
+-'TR' map(:[Li? me], :Fn.a1) me :.
   NO: NO
   Li(x,rs): Li(fn(x), Fn.a2.map(rs,fn))
 
@@ -1745,9 +1758,16 @@ sum_of_bigger_than_2([{1~5}])
   (1~n):[i] S(i,0)=i; (1~m):[j]
     S(i,j) = (ab.A[i-1]==ab.B[j-1]).{$N 1+pose $Y S(i-1,j-1)}
   s[1][j]
-^name
+.:
   - S'ij' s[i.rem/2][j]
   - pose [S(i-1,j-1) S(i,j-1) S(i-1,j)](Sum: min(A,B))
+
+.: name org.mu.calc
+  os java.util
+  os numpy:np
+  os.PIL Draw
+  scipy
+over
 
 - min'ab'(_:Int) (a\<b)(a,b)
 
@@ -1778,10 +1798,10 @@ say: '{res}'
 names
   - find'AB' as:
     mid A+(B-A)/2
-    S.sortFn(me[mid],u) .:
+    S.sortFn(me[mid],u) :.
        0: return mid
-       1: now(A,B-1)
-      -1: now(A+1,B)
+       1: inc(A,B-1)
+      -1: inc(A+1,B)
 
 type User
   id seat.[Int too]
@@ -1791,15 +1811,15 @@ type User
     - as(x0:Var, x1:Var) as:
       id==x0, email==x1
 
-funcs Person(name:Str)
+??- Row Person(name:Str)
   children Inc.[Person Ln]
-  - setSuper say:''
+  - wasSuper say:''
 ^name
   - as(name,parent:Person) as(name) : parent.children add me
 
 now Student("",{}):
   stu ("San" {"语文"98})
-?? Data
+?? Column
   Student(name:Str, testScore:[Str Int KV])
 
 data'T' Inc.Set LogCollection()
@@ -1807,30 +1827,410 @@ data'T' Inc.Set LogCollection()
 
 - Person countryName std.[val as]: company?.address?.country \: "UNK"
 (0~10 sep-1).Str:"{me},"
-msg Message(): -recever "" -title ""
+msg Message() .: -recever "" -title ""
 msg.send: d=me
 
 d Dog("Zeus").doTricks
 c Cat("Rusty").doTricks
 - Pet doTricks as: walk();speak()add comeToMaster()
 
-func Pet(name:Str)
+?? Row
+  Pet(name:Str)
+
+-  Pet(name:Str) too.[Row]
+.:
+  - speak "Yo"
+  - comeToMaster
+
+??- Pet
+  our: name
   - walk say:
     'walking, {speak()}'
+
+?? Pet
+  Dog()
+    - speak as:
+      "Woof"
+    - comeToMaster "Hi"
+  Cat()
+    - speak "Meow"
+    - comeToMaster "Nope"
+
+- MyPet() as:
+  inc: nLegs 4
+  inc: actuallyLikesPeople $N
+  too.[Pet]
+.:
+  furColor Str
+??- MyPet
+  our: nLegs
+
+??- [Row]() Pet(name:Str)
 ^??
   - speak "Yo"
   - comeToMaster
 
-data Pet Dog()
-  - speak "Woof"
+??- Pet
+  - walk say:
+    'walking, {읏.speak()}'
+
+
+??- Pet Dog()
+  - speak as:
+    "Woof"
   - comeToMaster "Hi"
 
-data Pet Cat
+??- Pet Cat()
   - speak "Meow"
   - comeToMaster "Nope"
 
-name MyPet Pet
-  now [our]: nLegs 4
-  now: actuallyLikesPeople $N
-^type
+??- Pet MyPet
+  mark our: nLegs
+  inc: nLegs 4
+  inc: actuallyLikesPeople $N
+^??
   furColor Str
+
+- fizz-buzz Inc: (0~100):[i]
+  A i rem/3; B i rem/5
+  had i :.
+    A B: "fizbuz"
+    A: "fiz"; B: "buz"
+    \: "{i}"
+  (i rem/3 ~~ i rem/5):
+    $Y~~$Y
+    $Y~~$N
+    $N~~$Y
+    \:
+
+
+- 'R'until(is:F.[R is], :F.[R R a1]) f() :.
+  is(me): until(is,f)
+  \: me
+
+- 'AR'switch(:YN, a:F.a1,b:F.a1) yn.{$Y a() $N b()}
+switch($Y){""}{"r"}
+
+- 'ARr' `|`(me:F.a1, u:F.[R r a1]) F.[A r a1]: u(me(A))
+
+
+- num_water_bottles'bottles xchg drunk'(drunk=0) as:
+  inc(bottles-xchg+1, xchg, drunk+xchg): bottles\<xchg
+  bottles+drunk
+
+x 10
+a 3.14
+s "Hello"
+通过编译 x+(a+.2).Int
+
+- init say:'
+  {$Y $N}
+  {$Y|$N}
+  {$Y\ }
+  ===
+  {-4/3}
+  {2147483647 + 1}, {2147483647n + 1n}
+  {2147483648L.Int}
+  ===
+  {.1+.2}==.3
+  {.1+.2-.2}
+  ===
+  {Eqs.chr.cat('a')}
+  {Eqs.chr.cut(65)}
+  ===
+  {Col3(2023,10,24).A}
+  {("Bob"~~3).A.0}
+'txt
+
+pi 3.141592653578
+
+surface_r_1 as: r 1.0; pi  r r
+surface_r_2 as: 1pi  r^2
+
+- 面积'半径' as:(半径 半径)pi
+
+result (1~3.): 面积(me)
+
+- one() 1.[Int too]
+- add_char(ch: Str.AZ, :Str)  ch.Str had str
+
+moonbit add_char(Eqs.chr.cut(109), "oonbit")
+
+as:
+  ch Eqs.chr.cut(-1)
+  nan  1. / 0
+
+- div'ab' (b\=0).{$Y a/b  $N NO}
+- answer as:
+  real_answer F.a1:[i] 42
+  real_answer("Ultimate answer")
+
+
+int_list 1~~2~~3~~NO
+char_list '一'~~'句'~~'话'~~NO
+
+?? 'A'List [[A List Col2] mayNO]
+
+- head(me:List) me :.
+  NO: NO
+  x~~xs: x
+
+first_elem int_list.head
+get_or_else (NO).head \: "Bad"
+
+- fib(n:Idx) n.{1 1 2 1} \: fib (n-1) + fib (n-2)
+
+??- evo(n:Int)
+??- evo
+  - even n != 1 && (n == 0 || evo(n-1).odd)
+  - odd  n != 0 && (n == 1 || evo(n-1).even)
+
+- length(me: [Int List]) me :.
+    NO: 0
+    x~~xs: 1+xs.length
+
+n char_list.length
+
+- tail(me: [Int List]) me :.
+  NO: NO
+  x~~xs: xs.tail
+  x~~NO: x
+  //x~~xs  xs==NO: x
+
+^name RowData
+
+v2023 [2023 10 24].0 // 2023
+
+?? String Str
+?? Info
+^的
+  ?? Column
+    Personal(name: String, age: Int)
+    Contact(name: String, telephone: Int)
+    Address(address: String, postal: Int)
+
+info Info.Personal("moonbit",1)
+
+?? Column
+  A(val:Int,other:Int)
+  A'val other'(_:Int)
+
+inc A(0,0):
+  x (1 10)
+  x2 A(1,10)
+
+old_info info() .: -name "Moonbit"; me
+Need: old_info.age==1
+
+- f(me: Info.Personal) name~~age
+- flip(me: [String Int Col2]) std.[Info.Personal as]: (A B)
+
+- accept(tuple: [String Int Col2]) $Y // pls DO NOT duplicate typename(accept_tuple)
+tuple_accepted  accept((1 "Yes"))
+
+- accept(:A) $Y
+
+a_accepted  accept(A(1, 2)) // RowData uses 1st overload
+
+- get_or_else(me: [Int mayNO], default: Int) me :.
+  NO: default
+  \: me
+
+- `is_zero`(me: Int) me :.
+    0: $Y
+    1 | 2 | 3: $N
+    \: $N
+
+?? 'T'Pairs [T T Col2]
+- 'T'first(me:[T Pairs]) me :.
+  (A B): A
+
+- baby_name(me: Info.Personal) me :.
+  (name  0): name
+  \: NO
+
+- 'AB'zip(me:[A List],u:[B List]) std.[[Col2 List] as]: me~~u:
+  (x~~xs)~~(y~~ys): (x y)~~xs.zip(ys)
+  \: $N!:"need equal"
+
+?? 'T'Ln [Ln- mayNO]
+?? 'T'Row
+  Ln-(x:T, xs:Ln)
+
+-'AB' foldr(您:[A 行], :F.[A B B arg2], :B) 您 :.
+  NO: b ; Cons: f(x, xs.foldr(f,b))
+-'AB' fold (me:[A Ln], :F.[B A B a2], :B) me :.
+  NO: b ; Cons: xs.fold(f, f(b,x))
+
+-'AB' fold (me:[A Ln], :F.[B A B a2], :B) as:
+  inc(me!.xs, f, f(b, me!.x)) : me==NO
+  b
+
+
+?? DaysOfWeek
+  Monday; Tuesday; Wednesday; Thursday; Friday; Saturday; Sunday
+
+
+?? Coin
+  Head // 可省略分号
+  Tail
+
+
+now DaysOfWeek.Monday:
+  monday  Monday
+  tuesday Tuesday 
+
+?? Repeat1
+  A; B
+?? Repeat2 //不可使用{}
+  A; B
+
+repeat  A.[Repeat1 too]  //类似 ()RowData
+
+?? ComputeResult
+    Success(:Int)
+    Overflow
+    DivideByZero
+
+?? Nothing //无构造器
+as 'T'PlusOne(:T; unit: Row) // T * 1 = T，与（T，Unit)、T 同构
+?? 'T'PlusZero // T + 0 = T，与 T 同构
+  CaseT(:T)
+  CaseZero(:Nothing)
+
+div(10,2)!
+div(10,2) :.
+  may2.A: it
+  may2.B: $N!: it
+
+Stack():
+  push(42); push("NO")
+Stack().pop!
+
+nums [{10~30 sep 10}]
+nums.posL.2 (NO) : me.Str
+nums.posL.3 :.
+  NO:"bad" ; x  x<3: "={x}"
+
+(fs:'README'.md !:"failed to read the file"):
+  buf Bytes()
+  sepIn(buf)
+  buf.Str
+
+??- test Main
+  - `CPU has ALU` {
+    10+5==15
+    1+ -1==0
+  }
+
+- div'me u'(_:Int) {u\=0 !:"div by 0"} me/u
+  
+- div2'me u'(_:Int) me.div(u)! :.
+  5:50 ; or:me
+
+- main Wait:
+  calc Pipe():
+    factor(15, me)
+  dd=calc()
+
+- factor(n:Inc, res:[Int Pipe]) as:
+  prd Sum(1): A*B
+  res((1~n)(prd))
+
+- loops as:
+  inc 0: num
+  inc num<10: num=:+1
+  inc $Y: noOp
+
+?? 'T'Row
+  Stack(values=Inc.Ln(0))
+    - push(:T) values had it
+    - pop values.del(0)
+
+?? Row
+  Person()
+    - good 1
+    - boy 2
+
+- Person(name:Str) too.[Row] .:
+  - Str name
+
+??- 'T'(T Row) Ln
+  - as too.[Row] .:
+    - Str ".."
+
+
+?? Person inc ["age" Rows]:
+  alice (42)
+
+?? Row
+  Person-bad (name:Str,age:Inc)
+
+- FileDoesntExist too.[Err] .: "404"
+
+
+f 1/x
+f({x y})({y 1})
+set.({x in.Re}): x@3-1==0 x\=1
+as:
+  A [1 1 0 2]%[_ 2]
+  b [3 5]%
+  set(A,b)
+in.eye%[3 2]
+oo.3: e@(I pi)+1
+mini.x.: 1/x
+mini.(x oo)(f)
+D.(x 2)(f)
+
+simp.x: x@2+x+1-x
+samp: (x+1)@2
+simpf: [x@2 3x 2]/[x@2 x]
+(Sum.x: 1/x)(1~~2)
+
+??- Int
+  - method_info as:
+    fn1()
+    yyy:[xxx]
+      foo logic(me)
+      foo :.
+        "A":
+          goodd()
+          bar()
+        "B": baz()
+        \: haha
+
+  - hihi good()
+  - nini bad()
+
+??- Indent.as(ch:Str.AZ,n:Inc, cached=40,spaces=in(' ),tabs=in('\t'))
+  ch :.
+    n<cached  ch==' ': spaces(n)
+    n<cached  ch=='\t': tabs(n)
+    \: as(ch,n)
+.:
+  - in'x' tabDP(cached+1)(as(x,_))
+^name
+  zero as(' ',0)
+
+(x) :. 0: zero x, x+zero ; n: n+1
+
+
+天气  “晴天”
+说: 天气 :.
+  “晴天”: “我们去野餐吧”
+  \: “让我们在家看书”
+(1~3):
+    说:“第{您}个”。
+
+“苹果”() .:
+  除空白
+  片假名转换
+  您({“リ” “タ”})
+  说
+dd=(3+2)4
+
+100的折扣处理
+??- 价格
+  - 折扣处理 (* 0.8)的Int
+
+- 海龟 1~6: +90; (360/6)tr

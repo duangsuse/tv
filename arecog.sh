@@ -77,3 +77,9 @@ fi
 
 #require("vs/editor/browser/services/abstractCodeEditorService")
 #ce=this.getActiveCodeEditor();$('.modified.editor').onclick=()=>ce._paste(1,'\n')
+
+#node -e 'fs.readFileSync(0,"utf-8").replace(/[\p{sc=Hira}\n]+/gu, (m)=>process.stdout.write(m))'
+#unzip -O shift-jis
+#for f in *.ust;do iconv -f shift-jis $f>"_$f";done
+
+#subaud(){ for f in "$@"; do cd $f; ffmpeg -i *.mp4 -i *.wav -map 0:v:0 -map 1:a:0 a.mp4; done }
