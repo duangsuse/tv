@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<table id="roll"></table>
+<script src="_8.js"></script>
+<script>
+crossWin(300);clip=navigator.clipboard;oldClip=''
+onclick=async()=>{oldClip=await clip.readText()}
+pipe.let({_send:s=>clip.writeText(oldClip=s).catch(e=>e) ,_msg:()=>oldClip })
+
+{let key=y=>frq.value=y? 440*2**((y-69)/12 ) :0,
+  get=(k,o)=>(k in o)?o[k]:k, g=new AudioContext,y,
+f=(on,ck)=>ev=>{ev.stopPropagation();ev.preventDefault()
+  y=+ev.target.innerText
+  if(!y)return
+  if(ck==2)pipe.send(y)
+
+  if(!this.frq) if(ck)return;else frq=g.createOscillator().let(c=>{c.type='sine';c.connect(g.destination);c.start()}).frequency;
+  key(y*on *(ck? frq.value!=0 :1) )
+}
+roll.let({
+  innerHTML:Array(101).fill().map((x,i)=>`<tr><td>${112-i}</tr>`).join(''),
+  onmouseover:f(1,1),
+  onmousedown:f(1),oncontextmenu:f(1,2) ,onmouseup:f(0),onclick:f(0)
+})
+
+onkeydown=(ev,d=get(ev.key,{0:10,'-':11,'=':12,'`':0}))=>isNaN(d)?pipe.send(d): (key(y+ +d), pipe.send(y+ +d) )
+onkeyup=()=>pits?0:key(0)
+keyRec("as", ()=>key(0), y=>y?key(y) : (pits=null) )
+}
+
+if(0){
+  webext.icons={96:svg,48:svg};w(svg, htSVG(96,96, wh=>`<image ${wh} href="${eLogo.href}"></image>`))
+htSVG=(w,h,f)=>`<svg
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 ${w} ${h}"
+  width="${w}" height="${h}">${f(`width="${w}" height="${h}"`)}</svg>
+`
+if("LINK"==e.tagName){ f=ht.swap(e,"href","src"); f();ht.tag(e,'img'); await ht.ev(e,'load'); await dl(e); ht.tag(e,'link');f() }
+  ht={swap:(e,A,B)=>()=>{let x=e.attributes[A],V=x.value;x.value=e.getAttribute(B); e.setAttribute(B,V)},
+  tag(e,k){e.outerHTML=`<${e.outerHTML.replace(/^<\w+|\w+>$/g,k).replace(/>$/,'')}>`}}
+  return `<${k} dl src="${i}"></${k}>`
+  //w(path,v): access files under SV/scripts/, SV/settings, "dl/"=SV/download, "dict/".sync write changes
+  fnURL=f=>URL.createObjectURL(new Blob([f+''], {type:'text/javascript'}))
+  CSS.paintWorklet.addModule(fnURL(()=>{ console.log(2) } ))
+
+  mkOffline=(ver='0', XHR=XMLHttpRequest.prototype)=>{
+hook(this,'fetch', f=>async(k,c)=>(c=await caches.open(ver),
+    (await c.match(k))||(c.add(k),f(k)) ))
+
+hook(XHR,'send', f=>function(){if(this.cache==0)f.call(this) })
+hook(XHR,'open', realDo=>async function(...a) {
+  let fs=await navigator.storage.getDirectory()
+  ,f=await(fs=await fs.getFileHandle(ver+'..'+a[1].replace(/\//g,'..'), {create:1})).getFile()
+  ,r=await new Response(f)
+  if(f.size) {
+    r.arraybuffer=r.arrayBuffer; r=await r[this.responseType].call(r)
+    defK(this,'response',()=>r); this.onload({status: 200})
+  } else {
+    f=await fs.createWritable();
+    hook(this,'onload', fn=> ev=>{
+      f.write(this.response);f.close(); fn(ev)
+    }); realDo.apply(this,a); this.cache=0;this.send()
+  }
+})
+}
+mkOffline=(ver, XHR=XMLHttpRequest.prototype)=>{
+  fetch=async(k, c,r)=>(c=await caches.open(ver),
+  (r=await c.match(k))?r : (await c.add(k),await c.match(k)) )
+  XHR.send=()=>{}
+  XHR.open=async function(k,u) {
+    let r=fetch(u, {method:k}); r.arraybuffer=r.arrayBuffer; r=await r[this.responseType].call(r)
+    defK(this,'response',()=>r); this.onload({status: 200})
+  }
+}
+
+[1,[2]].flat(',v')
+;({k:1,xx:2}).flat('[k,v]')
+;({a:0,b:1}).flat('k+v,v+1')
+(f=o["getSelected"+k+"s"])? f.call(o).let({push:F('x', 'SE.select+'+k+'(x), [].push.call(o,x)'),
+        set:F('p', '!p?SE.clearAll'+k+'s():0, o.forEach(function(x){if(!p(x))SE.unselect'+k+'(x) })') }) :v
+// Object.assign=function(o,o1) { for(var k in o1)o[k]=o1[k]; return o } // fix Duktape.. set no retTrue
+sets=F('c','function(x){x.let(c)}')
+Group=function(k, at,t){ // 't' always a time
+  var g, a=[],i; if(k.addNote) { for(g=k,i=0;i<g.numNotes;i++)a.push(gsp(g.getNote(i))) } else {
+    g=this("NoteGroup").let({name:k});s5p.addNoteGroup(g._); at=0
+  }
+  if(null!=at)s5p.getTrack(at).addGroupReference(
+    SV.aNew("NoteGroupReference").let({target:g._, timeOffset:t||SP.now() })._
+  )
+
+  return a.let({g:g, push:F('x','o.g.addNote(SV.aNew("Note").let(x).let([].push.bind(o))._) ')})
+}
+SV.__defineSetter__('App', function(f) {
+  main=function() {
+    SVd=gsp(SV); SEd=SVd.mainEditor
+    s5p=SVd.project;SE=SEd.selection; (SP=SVd.playback).let({
+      now:F('T','s5p.timeAxis.getBlickFromSeconds(T||o.playhead)'),
+    }); f()
+  }
+});
+
+Object.prototype.let=function(c){return c.call?(c(this),this): Object.assign(this,c) }
+
+URL.svg=([W,H],s)=>`data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='${W}' height='${H}'%3E${encodeURI(s)}%3C/svg%3E`
+CSS.href=s=>new CSSStyleSheet().let(c=>{c.replaceSync(s);document.adoptedStyleSheets.push(c)})
+
+
+let imDot=URL.svg([8,8], `<circle r='4' opacity='.5' cx='4' cy='4'/>`)
+
+document.body.let((e, eg,l=`--l`,dt=400)=>{
+e.append(
+  eg=window.cursor||new Image().let({src:imDot, id:'cursor'})
+)
+e.onmousemove=({x,y})=>{
+  eg.animate({translate:`${x}px ${y}px`}, {fill:"forwards", duration:dt}).commitStyles()
+}
+CSS.href(`
+:is(body,:link,:enabled):not(:read-write) {cursor:url("${imDot}")4 4,auto}
+body:is(:active,:not(:hover)) #cursor{${l}:0px}
+body:has(:link:hover,:enabled:hover) #cursor {${l}:40px; opacity:.2}
+#cursor{${l}:16px; opacity:.5; pointer-events:none; z-index:100; transition:.4s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+width: var(${l}); height: var(${l});
+position:fixed; top:calc(-0.5 * var(--l));left:calc(-0.5 * var(--l)) }    
+  `)
+})
+
+c={
+ "tracks": [
+    {
+      "name": "H0",
+      "dispOrder": 1,
+      "mainGroup": {
+        "uuid": "40ad1f0c-2f31-4103-b957-e648d94f14db"
+      },
+      "mainRef": {
+        "groupID": "40ad1f0c-2f31-4103-b957-e648d94f14db",
+        "isInstrumental": true,
+        "audio": {
+          "filename": "vocals.wav",
+          "duration": 248.4444444444445
+        }
+      }
+    }
+  ],
+"time":{"meter":[{"index":0,"numerator":4,"denominator":4}],"tempo":[{"position":0,"bpm":120.0}]}
+}
+//https://studiocode.dev/resources/midi-pitch-bend/
+//twistd -no web --path . --add-header='Access-Control-Allow-Origin: *'
+chrome.downloads.download({url:u,filename:fp, conflictAction:"overwrite"}); 
+/*
+pcm.inout{
+  type plug
+  slave.pcm "pulse"
+}
+pcm.!default {
+  type plug route_policy "duplicate" slave 
+ {rate 48000 pcm{type multi
+  slaves{0. pcm"hw:Loopback,1" 1. pcm"null" }
+
+  slaves.0{channels 2}
+  slaves.1{channels 2}
+  bindings{
+0 { channel 0 slave 0 }
+1 { channel 0 slave 1 }
+2 { channel 1 slave 0 }
+3 { channel 1 slave 1 }
+  }
+}}}
+alsaloop {-C,-P}hw:Loopback,1 2>/dev/null
+i=4; eval python -m denoiser.live --{in,out}' '$i
+l=next(pathlib.Path('~/vosk').expanduser().glob(f"*{k}*"))
+
+if time.time()%2 <.1:
+    for a in self.recs: self.rec.AcceptWaveform(bytes((a*65535).to(th.int16).numpy()) )
+    self.txt.write(self.rec.Result()); self.recs=[]
+
+https://cloud.tencent.com/developer/article/1582403
+https://blog.csdn.net/weixin_44297922/article/details/121496280
+https://htmlg.com/html-editor/
+*/
+}
+</script>
+<style>
+td {
+    padding: 9px 8em 0 0;
+    border: 2px double;
+    border-radius: 0 7px 7px 0;
+    background: linear-gradient(105deg, var(--p),60%,white);
+    font-size: 30px;
+    user-select: none;
+    transition: .2s --p;
+    --p: #919191;
+}
+td:active {
+    --p: #4c4c4c;
+}
+td:hover {
+    border-color: red;
+}
+
+body {
+    margin: 0;
+}
+
+li:active+li {
+  filter: var(--fi) drop-shadow(2px 4px 6px black);
+}
+
+li{--fi: sepia(.3);}
+@property --p{inherits:false; syntax:'<color>'; initial-value:gray }
+</style>
