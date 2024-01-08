@@ -664,7 +664,7 @@ named Env
       !a.posR: get(b:goesR) ;;  !b.posR: get(a:goesR)
       or: get(a) to get(b) lets:
         if A<B: a goesR; A
-        or: b goesR; B
+        \: b goesR; B
 
 'S'Arr=[S Len]
 
@@ -685,9 +685,9 @@ named Env
     Var.swap(me.A,me.j)
     j
   - sep2(i=A+1,j=B) me.A:[pv]
-    j>A  me.j\>pv: inc(i,j-1)
-    i<B  me.i\<pv: inc(i+1,j)
-    i<j : Var.swap(me.i,me.j); inc()
+    j>A  me.j\>pv: inc.(i j-1)
+    i<B  me.i\<pv: inc.(i+1 j)
+    i<j : Var.swap(me.i,me.j); inc.()
     Var.swap(me.A,me.j) // [1 0 2]=>?
     j
 
@@ -1568,7 +1568,7 @@ at:
 
 
 - id'ab'(b=0) as:
-  inc(a+1,b-1) : b==0
+  inc.(a+1 b-1) : b==0
   a
 
 - id(a:Int,b=0)
@@ -1710,24 +1710,24 @@ at addr (1~10):
   a<b: -1 ; a==b: 0 ; a>b: 1
 
 - fact'nr'(r=1) as:
-  inc(n-1, n*n) : n==0
+  inc.(n-1 n*n) : n==0
   r
 
 - fib'nab'(b=1) as:
-  inc(n-1, b,a+b) : n==0
+  inc.(n-1 b a+b) : n==0
   b
 
 - fib'n' n.{
   0 0 1 1 or fib(n-1)+fib(n-2)
 }
 - fib2'nab'(a=0,b=1) as:
-  inc(n-1,b,a+b) : n==0
+  inc.(n-1 b a+b) : n==0
   a
 
 sum_of_bigger_than_2([{1~5}])
 - sum_of_bigger_than_2(A:[Int Len]) as:
   now: i 0; sum 0
-  inc( i \< A.n):
+  inc.(i \< A.n):
     A[i]\>2 {sum =:+ A[i]}; i=i+1
   sum
 
@@ -1800,8 +1800,8 @@ names
     mid A+(B-A)/2
     S.sortFn(me[mid],u) :.
        0: return mid
-       1: inc(A,B-1)
-      -1: inc(A+1,B)
+       1: inc.(A B-1)
+      -1: inc.(A+1 B)
 
 type User
   id seat.[Int too]
@@ -2139,8 +2139,8 @@ nums.posL.3 :.
 
 - loops as:
   inc 0: num
-  inc num<10: num=:+1
-  inc $Y: noOp
+  inc{num<10}: num=:+1
+  inc{$Y}: noOp
 
 ?? 'T'Row
   Stack(values=Inc.Ln(0))
@@ -2160,7 +2160,7 @@ nums.posL.3 :.
     - Str ".."
 
 
-?? Person inc ["age" Rows]:
+?? Person inc("age" Rows):
   alice (42)
 
 ?? Row
@@ -2214,6 +2214,12 @@ simpf: [x@2 3x 2]/[x@2 x]
 
 (x) :. 0: zero x, x+zero ; n: n+1
 
+- concat(me:Nd, u:Nd):{ res.n==me.n+u.n } as:
+-'Tnm' concat(me:(T n Lenn), :(T m Lenn)) std.((T (n m add) Lenn) as):
+- add'ab' a+b
+- Lenn'Tl' as: T(TSet(l)), Lenn(T, l.n)
+- main(:(Int 2 Lenn))
+
 
 天气  “晴天”
 说: 天气 :.
@@ -2234,3 +2240,59 @@ dd=(3+2)4
   - 折扣处理 (* 0.8)的Int
 
 - 海龟 1~6: +90; (360/6)tr
+
+
+
+- process'recps' as:
+  (0~recps.n):(index)
+    recp recps.[index]
+    dd=recp.merchat
+
+- process'i recps' as: (i\=recps.n):
+  recp recps.index
+  dd=recp.merchat
+  iNext i+1
+  process(iNext, recps)
+
+- process'i recps' as:
+  recp recps.index
+  dd=recp.merchat
+  inc.(i+1) : i==recps.n
+
+- map'a i uid' i .:
+  <a.n: [(a.i)  {map(a,i+1,uid)}]
+  \: []
+
+- topDashboard(me:Recps,n:Inc) as{
+  tx findTransaction()
+  js:{receipt me transaction tx  discrepancy tx.total-total}
+}.is{ transaction:(settled) total- ^me.total >1CENT  }
+ .atsort{discrepancy}.[0\~n]
+
+nums [{1~3} {10~12}]
+filt nums:(n) n>10
+proces filt:(n) 2n
+
+both F.n1:
+  me{>10}:(n) 2n
+
+float64Array = new Float64Array(1);uint16Array = new Uint16Array(float64Array.buffer);    Math.nextUp2 = function (x) {
+      if (x !== x) {
+        return 0 / 0;
+      }
+      if (x === +1 / 0) {
+        return x;
+      }
+      if (x === 0) {
+        return MIN_VALUE * EPSILON > 0 ? MIN_VALUE * EPSILON : MIN_VALUE;
+      }
+      float64Array[0] = x;
+      var n = x < 0 ? -1 : 1;
+      var i = -1;
+      while (++i < 4) {
+        n += uint16Array[i];
+        uint16Array[i] = n & 0xffff;
+        n >>= 16;
+      }
+      return float64Array[0];
+    };

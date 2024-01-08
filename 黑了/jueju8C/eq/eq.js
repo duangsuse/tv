@@ -63,12 +63,12 @@ html(
   button(wOp({tap:iLight(nextIn(TRAFFIC_LIGHTS))}),
     `Next light`),
   p(fg, html`Light is: ${light}`),
-  p(`You must`, span(when(light,{
+  p(`You must`, span(light.as({
     red:`STOP`, orange:`SLOW DOWN`, green:`GO`
   }))),
   NOTES(
     span$or(
-      when(light.as(x=>[x=='red',$Y]), [`STOP`,`GO`])),
+      light.as(x=>[x=='red',$Y]).as([`STOP`,`GO`])),
     light.err(toX, 'when edit:$Y, red==GO,.')
   )
 )
@@ -113,7 +113,7 @@ html(
   p`My name is ${name}!`,
   p`My age is ${age}!`,
   p`My favourite colors are ${favouriteColors.as(a=>a.join(", "))}!`,
-  p`I am ${when(available, "available","not available")}`,
+  p`I am ${available.as(["available","not available"])}`,
 )
 //use when(class{}) for validation, 'age_' for !required
 
@@ -124,7 +124,7 @@ html(
   AnswerButton(wOp({
     yes:happy(to=>$Y), no:happy(to=>$N)
   })),
-  p(wUI({fontSize:50}), when(happy, "😀","😥"))
+  p(wUI({fontSize:50}), happy.as(["😀","😥"]))
 )
 
 ww.AnswerButton=({YES,NO}, our={yes:0,no:0})=>
@@ -137,8 +137,8 @@ ww.main=()=>html(
   FunnyButton(`Click me!`),
   FunnyButton()
 )
-ww.FunnyButton=({},...body)=>
-button(wUI({
+ww.FunnyButton=({})=>
+button($({
   background: "rgba(0, 0, 0, 0.4)",
   color: "#fff",
   padding: "10px 20px",
@@ -149,7 +149,7 @@ button(wUI({
   boxShadow: "4px 4px rgba(0, 0, 0, 0.4)",
   transition: "transform 0.2s cubic-bezier(0.34, 1.65, 0.88, 0.925) 0s",
   outline: "0",
-}), ...(body||[ span(`No content found`) ]))
+}), slot(span(`No content found`)))
 
 ww.main=({
   user={id:1, username:`unicorn42`,
@@ -180,7 +180,7 @@ bind=(v, kv={},key='value')=>[{...kv,[key]:v},
   wOp({change:v((to,ev)=> ev.e.value) })]
   //Op{change} won't trigger by inp.v=v1
 
-when(class {
+is(class {
   BetterALL(text,is,pick) { is:'acty'; pick:['red','blue'] }
 })
 ww.BetterALL=({text,is:{acty},pick})=>
@@ -274,7 +274,7 @@ html(
 
 ww.Logics=({num=7, X})=>
 div({edit:$Y},
-  when(num.as(x=>[x>10, x<5, $Y] ), [
+  num.as(x=>[x>10, x<5, $Y] ).as([
     $max(html`${x} > 10`),
     $min(html`${x} < 5`),
     $mid(html`${x} in rn(6,9)`),
@@ -365,7 +365,7 @@ html(
   btn(Add(to=>a.add({done:$N,text:''})),
     Clear(to=>a(active) ))
 )
-when(class{
+at(class{
   Todo(text,done){}
 })
 ww.Todo=({done,text})=>
@@ -392,9 +392,9 @@ html({our:{n}}, // attr boilerplate for SSR+wUI(scoped)
   )
 )
 
-when(class{
+at=class{
   BigReact(txt,lTxt){lTxt=rn}
-})
+}
 ww.BigReact=({count=0, t=0, P=N2(0,0),L=N2(0), hov,txt,lTxt},
   txt=html`count is ${count}`,
 _=_=>$(count,x=>doc.title=x*2)
@@ -402,9 +402,9 @@ _=_=>$(count,x=>doc.title=x*2)
 $full({PLen:[,L,'absolute!']},//+border
   N2.xy(P), 1..s.rate(t(t=>t+1)),
   button(
-    wOp({tap:count(x=>(x==9)?say(`too high`) : x+1), hov}), txt,
-    when(count.as(x=>x%2), [p(`even`),p(`odd`)] ),
-    when(count.as(x=>[x>10, x>5, $Y]),
+    wOP({tap:count(x=>(x==9)?say(`too high`) : x+1), hov}), txt,
+    count.as(x=>x%2).as([p(`even`),p(`odd`)]),
+    count.as(x=>[x>10, x>5, $Y]).as(
       [p(`big`),p(`medium`), mark(`small`)])
   ),
   h2(html`${t}s, Time is ${[t.as(_=>new Date),['h24',,,,0,2,2]]}`),
@@ -444,16 +444,16 @@ ok I liked this
 age Get Elder
 rgb Change color theme
 `
-when(class {
+at=class {
   Inp(txt,is){is='ok'}
   Aged(name,age){age=rn()}
-})
+}
 ww.Inp=({txt,is:{ok}})=>
 html(
   txt.v(""), p(html`You typed: ${txt}`),
   btn([`Reset`],txt(to=>"")),
   ok.v($Y),
-  p(html`You ${when(ok,'liked','did not like')} this.`)
+  p(html`You ${ok.as(['liked','did not like'])} this.`)
 )
 ww.Aged=({name,age},
   helo=Eq.$({name,age}, _=>`Hello, ${name}. You are ${age}.`)
@@ -464,10 +464,10 @@ div$(age.v(18,''),
 )
 
 
-when(class {
+at=class {
   Themed(rgb){}
   Fxed(show){show=$Y, rap=$N}
-})
+}
 //https://www.solidjs.com/examples/context
 ww.Themed=({c:{color,title}, rgb})=>
 html({our:c},
@@ -508,7 +508,7 @@ html(
 
 ww.Pin=({pin='',it})=>
 html(
-  h1(wUI({ fg:when(pin,'#333','#ccc') }),
+  h1(wUI({ fg:pin.as(['#333','#ccc']) }),
     pin.as(x=>x? x.replace(/.(?!$)/g, '•') : `pls enter` )),
   Keypad(it, {done:alert})
 )
@@ -579,7 +579,7 @@ div(as({load:()=>db.Talks.only({confId:id})},
 ))
 
 is.use`marked`
-when(class{
+at=class{
   Forms(is,name, a,b, flavors,scoops,text)
   {is='yes', a=rn(1,10),b=rn(2,10),
     flavors=[
@@ -587,8 +587,8 @@ when(class{
       'Mint choc chip',
       'Raspberry ripple'
     ],
-    scoops=is.w`One Two Three`.as(x=>x+' scoops') }
-})
+    scoops=ws`One Two Three`.as(x=>x+' scoops') }
+}
 
 let big=(v,init,ui=v.v.bind(v))=>
 p(ui(init,{big:1}), ui())
@@ -611,7 +611,7 @@ html(
   p(html`${a}+${b} = ${c}`),
 
   yes.v(),
-  when(yes, [p(`Good boy!`),p(`Bad !! must be checked`)]),
+  yes.as([p(`Good boy!`),p(`Bad !! must be checked`)]),
   button({show:yes}, `Get Food`),
 
   h2(`Size`), scoops.v(), 

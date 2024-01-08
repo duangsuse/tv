@@ -27,7 +27,7 @@
 0.无类型/asm,bytes二进制
 1.按类型/C,VB,PHP
 2.子类型/Java,C#,JSPy
-3.类型查询语言/TS泛型,模式匹配,SQL-Prolog
+3.命题查询语言/模式匹配,SQL-Prolog,TS泛型
 
 类型是针对{对象}的“正则表达式”，它能让你为数据的格式、程序员的分工思考。 类型签名的多少，与实质上的强弱，与编译/解释型其实都无关。
 
@@ -129,7 +129,9 @@ exp=(s/*token o算符x单项*/, l/*evels 大则紧,深 *<+ */)=>{
 - 为什么 `nonlocal _; global x; x=1` 执行能免调试看变量？应用如 `from traceback_with_variables import activate_by_import`
 - 闭包 `栈转堆`。把外层局部 `(a,b)=> ()=>` ，创建函数对象。如查找 b=第i个this的编号变量j, b=i0.j1
 - 协程 `栈转堆`。把外层return `()=>delay(1)`，弄成回调时函续。对浏览器栈呢，返回键就是回调-赋值再跳转回链接
-- `对象是多方法的「共变量」函数`，函数就是能.invoke() 的「私变量」对象。 如js的定义get/set，以支持private可见性,final等函定性。
+- `对象是多方法的「共参数」函数`，函数就是能.invoke() 的「藏参数」对象，比如藏起闭包这"this"。如js的定义get/set，以支持private可见性,final等函定性。
+  - 编译期不能确定的重载叫重写(overload vs override by arg0,"this")
+  - class=struct+继承+接口 ，反观Go,Rust的trait 外部扩展能避免Adapter模式
 - 类型就是只用+-*/,<,= 等方法来定义“进制不同”的数值，这种语法能连接应用和框架层的两种代码
 
 接口对于算法，就像USB对于数码设备。 换个算法，就像文件换个网盘，程序员刷操作系统，并不会造成麻烦，但设计得狭隘或难插拔的接口，除了妨碍新功能 新用户，更会让框架有代沟，产生node_modules等众多碎片化和依赖地狱

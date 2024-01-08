@@ -78,8 +78,9 @@ fi
 #require("vs/editor/browser/services/abstractCodeEditorService")
 #ce=this.getActiveCodeEditor();$('.modified.editor').onclick=()=>ce._paste(1,'\n')
 
-#node -e 'fs.readFileSync(0,"utf-8").replace(/[\p{sc=Hira}\n]+/gu, (m)=>process.stdout.write(m))'
+#node -e 'fs.readFileSync(0,"utf-8").replace(/[\p{sc=Hira}\n]+/gu, (m)=>process.stdout.write(m))' #scx=Han
 #unzip -O shift-jis
+#diff -y x1 - #u加减c各自上文e补丁  #sed -i 's/\n\n/\n/'
 #for f in *.ust;do iconv -f shift-jis $f>"_$f";done
 
-#subaud(){ for f in "$@"; do cd $f; ffmpeg -i *.mp4 -i *.wav -map 0:v:0 -map 1:a:0 a.mp4; done }
+#subaud(){ for f in "$@"; do cd $f; ffmpeg -i *.mp4 -i *.wav -c:a flac -sample_fmt s32 -map 0:v:0 -map 1:a:0 a.mp4; done }
