@@ -47,7 +47,7 @@ ul(as(colors, x=>
 ww.Counter=({count=0})=>
 html(
   p(html`Counter: ${count}`),
-  button(wOp({tap:count(x=>x+1)}), `+1`)
+  button(wOP({tap:count((x,to)=>x+1)}), `+1`)
 )
 
 ww.InputFocused=()=>
@@ -56,7 +56,7 @@ input({type:"text"}, (sel,e)=>e.focus() )
 TRAFFIC_LIGHTS=is.w`red orange green`
 ww.TrafficLight=({iLight=0},
   light=iLight.as(i=>TRAFFIC_LIGHTS[i]),
-  nextIn=a=> (i=>(i+1) % n(a)),
+  nextIn=a=> ((i,to)=>(i+1) % n(a)),
   fg=wUI({fg:light}),
 )=>
 html(
@@ -387,7 +387,7 @@ ww.sCounter=({n=0},
 _=_=>wUI({fg:blue})
 )=>
 html({our:{n}}, // attr boilerplate for SSR+wUI(scoped)
-  button(wOp({tap:n(x=>x+1)}),
+  button(wOp({tap:n((x,to)=>x+1)}),
     html`pressed ${n}time$`
   )
 )
@@ -482,7 +482,7 @@ html(
     wUI({_efx:'fx(rap show)', _fx:'+ripple fly(200) fade', _dur:'2',_dt:'0 0 .1'})),
   progress({value:t}), efx(t),
   ...rn(0,1, 1/4).as(t1=>button(
-    wOp({tap:t(to=>t1)}),
+    wOp({tap:t((x,to)=>t1)}),
     html`${t1}%`
   ))
 )
@@ -631,13 +631,13 @@ wUI=`
 )=>
 $switch(our,
   wUI({checked}),
-  wOp({tap:checked(x=>!x)}),
+  wOp({tap:checked((x,to)=>!x)}),
   span$slider()
 )
 
 ww.Eventy=({count=0})=>
 html(
-  button(wOp({tap:count(x=>x+1)})),
+  button(wOp({tap:count((x,to)=>x+1)})),
   div(html`count:${count}`)
 )
 
@@ -659,6 +659,6 @@ ww.$=({txt})=>body(
 ww.App=({count=0,username="Anonymous"})=>
 div({edit:1},
   html`Username: ${username}`,
-  button(wOp({tap:count(x=>x+1)}), `Click me`)
+  button(wOp({tap:count((x,to)=>x+1)}), `Click me`)
   menu({Reset:count(to=>0) })
 )

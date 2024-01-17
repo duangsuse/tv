@@ -324,8 +324,8 @@ here:
   'T'(T Sort)fun Var `must<`(r:Var)
     if v !< r.v: Any.swap(this,r)
 
-/** May asList(for int[] do copy) to `Ary[T]`. On JVM [get] returns `int`, not `Integer` boxed,
-  `Ary[Int]` can't do this for it can be a [Line]. Supports JVM `Object[]`, or [T]: Int,. for typed array */
+>> May asList(for int[] do copy) to `Ary[T]`. On JVM [get] returns `int`, not `Integer` boxed,
+  `Ary[Int]` can't do this for it can be a [Line]. Supports JVM `Object[]`, or [T]: Int,. for typed array <<
 'T'impl? eval data AryN() Ary[T]
 /** Compile-time known expr list, use it for const expansion or destruct */
 'T'eval data Args () Ary[T]
@@ -425,9 +425,9 @@ type Draw
   !fun Str="$x,$y"
 - Rect(x,y, :Arg["wh"N]) Point()
   !fun Str=as[super].Str+"+$w,$h"
-/*Smooth line
+>>Smooth line
   better than polyline?
-*/
+<<
 /,py ,/ is good
 /, it.draw(app.view) ,/ is correct
 /, PrtScr(it{draw}) ,/ is good
@@ -650,7 +650,7 @@ named Env
       N i+d2
       a (rn(B=N-1):go(this)).Seq
       b (rn(A=N):go(this)).Seq
-      //a,b 半都指向升序
+      >a,b 半都指向升序
 
     loop if a.posR & b.posR:
       this[i]=get(a) to get(b) lets:
@@ -659,7 +659,7 @@ named Env
       i goesR
     a: this[i]=get(it); i goesR
     b: this[i]=get(it); i goesR
-//or “简化”代码
+>or “简化”代码
     loop if a.posR or b.posR: this[i:goesR]=when:
       !a.posR: get(b:goesR) ;;  !b.posR: get(a:goesR)
       or: get(a) to get(b) lets:
@@ -703,7 +703,7 @@ named Env
     mid this[A]
   loop if a<b:
     loop if a[b& get(b)]mid: b goesL
-    this[a]=b //选中太小的b. 下同
+    this[a]=b >>选中太小的b. 下同<<
     loop if a<b& get(a)<mid: a goesR
     this[b]=a
   this[A]=mid
@@ -824,16 +824,16 @@ accurateLrc  PLAYER!"not exist":
 - Ctrl点击 跳到文件/声明-实现/引用
 - CXV复制剪切粘贴 S W Q 保存 关标签 关窗口
 
-‘编解码函数。 cat谈=load, cut吐=dump
-也适于将问题谈为易懂概念再计算，如 `可同 ，pad(+1)去吐(234)是233 且 (!数())去谈做(3、「它+"0"」)是30。`
-或者接龙：
-`可同(UTF()、Base[64])去吐("你好ao")`
---
-cat 谈
-cut 吐
-oncat 谈做
-’“”
 对何[AB] 类 可同
+  >>编解码函数。 cat谈=load, cut吐=dump
+  也适于将问题谈为易懂概念再计算，如 `可同 ，pad(+1)去吐(234)是233 且 (!数())去谈做(3、「它+"0"」)是30。`
+  或者接龙：
+  `可同(UTF()、Base[64])去吐("你好ao")`
+  --
+  cat 谈
+  cut 吐
+  oncat 谈做<<
+  >>cat<<说
   - 谈（：A）：B
   - 吐（：B）：A
 
@@ -1086,7 +1086,7 @@ i=0；重复再若i<10，i移右。 “i=10. 但若有 i++, i完成时是11”
   重复若真，
     交 Random去nextInt(1、分配器=池)
 
-‘py式文本流’
+>py式文本流
 - 说(：值?) = 文件的std[1]，添此值去文；添"\n"。
 量 说点=文件的std[1]「添」
 
@@ -1592,9 +1592,9 @@ a\=0 {b}: id(a-1,b+1)
 
 ?? 'u'Num
   - `*`(:u)u
-  - `+`sep`*`
-  - `~`sep`+`
-  - `<`sep`+`
+  - `+`join`*`
+  - `~`join`+`
+  - `<`join`+`
 
 ?? Any
   - `==`sep`<` (:Any?)YN
@@ -1837,7 +1837,7 @@ c Cat("Rusty").doTricks
 ?? Row
   Pet(name:Str)
 
--  Pet(name:Str) too.[Row]
+-  Pet(name:Str) F.(Row)
 .:
   - speak "Yo"
   - comeToMaster
@@ -1859,7 +1859,7 @@ c Cat("Rusty").doTricks
 - MyPet() as:
   inc: nLegs 4
   inc: actuallyLikesPeople $N
-  too.[Pet]
+  F.(Pet)
 .:
   furColor Str
 ??- MyPet
@@ -1951,7 +1951,7 @@ surface_r_2 as: 1pi  r^2
 
 result (1~3.): 面积(me)
 
-- one() 1.[Int too]
+- one() 1.(Int at)
 - add_char(ch: Str.AZ, :Str)  ch.Str had str
 
 moonbit add_char(Eqs.chr.cut(109), "oonbit")
@@ -2025,12 +2025,12 @@ Need: old_info.age==1
 - f(me: Info.Personal) name~~age
 - flip(me: [String Int Col2]) std.[Info.Personal as]: (A B)
 
-- accept(tuple: [String Int Col2]) $Y // pls DO NOT duplicate typename(accept_tuple)
+- accept(tuple: [String Int Col2]) $Y >>pls DO NOT duplicate typename(accept_tuple)<<
 tuple_accepted  accept((1 "Yes"))
 
 - accept(:A) $Y
 
-a_accepted  accept(A(1, 2)) // RowData uses 1st overload
+a_accepted  accept(A(1, 2)) >>RowData uses 1st overload<<
 
 - get_or_else(me: [Int mayNO], default: Int) me :.
   NO: default
@@ -2085,7 +2085,7 @@ now DaysOfWeek.Monday:
 ?? Repeat2 //不可使用{}
   A; B
 
-repeat  A.[Repeat1 too]  //类似 ()RowData
+repeat  A.(Repeat1 at)  //类似 ()RowData
 
 ?? ComputeResult
     Success(:Int)
@@ -2117,11 +2117,13 @@ nums.posL.3 :.
   sepIn(buf)
   buf.Str
 
-??- test Main
+> Generate a weird test
+>> ??- test Main
   - `CPU has ALU` {
     10+5==15
     1+ -1==0
-  }
+  } << Generated a weird test
+>again
 
 - div'me u'(_:Int) {u\=0 !:"div by 0"} me/u
   
@@ -2152,11 +2154,11 @@ nums.posL.3 :.
     - good 1
     - boy 2
 
-- Person(name:Str) too.[Row] .:
+- Person(name:Str) F.(Row) .:
   - Str name
 
 ??- 'T'(T Row) Ln
-  - as too.[Row] .:
+  - as F.(Row) .:
     - Str ".."
 
 
@@ -2166,7 +2168,7 @@ nums.posL.3 :.
 ?? Row
   Person-bad (name:Str,age:Inc)
 
-- FileDoesntExist too.[Err] .: "404"
+- FileDoesntExist F.(Err) .: "404"
 
 
 f 1/x

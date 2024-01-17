@@ -14,11 +14,11 @@ CoPU.Ret函续=Pipe+LnKV函序池 同签名覆盖,泛型AS:u 函记为平权-函
   hito执行 含 _v(dep=v)Tags{by toMd _out=gcc } Nd广播
   Name=静态函名先.asSuper/mid 重载查找前是Str(值\名不变) 即地组/dict展开(Pkg-Date,[T0],{TSet}), (定数0~9)(列x)真
 
-VVOP TWAP组问列括 4S4tI Sum-Sav inouts-Out, HI=CLI+Ini Incy=>oo:y(+1) body,_H,me@GET,(_ifVarg-,??h,返链) axescrufoLt,01AB重语境,foxin单职责 vn,pn,vp无二域 rn/at函,Tevbm oo.2精度指针 dtfmLo=跳变,监听器反射 Astor浅先重合拷 Out右先重合变 
+VVOP TWAP组问列括原 4S4tI Out-inout-Sav Sum2, HI=CLI+Ini Incy=>oo:y(+1) body,_H,me@GET,(_ifVarg-,??h,返链) axescrufoLt,01AB语序化,foxin单职责 vn,pn,vp无二域 rn/at函,Tevbm oo.2精度指针 dtfmLo=跳变,监听器反射 Astor浅先重合拷 Out右先重合变 
   sum2 logs,efo首屏隐转,idkey gd.nmij=hwyx
 wOw$ 典树绑定 A$AM加检合写
-  ww.w= .as(f).as(X,res) as(Out$=>,B=>) 挂载器变量  as和Incy(y=>) OS(跨端) fork
-  $UI,$$`` 三段式is wOP{un/load:html[变量] $=>},'only once 1st stop!' 1sRate(进条猫,2) {slot,is,edit,AK} wOP{注入}   CSS=x=>$() $$即'>*'@,_PLbfg full,fade,box
+  ww.w=  x.a实时爬虫 .as(f).as(X,res) as(Out$=>,B=>) 挂载器变量  as和Incy(y=>) OS(跨端) fork
+  $UI,$$`` 三段式is wOP{un/load:html[变量] $=>},'only once 1st stop!' 1sRate(进条猫,2) {at,slot,edit,AK} wOP{注入}   at=CSS=>$() $$即'>*'@,_PLbfg full,fade,box
   Sav HI.pv sayIWE url.old 
 事件选函上传下发广播匹配 myenv
 _=>me [,or{and:rn},'col'] ddtfm fr/cache
@@ -27,22 +27,22 @@ TOADer
   App pointer(P.z按,hov$浅,foc) screen.PL.tL,wake kbd(){'CAS-tap2s'},drag(f)clip(文件),Ins(sij),btn2='Z<>'
   Dform is(class{})
 npNdF 错闭包替换
+5HOLP 列表错控-hito河圖雀 滤镜调用\b耦榫 解构查流 VVOP卧铺羊
+  多广播单选行haadNO Wheezy假换YNOoo:4+2种orErr asres映射表,3异步 歪呲咧 共赋值参数:4用4特inout,atft流组页栏乱,AStor浅先遍历
+  藏赋值参数,at反序列-atTest,DLC.acty可吊销 :{渐验即类型}  -(Incy val) Out memoNo 元类TSet(T1).枚举ColConds 右冒号压行,远离二值化
+   atSNR[[]权割],Sum(sum2,加/stepDP,[L0省略]).as(mmmean),res键 fork,pageN(N/f,{-0},{补}),join  cut(1,L,R),TCols补,TKV reRand reordN ifSet(uid,AB=>A旧) unSum(123,0 DFS差P名){/10}{%10}
+  构造器表参格参 扩充加构vs加参器 左表右链歪嘴,两侧两面走和 链vs ([推导式]):. =:+goR .:改赋参赋链 asatF.(段造器) inc枚举域idk-RowLit终造器 语法4押韵-表围列确定,3造器三段论,行列-转取2多态 函记取全平权,传隐藏/传HUP(i)/传闭包 APtr NamesType ask-eg-or,RE:''AZ \0xbeyn _Pipe:v 
+  Str Int_Inc KV KSet Rn Nd {Len针} ''响应-单位式类型 .(Ln)(n) !改复制 中空乘 had(Set)!:找指针 Nd%[_ n/2]系数@ .[y x] .[0~~0]=iLast Out.t(rn).neg
+  -I接口.typed ^I单例与.asSuper Row.函Mem,KFrq os.导入:NO  LEGB界门杠幕括树终,LEG多层沙底  Fn:F.n1返回首参.nn2.(ABC arg3).查库 子类命题!F.YN
+  say:模板'doc或单行宏 #>注释>##T1层级重录 I.DOC.ABC,脚本头尾注 ~+-()/@Bit rem/- IntPos-^v<>  os-catchSQL ErrOS  inc.递推:止,{$Y}: 包自动=I,pkgs受名,std,导入:受_ my:this_ my{this,pkg,api} 已穷举vs funcs!
+  ??-os-G工厂协议插件  捕获An:CoPU.Rets+=函序LnKV -闭包类宏'名常量'非(_:Num) lit(): (1~1):Fn粘贴 受匹= .js键 1门文学语言
+  f.kw OS($).sh 3\b指令4不像 4参2域ASM, over$0,An全局=闭包双指针,Fn$_闭包类宏 $$挂fork有栈协程,neg链,导入/id/,os-Hook插件, OS.tok.nest Str.raw
+  fs:'{""}'rw.v/dir Cofs (0~9).go{}共退域|CPU.IO.fork|CoPU.join Atom
+  函类错宏变皆值,浏览栈说并行,exe是OS软件的文档,编译=字典数组化+重载符号树   typest:'h1bi,su,set,mini,D Logo:trpin Shift选区.md.hi 跑分,小说导包 .dot常量框/左背搜索 hi-moji和正则改语 
+  Iinc my funcs over An ??-  ().[]{}\:,;"'` ^彼읏я此以上以下、的の。#>」 +sum2* ,闭包返包, 短长期记忆栈 ,四国四语法,逗句免隔 'SI'(T:incOnly) [I Sav CLI]fastutil  异步-变量无错.受{点文匹}受{名方花铺}''
 
-5HOLP河图 列表错控 滤镜调用\b 解构查流 VVOP蒸汽羊
-  多广播单选空haadel Wheezy假借YNOoo:4+2种mayerr asres映射表,go异步组 呲歪咧 左表右链歪嘴,两侧两面走路
-  共赋值参数:4用4特inout,DLC.acty可吊销 藏赋值参数,组求页栏gosft too导入-isTest:{渐验即类型} 元类TSet(T1).枚举ColConds 压行右块法 远离二值化,语法4声调-匹域表确定
-  goRn[[]权],Sum(join,加/stepDP,[L0省略]).as(mmmean),res键 fork,sep(N/f,{-0},{补}),join  TPair补,TKV; atSAN,trim(1,L,R) reRand reordN ifSet(uid,AB=>A旧) unSum(123,0 DFS差P名){/10}{%10}
-  构造终造器 表参格参 3造器三段论 扩充加构vs加参器 .:改赋参赋链 astooF.(段造器) inc枚举域idk-RowLit =:+goR ([推式]):. 行列-转为2多态, APtr AStor NamesType /??/T0/?裂重录 I.DOC.ABC
-  Str Int_Inc KV KSet Rn Nd {Len针} ''响应-单位式类型 .(Ln)(n) !改复制 中空乘 inout,posL!:找指针 Nd%[_ n/2]系数@ .[y x] .[0~~0]=iLast Out.t(rn).neg
-  say:模板'doc或单行宏,脚本头尾注 ask-eg-or,RE:''AZ \0xbeyn _Pipe:v ~+-()/@Bit rem/- IntPos-^v<>  os-catchSQL ErrOS  inc.递推:止,{$Y}: 包自动=I,pkgs受名,std,导入:受_ my:this_ my{this,pkg,api} 已穷举vs funcs!
-  f.kw 4\b指令4不像 4参4域ASM,禁遮盖 ,bind-1闭包双指针 goR传回调用,neg链, {An:}链$,导入/id/,os-Hook插件 , Fn$$宏重放和类 OS.tok.nest Str.raw
-  ??-os-协议工厂插件  2An捕获CoPU.Rets+=函序LnKV -闭包宏'名常量'非(_:Num) lit(): (1~1):Fn粘贴 受匹.js键 ,1门文学语言
-  -I接口.typed ^I单例与.asSuper Row.函Mem,KFrq os.导入:NO   Fn:F.n1返回首参.nn2.arg3查库ABC 子类命题!F.YN
-  fs:'{""}'rw.v/dir Cofs (0~9).go{}共退域 asgo:首|CPU.IO.fork|CoPU.join Atom -(Incy val) Out memoNo
-  函类错宏变皆值,函回调续, 短长期记忆栈 ,四国四语法,浏览栈说并行,exe是OS软件的文档,编译=字典数组化+重载符号树   typest:'h1bi,su,set,mini,D Logo:trpin Shift选区.md.hi .dot常量框/左背搜索 hi-moji和正则改语 
-  Iinc my funcs over An ??-  ().[]{}\:,;"'` ^彼읏я此以上以下、的の。』」/#? +sep* 函记为平权,逗句免隔 LEGB界门杠幕括树终 'SI'(T:incOnly) [I Sav CLI]fastutil  异步-变量无错.受{点文匹}受{名方花铺}''
 
-x[def,class,for knv]
+\[def,class,for knv]
 ul if-op[k] ol 
 
 O$on-AOP

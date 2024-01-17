@@ -1,0 +1,77 @@
+https://github.com/shimohq/chinese-programmer-wrong-pronunciation
+#learn 妙妙词典  同时矫正术语的发音和涵义
+首先 P2P 读作 p to p, log4j 读for, 这些和 btw,fyi 同是缩写
+以A开头的非专有名往往是æ 而非ʌɑ
+空耳仅供模拟「中国人不会拼音」时可能产生的片假名地狱，可以启发兴趣 不利生产和传播
+
+Adobe 啊逗比，创作力软件
+Apache 啊怕奇，旧软件补丁协会兼LAMP之A, 替代有 WAMP,LEMP,BaaS微服务,cloudflare FaaS
+Angular	安归乐，守旧的jsUI框架top1
+Kubernetes k(8char)s 酷播粒，把稻壳儿广播到集群部署
+Ubun-tu 无本图，免费版win
+Linux 林内X, lin-ear ，源码树林内开源的OS X/əks/
+Django 没有D, E-nginx 有E
+cache cash，很快取的现金 作为值
+route	root 读音反的
+archived 啊开物，盒装的资料
+License 赖生事，减少源码盗用的版权声明
+GNU没G  Git有G。哥怒！把源码传上 给它哈不？
+GNOME 格弄目，美化管理窗格，红帽,feDora开发
+
+deny 抵赖，不给权限, DDoS是挤爆服务器使其用5xx抵赖, 此时需要QoS限频
+daemon 抵门，抵到随main一起退出，不算子进程
+deque 待客，任务循环deck甲板，又名Channel,mainloop,MQ
+digest 带假死特，禁带假信息
+debt 抵他，抵押信誉借钱，很难断供
+issue 一宿，除错到没法睡 996.icu
+epoch 一破课，AI模型新世代
+session 塞生，塞进密码暂时生成的对象，传输为jwt,cookie酷卡
+query	馈睿，响应你睿智的查询
+tuple 它剖，对实体的剖析
+GraphQL 个睿附酷儿，联动个体信息的带参数S/kju ɛl/
+maven gradle 霉文 瓜斗，照抄XML,样板代码写疯的全局依赖下载器
+main men，面条代码(if while重赋值之流)的入口
+ver-bose ，老板模式 厕所里都管
+depre-cate ，撤回猫抓的代码
+format 研究信息编'码'，如matlab
+facade	法啥的，归类惯用法
+
+单音节:
+app ædmin,async asink, æSCII
+爱谱，共享图谱菜谱的平台
+爱得命，可以瞎 rm -rf 别人 /home 的狗管理
+啊新客，丝滑App必须有异步状回调，用于await event
+char_t 爱suki，电脑每8bit有可爱标志
+
+sudo pseudo Qt, implement LINQ Haskell
+速u度，不执行就用u型锁砸
+Cute，信号可爱的跨桌面端GUI(贵)
+哈死科，笑死专业数理科学的FP Math 符号科学
+
+多音节:
+event 一问特，定期轮询到了特殊事件
+lo-cale 落靠，软件UI落到全球都有依靠
+
+有/ʌ,æ,ɑ/:
+Hub putty
+null bind avatar misc.
+怕替，不能被USB和GUI替掉的tty打字机基建
+浪，C的野指针跑到Java,py里还不报错非得if，叫浪
+邦德，给函数或UI的参数贴几贴创可，全贴完才能跑、或赋值时更新/输入时赋值
+
+没有/ʌ,z/:
+ækccess Azure module猫着 obso-lete
+ælias	app main AJAX æspect
+A可塞撕，允许添加和删除A表格
+A裂撕，Homo OS是Android的 A裂撕
+A架可撕，部分重载A页面框架的IO方法
+Po架可撕，让页面据URL产生，从而易po在社媒/跨页播放的高效SPA方法
+A是拜客特，客户烦原版代码，拜托加挂特性A
+resume 睿祖母/zju:/，要查你三代的学历，是否sleep(nGapYear)过..
+suite	随他，IDE式sweet体验
+阈值yuzhi，测试的边界条件
+ex-ˈzek ecutor 1CPU等函数执行器
+
+pa-ra-meter vari-able pri-vi-lege 查参数变量的权限
+clang /klæŋ/, char=kar, OSX X=ten, null=闹
+C#读傻破, Python'宋' JSON 有重音 这两行看看就好
