@@ -163,6 +163,7 @@ __负频可以优化掉吗？__ 能。FFT 就用递归省了大量计算，效�
 
 - [伯克利大学Py数学书🎁](https://pythonnumericalmethods.berkeley.edu/notebooks/chapter24.02-Discrete-Fourier-Transform.html)
 - [Java实现](https://introcs.cs.princeton.edu/java/97data/FFT.java.html)
+- [Shader实现 100行](https://www.shadertoy.com/view/MllGRX)
 
 ```py
 def _FT(x):
@@ -182,6 +183,7 @@ def FFT(x):
 ```
 
 - [宏观粒子的波🎁](https://haha90.phy.ntnu.edu.tw/content/TeachAnime/allTeachinfAnimation/wave2DBasic/wave2DBasic.html), [物理原理](https://www.zhangzhenhu.com/audio/feature.html)
+- [光线物理Desmos🎁](https://phydemo.app/ray-optics/simulator/)
 - [CG:洋面模拟🎁](https://lianera.github.io/post/2016/ocean-sectional/), [3D](https://www.youtube.com/watch?v=kGEqaX4Y4bQ), 你可以搜zhihu/Brown运动 ，频域和概率论也有关系
 - [各种数学动画🎁](https://www.lfhacks.com/t/fourier/)
 
@@ -264,9 +266,10 @@ def kalman(f):
 
 [正经神经网络结构🎁](https://zhuanlan.zhihu.com/p/372516381)([Keras代码](https://keras.io/guides/functional_api/#:~:text=Now%20plot%20the%20model%3A))的[可解释性🎁](https://www.zhihu.com/question/268384579/answer/2928561483)都很差，是有智能的黑箱函数。根本差异是在数据来源和算力
 - 模型 `def 点的象限(xy:(2,))->1到4`, dataset就是示例参返
-- 网络 N层,每层M个加权求激活的“线”, sum线能成分割面. 
+- 网络 如FC节点是由n个m层 `dot(x,w加权)` 构成的tensor流程图，1个激活的dot可以识别1条分割线。这简化了神经细胞的网状模型, sum线能分割面. 
 - 激活 是靠分段函数把与输出(loss)不相关的信息归零
 - 神经元 "FC层", 要让1个 `np.dot(w未知,x)-y` 逼近0, 先调整它右层的w
+- 反传算法 是从输出获得最优网络参数的单次步骤。 函数的xy平等放入Excel单行，以loss来分任务学习
 - 训练 挑选1点,计算模型的结果, 逐xy轴, 用 `损失函数(真实y,f(wx))` 调整w,增数要看导速乘学习率
 
 刚才说马里奥是关于单变量t的，关于2个变量xy即FC网络，比如从AND,OR 的真值表[1 1 =1], [0 1 =1] [各学到一条分割线](https://www.desmos.com/calculator/mxyoq6siyp)，简单说就是枚举 `激活特征(dot(加权,输入))=对应输出`，比如OR是 `ax+by -0.5, ab=[1 1]`，通过[随机挑选,线性回归](https://www.desmos.com/calculator/bra3ao79ow?lang=zh-CN)慢慢调到最fit的权"ab"和 -增益 (bias, 即权重恒为1的项)
@@ -391,6 +394,7 @@ fig = plt.figure()
 - [用迭代法求N(π,10)](https://stackoverflow.com/questions/347734/gauss-legendre-algorithm-in-python), `S.oo.evalf(10)`
 - [三角剖分:Live2D 布料使用的Mesh几何](https://www.zhihu.com/question/560716102/answer/3266882974)
 - [“深先遍历”DFS 可视化](https://www.youtube.com/watch?v=-L-WgKMFuhE), [站点-箭头 A*搜索](https://youtu.be/CgW0HPHqFE8?t=16)
+- [画圈可视化](https://www.shadertoy.com/view/WdBGzc)
 
 ### 转圈圈
 
@@ -409,6 +413,7 @@ fig = plt.figure()
 - [scipy.fft 其实输入实数更优化](http://fftw.org/fftw2_doc/fftw_2.html#:~:text=for%20real%20data%20are%20the%20complex%20conjugate)
 - [典型C实现](https://github.com/numpy/numpy/blob/v1.26.0/numpy/fft/_pocketfft.c#L1271) 用 [plan DP模拟递归](https://ddosvoid.github.io/tags/)来加速
 - [SIMD于x86 CPU](http://www.jiashengli.cn/article/detail/?id=26)
+- https://www.youtube.com/watch?v=NpbhFTmUvts
 
 ## 如何方程
 

@@ -9,7 +9,7 @@ Apache 啊怕奇，旧软件补丁协会兼LAMP之A, 替代有 WAMP,LEMP,BaaS微
 Angular	安归乐，守旧的jsUI框架top1
 Kubernetes k(8char)s 酷播粒，把稻壳儿广播到集群部署
 Ubun-tu 无本图，免费版win
-Linux 林内X, lin-ear ，源码树林内开源的OS X/əks/
+Linux 林内X, lin-ear ，源码树林内开源的OS X
 Django 没有D, E-nginx 有E
 cache cash，很快取的现金 作为值
 route	root 读音反的
@@ -75,3 +75,110 @@ ex-ˈzek ecutor 1CPU等函数执行器
 pa-ra-meter vari-able pri-vi-lege 查参数变量的权限
 clang /klæŋ/, char=kar, OSX X=ten, null=闹
 C#读傻破, Python'宋' JSON 有重音 这两行看看就好
+
+上下文= 上文
+调用堆栈= 栈 (层叠vs堆叠)
+
+编程范式，是组合程序的手法，是软件设计的哲学。 Fortran的作者Backus, C的精神领袖Dijkstra 都颠覆过现有的范式
+下文不止是种浪漫或讲故事，React 也是对HTML模板范式的改良而爆火
+asm:
+世界上第一门编程语言，是各种机器语言的文本形式：汇编
+没有嵌套结构，以至于许多bot和cli命令使用它的格式接受参数、实现功能
+是自由度最高的"系统编程"语言，但机器的自由，反会奴役程序员的想象力
+
+算法范式： asm  procedural(imperative) declarative(markups)
+数据范式： structured/SP OOP FP
+从易解析、VM实现<50行的角度看，汇编是种标记语言。拿txt写需求够用，写业务流当然很累。 
+
+下表是这些范式的原神
+算法范式： LLVM/WASM  C++/Scratch  SQL/YAML/PyTorch
+数据范式： Rust  Java/JSPy  TS/React
+
+结构式Rust有比过程式C++更准确更美的类型系统，以此区分。它与Go没有构造器和继承，不算OOP，尽管它混入了精髓(self 参数的链式调用)
+从原神到远古。
+procedural:
+67年前，Fortran 随Backus的新ACM诞生: Can Programming Be Liberated from the "Von Neumann-style"?
+F90是一门基于goto行号、支持矩阵malloc和中缀算式、前置类型的语言，这些特性都是x86未提供的。汇编新函数都要手写CDEF样板代码，而那时给游戏机编程的团队也没在乎复用的概念
+F90的缩进风格类似SQL，调用风格比Ruby更混乱。PRINT(*) "hi" 是向内置函数提供默认+标准2种参数，自定义函数只能用CALL f,x 模仿。这种内外不平等在PHP,VBA也很常见，Py2to3 就为此修正
+
+structured:
+随后3年 ALGOL60.org 诞生。Dijkstra创立的这种结构化编程范式，是 Pascal,Ada 风格的老祖宗
+Algol 否定了汇编式的goto，引入了struct定义，划清了四则等运算栈和调用栈。反观最初的F77语言并不能定义具名元组(ADT)
+因此用它能学习算法和（同年诞生的Lisp包含的）递归
+
+OOP:
+随后2年，Simula67引入了OOP的class等概念： 对象和闭包都是代码+数据 是双指针。OOP就是FP，class是共享构造参数的多函数，函数是隐藏this等参数的单方法接口。 闭包序列化可实现RPC和printf!宏
+OOP的生硬对不习惯简洁明确DSL的人更友好，因为"method"闭包可以是getsetter、 final/abstract 确定性、 public/private 可见性..
+之后以 C++(39年前),Py(32),Rb(29),Java,JS(28),C#(24) 的顺序出现几门主流语言，而 Alan Kay 以启发了Scratch的Smalltalk获图灵奖，成为了OOP届的领军人物
+
+FP:
+49年前的Scheme支持了(retAddr的)闭包 以将栈vars转为堆对象(才能作为值)，且默认将函数存为(全局/原型链)变量。这比Lua协程早了十年
+34年前的Haskell最终让 State,Monad IO, Effect,异步Flow 等术语“组合拳”火遍JS界。 FP界相对零碎，丘奇和图灵可谓两大师
+Lisp系的圆括号SEXP直观统一了运算栈和调用栈，一切流控与数学都是函数，这启发了WASM 且等效于VPL拖拽编程/flow编程
+
+综上，老旧的语言未必是落后的
+Py,Lisp(WASM,LINQ DSL),Haskell(React) 就对现在的前后端和Excel影响很大
+
+
+
+https://telegra.ph/Linux-中-RISC-V-的-mmap-的重大问题-01-29
+冷知识Q&A
+> RISC-V Linux 内存页表(vm_area)适配问题在供应链的什么层级？
+
+首先man 上写的支持sv48,但代码支持不到 且语义错误 这不符合Linus的严谨度
+答：在JVM,gcc-libs 层级，影响交叉编译
+glibc.malloc() 会请求 brk(<128KB)或 mmap(-1=/dev/mem)
+
+py.mmap(*fpage, access=PROT_EXEC); fpage=fd+len+offset
+mmap(vaddr+len, PROT_EXEC, MAP_PRIVATE, fd+offset); MAP_FIXED=dup2=replace
+
+mmap还用于0copy fwrite() ，拒绝在用户态搞 IO Buffers
+brk 是ELF体系下自带的内存池，暂存碎片化的小对象(4K分页后 lazy分配的)。其实 open() fd 也是个Refcount对象，因此，rm -rf 不像NT总提示文件未close()拒绝访问（还有内存不能BE READ ，坐和放宽，哈哈）
+
+> x64 等ISA更费内存吗
+确实，每个指针都占8byte，.so.text 段也会膨胀，只是整数计算和GPU无需这么高精度。(.rodata/bss 段不会，因为依然 int=i32,char=u8 , 另外这些段Addr<heap)
+
+这不利于嵌入式，每条指令都耗电的。但SSE等特性、游戏的流畅度需要大量内存，所以32转64是种进步，更何况小白用户眼里下载 1G值1刀啊
+.so段可以用 readelf -Sd; ldd 查询， Termux.dev  waydro.id MSYS2.org 能够跨 glibc,bionic,msvc libc 平台, just like webVM.io 😋 #recommend 
+
+> 47bit?
+
+2**32 /1024**3 =4GB, fat32单文件最大
+2**47 /1024**4 =128TB, linux v6.6 单进程最大工作集
+cat /proc/cpuinfo 可以看到CPU最大寻址范围
+在 webVM.io 试玩Linux(su密码是 password)是查不了这种运维命令：它只实现 ext2fs(on http byterange) 和 net 的沙盒
+
+> 寻址?
+对CPU和内存分时复用(并发,容器化..统一设备格式API)是kernel的基本功。
+sudo cat /proc/self/maps|grep ] 里，地址从低到高是 heap(brk) stack vsyscall(类似 fakeroot,libfuse 等AOP)
+btw. sshfs,squashfs,overlayfs,snap 不是必须链接到FUSE，这只是微/宏内核之辩，类似于Android的反GPL C/S架构: system_server-AIDL-HAL.sysfs.dts 
+https://xiaolincoding.com/os/2_os_structure/linux_vs_windows.html#linux-的设计
+
+线程，就是完全共享内存的多进程，使用strace 就会发现main()线程只是个进程组。免root gdb 据此实现AOP
+内存段，能下载内存条~如swap分区就是时间换空间,反义词是ramdisk=rd
+WinXP 启用/PAE后多进程可以突破4G内存限制。在分段寻址数组的DOS, size_t < void*
+获取堆起始只需在putenv,asprintf,. 前调用 sbrk(0)。 stack可以在 gdb cat 里看 bt; 或 info proc all
+tcmalloc等堆分配器不会比GC简单。它们不会线性地查找4~?KB空闲链表或建正好够大的块，从而减少难以复用的碎片。这里不是说二叉"堆"算法，但它涉及 Hash桶,BitSet,Trie,线段树,SortedSet(RBt)—反正 Doug Lea 都会！
+
+> BIT(38)?
+作者希望一直使用sv48 MMU 模式，和x86一致
+不然就需要先if(mmap) 一下，看是否支持sv57，我猜的
+AI: 当 mmap 的文件大小超过虚拟地址空间的大小时，RISC-V 会返回 -ENOMEM 错误，而其他架构会返回成功。可能会给 RISC-V 的软件移植带来一些灾难问题。
+
+> mmap() 到的bytes比read()更快吗？
+从编程范式来讲，read+write(另存为式) IO 反而是最FP、最全拷贝的做法，而 mremap(mount,但挂载是对象树) 更适合随处+单次修改增长
+FP的性能都很差。mmap 除了对碎片(npm,pip缓存..) 慢，不适合 line/request-buffered 等IO 需求(.sock vs SHM)，它可以表示任何文件格式
+只有从 load即拷贝+dump(csv/ini/bytes) 统一为单YAML编辑指针，才能完全避免 malloc(手动"黏包"BUFSIZE) 和样板代码。但最前沿的，JSON的增量性序列化库 tree-sitter 都不好用。 为了0拷去用strcat,printf() 而拒绝模板字符串亏大了
+说人话： Linux 内存分页器和 FAT 等文件系统间只是算法的差异。今天，睡休眠已经取代开关机，内存和磁盘何必隔着序列化？像CRIU那样进程快照如何？ C对数据结构的僵化早该退场了
+
+#暴论 OSdev一点不比各语言的stdlib人聪明。 Linux内存段本该是C对象(不止有bytes)、而进程本该是C协程(不止能exit0)，你看 ps|head 就知道那是 def pipe(): yield line ，再比较下 Promise.{all,race} 与O_NONBLOCK的 epoll 呢？
+async 说白了，就是拿retAddr闭包"链表"当线程栈用，手动 for(;;)getEvListeners(events.poll轮询)() 跑这些小线程，只为了更轻量(隔绝于竞态的 SIGINT等抢占式异步 (https://www.baeldung.com/linux/attach-terminal-detached-process#background-jobs))
+只是DOM把内核允许死循环的洞补好罢了，让parallel,SIMD被严谨的 numpy,ForkJoin(PySpark~多线下载) 取代，用 job或yield(x).then(回调自身) 而无所谓"线程" "阻塞" 🐴
+DOM渲染器和linux/sched就是一类东西。如果学习WASM拒绝int指针，检查每次索引越界，userspace 内存地址完全隔离有鬼用？直接拿inode改文件内容，核内核外大和谐
+反正Android,Web框架也必须做权限和apt管理，fd,cookie那就是RPC句柄嘛。SQL注入不就本来是想传bool函数来RPC，无奈PHP的operator重载力(DSL悟性)太差 只好去eval代码致RCE。 markdown 渲染杀死了评论区XSS。剩下的复杂性就是libs表现欲过剩，矫枉过正。我这就是唱Powershell 打POSIX
+
+再比如eBPF抓包，这种程度的AOP (https://sysdig.com/blog/hiding-linux-processes-for-fun-and-profit/)，ruby js DevTools 玩烂了的东西，换API集 换到 globalThis=ld-linux(ver.so) 就变科技了，其实就是工具链烂 语法丑 👎
+C 编译器总是做能截断struct val 的访问，做不检查接口的union{}多态，暴露不含size的list(美其名曰buffer&支持多返回)，CLR和Go可没有，RESTful 则更加安全。py只靠ctypes+Rc 就干爆了strcat和各种野指针
+C也没有匿名函数，所以 pthread_create(fn,必须绑定arg) 。对象和闭包都是代码+数据 是双指针。OOP就是FP，class是共享构造参数的多函数
+如果我们摒弃所有术语，只从语意和用户需求，自顶向下地谈，IT和CS的技术，往往只是被不断地跨端复制 👎
+btw. so文件是 Singleton Object 的缩写 \: section-segment 则是常量池和堆。 gcc -static 只会打包有符号表的.o 汇编，是做tar 不涉及ld导出表

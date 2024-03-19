@@ -157,6 +157,7 @@ API和语法、语意学的重要性一直被低估了，以至于一个"Pythoni
   - 匹配解构 `unify(模式=[1,x],值=[1,2])` 遍历检查以让变数x.v=值2
   - 高性能 别和JIT编译器内卷谁聪明，多用numpy等定义式框架，做>3ms 的PGO跑分优化
   - GC,Rc 复用 `malloc(sizeof struct{x,y})` 的被引数跟踪，为0时才可free。对象图越小越块
+  - 内存管理上，GTK和Py使用Refcount+weak_ptr 而非各种分代GC，类似地 IncludeOS.org 就像BIOS,让代码直接运行在x86上而避免syscall上文切换开销
 - 强类型 用编译期能“运行”的语法，写函数/类签名，不能有if: class: vars() 等元编程，序列化和调试很难
   - 装箱 int补上Class标签。ListT不是 `template<>` 代码复制式实现，不能赋原始类型给调参：Integer可为null
   - 序列化 dump={for(k in it)dump(it[k])} 成扁平序列, 读时 `给字典补上类型`，以便递归读写对象(组)或Number等多情况类型
@@ -202,3 +203,5 @@ Trie(Radix=Hash),kD,quad,Seg
 英国工业革命那会内卷还严重些，为何你今天更滋润了？
 
 比人肉 ，框架调用侧
+
+

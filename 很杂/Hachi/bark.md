@@ -83,7 +83,7 @@ TTS 可输入vtt流-遇空时长词时吐句，基于停顿 `科大[p500]讯飞`
 :--|--:|:--|:--|:--|:-:|:-:|:-:|:-:
 [rmback](https://github1s.com/nadermx/backgroundremover/blob/HEAD/backgroundremover/utilities.py#L167-L169)|png|png/gif/ mask.flv|kFast=2,fps=10; gb=#00ff00|[U^2-Net](https://kgithub.com/xuebinqin/U-2-Net#updates-): Going Deeper with Nested U-Structure for Salient Object Detection. see [SAM by fb](segment-anything.com/demo)|2020|337||G
 [TP-SMM.](github.com/yoyo-nb/Thin-Plate-Spline-Motion-Model#web-demo-for-animation)|png,id / faceA,mp4|__B.mp4__(if pre=face2D) [paste A](https://github.com/s0md3v/roop)|idA, Pt=vox. try pre=rmback|Thin-Plate Spline Motion Model for Image Animation, Collage Diffusion|2022|384|✔|[清华](https://cloud.tsinghua.edu.cn/d/30ab8765da364fefa101/)
-[Make-It-3D](https://github.com/junshutang/Make-It-3D)|png|gif|artefacts.ai
+[Make-It-3D](https://github.com/junshutang/Make-It-3D)|png|gif|artefacts.ai https://www.csm.ai
 Wonder3D| Runway AnimateDiff  vino deforum
 [SadTalker]()|png,kpFaces|png||. see leiapix,genmo,ModelScope,civitAI,fliki,[D_ID](chat.d-id.com),[AIvoice](https://www.youtube.com/watch?v=yUuS-oTDSD4)
 [Paddle](https://kgithub.com/PaddlePaddle/PaddleOCR#-visualization-more)|ocr=png/pdf|docx / htm+box(json strXywhRi)|l,_need=box pdf_<br>picture `ruby{trans;sca;rot;}`|Baidu,multilingual OCR toolkits(support 80+ languages, provide tools,IoT)|2020|37|✔
@@ -94,7 +94,7 @@ Wonder3D| Runway AnimateDiff  vino deforum
 [DragGAN]()|png|pngs|vec2x2
 [DINOv2](https://vra.github.io/2023/07/14/dinov2-retrieval/)|pngs|png|
 [AnimeGAN](https://huggingface.co/spaces/akhaliq/AnimeGANv2)|png|png|sty|Landscape photos/videos to anime. [Paddle ver](https://github.com/PaddlePaddle/PaddleGAN/blob/develop/docs/zh_CN/tutorials/animegan.md)|2018|TBD
-[realeSRGAN](https://kgithub.com/xinntao/Real-ESRGAN/blob/master/README.md#portable-executable-files-ncnn)|pre=png|png|'+'x4plus (+face),k=4. [Bili lab](https://real-cugan.animesales.xyz/)|ncnn,Training Real-World Blind Super-Resolution with Pure Synthetic Data|2021|47||[zip](https://github.com/xinntao/Real-ESRGAN#portable-executable-files-ncnn)
+[realeSRGAN](https://kgithub.com/xinntao/Real-ESRGAN/blob/master/README.md#portable-executable-files-ncnn)|pre=png|png|'+'x4plus (+face),k=4. [Bili lab](https://real-cugan.animesales.xyz/)|ncnn,Training Real-World Blind Super-Resolution with Pure Synthetic Data, waifu2x|2021|47||[zip](https://github.com/xinntao/Real-ESRGAN#portable-executable-files-ncnn)
 [GFPGAN](github.com/TencentARC/GFPGAN)|face.png|png|v3, k=2|see also: [emoji](https://replicate.com/fofr/sdxl-emoji) PULSE FastPhotoStyle FaderNetworks pix2pix|2021|332||[gh](https://github.com/xinntao/Real-ESRGAN/blob/5ca1078535923d485892caee7d7804380bfc87fd/inference_realesrgan.py#L145)
 Midj|||SDXL,Skybox
 [Color-diff](https://github.com/ErwannMillon/Color-diffusion)|png|png
@@ -108,6 +108,7 @@ Midj|||SDXL,Skybox
 [F2F^ρ](github.com/NetEase-GameAI/Face2FaceRHO)|mp4 face.mp4|mp4,3DMM*2||speed=9*SOTA, >460M. [more](https://m.thepaper.cn/baijiahao_19128242)|2022|TBD
 [HQTrack](https://github.com/jiawen-zhu/HQTrack)|||
 [RMPPE.](github.com/ZheC/Realtime_Multi-Person_Pose_Estimation)|mp4|bones.npy||bottom-up approach for realtime multi-person pose estimation. [more.DensePose 4 WIFI](https://kgithub.com/geekfeiw/wifiperson/issues) |2017|TBD|✔
+“Follow-Your-Click”||gif|用户指哪动哪
 
 >再次感谢 [Nihui](https://github.com/nihui) [腾讯优图] 打包诸多nCNN应用的电脑端，用户运行很方便！
 

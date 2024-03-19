@@ -32,16 +32,16 @@ npNdF 错闭包替换
   藏赋值参数,at反序列-atTest,DLC.acty可吊销 :{渐验即类型}  -(Incy val) Out memoNo 元类TSet(T1).枚举ColConds 右冒号压行,远离二值化
    atSNR[[]权割],Sum(sum2,加/stepDP,[L0省略]).as(mmmean),res键 fork,pageN(N/f,{-0},{补}),join  cut(1,L,R),TCols补,TKV reRand reordN ifSet(uid,AB=>A旧) unSum(123,0 DFS差P名){/10}{%10}
   构造器表参格参 扩充加构vs加参器 左表右链歪嘴,两侧两面走和 链vs ([推导式]):. =:+goR .:改赋参赋链 asatF.(段造器) inc枚举域idk-RowLit终造器 语法4押韵-表围列确定,3造器三段论,行列-转取2多态 函记取全平权,传隐藏/传HUP(i)/传闭包 APtr NamesType ask-eg-or,RE:''AZ \0xbeyn _Pipe:v 
-  Str Int_Inc KV KSet Rn Nd {Len针} ''响应-单位式类型 .(Ln)(n) !改复制 中空乘 had(Set)!:找指针 Nd%[_ n/2]系数@ .[y x] .[0~~0]=iLast Out.t(rn).neg
-  -I接口.typed ^I单例与.asSuper Row.函Mem,KFrq os.导入:NO  LEGB界门杠幕括树终,LEG多层沙底  Fn:F.n1返回首参.nn2.(ABC arg3).查库 子类命题!F.YN
+  Str Int_Inc KV KSet In Nd {Len针} ''响应-单位式类型 .(Ln)(n) !改复制 中空乘 had(Set)!:找指针 Nd%[_ n/2]系数@ .[y x] .[0~~0]=iLast Out.t(rn).neg
+  -I接口.typed ^I单例与.asSuper Row.函回Mem,KFrq NO:os.导入  LEGB界门杠幕括树终,LEG多层沙底  Fn:F.n1返回首参.nn2.(ABC arg3).查库 子类命题!F.YN
   say:模板'doc或单行宏 #>注释>##T1层级重录 I.DOC.ABC,脚本头尾注 ~+-()/@Bit rem/- IntPos-^v<>  os-catchSQL ErrOS  inc.递推:止,{$Y}: 包自动=I,pkgs受名,std,导入:受_ my:this_ my{this,pkg,api} 已穷举vs funcs!
   ??-os-G工厂协议插件  捕获An:CoPU.Rets+=函序LnKV -闭包类宏'名常量'非(_:Num) lit(): (1~1):Fn粘贴 受匹= .js键 1门文学语言
   f.kw OS($).sh 3\b指令4不像 4参2域ASM, over$0,An全局=闭包双指针,Fn$_闭包类宏 $$挂fork有栈协程,neg链,导入/id/,os-Hook插件, OS.tok.nest Str.raw
   fs:'{""}'rw.v/dir Cofs (0~9).go{}共退域|CPU.IO.fork|CoPU.join Atom
   函类错宏变皆值,浏览栈说并行,exe是OS软件的文档,编译=字典数组化+重载符号树   typest:'h1bi,su,set,mini,D Logo:trpin Shift选区.md.hi 跑分,小说导包 .dot常量框/左背搜索 hi-moji和正则改语 
-  Iinc my funcs over An ??-  ().[]{}\:,;"'` ^彼읏я此以上以下、的の。#>」 +sum2* ,闭包返包, 短长期记忆栈 ,四国四语法,逗句免隔 'SI'(T:incOnly) [I Sav CLI]fastutil  异步-变量无错.受{点文匹}受{名方花铺}''
+  inc my funcs over An I??-  ().[]{}\:,;"'` ^彼읏я此以上以下、的の。#>」 +sum2* ,闭包返包, 短长期记忆栈 ,四国四语法,逗句免隔 'SI'(T:incOnly) [I Sav CLI]fastutil  异步-变量无错.受{点文匹}受{名方花铺}''
 
-
+rigaux merd https://blog.vero.site/post/noulith
 \[def,class,for knv]
 ul if-op[k] ol 
 

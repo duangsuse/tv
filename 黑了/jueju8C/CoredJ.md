@@ -38,7 +38,7 @@ asres映射表,3异步,atft组页栏乱
 - `as({key:x=>[x? 0 :NO, ]})` 用于字典或switch, 默认按'type'
 
 列表
-- at(Sum.as,key)可求和+分组, atsort即地照游标(.Sep)分组, 支持-字符串序数, 另有 at{Rate,N}
+- at(Sum.as,key)可求和+分组, atsort即地照游标(.Ins)分组, 支持-字符串序数, 另有 at{Rate,N}
 - fork,pageN(Nf,-.0),join(Sum.ln), cut(1,L=res,R=[]), cut(0,0)模拟py[:] 分页
 - TCols,TKV 分栏
 - rn.reRand率/().l<1/pageN/cut/cyc

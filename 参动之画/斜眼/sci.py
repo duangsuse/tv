@@ -524,6 +524,73 @@ if (abs(fragCoord.x) < 0.96) {
     drawLetter(fragColor, mod(fragCoord, vec2(0.19 , 0.25)) + vec2(0.0, 0.09), vec2(0.1, 0.2), vec2(0.35), 57);
 }//paper plane
 
+
+#define _SnowflakeAmount 200	// Number of snowflakes
+#define _BlizardFactor 0.2		// Fury of the storm !
+
+vec2 uv;
+
+float rnd(float x)
+{
+    return fract(sin(dot(vec2(x+47.49,38.2467/(x+2.3)), vec2(12.9898, 78.233)))* (43758.5453));
+}
+
+float drawCircle(vec2 center, float radius)
+{
+    return 1.0 - smoothstep(0.0, radius, length(uv - center));
+}
+
+
+void mainImage( out vec4 fragColor, in vec2 fragCoord ) //Simple snow and blizard 
+{
+    uv = fragCoord.xy / iResolution.x;
+    
+    fragColor = vec4(0.808, 0.89, 0.918, 1.0);
+    float j;
+    
+    for(int i=0; i<_SnowflakeAmount; i++)
+    {
+        j = float(i);
+        float speed = 0.3+rnd(cos(j))*(0.7+0.5*cos(j/(float(_SnowflakeAmount)*0.25)));
+        vec2 center = vec2((0.25-uv.y)*_BlizardFactor+rnd(j)+0.1*cos(iTime+sin(j)), mod(sin(j)-speed*(iTime*1.5*(0.1+_BlizardFactor)), 0.65));
+        fragColor += vec4(0.09*drawCircle(center, 0.001+speed*0.012));
+    }
+}
+
+//https://iquilezles.org/articles/palettes/
+vec3 palette( float t ) {
+    vec3 a = vec3(0.5, 0.5, 0.5);
+    vec3 b = vec3(0.5, 0.5, 0.5);
+    vec3 c = vec3(1.0, 1.0, 1.0);
+    vec3 d = vec3(0.263,0.416,0.557);
+
+    return a + b*cos( 6.28318*(c*t+d) );
+}
+
+//https://www.shadertoy.com/view/mtyGWy
+void mainImage( out vec4 fragColor, in vec2 fragCoord ) { //Shader Art Coding Introduction 
+    vec2 uv = (fragCoord * 2.0 - iResolution.xy) / iResolution.y;
+    vec2 uv0 = uv;
+    vec3 finalColor = vec3(0.0);
+    
+    for (float i = 0.0; i < 4.0; i++) {
+        uv = fract(uv * 1.5) - 0.5;
+
+        float d = length(uv) * exp(-length(uv0));
+
+        vec3 col = palette(length(uv0) + i*.4 + iTime*.4);
+
+        d = sin(d*8. + iTime)/8.;
+        d = abs(d);
+
+        d = pow(0.01 / d, 1.2);
+
+        finalColor += col * d;
+    }
+        
+    fragColor = vec4(finalColor, 1.0);
+}
+
 https://shadertoyunofficial.wordpress.com/2017/11/11/playable-games-in-shadertoy/
 https://www.shadertoy.com/view/lssGW4 共享out的pong
 https://www.shadertoy.com/view/Msj3zD 注释好。会模拟之前几帧的mario.y ，能在不保留buf的前提下跳跃. marioYSpd -= 2.5; 鬼畜..
@@ -532,14 +599,14 @@ https://www.shadertoy.com/view/4sGSDw ABbuf粒子流体
 https://www.shadertoy.com/view/Ms2SD1 程序海面/L200
 https://www.shadertoy.com/view/4ts3z2 雾声音 L250
 https://www.shadertoy.com/view/ldXXDj L200 doc
-https://www.shadertoy.com/view/XslGRr 云阳raymarch /200 https://www.shadertoy.com/view/3syfRd 仅云/160 https://www.shadertoy.com/view/ll3SWl 亮色/90 https://www.shadertoy.com/view/llXSW2 /200
+https://www.shadertoy.com/view/XslGRr 云阳raymarch /200 https://www.shadertoy.com/view/3syfRd 仅云/160 https://www.shadertoy.com/view/ll3SWl 亮色/90 https://www.shadertoy.com/view/llXSW2 /200 极光/170 https://www.shadertoy.com/view/XtGGRt
 https://www.shadertoy.com/view/3l23Rh 体积雾龙卷/160 https://www.shadertoy.com/view/lsySzd 火云/281 https://www.shadertoy.com/view/4lfSzs 小云/100
 https://www.shadertoy.com/view/4slGz4 @iq sound/100 link2doc graphtool.com
 https://www.shadertoy.com/view/ftVXDD 157 https://www.shadertoy.com/view/Xsd3R2 /120 sound https://www.shadertoy.com/view/Mt3GWs 235 https://www.shadertoy.com/view/4ttGDH 200 (fun Noise Contour, blog http://candycat1992.github.io/)
-https://www.shadertoy.com/view/wd33zl glass
+https://www.shadertoy.com/view/wd33zl glass  Drive https://www.shadertoy.com/view/MdfBRX Heartfelt  https://www.shadertoy.com/view/ltffzl
 https://www.shadertoy.com/view/fstyD4 梵高 https://www.shadertoy.com/view/flcyRB
 https://www.shadertoy.com/view/NslGRN 玻璃体素
-https://www.shadertoy.com/view/XdcGW2 GoL 海岸
+https://www.shadertoy.com/view/XdcGW2 GoL 海岸  
 https://www.shadertoy.com/view/fslyW4 黄金比例/100
 https://www.shadertoy.com/view/fsXcRS 分形绳子/150
 https://www.shadertoy.com/view/wl2SzR 彩绳子/30
@@ -548,12 +615,12 @@ https://www.shadertoy.com/view/4dG3R1 修改react() 尾main polycu.be
 https://www.shadertoy.com/view/7lKSWW 万花筒/300
 https://www.shadertoy.com/view/lddGWl 海/60
 https://www.shadertoy.com/view/4dccR4 棱镜光/60
-https://www.shadertoy.com/view/MsVfWy 星辰/120 https://www.shadertoy.com/view/ttlfRM 泡泡/80 彩幕/31 https://www.shadertoy.com/view/lscBRf 雨滴/50 https://www.shadertoy.com/view/MlfBWr 瀑布/10 https://www.shadertoy.com/view/4dXSzB https://www.shadertoy.com/view/4ltSRS 烟雾 雪/10 https://www.shadertoy.com/view/Ml3SRs
+https://www.shadertoy.com/view/MsVfWy 星辰/120 https://www.shadertoy.com/view/ttlfRM 泡泡/80 彩幕/31 https://www.shadertoy.com/view/lscBRf 雨滴/50 https://www.shadertoy.com/view/MlfBWr 瀑布/10 https://www.shadertoy.com/view/4dXSzB https://www.shadertoy.com/view/4ltSRS 烟雾 雪/10 https://www.shadertoy.com/view/Ml3SRs Voronoi https://www.shadertoy.com/view/XdsSDn
 https://www.shadertoy.com/view/3dVXDc 烟雾/100 https://www.shadertoy.com/results?query=Gradient&sort=popular&from=60&num=12
 https://www.shadertoy.com/view/ldd3DB Fish/200
 https://www.shadertoy.com/view/lsXcWn Emoji 圆 doc
 https://www.shadertoy.com/results?query=tag%3Dscreensaver
-https://www.shadertoy.com/view/MsVfz1 /Hex Glow,Week
+https://www.shadertoy.com/view/MsVfz1 /Hex Glow,Week Hex Neon Love  https://www.shadertoy.com/view/3tKSWV
 https://www.shadertoy.com/view/tsV3Rw bluesketch VFX
 https://www.shadertoy.com/view/7tcGWB Octgon
 https://www.shadertoy.com/view/Nt23Ry firefly 47
@@ -897,8 +964,72 @@ void mainImage(out vec4 o, vec2 v){ //cube, (fun quadtree)
 	P P P P        // 4*3 segments
 }
 
+// 200 chars - iq and Fabrice not only fix a bug, they kill another 13 chars:
+
+void mainImage(out vec4 o, vec2 u) {//Torus Interior - 200 chars 
+    o*=0.;
+    vec3 R = iResolution;
+    for ( o.z++; R.z++ < 64. ; )
+        o += vec4((u+u-R.xy)/R.x,1,0)*(length(vec2(o.a=length(o.xz)-.7,o.y) )-.5);
+    o += sin( 21.* ( atan(o.y,o.w) - atan(o.z,o.x) - iTime ) ); }
+
+#define C(U) texture( iChannel0, U*2./H/16. + fract( vec2( int(++t), 15-int(t)/16 ) / 16. ) ).w - .5//
+#define M void mainImage(out vec4 O, vec2 U) {                              \
+    float H = iResolution.y, t = 3.*iTime;                                  \
+    O =  mix( texelFetch(iChannel1, ivec2(U)-1, 0) * vec4(.985,.99,.995,1), \
+              ++O, clamp( 1. - H* mix( C(U), C(U), fract(t) ) , 0.,1.) );   } /*
+     iFrame%10 > 0 ? ++O : O      // variant
+*/ //3D font morph
+
+#define R mat2(cos(a/4.+vec4(0,11,33,0)))
+
+void mainImage(out vec4 O, vec2 I ) //"Origami" by @XorDev
+{
+    //Initialize hue and clear fragcolor
+    vec4 h; O=++h;
+    
+    //Uvs and resolution for scaling
+    vec2 u,r=iResolution.xy;
+    //Alpha, length, angle and iterator/radius
+    for(float A,l,L,a,i=7.;--i>0.;
+            //A = anti-aliased alpha using SDF
+            //Pick layer color
+            O=mix(h=sin(i+a/3.+vec4(1,3,5,0))*.2+.7,O, A=min(--l*r.y*.02,1.))*
+            //Soft shading
+            (l + h + .5*A*u.y/L )/L)
+        
+        //Smoothly rotate a quarter at a time
+        a-=sin(a-=sin(a=iTime*4.+i*.4)),
+        //Scale and center
+        u=(I+I-r)/r.y/.1,
+        //Compute round square SDF
+        L = l = max(length(u -= R*clamp(u*R,-i,i)),1.);
+        
+        
+}
+
+// 362 chars - Thanks to timestamp and Fabrice, this is 7 chars lighter!
+#define m  *= mat2( cos( vec4(0,33,55,0) + t*//
+#define M  ( s.xz m.4)), s.xy m.3)) ,                        \
+               length(s + sin(t*.7))                         \
+             * log( length(s) + 1. )                         \
+             + sin( sin(sin(s+=s+t).y+s).z + s ).x * .5 - 1. \
+           )
+
+void mainImage(out vec4 o, vec2 u){ //smoke ether
+    vec3 p,s,O,R = iResolution;
+    for( float t = iTime, d = 2.5, r;
+         R.z++ < 7.;
+         o.xyz = O = max(O+.7-r*.28,O)
+                   * ( vec3(.1,.3,.4) - vec3(10,5,6)*(M-r)/4. )
+       )
+        s = p = vec3( (u - .5*R.xy ) / R.y * d, 5.-d ),
+        d += min( r = M, 1. ),
+        s = p + .1;
+}
+
 #define N(h) fract(sin(vec4(6,9,1,0)*h) * 9e2)
-void mainImage(out vec4 o, vec2 U) { //fireworks[SH17a]
+void mainImage(out vec4 o, vec2 U) { //fireworks[SH17a] //https://www.shadertoy.com/user/BigWIngs/sort=popular&from=8&num=8
     vec2 u = U/iResolution.y;
     float e, d, i=-2.;
     for(vec4 p; i++<9.; d = floor(e = i*9.1+iTime),p = N(d)+.3, e -= d)
@@ -994,7 +1125,8 @@ void mainImage( out vec4 fragColor, in vec2 fragCoord ) //cartoon VFX
 	fragColor = vec4(col, 1.0);
 }
 
-// Raymarch Edge Detection by HLorenzi!
+
+// Raymarch Edge Detection by HLorenzi! https://www.shadertoy.com/view/WlSfRD
 // Detects whether a ray that comes too close to a surface goes away.
 #define EDGE_WIDTH 0.5
 #define RAYMARCH_ITERATIONS 40
@@ -1139,18 +1271,114 @@ void mainImage( out vec4 fragColor, in vec2 fragCoord )
 		fragColor = vec4(0,0,0,1);
 }
 
+const vert = `
+attribute vec4 a_position;
+varying vec4 v_color;
+
+void main() {
+  gl_Position = vec4(a_position.xy, 0.0, 1.0);
+  v_color = gl_Position * 0.5 + 0.5;
+}`
+
+const frag = `
+precision mediump float;
+
+varying vec4 v_color;
+uniform float time;
+
+void main() {
+  gl_FragColor = v_color;
+  gl_FragColor.r = v_color.r * 0.5 * (1.0 + sin(4.0*time) );
+  gl_FragColor.g = v_color.g * 0.5 * (1.0 + sin(1.0 + 2.0*time) );
+}`
+
+function animate(t) {
+	gl.uniform1f(timeUniformLocation, t / 1000); // convert from milis to seconds
+  gl.clear(gl.COLOR_BUFFER_BIT);
+  gl.drawArrays(primitiveType, offset, count);
+  requestAnimationFrame(animate)
+}
+
+
+var gl = document.getElementById("canvas").getContext('webgl');
+var vertexShader =gl.createShader(gl.VERTEX_SHADER);
+gl.shaderSource(vertexShader,vert);
+gl.compileShader(vertexShader);
+var fragmentShader =gl.createShader(gl.FRAGMENT_SHADER);
+gl.shaderSource(fragmentShader,frag);
+gl.compileShader(fragmentShader);
+var program = gl.createProgram();
+gl.attachShader(program, vertexShader);
+gl.attachShader(program, fragmentShader);
+gl.linkProgram(program);
+if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
+	console.log(gl.getShaderInfoLog(fragmentShader))
+  console.log(gl.getShaderInfoLog(vertexShader))
+}
+
+var timeUniformLocation = gl.getUniformLocation(program, "time");
+var positionAttributeLocation = gl.getAttribLocation(program, "a_position");
+var positionBuffer = gl.createBuffer();
+gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
+var positions = [
+  -1, -1,
+  -1, 1,
+  1, 1,
+  1, 1,
+  1, -1,
+  -1, -1,
+];
+gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(positions), gl.STATIC_DRAW);
+
+gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
+gl.clearColor(0, 0, 0, 0);
+gl.clear(gl.COLOR_BUFFER_BIT);
+gl.useProgram(program);
+gl.enableVertexAttribArray(positionAttributeLocation);
+gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
+// // Tell the attribute how to get data out of positionBuffer (ARRAY_BUFFER)
+var size = 2;          // 2 components per iteration
+var type = gl.FLOAT;   // the data is 32bit floats
+var normalize = false; // don't normalize the data
+var stride = 0;        // 0 = move forward size * sizeof(type) each iteration to get the next position
+var offset = 0;        // start at the beginning of the buffer
+gl.vertexAttribPointer(
+  positionAttributeLocation, size, type, normalize, stride, offset)
+// // draw
+var primitiveType = gl.TRIANGLES;
+var offset = 0;
+var count = 6;
+gl.drawArrays(primitiveType, offset, count);
+animate()
+
+
 http://www.joshbarczak.com/blog/?p=787 Raytrace packet
 https://www.shadertoy.com/view/XlGcRh GL hash visual
 https://www.shadertoy.com/view/WdB3Dw Toruus
+https://www.shadertoy.com/view/7df3DM 弹力
+https://www.shadertoy.com/view/llyBDW 布料
 https://www.shadertoy.com/view/XltSWj# 4D noise
 https://zhuanlan.zhihu.com/p/358436777 GLSL2Unity
 https://zhuanlan.zhihu.com/p/52807564 GLSL入门
+https://zydiii.github.io/ShaderToy-For-Beginners7
+https://github.com/Zydiii/LearnTaiChi
+https://pmlpml.github.io/unity3d-learning/
+https://zhuanlan.zhihu.com/p/542447481
+https://www.shadertoy.com/view/7sB3Wz 伪碰撞
+https://www.shadertoy.com/view/NtlGz7 圆形弹力
+https://www.shadertoy.com/view/MclXRj
+https://www.shadertoy.com/view/tstSz7 鼠标粒子
+https://www.shadertoy.com/view/Nty3D3
+https://github.com/danilw/godot-utils-and-other/blob/master/particle_self_collision/mini_example/shaders/Particles_vert.shader
+https://www.geeks3d.com/hacklab/20231203/shadertoy-demopack-v23-12-3/
+https://api.arcade.academy/en/2.6.13/tutorials/shader_toy/index.html
 
 https://www.shadertoy.com/view/4sjGWw 3D基本形状
 https://www.shadertoy.com/view/wdffWj 蒙特卡罗渲染
 https://www.shadertoy.com/view/ldXBzH 声音 (fun trace)
 https://www.shadertoy.com/view/ttlyDX text
 https://www.shadertoy.com/view/XsycRw 波
+https://www.shadertoy.com/view/4tGfDW smoke
 https://www.shadertoy.com/view/MltXz2 分形
 
 https://www.shadertoy.com/view/XlBXRh wave grid
@@ -1165,6 +1393,7 @@ https://www.shadertoy.com/view/wlXBWM lineSeg3D
 https://www.shadertoy.com/view/tltSzM neon/400
 https://www.shadertoy.com/view/lds3zr Ribbons/200
 https://www.shadertoy.com/results?query=tag=distance&sort=popular&from=48&num=12 粒子和贝兹
+https://www.shadertoy.com/view/lscczl 平铺预制粒子9宫格
 https://www.shadertoy.com/view/llXfRr 分形树/212
 https://www.shadertoy.com/view/Msl3Rr 频谱木柱/330
 https://www.shadertoy.com/view/Wlt3DM bend
@@ -1245,3 +1474,41 @@ Paint=(f,kw={})=>{
 jbin=f=>(f+'').replaceAll('window.runnerWindow.protect.protect','(x=>0)')
 
 Paint(rbRoll)
+
+let L,P,vel, vKbd //画布L 点P 速度v
+function draw() {
+  background(220);
+  P._p(vel); P._lim(L); if(P.x<0||P.y<0)vel.v*=-1//进1步并检测碰撞
+  P.i(translate);rotate(vel.a*2*PI);text("⇨",0,0)//(1,0) 时a==0
+}
+function setup() {
+  vKbd={w:N2(0,-1),s:N2(0,1), a:N2(-1,0),d:N2(1,0), q:-.1,e:.1}
+  L=N2(400, 400), P=L.__.mm(2); vel=N2(0)
+  L.i(createCanvas)
+}
+function keyPressed(k) {
+  (k=vKbd[key]).turn? vel._p(k) : //to(k)
+  k? vel.a+=k :0
+}
+
+N2=(x,y=x)=>new _N2(new Float32Array(2),x,y)
+data=(kv,T)=>{
+  let s=(T+''), sub=(s,f)=>s.replace(/(\w+)/g,f), kvs=kv.split(','), cg='',
+  vec=(k,v)=>`${k.substr(1)}(v){let a=this._,i=${kvs.length-1};while(i-->0)a[i]${k[0]}=${v}; return this}`
+  if(kvs[0]=='_') {
+    '+p *pp -m /mm %lim \tto'.split(' ').forEach(k=> cg+=vec(k,'v')+'_'+vec(k,'v._[i]'))
+    kvs.slice(1).forEach((k,i)=> cg+=`get ${k}(){return this._[${i}]}set ${k}(v){this._[${i}]=v}`) 
+  }
+  T=eval(sub(s,(m,k)=>kvs.includes(k)?`this.${k}`:k).replace('{\n',`{constructor(${kv}){${sub(kv, `this.$1=$1`)}}`+cg))(); this[T.name]=T
+}
+
+data('_,x,y', ({cos,sin,atan2,sqrt,PI}=Math,tr=2*PI)=>
+class _N2 {
+  get a(){return atan2(y,x)/tr}
+  get v(){return sqrt(y**2+x**2)}
+  turn(a,v){x=v*cos(a*tr);y=v*sin(a*tr); return this}
+  get __(){return N2(x,y)}
+  i(f){return f(x,y)}
+  set a(a){this.turn(a,this.v)}
+  set v(v){this.v1(); this.pp(v)}  v1(){let v=this.v; if(v!=0)this.mm(v)}
+})
