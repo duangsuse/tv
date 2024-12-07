@@ -6,6 +6,8 @@
 
 但这次视频也不提太多专业知识，此次的『操作系统』指代80x86(8086的改进,386引入虚地址)机上和 BIOS,GRUB 一样 __运行在Ring0 ，被实模式应用加载的 x86 (虚地址内存)保护模式管理工具__，一个带Logo的 ~~VGA打字机~~，没错这回没有 上下文切换PCB、[IDT](https://cloud.tencent.com/developer/article/1145364), [8259A中断](https://zhuanlan.zhihu.com/p/26464793)注[册](https://jishuin.proginn.com/p/763bfbd6c6e9) 等专业内容
 
+https://www.zhihu.com/question/552173126/answer/3353013354 各编程语言为什么不用左移负数位代替右移？ 答：可读性更高。
+
 反正，有了你们也不会看；就像某些企业家说是支持国产系统，其实只是想跟个风
 
 >v86.copy.sh

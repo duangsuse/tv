@@ -207,7 +207,7 @@ while True:
 
 你可以试着支持伸缩旋转光标，甚至[粒子特效](www.websiteasteroids.com)。用一种很新的方式学游戏开发！
 
-对了，应该看看那个分形！去 [ShaderToy](https://www.shadertoy.com/view/4ttBWM) 搜搜3D版吧(包括上面的双摆)，或者，看看[Taichi☯️ 物理语言](https://github.com/taichi-dev/taichi#run-your-hello-world)、[js1k](https://js1k.com/2016-elemental/) 等信号处理应用！
+对了，应该看看那个分形！去 [ShaderToy](https://www.shadertoy.com/view/4ttBWM) 搜搜3D版吧(包括上面的双摆)，或者，看看[Taichi☯️ 物理语言](https://github.com/taichi-dev/taichi#run-your-hello-world)、[js1k](https://js1k.com/2016-elemental/)、[OGL 3D兔旋转](https://www.zhihu.com/question/430885980/answer/3076867653) 等信号处理应用！
 
 - [Taichi用99行实现了向量粒子-水和果冻](https://zhuanlan.zhihu.com/p/158205579)
 

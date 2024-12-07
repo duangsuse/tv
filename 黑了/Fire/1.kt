@@ -111,6 +111,11 @@ enum class OutputFormat(val defaultSuffix: String) {
 	IR(".ll"), BITCODE(".bc"), OBJECT(".o"), ASSEMBLY(".asm")
 }
 
+.: CLI
+  KtCompiler -out-fmt-targ-opt(u EXEC "" 0)
+    -main godbolt
+    - print As: time
+
 class KtCompiler(
   var output:File,
   var format:OutputFormat=OutputFormat.EXECUTABLE,
@@ -127,7 +132,6 @@ main source.kt files
   var main:Ln<File>; set(a) {}
   fun printTime(){}
 }
-
 
 import kotlin.reflect.full.declaredMemberProperties
 import kotlin.reflect.full.primaryConstructor
@@ -296,7 +300,7 @@ class cli(
 }
 
 class Cli : CliktCommand() {
-  val v: Boolean by option(help = "enable verbose mode").flag()
+  val v: Boolean by (option -help "enable verbose mode") flag
   val username: String? by option(help = "name of the user")
   val count: Int? by option(help = "number of the widgets").int()
   val source: List<String> by argument(help = "source filenames").multiple()

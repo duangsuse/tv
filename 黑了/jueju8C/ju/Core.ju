@@ -5,10 +5,19 @@ use ju.expr
   Pair(A:A,B:B) Pair3(A:A,B:B,C:C)
 'T'PairOf=Pair[T T]
 'T'PairOf3=Pair3[T T T]
+'F'Decorate=Fn0[]:F
 
 /*  `from traceback_with_variables import activate_by_import` */
 https://quasiquotes.readthedocs.io/en/latest/#the-c-quasiquoter
-'F'Decorate=Fn0[]:F
+def goto(line):
+  breakpoint(commands=['n', f"j {line}", 'c'])
+
+#!/bin/sh
+#![allow(unused_attributes)] /*
+OUT=/tmp/tmp && rustc "$0" -o ${OUT} && exec ${OUT} $@ || exit $? #*/
+
+use std::process::Command;
+use std::fs;
 
 /*游标*/
 ''Idx=Cnt

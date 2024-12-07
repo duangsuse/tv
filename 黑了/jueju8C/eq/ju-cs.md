@@ -126,7 +126,7 @@ exp=(s/*token o算符x单项*/, l/*evels 大则紧,深 *<+ */)=>{
 不过，树主要是计算器级别的语意。在吃def时，参数-引用 被查找到局部Var(v) 默认保存了$0这样的编号。在调用时，从栈上取，放回运算结果就能实现调用链乃至递归
 
 非局部的变量"this"，就是匿名函数的另一种全局表，叫“闭包”。 它和调用栈、全局import 构成了函数的运行期。
-- 为什么 `nonlocal _; global x; x=1` 执行能免调试看变量？应用如 `from traceback_with_variables import activate_by_import`
+- 为什么 `nonlocal _; global x; x=1` 执行能免调试看变量？应用如 `from traceback_with_variables import activate_by_import` pdb hunter trace ic pysnooper
 - 闭包 `栈转堆`。把外层局部 `(a,b)=> ()=>` ，创建函数对象。如查找 b=第i个this的编号变量j, b=i0.j1
 - 协程 `栈转堆`。把外层return `()=>delay(1)`，弄成回调时函续。对浏览器栈呢，返回键就是回调-赋值再跳转回链接
 - `对象是多方法的「共参数」函数`，函数就是能.invoke() 的「藏参数」对象，比如藏起闭包这"this"。如js的定义get/set，以支持private可见性,final等函定性。

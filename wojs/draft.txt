@@ -1,0 +1,53 @@
+
+
+sixfane也称为ASToR范式，其标准库仅由算式as or(,)、类型To Is、IO res组成。她内建逻辑关系式与群论计算图，以自带电池：LINQ和响应式 模板填充 函数转CLI» 类和方法/构造器解耦。
+对嵌套数据，她仅规范五项Arrinc/Strnum/Tuple/orEnum/Refcell，让sixfane类型字符前缀于变量名，便可把API的草稿组织得行云流水、肝胆相照。堪称能点破函数性格的MBTI <: <3
+而看着简洁\=功能简陋的行列算数，为数据的静态多型、动态验证提供一致的Is{}:.修饰，让分支如 x.0 x.(1~2), x/0 x/y 般泾渭分明。表格值的上下界为CMem~Cry
+Col“栏目列”，能随意放在堆/栈/指针内，Row更支持值-值 或 值TImpl.As TrimLits。C的fopen()也在u.和mk,cell监听里得到了史诗级强化，wait多口输入 无需新建线程傻等return
+栏目答(A,B)=>A+B 、可适配的接口TImpl(.TIDlitsz As)，直接消灭了使java难以如js般简洁的“病态类型”两门语言问题
+对OOP结构和函数反射，OSon基于 RCC #CRR_LEGB，即 Row,rw Col,Ln cell。类名有语意，I*为基类接口/*IS多选enum/*Fn带seal，类中的语句集至As()，构造器则以extfun mk()多写。语句级更有Eval，OSon的第0~1期反射！(编译期cellProxy引用计数)
+她还为中文圈准备了术语-俗语与易错发音词典，以及一些名言警句！
+“简单是可靠代码的先决条件，而非可靠的牺牲品——Dijkstra, 发明递归的人”
+“优雅的程序与它对应的数据，在读写前直观绑定——Daniel Friedman, 箭头函数的先驱”
+“业界有两个设计软件的方法，一种简单大方，明确没有堆砌缺陷，一种繁琐抽象，连缺陷都难以写明确——Hoare, 快速排序之父”
+“编程赞歌是组合搭配的赞歌，框架伟大是拆分代换的伟大。代码是流动的数据，内存是暂停的程序——duangsuse, 为了整齐排在前面”
+在错误的方向上停止，就是前进！该奋斗的，不是为了除错避坑熬一整夜的疯子们，而是忘不掉正确答案的天才。编程从 How, What, Why 最终要学会 Why not。能与曾经奋斗出的代码决裂，才是热爱代码的标志。
+“不能改变你代码画风的语言，不值得你去学！——Alan Perlis, 第一个图灵奖得主”
+* https://zhuanlan.zhihu.com/p/20788272
+* https://tech.codelc.com/docs/thinking/quotes.html
+
+设计模式与语言特性1:1对应。具体来说，写应用归于6个"子语言"： asWheezy集合!歪嘴流控错处 symmetryIO正反访问函数 reactSession&Rowcols逻辑式深更新与校验 hiSumUnit物理量全局微分
+sugarBindLit路径绑定,二段求值:变量类型作为值 osCPU回调含续体,json与MIME虚拟机
+
+
+
+
+bindLit主要靠evar().as/or/over链生成，支持x()记为x.As 而x[]即 x.Dot() or lib.Dot(x,,res); +-*/^%点乘 取余< 同时 并列 ==和多参 记为 十一Xノ,XX,Xsum RemLt Lt X or As
+Is{<>\=;}{} 是逻辑且或非。\< 可由>=, \=由!==, x\由 x.neg, in a由 evar(a).KV(x)!=pass 表示；以Is,As替换BitSet和赋值
+亦有 fetch().as(fx.json.data) 单链，fx.json()()默认为res.v.json?.()
+#CRR_LEGB # Call Ref Req{-arg}G.E.L. @Lit EVal Getset liB/dictT/listF/Eevar, 元方法wasLit/Enclosed/Get/Built
+栈帧支持(0~Z)36个局部，包括被自动传入的全局值。wojs仅支持后6个作为参数(A-F): "Diane's silk dress costs $89"
+
+osCPU支持 线程作回调 on=  
+ CEnv<取注入> CPU.run1addMainIO(装饰器) CoPU.lock1/atom(0)/addSW/waitGroup{}
+
+C=mk{Pair{A=="hi"; B==0}} //不使用upsert，这样要另set{},不能复制粘贴了
+R=Pair{B==0}, Pair{by(A);ret(A);all_uniq(B to Max); B>0}, Pair.buf(100){}.p(0)
+U=Pair{set{A=="bye"} B==0}
+D=..set(null)
+RC=Pair{setNew{B==B+1} B==0}
+连接词= Is({A==x}, {B==y; 1<2}), 包括 _ !is, *like,in
+链接表= join(INNER){Film.starring==Actor.id}; +代表unionAll
+宏=Pair(Pair.sql {B==0}), on f2 AB
+集合类= [a b c].sql<Pair>{B==0}
+事务= commit{}
+
+
+pyl 洛书约法三章：
+允许块调用(){}{}: 即后缀式def:(x-y str int)()取代装饰器，并让:_x=arg0.x。允许 py\n#line 1 "a" ~
+预处理器多行注释，_def/x.h 定义_x()，含###\n 的A定义 A_0,1,..
+允许省略{}[]内:, 并增加bash赋值调用链，即二项赋值 x 1-[1x 2].0, vars: n 0; 括号调链 git help"v1" init(), a 2 x 则是 a(2); a(x)。 为此，x:=1+x 记为 x: 1+this 或 x/ (1+x)
+cell变量化，f'{x}'等于_f(['', ''],x)，将Type<>视为带cell的const。为小写类型支持typefns.range等扩充如.As，这样就能通过库跨语言粘贴简单的逻辑
+inc(0,9).As:(i)
+  i%2==0: say: f'{i} even'
+为了文学编程，Unicode 'FILLER, \p{Cf,Mn}\u2800 ' 如 U+3099和U+309A 不能存在于命名或字面量

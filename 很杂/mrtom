@@ -37,17 +37,19 @@ bits=(a,bN, bn,bi)=>{let b=x=>x, i=bn.toFixed&&bN.toFixed?0x00: (b=BigInt, bn=b(
 }
 
 {
-let enc=(K,R64)=>{let bn=Math.log2(K), tm=reTrim(base.pad/*=*/), charz=(N,z/*Deco*/, j,f)=>
-    (s,EQ,r)=>(r=j(chunk(z&&q2?tm(s):s,N, [f, n=>(EQ=-( (z?Math.round(n*kA): n/kA>>0)), newA(n,_=>z)), eof=>f(eof).slice(0,EQ)] )), z?r:r+base.pad.repeat(q2?-EQ:0) ),
-  [A,B]= (5==bn?[(bn=5n,5),8] : 4==bn?[1,2] : R64.ratio) || [3,4], q2=Number(bn)%1==0, kA=K!=32?1: A/B
+  //按膨胀率 3b:4c 补足3个\x00 重分组，查码表后换成'='
+let enc=(K,R64)=>{let bn=Math.log2(K), tm=reTrim(base.pad/*=*/), charz=(N,z/*Decode*/, j,f)=>
+    (s,EQ,r)=>(r=j(chunk(z&&z85?tm(s):s,N, [f, n=>(EQ=-( (z?Math.round(n*kA): n/kA>>0)), newA(n,_=>z)), eof=>f(eof).slice(0,EQ)] )), z?r:r+base.pad.repeat(z85?-EQ:0) ),
+  [A,B]= (5==bn?[(bn=5n,5),8] : 4==bn?[1,2] : R64.ratio) ||  //b32,16
+  [3,4], z85=Number(bn)%1==0, kA=K!=32?1: A/B //trim tail, nc=4,5,6 的膨胀率(B/A)是 2/1, 8/5, 4/3. 对于z85(nc非整数) pad=禁用
   return Eqv(
-  charz(A,0, b=>b.join(''), u=>{let a,s="",i=B; if(q2){
+  charz(A,0, b=>b.join(''), u=>{let a,s="",i=B; if(z85){
     a=bits(u,8, bn,K-1) ;while(i-->0){s=R64[a()]+s} } else {
     a=bits(u,8, 32,0xFFFFFFFF)(); for(;i-->0;a=a/K>>0)s=R64[a%K]+s
     }
     return s
   }),
-  charz(B,R64.at(-1), b=>b.flat(), u=>{u=u.split('').map(x=>R64.indexOf(x)); let a,s=[],i=A; if(q2){
+  charz(B,R64.at(-1), b=>b.flat(), u=>{u=u.split('').map(x=>R64.indexOf(x)); let a,s=[],i=A; if(z85){
     a=bits(u,bn ,8,0xFF) ;while(i-->0){s.unshift(a())} } else {
     a=0; u.forEach(di=>a=a*K+di); for(;i-->0;a=a>>8)s.unshift(a&0xFF)
     }
@@ -55,7 +57,11 @@ let enc=(K,R64)=>{let bn=Math.log2(K), tm=reTrim(base.pad/*=*/), charz=(N,z/*Dec
   })
   )
 },rt=(t,k)=>Object.assign(reCGrp(t),{ratio:k}),
-  a=[64,'u64',16,32,'u32',2, 85,'z85'], tb=[["AZaz09",'+/'],["AZaz09",'_-'], ['09AF'],['AZ','234567'], ['09AV'] ,rt(["01"],[1,8]),rt(["!u"],[4,5]),rt(["09azAZ",".-:+=^!/*?&<>()[]{}@%$#"],[4,5]) ]
+  a=[64,'u64',16,32,'u32',
+     2, 'a85','z85','b58'], 
+  tb=[["AZaz09",'+/'],["AZaz09",'_-'], ['09AF'],['AZ','234567'], ['09AV'] ,
+      rt(["01"],[1,8]), rt(["!u"],[4,5]),rt(["09azAZ",".-:+=^!/*?&<>()[]{}@%$#"],[4,5]),
+     "123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz"] //nInput%4 must 0
 
 base={ofChars:enc, pad:'='}
 a.forEach((k,i)=> base[k]=pipe(UTF(),enc(+k?k:k.slice(1), tb[i].map?reCGrp(tb[i]):tb[i] )) )
@@ -63,12 +69,71 @@ a.forEach((k,i)=> base[k]=pipe(UTF(),enc(+k?k:k.slice(1), tb[i].map?reCGrp(tb[i]
 
 
 
-// a=['abc', 'caty', 'catsy','goodgy','slamiiyz','a','ab']
-a=[...reCGrp(["AN"])].map(k=>[...reCGrp([`A${k}`])].join('') ) 
-fs=[base.u64,base.u32,base[85],base[16]]
+a=['abc', 'caty', 'catsy','goodgy','slamiiyz','a','ab','Man ']
+// a=[...reCGrp(["AN"])].map(k=>[...reCGrp([`A${k}`])].join('') ) 
+  fs=[base.z85]//[base.u64,base[32],base[85],base[16]]
 console.table(a.map(x=>[x,...(r=fs.map(f=>f.cat(x) )), r.map((y,i)=>fs[i].cut(y)).join()] ))
 //for s in `cat`; do for f in base{64,32hex}; do echo -n $s|basenc --$f; done done
 
+basenc(K, radix="ABC..+/") 的每字符吃掉 b:bytes 里 nc=log2(K)位
+nc=4,5,6 的膨胀率(B/A)是 2/1, 8/5, 4/3. 对于z85(nc非整数) pad=禁用
+A85让 bytes 对齐4字节 ，\x00{4}编码为'z'，一组字节>int32 因此 `*,+ 和 <<, |` 有不一样的地方，直接用+会导致 结果丢失1个bit
+
+- reGrp(A, join,enc, zpad)(b) 对b+zpad 分组转码，最后去掉nPad 补上'='
+- reBit(8,nc, b,K-1) 把8bit 转为nc bit 的流. (nc,8, b,0xFF)反之
+- enc 转码 radix[流], "SGVs"->流
+zip([64,16,2, 32,85], [
+        ["AZaz09", may(b'+/',b'_-')], ['09AF'], ["01"],
+    may(['AZ',b'234567'],['09AV']),
+    may(["09azAZ",b".-:+=^!/*?&<>()[]{}@%$#"], ["!u"],
+        ["09AZaz",b"!#$%&()*+-;<=>?@^_`{|}~"]) ])}
+
+Lexer=kv=>{
+  let re=Object.keys(kv).map(x=>`(${x})`).join('|'), mf=Object.values(kv),m,i,j=0
+  re=RegExp(re, 'gy')
+  return (s,ontok)=>{
+    for(m of re[Symbol.matchAll](s)) ontok(
+      mf[(j=m.findIndex((x,i)=>null!=x &&i!=0))-1](m[j]),  (i=m.index), i+m[0].length
+    )
+  }
+}
+
+f=Lexer({
+  '\\d+':parseInt,
+  '[a-zA-Z]+':s=>s,
+  '\\s+'(){}
+})
+
+rep=(txt,on, n=null)=>f(txt,x=> (x==null)?on(' '):
+  (x.substr)? (on(x.repeat(n)),n=null) : 
+  (n=x)
+)
+
+buildAry=(f,a=[])=>(f(x=>a.push(x)), a)
+
+rnSel=(e,A,B,o=new Range)=>(o.setStart(e,A),o.setEnd(e,B), o)
+rnHL=(e)=>
+e.oninput=()=>{CSS.highlights.clear(); f(e.textContent, (x,A,B)=>{
+  let on=tag=>CSS.highlights.set(tag, new Highlight(rnSel(e.firstChild,A,B)))
+  ;(x==null)?0:
+  (x.substr)? on('str') : 
+  on('num')
+})
+  hout.textContent=buildAry(rep.bind(0, e.textContent)).join('')              
+}
+
+
+document.write(`
+<style>::highlight(num) {
+  background-color: #f06;
+  color: white;
+}
+::highlight(str) {color:red}
+</style>
+<div contentEditable id=hl></div>
+<mark id=hout>
+`)
+rnHL(hl)
 
 pipe=fn-editor, s.substr((t=dT/dur)*n)
 https://github.com/gre/bezier-easing/blob/master/src/index.js

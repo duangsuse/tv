@@ -84,8 +84,8 @@ TTS 可输入vtt流-遇空时长词时吐句，基于停顿 `科大[p500]讯飞`
 [rmback](https://github1s.com/nadermx/backgroundremover/blob/HEAD/backgroundremover/utilities.py#L167-L169)|png|png/gif/ mask.flv|kFast=2,fps=10; gb=#00ff00|[U^2-Net](https://kgithub.com/xuebinqin/U-2-Net#updates-): Going Deeper with Nested U-Structure for Salient Object Detection. see [SAM by fb](segment-anything.com/demo)|2020|337||G
 [TP-SMM.](github.com/yoyo-nb/Thin-Plate-Spline-Motion-Model#web-demo-for-animation)|png,id / faceA,mp4|__B.mp4__(if pre=face2D) [paste A](https://github.com/s0md3v/roop)|idA, Pt=vox. try pre=rmback|Thin-Plate Spline Motion Model for Image Animation, Collage Diffusion|2022|384|✔|[清华](https://cloud.tsinghua.edu.cn/d/30ab8765da364fefa101/)
 [Make-It-3D](https://github.com/junshutang/Make-It-3D)|png|gif|artefacts.ai https://www.csm.ai
-Wonder3D| Runway AnimateDiff  vino deforum
-[SadTalker]()|png,kpFaces|png||. see leiapix,genmo,ModelScope,civitAI,fliki,[D_ID](chat.d-id.com),[AIvoice](https://www.youtube.com/watch?v=yUuS-oTDSD4)
+Wonder3D| Runway AnimateDiff https://huggingface.co/spaces/Wuvin/Unique3D  vino deforum
+[SadTalker]()|png,kpFaces|png||. see flux,leiapix,genmo,ModelScope,civitAI,fliki,[D_ID](chat.d-id.com),[AIvoice](https://www.youtube.com/watch?v=yUuS-oTDSD4),https://app.suno.ai/
 [Paddle](https://kgithub.com/PaddlePaddle/PaddleOCR#-visualization-more)|ocr=png/pdf|docx / htm+box(json strXywhRi)|l,_need=box pdf_<br>picture `ruby{trans;sca;rot;}`|Baidu,multilingual OCR toolkits(support 80+ languages, provide tools,IoT)|2020|37|✔
 [MMLab](https://github.com/open-mmlab/mmocr)|ocr||
 [Tesseract](https://digi.bib.uni-mannheim.de/tesseract/?C=M;O=D)|png|↑ _pdf2docx_/pdf|l:Tes,need;`TESSDATA_PREFIX=/usr..`|LSTM,[Apps](https://tesseract-ocr.github.io/tessdoc/User-Projects-%E2%80%93-3rdParty.html) Ver5 2021.11.30|2007|109||unix

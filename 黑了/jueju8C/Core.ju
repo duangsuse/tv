@@ -1847,14 +1847,14 @@ c Cat("Rusty").doTricks
   - walk say:
     'walking, {speak()}'
 
-?? Pet
-  Dog()
-    - speak as:
+.: Pet
+  - Dog()
+    speak as:
       "Woof"
-    - comeToMaster "Hi"
-  Cat()
-    - speak "Meow"
-    - comeToMaster "Nope"
+    comeToMaster "Hi"
+  - Cat()
+    speak "Meow"
+    comeToMaster "Nope"
 
 - MyPet() as:
   inc: nLegs 4
