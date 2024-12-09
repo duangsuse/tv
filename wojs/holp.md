@@ -1,8 +1,10 @@
 
-拟态类型sikxfane areBEcon.:--inc __ALLISincAs$ 3严谨; 另写字面CuRLpod []{type:}{T:红黄双绑}{} 5常量; 布尔错控AsumOf4,AsIfNm数组宽化&阻止  圈行算数CforRUD 叠加叠合bgoTs5Sum,are(A12BBC)If号选守卫
+拟态类型sikxfane areBEcon.:--inc __ALLISincAs$ 3严谨; 另写字面CuRLpod 5常量; 布尔错控AsumOf4,AsIfNm数组宽化&阻止  圈行算数CforRUD 叠加叠合bgoTs5Sum,are(A12BBC)If号选守卫
 
-万能调定链 BS-VO.:-C(ipPUT sh sql menu py) 6As4Sa As零参加参,As4pass/Hito%符; 行列多形态I_IfIsIm `TrimLits.Imp[P](T..);BDFL类` ICue3cry,ICmp串.ID1哈,IConv,IStat
-诺榫 控8cry-bcd1248CDef-mat3D2T标-uflags.cue TbladyArckks6控(h5 sh datT,lists ytdl) CPU.j OS.jtxrx TDDc:eval串留字面Fn({x:0,body:''|(STR,xBB)=>,AsSTR}) TrimEvr/xBB.op生排深
+三新值三旧值 builtStr(错误日期文件正则),bcd1248(dnLt),cfg(元组T情况type旗域), []单行a-line {}单表kv tx:圈选hole 元组增 红黄双绑
+
+万能调定链 BS-VO.:C--(ipPUT sh sql menu py) 6As4Sa As零参加参旗,As4pass/Hito%符; 行列多形态I_IfIsIm `TrimLits.Imp[P](T..);BDFL类` ICue3cry,ICmp串.ID1哈,IConv,IStat
+诺榫 控cry(8edf)-bcd1248CDef-mat3D2T标-uflags.cue TbladyArckks6控(h5 sh datT,lists ytdl) CPU.j OS.jtxrx TDDc:eval串留字面Fn({x:0,body:''|(STR,xBB)=>,AsSTR}) TrimEvr/xBB.op生排深
 
 时空伴随签PiyjxGnmhw D1~4.xyavRGBA框动点 Lp1~4左反手座标系 NdDn; 心智统模型MIME.vagezTmud=datmu注册安App[!图],负20b; 五篇什锦SQRUT(mdd dm tsv mu9fs,yxmlcss) 吃豆参数?ufostk-u配置T_anc,SAVE_ 43osRootFS=xURL$.容器 CJEnK-BYGRP1N挟意音
 
@@ -13,7 +15,7 @@
   - As(u=>u<0? NO: u+1) filterMap, sepAt(2,A=>,B=>[]) 取前缀
   - "".As(RE.g`hi (+)`,id=>{}), "".As(U._txt.a, s=>) 替换和另存为
   - As(async(u,CPU)) Promise.all/any; 深先赋值算法有 a,BE,If(CHole mkEq/mkQEy SEAL) 切片展开 As(A~B,NO) (i,[xyz]) 
-- Sa SA,
+- Sa it.As线程局部糖
   - c.SA.f(x, $,[],kw,{}) 调用bind。加构加造[加参], F[({n=0})=>].inst:副本赋值验As(woj.fork)
   - BE视''即'type'圈选 get值。动态case/if Sa(If(u=>[u<0,u<3], n))
   - _get(vNO, [inc/i圈选]/矩阵); -1即末尾，NO得NO。 赋值Sa(y,x,v)
@@ -35,13 +37,13 @@
   - 左值:TrimFn替换/Eval()[]循环展开/Fn互转   Eval(代理,写,{})/原型变量集
 
 YY/NN ks=are("up",YY)是WeakSet/Map同理; As(pass)=_Z2As4pass, 用If验证的,  BSsiLFDzCARp(jk)缩写了有符aHex
-NO/n0 i0 _0，NN NO 更像一种语法字面而不是常量，它参加重载选择
+NO/n0 i0 _0。NN NO 更像一种语法字面而不是常量，它参加重载选择。歪嘴空：返回位置的NO写成 `out(Noo)` ，HOLP仅允许参返表3种空变量、假错 翻译 deFault 3种错误处理，不支持 `x_?.As(u=>).Or(0)` 的语言写为 `(it=x_)&&As(u=>)||0` 。HOLP仅在参/表内允许bool以Is旗组形式存在，has()建议替代为get()!=NO。 {}里不允许pass，且在[]首尾外赋空将冻结Sa()，As(out),Tr,JSON等无关下标者不影响。 inc行的inc不零拷贝
 oo pass， inc(CPU=>时间切片环); inc(1.AA~9.VV)cut,rand,edge； say`:I :D :W`, TODO(),F12fw监听器和图%c, Amy生日快乐翻译器
   
   
 # semvar
 
-- say2逆 said2 spybugDTFM strfmt2 slang&|u semver安446; inc3标件逆i0队初始 I If.Or3控onExit Is3标1b状态 Imp([str,Ln],扁平读写).f; x1B xBB.Tab.:3 BE标☯判矩 RE.g dt.YMDhmszvZ周号mo BYGRP3优; 装饰器Fn=old,F.n1,con(CON,{C33T原型链接带捕获}).As才调 FNeg2  fx.ease fps.hit[oo]
+- say2逆 said2 spybugDTFM strfmt2 slang&|u semver安446; inc3标件逆i0队初始 I If.Or3控onExit Is3标1b状态 Imp([str,Ln],扁平读写).f; x1B xBB.Tab.:3 BE标☯判矩 RE.g dt.YMDhmszvZ周号mo BYGRP3优; 装饰器Fn=old,Fn(2),F.con(CON,{C33T原型链接带捕获}).As才调 FNeg2  fx.ease fps.hit[oo]
 - a/az/aNO are3标判#0/allBase acc控错件3/aHex生成环; nmKB sRateLim☯/deg/tauX Nm([1x1],0xb1)标; env doc.ucall-1.inScr☯ et.Div.to $标.p/parent``
 - cage3 cfg3件 CfgT.cue.F5#:~:mainConf控☯=状态扁平 Cfor2逆件 RowboChef[Col23.push,out_逆,CHole☯,Refork=>xkca值inc旧值,]=cp(,1lnk), kw{kVK=>""NO}; U3 Ur6 Uh tap kbd/ kbdrop PATH.so; Lpos(1,D2(0)),Lp1<inc dLt
 
@@ -63,7 +65,7 @@ spgjia
 
 优: Bisect和懒trunc/unload,N2Ary,inc免检, flatHashMap/bufPak,Str16b,SWAR查分隔,Trie(z=1)DAT Tomohiko算法
 - RE:`' '=\s+ [·\xb7]= `, `(a|b ,) = (?:(a|b)[,]\s*)*`, '(+)x \\* 0'=0 (`:noPre([)\]],\\.?)[+*] = .+? [^/.:;]*`) so `**=.*?`; `/\w{2,7}(?=\))/g` 可复用(?<$0>的内容)
-- b=Bisect(); v☯=b.i(1,"x",upd) iDup(冒泡); v("xx"); b.at(3)(xx) b.rm(0,-1) 中间偏右找>=i点; 确认长度
+- b=BYGRP.Bisect(); v☯=b.i(1,"n",upd) b.at(3)(nn) iDup(冒泡/游标CoW); v("nn"); b.rm(0,-1) 中间偏右找>=i点; 确认长度
 - s=BYGRP(e=[""]),e.As(""), "A"=s(1), (1,NO) (/./,☯s=>,'高亮'); (1{,s=>()=>,{up,泡repl☯}) 增量解析单词和fn{{}}冒泡 词首wskip wsPre[.i]=文档 ws#1=inc
 
 echo ONLY6:  home/0+1k/{uv,.pub.u/,.localPATH} etc/**.toml/HKLM/HKCU v/{www,opt/sndo,run,tmp} ip/{RPATH,etc/iwd/dns/tuntp,syd}
