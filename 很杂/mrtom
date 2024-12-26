@@ -28,6 +28,18 @@ UTF=(k='utf8', A=new TextEncoder(k),B=new TextDecoder(k))=>
   Eqv(x=>x.buffer?x:A.encode(x), y=>y.length? B.decode(new Uint8Array(y[0].toFixed?y: y.map(Number))) :'' )
 
 
+n=a=>a.length; trieS=d=>(k,v)=>{
+let pre=(a,b)=>{let i=0,N=Math.min(n(a),n(b));for(;i<N;i++)if(a[i]!==b[i])return i;  return N},
+p=d,K,p1 ,S//AME part
+fndK:for(;;){for([K,p1]of p)if(S=pre(K,k))
+  if(p1.set&&S==n(K) ){p=p1,k=k.slice(S);continue fndK} else {
+      p.set(K.slice(0,S),  p.delete(K)&&new Map([[k.slice(S),v],[K.slice(S),p1]]) /*长k短'' 新先*/);return}
+  p.set(k,v) ;break}
+}
+
+k=trieS(ks=new Map)
+`pub priv prot`.split(/ /).forEach(k) 
+
 reCGrp=([s,sr=''], b=UTF())=>chunk(b.cat(s),2, ([A,B])=>b.cut(newA(B+1-A, (x,i)=>A+i)) ).join('')+sr
 reTrim=(s,at='$', re=RegExp(`${s||'\s'}+`+at,'g'))=>s=>s.replace(re,'')
 

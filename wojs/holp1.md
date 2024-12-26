@@ -1,35 +1,14 @@
 
-## Branding
-
-[HOLP烙书, Human Oriented Logicvar Progs] 即人性化变量关系编程库，包含[河图hito][握迹wojs]编程语言，协同于[诺榫LOSon]在前后端的方言[洛书Losu.pyl]。可使用[跨语跨期,二段求值]的BS-VOC调用链和拟态类型、超正则的文件IO[爬抠pahQL]。
-
-[河,一水可][图,形真似][握,手至尸][迹,促办冠] [诺,言右生][榫,木十雀][爬,(一爪八][抠,手取㐅)*]
-HOLPful 的源码主义是 🦜☯雀真[🎈🐑羊善⚖️🦙络美](https://emoji.supply/kitchen/?🌌+🎈=8x1lps)🚪🖖门行。 JavaC [繁文缛节,redundant] [夜不能昧,\productive]，ReactFP [狭技居奇,tricky] [半途而非,naive]，REST/XML [天罗地网,wildly] [莫忠一是,\​consistent]，IO/OS [不源本心,isolated] [有进无出,stucks]。 真实真诚-简明、完善友善-普世、每点美化-对等、流行无形-舍得。
-
-对知识、对用户、对开发者、对设计管理，GNU还需以真之善大美于行，走向假恶丑止的反面，才能解放软件自由。 YAML, Kotlin, Prolog&Plan9, numpy&ffmpegs
-
-知其变，守其恒，为天下式；穷其变，知不穷，得地上事。知变守恒，穷变知新；
-美而不丑、明而不暗、简而不繁、长而不乱，扁平不宽，读而后码，四海皆准，勿入地上天国。 
-异常勿吞，得过勿过，追一真理。效率是很重要，盲目最是低效。简明是可靠的先验，不是可靠的祭品。
-
-明胜于暗，汇编和机翻的生硬败于中文英文。多权衡「约定优于配置」和「最小知识原则」，给App搭配最酷的库抽象，给领域最1:1的心智模型。
-要当心凑字数的范式，看面条代码+机翻文档的时间，本可多搜多写。 code&API是文档，文档是示例，Docs是大纲，河图是面向人类编程的导游周刊。 
-
-- 「功率≠(1时间 人数)/1工作量，功率=有用功/总功——酷壳网陈皓·千古」
-- 「编程无关计算机，就像天文无关望远镜——Dijkstra, 在“软工”未诞生时写代码的荷兰人，FFmpeg v7向他致敬」
-- 「业界总有两派程序设计方法，一派简洁真诚，明确不堆砌缺陷，一派繁复空洞，连缺陷设计都不明确——Hoare, 快速排序之父」
-- 我最怕HOLP更强大。强者积累于模板和算法，领域的烙印。假如编程是让不懂黑框框的人用电脑，元编程就是让不懂花绿代码的人用编程。 我的课题不是懂和不懂，是已知或未知。知愚为智，崇贤为礼。
-
  AI“乙方”会根据中文想法自动编程，但甲方没真的探索过五彩斑斓的黑，乙方更不会有新意。  
 
 请向50多年前的先驱致敬: 为UIUXDX自顶向下的技术栈、Lisp和np的深先树改写+四则多写(序列化,luaRPN解析器)、树里的硬链接-免递归、Prolog和FP的可变量-return作为值，即async闭包+读写语法叠合。 这些治未病的架构设计超越了 OOP双指针(原型vtable,头尾size,Str16b) 和 gcc -O3 。
 
-- 河图：拟态类型强检查编程语言，洛书.pyl .ktl之母。包容pyjs/javacs/zigC等语言、OOP/FP/LOSon.FEVal.on 文化。英❤️CJK五语，仅7关键字！
+- 河图：拟态类型强检查编程语言，洛书.pyl .ktl之母。包容pyjs/jvmcs/zigC等语言、OOP/FP/LOSon.FEVal.on 文化。英❤️CJK五语，仅7关键字！
 - 握迹：简单谦和的Web框架联邦，紧握视图Var的JsXML方言、OSon终端
-- 诺榫：21世纪无损JSON.lisp可鉴权RPCode，透过"- enc\b"双管道整合了4类语言技术栈: pyjs zigC javacs +4二进制优化  外急内慢
+- 诺榫：21世纪无损JSON.lisp可鉴权RPCode，透过"-encxXt,"双管道整合了4类语言技术栈: pyjs jvmcs zigC
 - 爬抠：代码/hex 增量pull解析器，支持6种通配符"+-*? ^"，含PCRE示例。skr递归下降+splice冒泡实现
-+ hito:. say: 'hi to' declarative world(supports .pyl .ktl)! pyjs/javacs/zigC/* platform, OOP/FP/LOSon.FEVal.on paradigm, 7 English❤️CJK keywords
-+ LOSon: 21st century lossless JSON.lisp RPCode consolidating 4 lang'stacks via socket: "- enc\b" pyjs javacs zigC rblua +4 \bzip<3int\fstrNumsTbl speedups
++ hito:. say: 'hi to' declarative world(supports .pyl .ktl)! pyjs/jvmcs/zigC/* platform, OOP/FP/LOSon.FEVal.on paradigm, 7 English❤️CJK keywords
++ LOSon: 21st century lossless JSON.lisp RPCode consolidating 4 lang'stacks via socket: pyjs jvmcs zigC rblua "-encxXt,"speedups
 + woJs: modest web framework federation, viewVar-oriented JsXML subset & OSon runtime
 + pahQL: code/hex incre.pull.parser with 6combinators: "+-*? ^". glob-PCRE demo, RD+spliceUp impl
   + sep orNO pair or rep recur trie
@@ -267,3 +246,71 @@ rel: arcksAks_ASumOf
  Uroot默认有['.mp3,wav#']多指定，只是$U自根目录，U自/res 并支持网络 
  $pq支持page&per_page&q&sort。以body区分GET,PUT(NO) ，cli --回上一级
 
+
+依一事悟疑实
+
+依 class
+一 val
+忆 var
+事 fun
+悟 override
+疑 when
+实 object
+悟一 companion
+一悟 return
+依悟 interface
+典 package
+孝 import
+急 require
+绷 runCatching
+依一 data
+小疑 enum
+大疑 sealed
+悟疑 open
+事实 super
+依实 constructor
+以实 this
+实施 Unit
+
+于 in
+悟于 is
+疑悟 as
+一实 for
+一疑 if
+二疑 else
+YN Boolean
+YY true
+NN false
+NO null
+数 Int
+键 String
+表 Map
+行 List
+一表 mapOf
+一行 listOf
+啊啊啊 throw
+哼啊 try
+哼 catch
+啊啊 finally
+一旦 while
+不输别玩 break
+菜就多练 continue
+废 private
+依悟 typealias
+说的 inline
+道理 abstract
+懂王 final
+
+Runar🌤🗓&cpp-Exlit.md
+- Rc&Strumbra_t (rc@init/fini, no weak_key) metafun, inc[T](A,B) ptrpair & oo.n() /+oo .dnavprxy doc.scr.L.xy , AsNO-addpop
+- auto alloca() & Type_t=no '*', pointer tagged CBOR(with sizeof)
+- (x,y){ok()/cry("")}, [0 0]0  are fn expr&type (SAM-struct, effective final boxed)
+- OOP interfaces must be kwargs-struct(aka this / vtable)
+- rust_enum(), class 'T impl'{}, 'IClose' impl?{} sugar supported
+in new syntax:
+- #require "dll".c 'stdio:io'.h; a.stdout=run
+- fXX"{1}" for asprintf/fXX, (-strify) ''' and --[=[]=] docstr comment
+- #pragma -Dk=v ={1,wtf} mainEnv(_c) args
+- #def f(x,y,...) #line 0".js,py, f-x-y" #ok eval
+- var/lit chain arg, {-k v,} , users#1/cENV: -name set
+- type infer eg. map $AB_Col2, as

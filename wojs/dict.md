@@ -34,10 +34,10 @@ for z in (Z.ZipFile(u,'r') for u in glob('*.zip')):
   with z as rz: rz.extractall(path='.')
 </details>
 
-Ruby rails 入彼 睿遨s，本意是如比py更灵活、[更DSL](https://ruby-china.org/topics/33712)，却步入彼时Perl-PHP的后尘。落红不是无情物，语言社区早就贡献了"killer app"，如GitHub,Homebrew,JekyllPages-[HAML](https://haml.info/) 和 Markdown,[能验证JSON的正则超集](https://regex101.com/library/tA9pM8)([Perl PCRE](https://www.perlmonks.org/?node_id=995856), [Tcl/Tk](https://github.com/duangsuse-valid-projects/TkGUI))。 请致敬日本人Matz, BSD人Ousterhout, Regex101(正则元语法,元编程)
-RegExpr 正规则取，🔑 正择可实现validate或scanf: `/[+-]?\d+/.test(1), "Amy 11".replace(/(\S+) (\d+)/, (m,k,n)=>'user ${k} age ${n}')` ，对象正择可 `let[x,y]=iMouse`
-VLC ，可以放各种格式解霸-cmd下都可用。其前辈是 MPlayer FFmpeg, 请致敬技术基建了 libav 和 TCC(另见 c4/[9cc](https://t.me/dsuse/20076)/shecc,QuickJS/Lua, [tccboot](https://t.me/dsuse/18833)) 的 Bellard.org
+RegExpr 正规则取，🔑 正择可实现validate或scanf: `/[+-]?\d+/.test(1), "Amy 11".replace(/(\S+) (\d+)/, (m,k,n)=>'user ${k} age ${n}')` ，对象正择可 `let[x,y]=iMouse` 。请致敬UC毕业生 Larry Wall, Regex101(正则元语法,元编程)
+Ruby rails 入彼 睿遨s，本意是如比py更灵活、[更DSL](https://ruby-china.org/topics/33712)，却步入彼时Perl-PHP的后尘。落红不是无情物！语言社区早就贡献了"killer app"，如GitHub,Homebrew,JekyllPages，乃至仍在繁衍的[HAML](https://haml.info/) 和 Markdown、[能验证JSON的正则超集](https://regex101.com/library/tA9pM8)([Perl PCRE](https://www.perlmonks.org/?node_id=995856)), 跨平台的极简UI [Tcl/Tk](https://github.com/duangsuse-valid-projects/TkGUI)。 请致敬日本人Matz, BSD人Ousterhout 
 Chrome 可容🌈，包容易用的jscore，F12可视化超JetBrains。 [WebKit.org] 的加速版，可容床垫是[“红芯扭卵器”](https://www.leiphone.com/category/gbsecurity/MKoth1WE1VXo3uq7.html)躺赢的法宝
+VLC可以放各种格式解霸-cmd下都可用。其前辈是 MPlayer FFmpeg, 请致敬技术基建了 libav 和 TCC(另见 c4/[9cc](https://t.me/dsuse/20076)/shecc,QuickJS/Lua, [tccboot](https://t.me/dsuse/18833)) 的 Bellard.org
 echo 挨口，把代码里的常量"",''挨到stdout对应的pty端口。
 json 择深，🔑1字分类型 `[{"":0tfn}]` 不费脑力的嵌套键值。(点明批评Java 别扭new)，不经网络建议[YAML.org]，浅嵌套建议ini+prop的后继[TOML.io]，学读写库: bencode `X=i(N)e|N:Hex|[ld](X*)e` 压缩 [CBOR.me](https://www.rfc-editor.org/rfc/rfc8949#name-jump-table-for-initial-byte) 可见 <details>byte0=0bT{3}N{5}; T0~7=N-hsaked, N:+立即数, hex:尾随bytes a:ary k,dict:KVs e:xtra o:0.tfnull@0xf4; N 如18=1char,39=2char.neg<br>bin(0x3A)=0b0011_1010, A即10=8+0+2+0 (chmod 755=rwxr-xr-x 算法同理), 以3T5N观001_11010,其中T=1,被乘2+1 N=24(0x18)+2=26, T=0:正数N时同理<br>5F/9F~FF是缓冲/数组流， 长度<26 的优化很像StrUmbra(16b=4+(12c|4c+8))</details>
 
@@ -69,7 +69,7 @@ PJAX 疲架可撕🗺，🔑 `history.pushState(?旧url_kw参数,'', '#新')` �
 route 入它，🔑根据路径调用不同，生成不同页面。不是 root(/根文件树 uid1 pid1) 哦。btw. Android和Homo 使用高大上的 Activity/Ability 页面、超丝滑的Fragment#/Recycler(List)对象复用呢
 deny 抵赖📈，因为server没有提权漏洞和rateLim，就试图用垃圾流量麻木对方的若智攻击。编程娱乐圈の日经话题， [CDN](https://cloudflare.com/)可解DDoS
 null 漏，🔑C的None指针野到Java,py里还不报错。非得逐个去 `if(数据是漏)数据=默认或return..` 。和[js:undef](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined#typeof_operator_and_undefined)的区别是，null是object，就像NaN是number
-main 命，🔑命题作文的主线，那些class,def只是支线，别def几百行成面条代码了！ 递归函数的主线则是 `if(..)return 终止值`，`y? gcd(y, x%y) : x` 是递推 。[py:fire](https://google.github.io/python-fire/guide/#introduction)
+main 命，🔑命题作文的主线，那些class,def只是支线，别def几百行成面条代码了！ 递归函数的主线则是 `if(..)return 终止值`，`y? gcd(y, x%y) : x` 是递推 。[py:fire](https://google.github.io/python-fire/guide/#introduction)。 分治三兄贵： [DP动态规划](https://zhuanlan.zhihu.com/p/486145829) 、递归、伪递归aka递推
 parameter 谱燃meter🧲，🔑(引数,对立于常数) 必须把读数计算得更燃再(作为 `argument`)传入。如 `str.spLit(seParator); rIgistery.servLet.doGet(req,reSult); alert.KEnfirm/KEncel @AnnoTation().cApy()`
 variable veryable🎛，🔑(变数,对立于-val) 啥语言里都有变数(--CSS 都有)，很能！ 
 ConText module 扛text🛒 马脚🦄，非常大的包，定义了整个的业务组件+运行你的上文🔑。 组件间要隔离出接口{}、按类型注入@Autowired(ctx.getBean)，别“露了马脚”！
@@ -97,7 +97,7 @@ handler callback 喊得了 靠拜客☎️，🔑(添加-回应) 大丈夫不ret
 session handle 塞生🔐 喊得，🔑(uid,fd..) 非season🌸，塞进密码后暂时生成的对象号，在"靠"不住时RPC。方便吊销，传输为cookie窟启。jwt则带日期加密整个对象
 event 一问特⏰，定期轮询(evpoll)(selector选中)一个新输入，需要回应then函数。例如迷宫的WASD移动+TLE倒计时。 **只单次wait一个输入，可以等return，但多路IO/多按钮 就该注册函数值** `trap w SIGINT`
 deque 待客📬，🔑甲板deck的长队，又名Channel，只要+1CPU待客！何必去 `new Thread(+1死循环)`？安卓上调一些API的函数(setText..)只能请Main待客，Electron禁止用alert()-就像C scanf(%s\n)卡调栈阻塞待客。
-async resolve 啊新客☎️ 睿炸物，🔑(回应式编程) 丝滑App敢于在await后暂时return。即：等主线程的(event poll轮询监测)回应你的调用，余下时间片它还能对回调逐个待客，单线程足够多任务！ 1线:NCPU,1协程:N线程,轻量化 (sink丝滑,也指"节点输出") 
+async resolve 啊新客☎️ 睿炸物，🔑(回应式编程) 丝滑App敢于在await后暂时return。即：等主线程的(event looper轮询监测)回应你的调用，余下时间片它还能对回调逐个待客，单线程足够多任务！ 1线:NCPU,1协程:N线程,轻量化 (sink丝滑,也指"节点输出") 
 interrupt CPU中断，等于 while(true) 里的break; 但本质是回调(于某内存地址)。 mainloop 就是模拟1CPU的解释器循环，但单位是Task如网络IO，而非[ALU字节码](cpu-time.jpg)
 daemon 抵门，🔑抵到随Main一起推门离开。守护那线程。 N:M线程池，即轻量协程goroutine，是最正确的集群加速。
 sort 锁梯📶，🔑非short🤏, sort of thing=grpBy:category。避免因为用户手贱把顺序搞乱、搞不一致。 `sorted([2,3],key=lambda x:-x)`
@@ -130,6 +130,8 @@ reSume 睿族母，浙大CS睿智！ then回调后跳到for(){;i++ ..}继续求�
 Continuation 看屉留ation，函续体？ 调用栈=函续链表，没错，async就是允许你setTimeout(retAddr,0s)并return的空函数，你们叫它yield或await。
 Unification 有你非cation，叠合(1=1 1=x)各得 真, x:1。 `UnionFind=x=> x==Fa[x]?x:Fa[x]=find(Fa[x]); Fa=Array(N).fill(0).map((x,i)=>i)` (误)
 
+>这不仅仅是起了名，而是在脑子里先遭遇了这个概念，再根据从不同的角度，用这个概念的理解来起名。 音意译不是纸面的文字游戏。删繁就简才有空间标新立异。
+
 `/^([\w. ]+) (.+?)，(.*?)[。？！]/`
 
 ### CSS
@@ -139,9 +141,20 @@ Unification 有你非cation，叠合(1=1 1=x)各得 真, x:1。 `UnionFind=x=> x
 - [ShaderToy](https://www.shadertoy.com/playlist/MXdSRf), [TurtleToy](https://turtletoy.net/turtle/46d50beb8a)/[P5js](https://openprocessing.org/discover/#/game), [webgl-image-slider](https://offscreencanvas.com/renders/webgl-galleries-and-sliders)/[补](https://github.com/Anemolo/WebGLDistortionConfigurator)[by](https://velasquezdaniel.com/blog/rendering-100k-spheres-instantianing-and-draw-calls/), [CabelsGL](https://cables.gl/p/C6iqnt), [H5流体](https://haxiomic.github.io/GPU-Fluid-Experiments/html5/)/[3D视差滚动](https://tympanus.net/codrops/2019/02/20/how-to-create-a-fake-3d-image-effect-with-webgl/)/[弹幕游戏](https://firedancer-lang.com/)-[更多](https://t.me/dsuse/18667)
 - manim/lotties: [🔎VFX js](https://rossning92.github.io/movy/?file=examples/demo/opening.js), [Tridiv.com](https://petertyliu.github.io/toaster/) (movy>[mojs/motion/barba](https://www.nunustudio.org/editor/index.html?nsp=../../examples/flappy.nsp)?), [blendswap](https://armory3d.github.io/armory_examples_browser/#templates-first_person),[VR](https://aframe.io/examples/showcase/responsiveui/); [导航](https://dribbble.com/tags/3d-website) [awwards](https://www.awwwards.com/websites/3d/)
 - [节点图](https://apvarun.github.io/graphize/): [OpenArt](https://openart.ai/workflows/openart/-/lkOtNJ2UexVd6vK0kYhd)-[带AI](https://eternal.rob.computer/) [TFjs](https://magenta.tensorflow.org/demos/web/)-[带事件](https://tamats.com/projects/litegraph/editor/), [libA/V滤镜](https://www.audiotool.com/product) by [andré](https://andremichelle.io/lab/): [🤔为啥DSP代码能微言大义](https://ncase.me/joy/demo/music/?song=fractal)-[教辅Desmos](https://www.geogebra.org/calculator), Draw.io: asciiflow.com q.uiver.app#TeX cryptii.com svgfilters.com houdini.how
-- blog: [Bezier贝兹](https://blog.richardekwonye.com/bezier-curves)-[PtsJS](https://ptsjs.org/demo/?name=curve.bezier)-[png算法](https://iter.ca/post/png/) [FFT变声](https://www.jezzamon.com/fourier/)-[公式动画](https://www.andreinc.net/2024/04/24/from-the-circle-to-epicycles)-[用PS做mp3](https://t.me/dsuse/18423)-[音乐可视化](https://github.com/icopy-site/awesome-cn/blob/master/docs/awesome/awesome-audio-visualization.md)-[老游戏电音](https://chiptune.app/browse/Demo%20MIDI/Voyetra%20Orchestrator)-[D2入门](https://t.me/dsuse/19402) [三角壁纸](https://trianglify.io/)-[svg一笔画](https://zhuanlan.zhihu.com/p/72632360)-[更多](https://t.me/dsuse/18154) [Taichi](https://github.com/taichi-dev/awesome-taichi?tab=readme-ov-file#:~:text=2d%20physics%20engine)-[MC.py!](https://youtu.be/Ab8TOSFfNp4?t=3700)
+- blog: [Bezier贝兹](https://blog.richardekwonye.com/bezier-curves)-[PtsJS](https://ptsjs.org/demo/?name=curve.bezier)-[png算法](https://iter.ca/post/png/) [FFT变声](https://www.jezzamon.com/fourier/)-[公式动画](https://www.andreinc.net/2024/04/24/from-the-circle-to-epicycles)-[用PS做mp3](https://t.me/dsuse/18423)-[音乐可视化](https://github.com/icopy-site/awesome-cn/blob/master/docs/awesome/awesome-audio-visualization.md)-[老游戏电音](https://chiptune.app/browse/Demo%20MIDI/Voyetra%20Orchestrator)-[D2入门](https://t.me/dsuse/19402) [图灵机可视化](https://samwho.dev/turing-machines/) [三角壁纸](https://trianglify.io/)-[svg一笔画](https://zhuanlan.zhihu.com/p/72632360)-[更多](https://t.me/dsuse/18154) [Taichi](https://github.com/taichi-dev/awesome-taichi?tab=readme-ov-file#:~:text=2d%20physics%20engine)-[MC.py!](https://youtu.be/Ab8TOSFfNp4?t=3700)
 - [物理人Omio](https://oimo.io/works),antfu.me, [3D博客首页](https://dev.to/hr21don/six-stunning-web-developer-portfolios-showcasing-threejs-mastery-206n#:~:text=Bruno%20Simon),[jessezhou.com](https://t.me/NewlearnerChannel/11536),[导游](kubota.com/futurecube/)
 - [Live2D](https://guansss.github.io/live2d-viewer-web/) 算法 [clmface, js verlet, js Homography](https://subprotocol.com/system/tree.html) 或 [svg morph](https://pavellaptev.github.io/warp-svg/), "skimage straighten [curved text](https://type.constraint.systems/)"
+
+### 物理常识
+
+相对论=牛顿+解释光速为何不能叠加+引力与黑洞为何产生：
+
+- 波速仅与介质折射率有关，不涉及波长频率，波只有开关，无中间态，并非粒子。
+- 时间可以被静态表示(关键帧叠合)，但需要知道模型，视“宇宙”的1帧不能预测整体走向，就像x^2+k的回归
+- 光波不因相对速度而增加，是无穷大。超光速瞬达、“宇宙屏幕刷新率”能描述这种无穷大。
+- 2D 1D 是指z,y=常数的3D，多出的轴可编码时序t，易于音乐和B超可视化。2.5D指3D渲染2D操控。莫比乌斯:BV1PPpseoENq
+- 在解释光和引力的互作用时，需要时空四维度灰度。光速不能变，时间空间可以像洛伦兹的按参考系变换，如同经纬度到xy的投影，双曲光锥、 
+
 
 ```js
 //从节点 2 的[+3,*3]边怎么走到 "9":
@@ -161,84 +174,81 @@ def DFT(x): # 钢琴键变换，得音乐频谱图(音高可视化)，也用于�
 ```
 
 ### OOP
-
+ 
 - public🔘列表符号！默认为包私有能凑字数！ protected族内 private私下 static类名上🔑 signature函数签名/Tab»补齐
 - forEach列举 listIterator行列举器 cursor圈选(是选区的首项) circle这圈(数/文/..) List< User>.get(0).name=行1列A#A1
-- record行 field栏 get/setX-栏目X的读写  lambda栏目答 fun点号参函数/方法 +-*/二项调用binaryOp -!一项调用unary reduce单步调用🔑 macro码可揉/传字面函数
+- record行 field栏 get/setX-栏目X的读写  lambda栏目答 fun点号参函数/方法 +-*/二项调用binaryOp -!一项调用unary macro码可揉/传字面函数
 - override改写🔑/赋值多型 overloads另写🔑/函数多型 polymorphism多形态/定量子类 overhead开销 boilerplates样板 template模板 base模板原型 dispatch/sched判发 
 - class新类/补丁旧类(Ruby) abstract空悬 final确定 sealed判定🔑 switch(enum)判分类 extends/inherits/implements实现(Object)subtype
 - generic多型参🔑(由[..int|str|T  List]检查的编译期Matcher模式匹配。typehint只是黑盒测试) synchronized{}逐线程🔑-获得互斥锁 Atomics单提交-不可分
 - exception错误 error致命恐慌 finally返回前🔑 injection/RCE代码注入漏洞-模板字符串缺位 0day零日漏洞-已被骇客利用。也可指int_time溢出跳回零，[千年虫](https://en.wikipedia.org/wiki/Year_2000_problem#:~:text=Credit%20card%20systems)和[null:十亿美元bug](https://taiwannews.com.tw/zh/news/5904978)
 
-> 我怎样调用书库：先广度，轮询深度，签换页。思而学，教学半笑学伴都好，资料和圈点都要调次理序，分扪聚类。 敢于用无言之语重写，所记本质，最怕摘西瓜丢根儿，不怕留小失大。why>how
-> 我怎样利用书库：多抄袭有趣而简明的积木，再推倒你的赝品。多“把玩”核心积木，知识网必水到渠成。多用赤子外行的眼来取舍核心，灵感孤岛便可能联通。 最后，每次我打第一行代码前，“编码”和自顶向下调研就已完成了。
-> 我怎样弃用书库：知变守其恒，穷变悟不穷，思学都很重要。 要融入原作语境下一堆API/算法/惯用法，要从崇拜到协作到发难。莫当万年老二：比如饱和竞争第一！
-> ——文学、编程、经济、软件工艺，不复古文明。INTP
+- 参数多类型 多音 链顺序传参  导入表this 求值序
+- 赋值多类型  改函数值:hook代理
+- 双指针、栈闭包
+- 繁型、常量闭包 []宏 
 
-问答式书籍,术语括号 孤儿概念,景德镇,凑字数 决策是什么和为什么  欣赏成本
+《三个我怎样》
+> 调用书库：广度优先，轮询深度，千换页。思而学，教学半笑学伴都好，资料和圈点都要调次理序，分扪聚类：新术语「要括号」，孤儿概念要找妈。 敢于用无言之语重写，所记本质，是怕拣西瓜丢根儿，别怕留小失大。欣赏而不投机是有成本的，需要内趋力修养。
+> 利用书库：多抄袭有趣而简明的积木，再推倒你的开源赝品。码力就是纵横组合包装的代换潜力。 why>how>doDont，先试玩后拆解，多写问答式书籍。多用赤子外行的眼来取舍出核心，灵感孤岛以此联通。多“把玩”核心差异，知识网必水到渠成。 到最后，每次我打第一行代码，“编码”和自顶向下调研早就完成。小心凑字数或流水帐。
+> 弃用书库：思学都是进步。知变方守其恒，穷变方悟不穷，要融入原作语境下那堆API/算法/惯用法，从崇拜直到协作再到发难。 莫当万年老二：比如饱和竞争第一！ 莫学景德镇：空心瓷儿多！
+> ——编程工艺、文学、视效、经济。认真理，不认真。INTP
+
+import this;
+> 美而不丑、明而不暗，短而不凡、长而不乱，扁平不宽，读而后码，行之天下，勿托地上天国。 
+> 异常勿吞、难过勿过，叹一真理。效率是很重要，盲目最是低效。简明是可靠的先验，不是可靠的祭品。
+> 知其变，守其恒，为天下式；穷其变，知不穷，得地上示。知变守恒又穷变知新，我认真理，我不认真。
 
 ### OS
 
-- [pipe管道](https://lotabout.me/2020/Back-Pressure/) socket双管道🔑 serializer扁平读写🔑(长度前缀分项,_常被误会为黏包拆包_.帧于流=图于视频) cookie窟启🔑(JWT也是,RPC)
-- cache快取🔑 lazyCOW晚取🔑 buffer闪存🔑/截取加载(高时延换低延时;bash dd bs=1KB)
-- add request handler 添加http回应 async回应式🔑(回调链表) sync卡线程🔑(同步调栈) push通知式(写方发起) pull轮询式(React"高性能diff")
+> 操作系统就是为libc服务的4片3口虚拟化(时间内存存储程序-片，网口线口板口，4片3口)，其驱动内核或者说特权代码，在BIOS中断表上(int0x80~iret)或上文切换timer里被调用(传fd等IPC“库启”cookie)
+- [pipe管道](https://lotabout.me/2020/Back-Pressure/) socket双管道🔑 serializer扁平读写🔑(长度前缀分项,_常被误会为黏包拆包_.帧于流=图于视频) Inject依赖注入(隐式传参)
+- cookie窟启🔑(JWT也是,RPC) handle库启(黑箱对象号,IPC,如文件fd) cache快取🔑 lazyCOW晚取🔑 buffer闪存🔑/截取加载(高时延换低延时;bash dd bs=1KB) contextHashmap 上文KV(预分组查表)
+- hashMD5特征码ID1 storage存储(M2,HD,SD.) permission许可项(可否) shim/stub/polyfill/adapter垫片
+- add request handler 添加http回应 sync阻塞函数🔑(卡线程,同步) async回应函数🔑(回调链表,异步) pull单拉取(F5刷新) push通知式(写方发起) poll轮询式(消息队列,pop&pull loop,React"高性能diff")
 - heap,queue,techstack 堆/队/技术堆叠🔑
-- newFree分配归还 leak泄漏 overflow越界/超额🔑 thres域止在(阈值,边界条件) RegExp正择式
-- shim/stub/polyfill/adapter垫片 hashMD5特征码ID1 storage存储(M2,HD,SD.) permission许可(可否)
-- context hashmap 上文KV(预分组查表) opacity有色度(RGBA) bitmask位遮罩
-- serial线口(2线端口) USB通用线口🔑 DBus.svc桌面端口服务(单端口多管道) marshal封送 handleOpaque/fdescriptor库启(黑箱对象号,IPC) 
+- newFree分配归还 leak泄漏 overflow越界/超额🔑 thres域止在(阈值,边界条件)
+- RegExp正择式 bitmask位遮罩 opacity有色度(RGBA)
+- serial线口(2线端口) USB通用线口🔑 DBus.svc桌面端口服务(单端口多管道) marshal封送
 - call调用 exec执行(单步操作) runs运行(无返回值) bind回应端口(Reactive回应式编程🔑)
 - parallel平行调用(数据分块不相交) concurrent多任务🔑(单线程池-回调列队)。 平并行就像同向/对向双车道，平行的超车失败(资源被锁)顶多比单车道还慢，竞争的就在读写时撞车：随机注释掉一条赋值会产生什么bug？想象一下
 
-好文字游戏：
+好的文字游戏：
+- GCC = GNU Compiler Collection \ General C Compiler
 - PHP的解释为 PHP Hypertext Preprocessor \ Personal HomePage
 - Wine解释为 Wine Is Not an Emulator \ Win emulator
 - GNU=GNU is Not Unix \ General New Unix
 - GPL = General Public License
-- GCC = GNU Compiler Collection \ General C Compiler
 
 反例:
-- “诱导公式”简化公式  “阳性”检出 “阴性”未见 reformat格式化(没有删除,只是整理碎片哦?!) 负和/零和博弈(互害博弈/互损博弈)
+- “阳性”检出 “阴性”未见 reformat格式化(没有删除,只是整理碎片哦?!) 负和/零和博弈(互害博弈/互损博弈) “诱导公式”简化公式
+- “导数/导函数” 导速-函数就是横线，不论绘制或化简人还不如电脑。记得文件下载的进度图吗？ “帝国主义意识形态”帝国主导的易帝逻辑(ideology)
 - enable使能 offline脱机 32位/双字整形:i32整数/u32计数/4byte vararg“变长”参数:不定参数 --"整型"整太多，以至于都脱敏了
-- default缺省值 segfault内存不能BeRead robust鲁棒(rubber皮实柔韧健壮) 有限状态机(DFA/状态机,如Trie+failptr)
+- default缺省值 segfault内存不能BeRead robust鲁棒(rubber皮实柔韧健壮) 有限状态机(DFA/状态机,如Trie+failgoto)
 - ram随机访问(编号读写) destructor析构函数 deference取引数(取消引用) opacity:0透明度最高 向“后”兼容:向旧兼容
 - 设置端口80监听，注册http请求处理器，注意请求缓存和缓冲区溢出
 - 回应端口定为80，添加http请求回应，注意文件快取和闪存越界
-- thunderbolt雷劈总线 坐和放宽 正在成功 确保你是最新的，头抬起，滚回到旧版。。 挂起会保存您的功率键，请勿™关闭计算机。  微软边缘：不要怪我们没有警告过你，加入AI进一步扰乱行业(微软式中文)
+- thunderbolt雷劈总线 正在成功 坐和放宽，确保你是最新的，头抬起，滚回到旧版。。 挂起会保存您的功率键，请勿™关闭计算机。  微软边缘：不要怪我们没有警告过你，加入AI进一步扰乱行业，轰轰轰嚓嚓(微软式中文)
 
 >要根据上下文及时通过句柄释放分配的内存，要定期吊销cookie，防止调用堆栈溢出(到底是说heap还是stack?)
 <br>“只需要打开套接字，read到1K的缓冲区，写入文件，直到结果为-1”
 <br>通过列表(到底是列举还是键值表?)迭代器，遍历，使用主调度器执行，它会序列化保存未完成项
 <br>new一个抽象类对象，报错，继承它再多加个静态整型属性和颜色枚举，编译pass
 
-### Web
-
-- HTML5元素×111 []里的键名和尖括号可忽略
-  - 无样式×8: link[href,rel] style[src] script[defer]; head title meta
-  - 输入×14: form label>input button select option<optgroup; textarea datalist+input[list=#,pattern,type="email"multiple]
-  - 外链×12: img audio,video,picture source(poster),track; map>area canvas iframe object[data=pdfobject,ruffle.rs,webVM.io#andjvm]
-  - 组件×2: slot template output progress dialog meter#补习[lo=60,hi=80,opt=lo]
-  - 布局×75:
-    - 两项标注×7: :is(ul,ol,menu)>li ruby:has(rt,rp)注音 details>summary fieldset>legend figure>figcaption
-    - 单独含义×52
-      - div类×24: div section  address hgroup h1 h2 h3 h4 h5 h6 blockquote hr p pre
-      - 结构: main>article nav header,footer,aside
-      - span类×28: a span b,i,var u,s,sub,sup br q,mark,code del,ins    samp  time,abbr,cite,kbd
-    - 多项配合×16
-      - 表格系×10: table>tr:has(th,td) caption colgroup.周末[span=2] tbody thead,tfoot
-      - 词典表×3: dl dt,dfn dd   bdi bdo
-- 占位类: <!DOCTYPE html> base body embed em noscript col small strong (wbr=U+200B wordWrap)
-- 1em=1font-size, 居中可 text-align,align-content(display:flex):center
-- 语义化标签 都是很重要的！ https://developer.mozilla.org/zh-CN/docs/Web/HTML/Element#content_sectioning
-
 ### Metaprogram
 
-- stmt句式 expr算式 funDeclare函式 constLiteral常数/param引数("某调用"参数) operator运算函数🔑 arg参数 ^1
-- varDecl(在某行)添加变数🔑 local局部 global全局对象(适用pyjs,kt,C) ^2
-- callback回应 return回值 void()可调 void*可调引数(引向可写的数) inline免链接🔑 assembly(x86,dalvik等具体的ISA指令结构!"汇编"可不是语言)
-- syntax写法 semantic语意🔑 reflect类型查询 identifier变量名/函数 qualified带前缀 tailrec伪递归🔑(continue到开头)
-- parser 调用树的编解码器，和整体的关系类似 png-AdobePS zip-JVM json-GitHubAPI
-- 它使 class{fun(x){x}} 等调用在编译期运行，相对于JIT和curry，这是一种 partialEval二段求值🔑
+- 元编程的一切： DCBA树图+ABCD引用+"浅深后前SDPO"算法 实现 parser爬撕饵 compiler刊木排而 VMachine微迈细硬 interpreter深先改树(改数)aka解释器
+  - AST树的DCBA: 最开始，你只是将 `"十一Xノ"(A,B)=A+B, get[""]call(varg)` 等Decl组合成求值脚本，再靠Connect复用(var x=啥,ret=x+x)链树为图，再将条件重复块Block{Blk;}规范为一种宏参数("字面")，最后用 `Arg[i]或this._slot[J]` 建模Blk里的空洞，就有了函数or闭包词法域。 `[空洞 List], [Str 空洞 KV]` 被称为形参默认参，调用栈被称为实参，编译期Test的断言被称为Typehint，各种VM字节码汇编的共同点在此。ld.so"relocation"也是待回填空洞。
+  - 名字字面寻址序ABCD: (Arg$i Blk$j,J)靠堆栈偏移量 ConstV Dict'K' 靠运行时常量池。 线程栈也实现了return，协程回调链表更是fun-retAddr的重量级实现，但它仍比线程的4K栈轻量许多，可对接RPC的叫号取“参”。
+  - AST解码与解释的"浅深后前": 浅先遍历 `s=>if(s(1)=='-'){s(1,NO);num(s)}` 深先遍历 `(e,env)=>e.lit ?? e.dictK?(env) ??..` 前后缀栈调用 `1*2+3=[12*3+], 1+2*3=[1 23* +]` 可用于扁平读写树结构，Blk列表只需多个算式和赋值构成。 前缀式 `[+1[*2 3]]` 与之等效，但适合编码 `(A,B)=>A+B`,forif 等需要统计分配或'}'回填goto才能执行的结构
+  - 关于CS科班：未闻数学生=计算器。与其把lex-YaCC都搞成「状态机」呢，还不如把x86也视为while(ASM op=*pc++)的模板解释器。 懂goto不仅比懂ndarray的难编程，还会把Trie文件夹+failptr搞成KMP那样麻烦。要说自底向上，await栈就是新的LR。 省点IQ留给直觉吧，科举4ky搞出四大发明，玩够了吗？ 
+- varDecl(在某行)添加变数🔑 local局部 global全局对象(适用pyjs,kt,C) ^2  GC自全局树剪枝(图=树+硬链复用=Rc,DFS和Weak解循环引用)
+- callback回应 return回值 inline免链接🔑 void()可调 void*可调引数(引向可写的数) assembly(x86,dalvik等具体的ISA指令结构!"汇编"可不是语言 identifier变量名/函数 qualified带前缀)
+- syntax写法 semantic语意🔑 lambda栏目答 macro码可揉🔑 thenCont函续体🔑 reduce单步调用🔑 reflect类型查询 tailrec伪递归🔑(continue到开头)
+- stmt句式 expr算式 funDeclare函式(公式) constLiteral常数/param引数("某调用"参数) arg参数 operator运算函数🔑  ^1
+- parser 常量或字面树的编解码器，和整体的关系类似 png-AdobePS zip-JVM json-GitHubAPI
+  - 它使 class{fun(x){x}} 等调用在编译期运行，相对于JIT和curry，这是一种 partialEval二段求值🔑
+  - 关于LR/LALR，手写递归下降是右递归的，await getch()是递归上升。clang和lua,ruby的parser是基于C调用栈的LL1(不带递归回溯自顶向下)，表驱动的语法解析器几乎无法维护和微调。 左递归对应tailrec伪递归 Z=0x | Z 0 匹配无穷个0。[PeggyJS.org](https://ohmjs.org/editor/) 用它做Web计算器
 - import ast/CST/PSI源码结构 IR中间树 SSA返回赋值图(将{}块内重复的算式，编号化复用,是扩充的[ffmpeg lavfi 节点图](https://shadered.org/blog?id=10),类似的高复用软件有YaST,pandoc)
 - ln -s 文件树+硬链接=图DAG; =NodeGraph滤镜=let赋值复用=.. Python 当初是没有 malloc-delete 或 GC 的，全靠Rc，和当今一堆如node_modules般傻缺的编译期运行时的过度工程相比。简直是一股清流，说明了“搞不懂就该学pip和ld-libc那样跳过”。 GC roots=全局|此线程局部栈|[]{}()=>内值
 
@@ -270,14 +280,34 @@ WannaCry(SMB SrvOs2FeaListSizeToNt), CrowdStrike(CSAgent.sys VM空指针), log4j
 ><br>
 >“电脑”和人脑一样，其记忆传输媒介是分效率的，分 内存片malloc/存储片open-superblock 和 多请求async(单线待客)/多线thread(单核时间片,如GPU像素级同算式)，可以用序列化(json等通用格式)或swap(睡眠,coredump/criu)将不常用的片换出、极小的片换入(yml配置树,RAMdisk,initrd)。
 
->程序的片称为段。C文件就是PATH里的对象，编译转储为 `lit,asm,prop,proplit,pfn,pool` 段：[为何不试试](https://jasonblog.github.io/note/fcamel/05.html) `chmod -x ./a.out; /lib/ld-linux-*.2 $_` ？除了代码，有些二进制还支持多加CPU(fatELF,apkb)、图标资源和签名，像网页PWA那样方便容器化。6个段对应 .rodata,text,bss,data, (按so/dll的 ELF [PLT](https://www.cnblogs.com/pannengzhi/p/2018-04-09-about-got-plt.html#:~:text=进程链接表),strtab； PE [IAT](https://xuelinf.github.io/2016/07/15/ELF-PE-文件结构分析/#:~:text=导入地址表的内容),rsrc,rdata)
+>程序的片称为段。C文件就是PATH里的对象，编译转储为 `asm,lit,pfn,pool,kv,kvlit` 段：[为何不试试](https://jasonblog.github.io/note/fcamel/05.html) `chmod -x ./a.out; /lib/ld-linux-*.2 $_` ？除了代码，有些二进制还支持多加CPU(fatELF,apkb)、图标资源和签名，像网页PWA那样方便容器化。6个段对应 .text,rodata, (按so/dll的 ELF [PLT](https://www.cnblogs.com/pannengzhi/p/2018-04-09-about-got-plt.html#:~:text=进程链接表),str等tab/dyn如str,bss,data； PE [IAT](https://xuelinf.github.io/2016/07/15/ELF-PE-文件结构分析/#:~:text=导入地址表的内容),rsrc,rdata)
+
+### Web
+
+- HTML5元素×111 []里的键名和尖括号可忽略
+  - 无样式×8: link[href,rel] style[src] script[defer]; head title meta
+  - 输入×14: form label>input button select option<optgroup; textarea datalist+input[list=#,pattern,type="email"multiple]
+  - 外链×12: img audio,video,picture source(poster),track; map>area canvas iframe object[data=pdfobject,ruffle.rs,webVM.io#andjvm]
+  - 组件×2: slot template output progress dialog meter#补习[lo=60,hi=80,opt=lo]
+  - 布局×75:
+    - 两项标注×7: :is(ul,ol,menu)>li ruby:has(rt,rp)注音 details>summary fieldset>legend figure>figcaption
+    - 单独含义×52
+      - div类×24: div section  address hgroup h1 h2 h3 h4 h5 h6 blockquote hr p pre
+      - 结构: main>article nav header,footer,aside
+      - span类×28: a span b,i,var u,s,sub,sup br q,mark,code del,ins    samp  time,abbr,cite,kbd
+    - 多项配合×16
+      - 表格系×10: table>tr:has(th,td) caption colgroup.周末[span=2] tbody thead,tfoot
+      - 词典表×3: dl dt,dfn dd   bdi bdo
+- 占位类: <!DOCTYPE html> base body embed em noscript col small strong (wbr=U+200B wordWrap)
+- 1em=1font-size, 居中可 text-align,align-content(display:flex):center
+- 语义化标签 都是很重要的！ https://developer.mozilla.org/zh-CN/docs/Web/HTML/Element#content_sectioning
 
 ## 通假音
 
 > 仅供参考的发音： 念错，反而是更易于理解的
 - Apache 阿帕奇一，本意是 A Patch
 - C# Csharp .NET C傻 dotnet
-- BIOS bail-os 一般应用为开机按F11,12,ESC后手动选引导器，如GRUB，为主板自带没有OS或使用DOS时的[最小IO函数库](https://github.com/duangsuse/tv/blob/2ade66184f37e3dd558e3efd9c1684b4e57062fd/系统C/osd.md#高中生也能懂的操作系统确信)，图形仅支持到VESA(典型800x600,1024x768)。 操作系统就是4片3口虚拟化(时间内存存储程序-片，网口线口板口，4片3口)，其驱动内核或者说特权代码，在BIOS中断表上(int0x80~iret)或上文切换timer里被调用(传fd等IPC“库启”cookie)
+- BIOS bail-os 一般应用为开机按F11,12,ESC后手动选引导器，如GRUB，为主板自带没有OS或使用DOS时的[最小IO函数库](https://github.com/duangsuse/tv/blob/2ade66184f37e3dd558e3efd9c1684b4e57062fd/系统C/osd.md#高中生也能懂的操作系统确信)，图形仅支持到VESA(典型800x600,1024x768)。 操作系统就是4片3口虚拟化
 - OSX OS10, 是一个基于[Darwin BSD](https://www.quora.com/Why-do-we-not-have-any-Darwin-or-XNU-based-operating-systems)的*nix桌面系统 https://apple.stackexchange.com/questions/2549/whats-the-proper-way-to-pronounce-mac-os-x
 - RISC-V risk5, 开源界的x86; RFID IEEE I-tripleE, 3A=AAA的读法相同, https://www.ieee.org/about/ieee-history.html
 - SHA256 S-H-A two five six, shuh two fifty-six
@@ -296,7 +326,7 @@ WannaCry(SMB SrvOs2FeaListSizeToNt), CrowdStrike(CSAgent.sys VM空指针), log4j
 >纯血=Linux 内核 + musl libc + LLVM/Clang + 魔改 node.ts + 基于魔改 TypeScript 疑似大量借鉴 Flutter 的 GUI 框架。鉴定完毕。
 >当年“汉芯”已经被精心打磨得找不到Motorola字样了，[“红芯”](https://github.com/monyhar/monyhar)和“[cecIDE](https://github.com/qxchuckle/vsc-cec-ide)”也没有Chrome和VSCode的Logo了, muLang和“众标麒麟”更是打脸了开源界的卡脖子，为什么海量个例依然顽固地认为是造假？
 
-## BYGRP1N音标
+## BYGRP1N挟意音-英日谐音
 
 这是一种免输入法的(半中日)英音标，足以准确表达英语书上的发音。 IPA参考自[多邻国](https://duome.eu/vocabulary/zs/en)、及[SynthV语音合成](https://dreamtonics.com/zh-CN/svstudio-resources/)内的[CMUdict/pronouncing.py](https://en.wikipedia.org/wiki/ARPABET)
 
@@ -536,23 +566,23 @@ BYGRP本是为代码设计。(💙函数参数/引数/常数 💜=非参数变�
 - 「研表究明，汉字序顺并不定一影阅响读」母语者听说读写的单位是意群即语素而非一词，介词和生词不错，逻辑就不乱。 读书提纲挈领，可从句逗之左读，忘记句首。逐词读速慢，导致英文必以ofBy前置中心，比之中日更散。
 - SOV的口语化形成了动词软化(百搭动+虚名词)，颜值高=很美帅、知名度高=有名气人气、前瞻性=远见卓识、A“作出”⼤贡献=A贡献巨大、已在B身上“进行”验证=用B得证， 包括滥用代词「的」：我家狗至少能活20岁 vs 我的狗的预期寿命是20年。 这两条语法冷知识摘自《中文的常态与变态》——余光中 1987
 
-CJEnK中英日韩等同挟意音认为，在语泾下，语言传输语意/意境，组合词根词缀-声韵元辅调，而一句话含时数罐搭4点
+CJEnK中英日韩等同认为，在语泾下，语言传输语意/意境，组合词根词缀-声韵元辅调，而一句话含时数罐搭4点
 
-- 💙罐袋值漏(冇)词 B run😈q 
+- 💙罐袋值漏词 B run😈冇b 
   - 要在了会过着就才再边 to'd'ing'ed'll've so,yet,[wc]ouldBe
-  - no/some/any/everY 四倒表:咋第哪啥为人时1H6Wh how2 (which1 Where) What why who When; 括号可搭句(that..)
+  - no/some/any/everY 四倒表:咋啥为人时哪几1H6Wh how-h2 What-w why who When (Where which1); 括号可搭句(that..) 的值定语 地值状语
   - 蓝词罐袋: 们的是去很于,被这那第一个只都另又 ofThe'm's're only-both-{an,ot,nei}her
   - &/\butToo eachSuch 和或也不比但有等如能成
   - 数态并非 1/#1st%/ones/1块片，名词的性表意太少。值词=单位+字面，袋= 🙋🧏🎏々👧👦👯‍♀ 那👉这👈卖self🙌的>是很:
 
-- 🦐动自动lyer形 Y 🧡ap
+- 🦐动自动lyer形 Y 🧡al
   - 5划3粗:AB我爱你,AC你好/BC好你,ABC安全带系好,ABb送你回家,ACc路在变宽; 定状语(的左语好右语) 动黏补语
   -  词缀不高亮,?¿!声调 的前那于后/于门'z旁 the仅最高级 lyerThe免erst
 - 🥦黏动黏 G 💚a
   - oninat asTFbyWF 作到从跟用为在里当若 if,while'cuz,else,case    
   - 时向前以外者似在上下左右 不一对最全见得出 .:I动私以下以上彼:.
   - 词缀:可前性无型化类度人版学 地而让把给据约
-- 🥓位链入时地 R atp
+- 🥓位链入时地 R apt
   - Oh uh well nah hey yay wow ew eg etc.
 - 💓形问SO漏 P 💜0🐷12❤️3
   - 心态0~3为[呢吗 吧 该 必否] yesno
@@ -597,6 +627,11 @@ Rust|i8|i16|i32|i64|f32|f64|u16;char=i32||i->u|0i128, isize..
 - 为允许函数另写，`c++filt` 使用类似base64/MIME的手段编码了函数签名，所以有 `#[no_mangle] fn`
 - [js里对 new Array 有泛型优化](https://github.com/babel/babel/issues/6233#issuecomment-329055890)，但对仅 `a.unshift(x)` 的栈比push慢，包括Ringbuf
 - 别问 `sizeof(long long)==8` [是否恒真](https://en.wikipedia.org/wiki/C_data_types)，用 `int64_t 就对了;`
+- `size_t == void*` 在老机器上为假。8051的jmp只能跳256行，它的C指针分NEAR/FAR，。 x86分16,32,64bit时代(ax=al+ah, eax, rax)，但MMU地址线有20bit(24 for PAE)，只能使用类似ROP的二级跳，即跳到 `jmp midA+1; midA: jmp realGoto; rest..` 。汇编可读写BIOS(硬盘C/H/S) VGA(DRAM帧缓冲)
+  - x86通用寄存器： {A,B,C,D}X {s,d}i字串 {s,b}P栈 {栈S,代码C,数据D,E,F,G}S R{8..15}{D,W,B} 拓展(禁止取高位)
+  - spbp,bx,r{12..15} 不允许调方改写，ret和longjmp(throw)要恢复 sp, *bp=oldSP 。上文切换要顺着bp链表一路到main()栈帧。 this=cx argA~F=`Diane Silk dress costs $89`
+  - 其他寄存器: IP下一单步 EFLAGS奇偶零等jmp旗标 操作系统和调试: TSC纳秒 {C,D}R{0..3} {IDT,GDT,LDT}R  IA32_TSC等MSR(400多个)用于内核和虚拟化
+  - x87(硬件FPU): ST{0..7} FP{S,C,T}W  SIMD部分： SSE+AVX512 {X,Y,Z}MM{0..31} Z为512bit,Y减半,X再减半, 相当于rax,eax,ax。
 - 目前 pyjs[rb](https://docs.ruby-lang.org/en/2.0.0/Bignum.html) 都支持BigInt，js需使用 `1n+BigInt(x=2)` 的强转
 - [C bitfield压缩bool[]](https://hackmd.io/@sysprog/c-bitfield)。ByteOrder(ints<=>bytes) 上，只有JVM规范为大端(MSB在左在前)，通过 `x=x<<8|(b&0xFF)` 读入字节， `set(x&0xFF);x>>>8` 输出小端，`d in 8,16,24,32: (byte)(x>>>(32-d))` 原样
 
@@ -651,7 +686,7 @@ Ruby|"#{2}"|Time.new|Time.parse
 - 引擎ngin 逻辑logic 几何geometry 拓扑topology 图腾totem 设定setting 绑定bonding 对偶dual 魔改模块Mod 模是Mode U盘disk X光镭射LASER(有穿透力的激光/“红外线”) 雷达RADAR(radio detection and ranging) 声呐sonar(sora suno) 霓虹neon(日本) 矽谷silicon 朊protein 皮卡车pickupTruck 石栋stone 是偷stole 死壮strong 依靠农民economy 卡是他么custom 制导遥感remoteSensing 坦克tank 向量外积wedge
 - 往之was 妄图wantTo 歪脑whyNot 猫腻迷思myth 妈mum 爹dad 父pa 亲戚姻络inLaw 爱慕未停ImWaiting 图样TooYoung 亦可赛艇excited 喉舌齿唇(试试怎么发音?) 绳线丝(发音长短?) 沙发sofa 谷子goods(ACG) 尼龙吉他nylonGuitar  歇斯底里hysteria(呓怔) 苦力怕creeper,coolie 力奔labor 无产普罗大众proletariat
 - cola,McDonalds,Pokemon,Minecraft麦块,BenzBWM,JEEP 高德god 伏地魔Voldemort 舒肤佳safeGuard 宜家IKEA 凡士林,威士忌,蕾丝lace,Ballet,伟哥Viagra,啃的鸡kentuckyFChicken 孩子王KidsWant 狗不理GoBelieve
-粉丝fans 黑hater 马刻笔mark 趴体party 1派pie 1听tin 1米meter 1卡card 迪吧discoBar 聊天沙龙salon 嬉皮嘻哈hiphop 体恤Tshirt 夹克jacket 胖此pants 泰迪Teddy 焙根beacon 网咖啡吐司cafeToast 白脱butter 威化wafer 柠檬芒果lemonMango 汽水曲奇sodaCookie 三文鱼salmon 披萨pizza 嗨拜拜hiBye 摩托克motorCycle 巴适bus 卡通cartoon 耳麦mic 迷你mini 拷贝cabi 寄了GG 摩登modern 时髦/杀马特smart 抓马dramatic 赛博朋克cyberPunk 爵士jazz 扑克脸pokerFace 风尚fashion 猫modem 马赛克蒙太奇montage 高尔夫glof 荷尔蒙hormone 抬头title 阀valve
+粉丝fans 黑hater 马刻笔mark 趴体party 1派pie 1听tin 1米meter 1卡card 迪吧discoBar 聊天沙龙salon 嬉皮嘻哈hiphop 体恤Tshirt 夹克jacket 胖此pants 泰迪Teddy 焙根beacon 网咖啡吐司cafeToast 白脱butter 红茶红糖blacktea 威化wafer 柠檬芒果lemonMango 汽水曲奇sodaCookie 三文鱼salmon 披萨pizza 嗨拜拜hiBye 摩托克motorCycle 巴适bus 卡通cartoon 耳麦mic 迷你mini 拷贝cabi 寄了GG 摩登modern 时髦/杀马特smart 抓马dramatic 赛博朋克cyberPunk 爵士jazz 扑克脸pokerFace 风尚fashion 猫modem 马赛克蒙太奇montage 高尔夫glof 荷尔蒙hormone 抬头title 阀valve
 - 挞tart 奶油淇淋cream 泵pump 加农canon  yogaSauna瑜伽桑拿  克隆刻隆clone 瓦斯gas  truly愤怒 留hair屏 脑秀逗shortCircuit 晒share 自拍秀shot 扎啤jardraftBeer
 板board 抬take 给give 离leave 嗲dear 台风Typhoon 闪shine kiwi果 为奇百科
 引得index 抛光polish 百战不Die 二货asshole 出包trouble 魔技magic 缺西trash 赤佬cheater 混腔势chance 噱头shitOwe 舶来borrow 瘪三begSir 陋死Loser
@@ -700,21 +735,52 @@ Ruby|"#{2}"|Time.new|Time.parse
 
 特此，让"德先生"科普一点微小的政经概念。
 
+假如课本里教你《经济》，却漏掉了三种「换位思考」，可以说你学的就是野鸡课程。
+
+- 「工人」是劳力市场的批发商家，有不同周期的卖法。有淡热季保收的，也有接小单接大项目的，有保险度低、自由度高，自负盈亏的卖法。
+  - 我们是精打细算的客人，更是商家。提供适合你个性或天材的合作很重要，这能省下很多情绪内耗、报复消费、或缘木求鱼或摸鱼怠工的隐形成本，极大节省削足适履所产生学习和医疗费溢价，以更轻松地满足更苛刻的消费者。 提升双边幸福度，才是有效的经济。何必朝三暮四，厚此薄彼地倾销劳动力呢？
+  - 榜一不代表垄断。 只有能扼制「创造性破坏」的实体有能力让市场干涸，它们一般会利用低价倾销(内卷)破坏规则，以图达到强制消费的唯一地位
+- 「储户」是银行的债主，小资通过钱庄汇集力量，足够完成稳赚不赔的事业。风险对冲好的银行家有更多利润，但放高利贷便意味着高风险。利息不是大风刮来的。谈到钱，没人会白给。
+  - 银行只靠信用支票便设立基金，赚到钱，说明人的声誉、资质和生产力资本一样属于价值投资；不过，许多金融游戏也就在“存”钱这些字眼上。你不理财财不理你，人的财富不断与认知眼界相匹配。同样资产的购买力尚且有别，增长就更需要“流”出舒适区，用勇气和智谋玩出来了！
+  - 现代经济体以信用本位印钞，一张名而符实的支票，就是真钞。 名不符实，印钞会助长贫穷，学历会带来迷信，钻戒会戳破爱情，法律会背叛正义，资本会压垮自己。 并非财富需要纸币，是纸币需要有财富背书和兜底。财富不必是金银，它可以是隐私的便民性，可以是苹果特斯拉那样绝妙的点子，最好是生产力工具，最好是无处投资只能消费的剩余价值“购买力”，它甚至能是被印在钱币上的“人民”。 钱不是目的。别像《The Golden Touch》那样许完愿所触之物都成了黄金，才醒悟被恐惧匮乏诱发的狂热，献祭了你生而为人最根本的食欲。
+- 「供需端」平衡时，才能避免“周期性的”萧条或通胀，并且为科技生产力与其对应社会文化的进步扫清障碍。 
+  - 经济人很少谈宏大叙事，都是着眼于摆摊买菜的大妈都听懂的「真金白眼」钱进钱出，但想成为能解读「风口」的金猪也是基本操作。 得钱只有4种方法：挣钱>借钱>骗钱>坑钱 ，借钱也是债主房东的获利法，最常见的庞氏骗局是套人=套现，以次充好看多做空，例如楼市和学土木“八股”市。 骗钱骗的也未必是钱，精力、舆论或尊严等有天然价值的权利常被用于套现。 坑钱(如赌狗)较骗局更不可持续，法律风险大。
+  - ¤"COPP机器" 便是某一供需端节点，例如公司或个体。左侧做空 Consume物料 Offer人力 右侧提供 Product产品 Provide服务 ，理想的机器无需人力(令物价<工价)，既有技术增长有回头客也卖周边服务；但高昂的获客成本和过低的劳价，常使资本趋于保守，无处发挥其革命性，这就是人口红利的优势和缺陷。 跨国供应链虽有上游下游之分，使能者多劳，薄利多销，却有工资分配的不足。 教育投资是强国之本，产业升级和三公意识方能让人矿变成人。
+
+ETF代币(memecoin)是一种投机产品， 就像数字人民币和房价，它既没法日常交易，也没有 **资产、不可替代的资质、'内行'的声誉、生产力** 当作支票的锚点（价值质押）。  和BTC一样，加密货币隐私性很好，人为价格操控很难监管，也有高频交易bot在投机收割。
+
+价格的本质是供需比例、市场情绪和预期，不受以上四种实体支持的泡沫资产增值，是无法自我平衡的。不受流量承认的市值数字滚滚便会暴雷。但对赌“狗”来说这正是立项的魅力所在。
+
+与股票可用于竞选[股东investor][股董chairman>shareholder]，帮助实业融资扩大、分红甚至于破产分钱不同，ETF更像纯粹的电子信号或者说带logo的废纸，只提供低买高卖的情绪价值，“高卖”来源于人气，这当然能正向循环做高，但早晚要走正轨反哺闭环。取决于玩家怎么理解金融，也有穷人跟着Musk炒DOGE，也可以起个名儿叫赌“狗”。 表情包币的不可能三角是声量、信心、互利博弈。地心引力和经济学里有相通的东西，愿赌服输。 
+
+代币和股市上市基本是1:1对应。在内盘(IPO/ICO)阶段是一定能赚到钱的，因此有证监会来阻止这种自我做空或两手倒做高的炒作。币圈甚至有空投钱包、老鼠仓、鲸鱼仓、貔貅发币的玩法(Pump&Dump做高砸盘,搜13岁币圈少年)
+
+BTC是ETH,SOL等区块链项目的模板， 是P2P私钥钱包+分布式账本的结合，每几分钟+1区块(1条红绿bar)由显卡价高者记帐上链，借算力众筹选拔可信中间人，防范私钥签名的重放攻击aka假账旧账51%攻击。挖矿=印钞+收税，因此衍生出矿工脚本和病毒的形式。ETH和SOL基于资本证明，已无法算力挖矿。 ETH和BTC有两大区别：是否金本位(BTC的钱包地址不公开-基于找零)、有无智能合约(支持定时定量锁仓&[禁止找零的NFT脚本](https://jason.mirror.xyz/kqYrbhtDeLu8ciH9tkblf9K1F1TIo5BuCLPn89h-DR0))
+
+公私钥体系(单向防窃听握手)无法破解，[P2P集群又有君子共识](https://www.ruanyifeng.com/blog/2017/12/blockchain-tutorial.html)，数字币就不是自由复制的数据。 这产生了几种话术：去中心化、互联共享(反集权)、WEB3元宇宙、账本透明(钱包匿名。)、0知识证明(1链算法=1家阿里)，但说实话 fuck off，上文讲过“价值”的本源逻辑了。画饼的技术力先比赢过VR游戏吧，别老拿看不见的代码说事。
+目前受到VISA背书的稳定币是USDc。 即便交易所有“一口价”监管，加密货币的隐私性仍受支持。
+
+
 经济权利，“仁义礼智信”
 - 钱：市场合作的提货单。农户给磨坊半吨米作为物料，磨坊主将劳动价值与生产资料租养费折算，还农户小于半吨面粉的提货单。 人言谓信；利人终利己，用“提货单”“信心支票”跨行业合作所产生的互利博弈和规模效益，是比黄金储量更长久的社会财富
-- 努力：达成回报的代价。`效=有用功/总功，效\=(人数·时间)/工作量`，力的价值取决于方向，在错误的方向上减速就是前进。 知愚谓智；运动是双边的绝对，位置不过相对于视角。倒果为因以失为得，视代价为产出，便是儒家八股文，虽创造好学与投资的氛围，也把智慧浪费在形式主义，故无缘于工业革命
+- 努力：达成回报的代价。`效=有用功/总功，效\=(人数·时间)/工作量`，力的价值取决于方向，在错误的方向上减速就是前进。 知愚谓智；运动是双边的绝对，位置不过相对于视角。倒果为因以失为得，视代价为产出，便是儒家八股文，虽创造好学与投资的氛围，也把智慧浪费在形式主义，故无缘于工业革命。 以现代视角功利地说，10w粉回复的底线1w粉。技术圈不会这样，它有自己的门槛，音乐科技也各有自己的分数线，这便是专业精神。 而把教育等同作教养，拿出生入世前的成败当成事，其实没有专业信仰。
 - 价值：某地供需比例的体现。`价=(需/供)×值质`，一正比一反比，值=需求层次(生理安全关系尊重自我,长短期高低端)。据此公式，只限价会让货架清空，只打击生产端会让黑市溢价。 崇贤谓礼；经济不是文字游戏，对物对人，普世价值的包容文化"不拘一格降人才"，它包容具体的人而非刻板印象，乃是有慷慨的伯乐，才不缺良马
 - 通货：印钞者和银行视角下的钱。通货膨胀=现货紧缩，通货紧缩=现货膨胀，通过升降专项印钞(放水)、储蓄利息、税收分配，能影响参与者的行为乃至预期，最终缓解危机。 大公谓义；但基于粮票的无产权经济下，个体对危机没有处分权或知情权，比如罢工“造谣”即非法。这是权力对人的异化
 - 物价与劳价：不同国家地区的价格包含运费/店铺地租/店主生活费等隐形成本，也可能含品牌溢价、知识产权，以及用于扩张和抗风险的剩余价值。 博爱谓仁；过度剥削，好比农户用秋收过度剩余的谷种去扩耕，分配不公，需求不足，最终会亏钱
 
 权力只对来源负责，生产只对标准负责，消费和休息是为了再生产。 确实有清官昏官给自己上价值上杠杆，清官比别人唯一多的就是敢担责任，因此被出事问责的概率最大，最不进步。 如果生产的来源不是消费而是指标压力，那粗糙泛滥的劳动价值的兑不了现的，因为你自己都不敢消费，比如用添加剂比赛节省性价比。虚假的繁荣源自供应链自上而下一切向钱看的从众。 
 
+知识座标系：
+😅二B 🖕精英 😎牛逼
+🤓爹味 🙉中庸 🤗人情味
+😇傻B 👇牛马 👏装逼
+
 政经座标系：
 ☭波布特  🖕特权 卐民粹日
 🕊左公益 🤓沉默 💸右效益
 🇨🇦社民加 👇自由 🇺🇸社自美
 
-经济学比二极管繁多些，如[小德MOMO“茅房类风口为何贬值”](http://www.bilibili.com/video/BV1wS42197kB)就只是讲投机主义--不比较收/支/兜底/预期，不关心投资的是何行业何领域。俩口袋左右倒、俩砖头来回搬便能把“牛市”“楼市”或“劳动价值”唱多，幕后都是看空和做多，豪绅托儿满 百姓踏空。  “羊的对手首先是羊，然后才是狼
+经济学比二极管繁多些，如[小德MOMO“茅房类风口为何贬值”](http://www.bilibili.com/video/BV1wS42197kB)就只是讲投机主义--不比较收/支/兜底/预期，不关心投资的是何行业何领域。俩口袋左右倒、俩砖头来回搬便能把“牛市”“楼市”或“劳动价值”唱多，幕后都是看空和做多，豪绅托儿满 百姓只踏空。  “羊的对手首先是羊，然后才是狼
 ”：没人能劝住无知自负到去投机top1%的赌徒呀。庞氏骗局是亏利赚本，赌场创业是操盘上桌贪婪+下套恐惧，套人=套现，但是政治投机根适合中国巨婴体制。
 
 辩马克思政的经，我一般只考七句，就能把聊天聊死。 毕竟，“反皇不反帝，仇财不仇阀，信仰唯物派达尔文，赞美道德和loser。” 的本源逻辑必然外儒内法，唱左做右
@@ -740,13 +806,14 @@ Ruby|"#{2}"|Time.new|Time.parse
 - 日漫日游，美帝驻军，韩国三星，又小又矬。但左上有一个朝鲜没有任何政府的驻军，它护照免签国都是180国以上，偷渡客和富人抢着移民，应该是世界上最有尊严、崛起得最过分的国家？
 - 你在大西洋飘了几个月下了船，冬天差点冻死。上岸后有个部落给你住的地方，请你吃烤火鸡。几年过后有一天他们跟你说，他们被别的部落打了，部分族人给抓了奴隶割了头皮，喊你带上枪帮他们的忙。 那时哪有这么多反战和政确？
 - 为啥要搞“承认败选”这套流程？要不，学学先进的“布尔什维克”少数派，去闯1918国会大厦？ 春秋秦灭六国，打了一百多年，本质上就是要一座座城池杀下来，其实就是军国君国主义同为头重脚轻的金字塔，同病相怜，1个刘邦就亡国，和欧洲的海星系统有优劣之分。 外战外行，内斗内行
+- 一个富人掌权的国家远比一个掌权后才有权致富的国家好得多——哈耶克。 没说谁市场，谁计划，好奇反驳的人是怎么对号入座的。
 
 > 读懂便可说破太太多的矛盾文学： 量大质好价格零 生产力至上,是罢工至上 唯物主义,是道德先锋队 结果平等,是机会专政 无产种姓vs资产法权 按需求端分配,劳动价值怎旱涝保收 无政经济,怎跨国组党 绝对真理,怎科学批判 必然实现,怎只能斗争 利好无产“没有”人权可失去 剥削者“赚差价”剩余工资必周期率危机 生产资料共产共享,但工农联合共你产革他命 阶级史观只有主观二分,没有立场合题
 
 一提到美国就是枪战每一天，一提到美军就笑谈贪生怕死的纸老虎，最好连枪都拿不稳。 一说日本是军国主义昂撒犹太，一说新闻联播还都是美媒自己爆的棱镜黑料。
 这样吧，退出WTO及其相关组织。 又嫌贫爱富，又爱石锤顾客金主，失业了，拳乱了，才记得起本色。
 亲们，左右别搞反了！ 不要犯第二次错误，亚洲四小龙没一个是往左现代化的，朝越缅柬才是“财富不断与你认知匹配”的经济体啊！
-其实，能搞出光州起义的韩国人和甘愿在苦难行军中默默饿死的朝鲜人，已经不是同一个民族了。
+其实，能搞出光州起义的韩国人和甘愿在苦难行军中默默饿死的朝鲜人，已经不是同一个民族了。 当斧头来到森林时，一些树说:至少它的把手是我们自己人。
 
 现代化指标：四票四力三权三券
 - 外汇钞票、监督选票、平等传票、福利税票
@@ -771,13 +838,17 @@ Ruby|"#{2}"|Time.new|Time.parse
 - 政府：财路上的交警，属于物业(财政财税)，以立宪为正证，法维人权、武卫主权， 三权分别代表立法正义、司法平等，行政透明。是谓兼听则明，偏听则暗。
 - 国民：路边店铺或小区的业主，在自己挣到钱后供养设施基建与福利：医食住行校劳老保。 (即市场竞争初次分配后)透过直接税与社保税、价格含税等方式；又百家争鸣，以保行业经济的可持续性、利民性。消费者便是「无形的大手」，产服学研 买卖方供需端 收支债险，有许多指标易被断章取义。
 - 国家：可替换为人口、政府、陆海权、主权国格四者之一，近现代"国家"即全体国民。 国家有主体民族/多民族、民主/法制/威权/独裁、陆国/岛国/资源/地缘、宗教或帝王崇拜/经济增速为中心/主权在民 的区分。参数不同的经济体没有比较意义，如汉语中国和多语言印度、新加坡城和台湾岛
-- 社会：暴力和谎言是万恶之源，要突破它们达成合作，人要聚会结社，至土于礼，礼理之森生产的光能穿透黑暗。 家是最小国，国是千万家。
-- 法律：权力导致腐败，特权反腐反复腐败。
+- 社会：暴力和谎言是万恶之源，要突破它们达成合作，人要聚会结社，至土于礼，礼理之森生产的光能穿透黑暗。 家是最小国，国是千万家。 
+  - 国家主权保护了每个人「不受干涉」的天赋自由，但强者自由往往不民主。强者也在进步，以多欺少和也发生过，善恶不会脸谱化，因此要分右派左派。
+  - 集体鼓励你做啥，要反思你的免费和自由被偷走了几项，花多少钱，还你多少；集体严查你做啥，要讨论瓜分到了更多财富自由的阶层是谁，非三公原则不可服众。钞票选票传票税票，把欲望和市侩公平地放在阳光下监督。
+- 法律：权力导致腐败，特权反腐反复腐败。钞票就是有法律、权力和资源撑腰的支票。没有三权分立，原告兼法官，便有潜规则。
+  - 「自由主义」的自由，是弱肉不受强食，才有自由。让穷人免于贫瘠，富人免于恐惧，才能正当竞争，和而不同，实现可持续发展的合作经济，而不对垄断倾销抱有幻想，重蹈大萧条覆辙。
+  - 这样的法制符合人性和科学实验，不会因贪婪恐惧而旱死涝死，也满足人本主义+主权在民的联合国合规要求。统治阶级？人人有份。 达尔文进化论的愿景是进化，淘汰只是手段。很明显，社达愿景是淘汰，结果是退化。 美国240年前有殖民和太监，今天也有毒品和黑命贵，所以禁毒禁成了伪君子么？穷苦人维权不贵么？ 慎防带节奏。
 - 外汇：央行间的价值交换。中国可以用科技或劳力(人民)甚至债务为锚印钞，向泰国买榴梿，也可以由美国向国内出资，进口再按美元结算。 `币的价值=流通率(市场体量)/总水量M2×信用 ，广义货币M2=现金M0+现金存款M1+定期存款`
 - 兜底新三样：如果算劳动价值，是只要性价比不要劳价比，单从需求端算真金白眼，外卖网约其实比外包雇佣更适合省差价，网红甚至是送差价的，主打一个分布式企业化，店商兼电商
 - 社融：社融(债券杠杆)和M1M2剪刀差，与萧条成反比；但繁荣也需要有可持续的锚，否则是泡沫。 即便有刚需，赤字太高，一旦资源错配就容易导致萧条裁员欠债坏账，银行破产，物价上涨；错配的产物卖不出就只能“倒牛奶”，为修复坏账失去30年。
-- 破产/债务重组： 拿低息换高息，拿低风险换高风险，
-- 外汇(1)： 假设你是中国，刚入世，那先出口产品换币，或先卖支票(债权)买进口，都行，目标利益最大化。 放水要放到消费者需要的行业，否则换手率过冷，M0M1M2依次结成冰就又要印钞了，通缩=货胀 通胀=货缩。 放水要浇根，叶子都那么大了要把树压塌，杠杆压断啊。
+- 破产/债务重组： 拿低息换高息，拿低风险换高风险。不破就会增加周期率风险：通缩=货胀 通胀=货缩，通缩降价=生产端遭遇通胀，买不起劳动力要卷款跑了，消费端为等5折也不买了，大家都只投机不看增长了，钱的购买力随即下降。
+- 外汇(1)： 假设你是中国，刚入世，那先出口产品换币，或先卖支票(债权)买进口，都行，目标利益最大化。 放水要放到消费者需要的行业，否则换手率过冷，M0M1M2依次结成冰就又要印钞了 放水要浇根，叶子都那么大了要把树压塌，杠杆压断啊。
 - 民族主义：记住历史，因为战争毁了我们的过去，忘记仇恨，因为你无权毁掉孩子的未来。对于负面新闻，只有知耻才有后勇，或许别人只得70分，但他们不以交白卷为荣； 民族主义是闭关锁国的爱国主义，将损害消费者权益，迫使人在禁买进口、脱钩裁员、窄化科技，或设立香港式租界间二选一
 - 核平： 荆轲，专诸、聂政、豫让、要离、核弹……哪个国君不怕斩首？ 但，你是平民，你怕不怕？犯不上。谁是战争的教唆者，谁怕。 送领导先走，就没人需要断后。
 - 同理心：慈善（同情心）是一种共情（同理心），在主要矛盾之外共情对象，往往能减小信息差提高效率
@@ -844,23 +915,29 @@ Ruby|"#{2}"|Time.new|Time.parse
 
 “这是个人的一小步，却是人类的一大步。”——这个男人叫[大壮](https://zh.moegirl.org.cn/zh-hans/阿姆斯特朗回旋加速喷气式阿姆斯特朗炮#/media/File:MLP_S04E12_15min39s.png)
 
-- “从来就没有什么救世主！他是人民的大救星！——听《东方红》《国际歌》觉醒的品客”
+- “从来就没有什么救世主！万岁，他是人民的大救星！——听《东方红》《国际歌》觉醒的品客合订本”
 - 你可以一时欺骗所有人，也可以永远欺骗某些人，但不可能永远欺骗所有人。——林肯
-- 教育就是当一个人把在学校所学全部忘光之后剩下的东西。 常识就是人到十八岁为止所累积的各种偏见。——Einstein 
+- 教育就是当一个人把学校所学全部忘光后剩下的东西。 常识就是人到十八岁为止所累积的各种偏见。——Einstein 
+- 焚书伊始，焚人以终。——[德]海利希．海涅(Heinrich Heine, 1797-1856) ——致生于逆宪不义，死于逆公投之屈辱的苏联
+- 甘地遇到英國人是聖雄，遇到斯大林就是無名屍。
 - 人生不需要意义，意义却需要人生——Tom Cat
 - “产品说明书里不存在可操作性 —— 37 Signals，很懂中式教育的防自学”
 - “罗马帝国之所以灭亡，是因为缺少能return 0 的皇帝。——下次就回归void吧”
-- 当掠夺成为某些阶层的生活方式，一种允许压迫的新法制和一个美化掠夺的新道德，就会日渐主流——The Law
-- “早打大打打核战，多死点人，我们生活压力就小一半。 ——这桌一共十人，你想死哪五个？ ——法西斯经济学就在我们身边，当心宏大叙事下的乌合之众。”
-- 焚书伊始，焚人以终。——[德]海利希．海涅(Heinrich Heine, 1797-1856) ——致生于对立宪不义，死于逆公投屈辱的苏联
-- 若政治没有竞争对手，权力必不受制衡，言论必无处自由，使罪恶不便披露，罪行不受惩罚： 立法是作弊，司法是作案，行政是作死，权力是凶器，部下是家奴；国企只懂夺富于民，银行只剩自动欠款机——戈巴契夫
-- “苏联只有一颗大脑在思考，其他的只需服从即可。而美国有成千上万颗大脑在思考，苏联必寡不敌众。 ——没人比他祂聪明！等他死了，我们13亿的智慧才从0岁往上成长——袁腾飞”
-- “苏联把阵营里第二和第三都开除阵营，14名元首又有12名是“叛徒”，后面的都被定义为修正者。你要不是叛徒，我就被成叛徒了，牛顿和苹果是靠战斗，顶层和顶层更是决斗——城市化的车怎么都在逆行啊？”
-- “世界上有两种bug——用的好就是feature, 比如可空类型”
 - “世界上有10种人——理解2进制的和不理解的”
-- 一个从未犯错的人是因为他不曾尝试新鲜事物。当我们的知识之圆扩大之时，我们所面临的未知的圆周也一样。
-- “为了理解递归，我们首先要理解的是递归——哈哈，其实要弄清的是，不再递归时你想return什么”
+- “程序员有一根金属棒，上面有一道细细地划痕，他就靠这个划痕的位置浮点数记住了上亿字节。——”
+- “我get不到这些笑话的笑点” “你用put试一下”
+- “push的反义词是什么？” “pop”  “poll”
+- “世界上有两种bug——用的好就是feature, 比如可空类型”
+- “为了理解递归，我们首先要理解的是递归——哈哈，那是死锁，其实要弄清的是，不再递归时你想return的类型”
 - “C数据类型不死，只是被cast成了void*——隐藏于汇编偏移量”
+- “我问了一下我的学生们：一个完全不会享乐，对娱乐持批判态度的人能否帮助人们过上快乐的生活。这群四五年级的小孩几乎全都回答这不可能。”
+- “早打大打打核战，多死点人，我们生活压力就小一半。 ——这桌一共十人，你想死哪五个？ ——法西斯经济学就在我们身边，当心宏大叙事下的乌合麒麟。”
+- 当掠夺成为某些阶层的生活方式，一种反向淘汰压迫的新法制和一个美化掠夺的新道德，就会日渐主流——The Law
+- 爱国教育，搞成“恨国”教育，我觉得反了。 蛋糕哪里都有，甚至每个时代都有，然而有的地方是只有一个人吃，其他人赞。 你根本没搞清楚矛盾，美国的伟大就在于蛋糕人人都能分到，而不是像印度这样，婆罗门吃蛋糕，其他人只能吃刀叉吃盘子，直到铤而走险吃泥模吃蛋鸡。
+- “苏联只有一颗大脑在思考，其他的只需服从即可。而美国有千千万万颗大脑在思考，苏联必寡不敌众。 ——没人比他祂聪明！等他死了，我们13亿的智慧才从0岁往上成长——袁腾飞”
+- 若政治没有竞争对手，权力必不受制衡，维权必无处言论，罪恶不便披露，罪行不受惩罚： 立法是作弊，司法是作案，行政是作死，权力是凶器，部下是家奴；国企只懂夺富于民，银行只剩自动欠款机——戈巴契夫
+- “苏联把阵营里第二和第三都开除工籍，14名元首又有12名是“叛徒”，后面的都被定义为修正者。你要不是叛徒，我就成叛徒了，牛顿发现苹果是靠战斗，顶层和顶层更是决斗——城市化的车怎么都在逆行啊？”
+- 一个从未犯错的人是因为他不曾尝试新鲜事物。当我们的知识之圆扩大之时，我们所面临的未知的圆周也一样。
 - 在水上行走和按需求开发软件都很容易，前提是，它们已经冻结。——Edward V Berard
 - 光速不是一个速度，而是一种结构，就像急弯的弧度、路面条件，跟怎么走没关系。就比如达到了第一宇宙速度你就没法呆在地上了，只要是这个宇宙时空的一部分，怎么也不会超过光速，而且达到光速的粒子还必定产生重大变化。——果壳中的宇宙 
 

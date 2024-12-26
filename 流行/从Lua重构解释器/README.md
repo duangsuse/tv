@@ -1,8 +1,9 @@
 # 前言
 
+
 Lua是一门类似pyjs、主打小巧的脚本语言，它支持Java编译不通过的 `if 1==1 then class{BE='Pair',swap=()=>Pair(B,A)}` 和 `co:yield(Async)` 一类函数范式。高动态和客制性，使Lua被腾讯和怒鸟游戏引擎+OpenResty+OpenWRT所青睐，并有了 [Luvit.io]/[MoonScript.org]/[YueScript.org] 等运行时和方言。
 
-Lua被 neovim,wireshark,Lightroom,Androlua,AutoJS 等App作为规则引擎高频调用，其地位很像给JVM构建apk的Groovy、其后端模板EL & `@Spring(DSL)` ，但，Lua没安全漏洞，[它甚至能运行在内核里](https://github.com/luainkernel/lunatik)、[跑在单片机上](LuatOS.com)！
+Lua被 [Neovim](https://github.com/OXY2DEV/markview.nvim/blob/main/lua/markview/presets.lua),[conky酷HUD](https://conky.cc/lua),wireshark,Adboe,Androlua,AutoJS 等App作为配置和规则引擎高频调用，其地位很像给JVM构建apk的Groovy、其后端模板EL & `@Spring(DSL)` ，但，Lua没安全漏洞，[它甚至能运行在内核里](https://github.com/luainkernel/lunatik)、[跑在单片机上](LuatOS.com)！
 
 可见，「Lua生态」并非藉藉无名。如果说它比pyjs差在哪，那就是 `local do…end` 和数组字典结构较冗长混淆，但其效率和完备性，深受游戏开发者、架构师的青睐。
 
@@ -12,17 +13,18 @@ Lua和PyJS的元编程技术有这样的对应关系：[NeLua.io]=Mojo、[Luau.o
 
 若要问在Web上体验Lua，或配置类似py的开箱即用环境的最好方法，请打开[Fengari.js](http://fengari.io/)和[Luvit](#标准安装)，它们提供了文件/格式/网络IO库。
 
-为啥非要构建Lua？ [CRuby,CPython,QuickJS](https://hellogithub.com/report/tiobe) 的源码有啥问题吗？ 其实，**无论你是想认识当代工业界 DSL(interpreter)|VM|GC 原理、OS或OOP架构本质，或是只做[二进制|逆向](https://github.com/duangsuse-valid-projects/CoolTok)Mod|FFI或AOP调用绑定，Lua都是top 1%的案例！🍏**
+为啥非要构建Lua？ [CRuby,CPython,QuickJS](https://hellogithub.com/report/tiobe) 的源码有啥问题吗？ 其实，**无论你是想认识当代工业界 DSL(interpreter)|VM|GC 原理、OS或OOP架构本质("心智模型")，或是只做[二进制|逆向](https://github.com/duangsuse-valid-projects/CoolTok)Mod|FFI或AOP调用绑定，Lua都是top 1%的案例！🍏**
 
 > “业界总有两派程序设计方法，一派简洁真诚，明确不堆砌缺陷，一派繁复空洞，连缺陷设计都不明确——Hoare, 快速排序之父”
 
-麻雀虽小，五脏超全，我初次阅读计算器[subexpr()解析](https://github.com/Tencent/xLua/blob/master/WebGLPlugins/lparser.c#L1069)时就学到了「科班的」 YaCC,LL1,[ANTLR+VSCode引擎](https://www.cnblogs.com/dtux/p/14885606.html) 与一众[FP函数式]解析组合子不会教你的速算法。 此法还可用于生成 HTML.h1~h6 大纲树、py的缩进块，本书都会实操 ——如果说Lisp和入演算是「语言之间的语言」，Lua便是「语言里的语言」了
+麻雀虽小，五脏超全，我初次阅读计算器[subexpr()解析](https://github.com/Tencent/xLua/blob/master/WebGLPlugins/lparser.c#L1069)时就学到了「科班的」 YaCC,LL1,[ANTLR+VSCode引擎](https://www.cnblogs.com/dtux/p/14885606.html) 与一众[FP函数式]解析组合子不会教你的速算法。 此法还可用于生成 [HTML.h1~h6 大纲树](https://wojs.org/HTMLs/deep.html)、[py的缩进块](https://t.me/dsuse/18843)([Cffi头文件](https://github.com/duangsuse-valid-projects/Hachiko/blob/master/hachiko_bapu/funutils.py#L63))，本书都会实操 ——如果说Lisp和入演算是「语言之间的语言」，Lua便是「语言里的语言」了
 
 这本书不止写给「称职」的开发者，更是属于「优秀」程序员的自我修养。 一招鲜，吃遍天的技术总是存在，但只有自由掌握底层逻辑上的学习能力，才能在它们初现时便一见如故，能穷其变，新知不穷。 #码哲
 
 如果您还不会Lua，请多看 [js2Lua](https://js-to-lua.netlify.app/) 和 [中文API文档](https://cloudwu.github.io/lua53doc/manual.html#6.1)。**本书大部分链接都可视为资料站，而非孤立引用文（初读建议您忽略，但确实都是沙海淘金的资料）**。 对Javaer和Pythonista，本书的元编程技巧也是通用的。 对序列化/依赖注入/接口绑定和 `@调用()` -例如 Gson,ButterKnife,DeepCopy 的幕后代码好奇？本书更附赠了实践方案。
 
 目前，CLua的最新版是2024/1发布的 Lua 5.4.7。Lua 诞生于巴西 PUC Rio 大学，至今语法上没什么变化，或者说，没py2to3那样重大的错误。
+
 
 >“简明是可靠的先验，不是可靠的祭品。——Dijkstra，或许和代码至上的Linus聊不来”
 
@@ -51,17 +53,25 @@ Lua解释器是开源的，其输入Lua脚本却有两种形式: loadstr|chunk �
 
 在显示本书大纲前，我希望您认真读完这4篇导论，再试看下这3个玩具。 这些文章的作者在国内Java/C#/JS的编译期和调优领域是佼佼者，有真知灼见，亦字字珠玑。他者之石，可攻玉也。
 
-- [RednaxelaFX 如何区分解释与编译](https://www.iteye.com/blog/rednaxelafx-492667), [如何JIT](https://zhuanlan.zhihu.com/p/610720287) (x86 ABI没基础可简读：[跳着看就够了](https://bxtkezhan.github.io/post/tutorial_003/), 猜猜 Diane Silk dress costs $89 是为啥😂)
 - [WASM MoonbitLang.cn 主创张宏波侃编程语言史](https://juejin.cn/post/7040037986699837453)
+  - ReScript 之父张宏波在前端上也很强，走纯函数路线，他对社区成员很友善。
+  - **但在本文中，抱歉，我不当好好先生。** 凡事都有两面性，发挥「拿来主义」，指出任何人的不足，那不是人身攻击。 「计科」就要有点儿科学态度，少点傲慢私货。 Linus,Timsort的作者Peters,Bcachefs
+- [RednaxelaFX 如何区分解释与编译-图文](https://www.cnblogs.com/LiPengFeiii/p/15459762.html)
+  - R大的文章，始于颜值，忠于品行，可惜2020以后不更新中文贴了；每观其札记，文气淋漓，字句切实，图文倍矣。
+  - R大虽然是API底下、OS层的人才，参加JDK.HotSpot的开发，却是技术有美德、谈吐有教养，非常敬佩App程序员，从不玩理论自恰却比C++还拉垮的黑魔法“应用题”，他靠眼光来选择。他讲“简单题面”，往往却能消灭难题里的复杂度，总能一箭双雕地写东西，这是IT领域的集大成之思想。
+  - 别人嘴里大几百行的流水帐和“demo” “可视化”，R大总能在[三五行白话间](https://www.zhihu.com/question/35777031/answer/64575683)就点破其利弊取舍，让我们突破表象弄懂术语的前世今生，得来全不费功夫；仿佛PLT设计和编译原理只是几张Excel表和公式嵌套那样的显学，就如同把高数拿来筑屋般举重若轻。 其“功力”之深、“功利”之浅，不言自明，他像学家装设计出身的Vue大，令我等“专家”汗颜。 <a id=jmpJIT>关于</a> [如何JIT加速](https://zhuanlan.zhihu.com/p/610720287) (x86 ABI没基础可简读：[跳着看就够了](https://bxtkezhan.github.io/post/tutorial_003/)), 看完能猜到 Diane Silk dress costs $89 是为啥😂
 - [美团技术沙龙：JVM -O3编译优化，从for开始读](https://tech.meituan.com/2020/10/22/java-jit-practice-in-meituan.html)  ([可对照@sysprog的C语言化简案例](https://hackmd.io/@sysprog/c-compiler-optimization?type=view#:~:text=Loop%20Optimizations))
 - [HW-PLLab 朱子润谈类型检查兼推导](https://zhuanlan.zhihu.com/p/634217295) (“数学”公式的部分不用看，[本文](#子类型断言)有覆盖)
 - [文言编程语言](https://wy-lang.org/) (类似生成PDF的PostScript，基于传参栈，难点还是在IDE封装与设计美工)
-- [代码罗塞塔](https://rosettacode.org/wiki/Guess_the_number/With_feedback#Rust)！ [特感兴趣的代码段,请可视化编译](https://godbolt.org/)。 code.golf 是认识语言差异的好方法，当然也可当[OJ赛](https://www.freecodecamp.org/learn/rosetta-code/rosetta-code-challenges/execute-brain)来用。
-  - 我曾用8种不同范式的语言写CSV或四则([甚至SQL](https://duangsuse.github.io/tv/黑了/db.htm#:~:text=SQLite%20甚至能))parser、[贪吃蛇](https://duangsuse.github.io/tv/游戏时间/贪吃蛇/?v=0.js)兼[2048](https://duangsuse.github.io/tv/流行/2048.htm?配0%287,7,2,128%29;doc.body.style.userSelect=%60none%60;cfg.动感=1)、[Desmos触屏乞丐版🎨](https://wojs.org/HTMLs/xy/xy.html)这种简单任务，别怕推倒重来，重构是Vue大那种架构师的日程。
+- [代码罗塞塔](https://rosettacode.org/wiki/Guess_the_number/With_feedback#Rust)！ [特感兴趣的代码段,请可视化编译](https://godbolt.org/)-[或解析](https://astexplorer.net/)。 code.golf 是认识语言差异的好方法，当然也可当[OJ赛](https://www.freecodecamp.org/learn/rosetta-code/rosetta-code-challenges/execute-brain)-[OI.wiki](https://oi-wiki.org/intro/what-oi-wiki-is-not/) 来用。
+  - 比helloworld更有趣的是，前端 Counter(n=1), [fakeJSON.data](https://www.jsonplaceholder.org)+component-party.dev; 后端 EchoServer, 动物几何OOP/组合, lsTree+sqlGrepr
+  - 最强文档在 [DevDocs](https://devdocs.io/vue~3/api/composition-api-setup)+[速查表](https://speedsheet.io/s/java?q=date#LjyM), [QuickRef](https://quickref.me/rust.html) devhints.io, cht.sh  tldr.sh
+  - 我曾用8种不同范式的语言[写CSV](https://wojs.org/Others/FillTemplate)或四则([甚至SQL](https://duangsuse.github.io/tv/黑了/db.htm#:~:text=SQLite%20甚至能),["Swagger"OpenAPI](https://github.com/duangsuse-valid-projects/GeekApk/blob/master/geekapk_v1b_api.geekspec))parser、[贪吃蛇](https://duangsuse.github.io/tv/游戏时间/贪吃蛇/?v=0.js)兼[2048](https://duangsuse.github.io/tv/流行/2048.htm?配0%287,7,2,128%29;doc.body.style.userSelect=%60none%60;cfg.动感=1)、[Desmos触屏乞丐版🎨](https://wojs.org/HTMLs/xy/xy.html)这种简单任务，别怕推倒重来，重构是Vue大那种架构师的日程。 (小作业:[DFS步骤可视化](https://clementmihailescu.github.io/Pathfinding-Visualizer/#),《广度优先的染色，从下面看？从侧面看？》)
+  - [日语分词器](https://wojs.org/HTMLs/Tokenizer_examples)、[人脸滤镜](https://duangsuse.github.io/tv/参动之画/斜眼/base)(移鼠标时绘制)、[图文模板](https://wojs.org/HTMLs/YounthLearn)(同目录共3种)、[FFT可视化](https://t.me/dsuse/18964)、[快排 归并 visualize](https://duangsuse.github.io/mkey/making_reco/#sorts3)、[baseN编码解码](https://t.me/dsuse/18917) 也比大家想的简单，就看您敢不敢上乞丐版。
   - 喜欢OI、CTF、黑客松的js人可涉猎[这篇游记](https://blog.hanlin.press/2021/01/project-nano-official-writeup/)，程序员的时代，大概比1024节、软考、技术鄙视链、35岁淘汰论丰富一点儿。 倒不如说编程比数学更像「元学习」
 - [草蟒和zhpy](https://www.grasspy.cn/zwdocs/grasspy-bible/chapter16_monkeypatch/)、 [一个OI生的Kotlin:kamet](https://mivik.moe/2020/tech/kamet-basic-implementation/)
-- 读完本书后，您再关注国内少数的优秀公知，便有更深的理解：  阮一峰 廖雪峰 云风 陈皓 鸟哥 张鑫旭CSS, 王垠 [vczh轮子哥](http://www.cppblog.com/vczh/category/6824.html) Barret李靖 编程随想 clowwindy(SSR的原作) [Conmajia译DNN](https://www.cnblogs.com/conmajia/p/annt-feed-forward-fully-connected-neural-networks.html)
-- *这里说的优秀，不是B站编程娱乐圈「Java之父余胜军 C爹谭浩强」*
+- 读完本书后，您再关注国内少数的优秀公知，便有更深的理解：  阮一峰(原经济博士,尤雨溪原室内设计) 廖雪峰 云风 陈皓 鸟哥 张鑫旭CSS, 王垠 [“温赵轮”之vczh轮子哥](http://www.cppblog.com/vczh/category/6824.html) Barret李靖 编程随想 clowwindy(SSR的原作) [Conmajia译DNN](https://www.cnblogs.com/conmajia/p/annt-feed-forward-fully-connected-neural-networks.html)
+- *这里说的优秀，不是B站编程娱乐圈「Java之父余胜军 C爹谭浩强」哦*
 
 >“如果Markdown和YAML需要有深度解读的话，那就不需要它们了” ——最有「潜力」的知识，总是所见即所得的，因为语言只是个载体，唯心态有雅俗之别。 读书时若一些章节不那么易见，不妨多读几个链接，再待几周你且看他。
 ><br> <br>  谈点[功利主义](https://www.zhihu.com/question/544112523/answer/2586209720)和知识付费笑话：Linux可购买用户更名卡，首充6元赠送终端皮肤，黄金会员解锁bashrc配置……
@@ -120,7 +130,7 @@ ldd $u|ruby -e 'puts ARGF.read.gsub(/ => (.*lib\/.*?) \(.*?\)/){"\t"+`du -h $(re
 - [pl+itertools](https://stevedonovan.github.io/Penlight/api/manual/02-arrays.md.html) `Cat = class(); function Cat:say()end`
 - [Moses FP](https://yonaba.github.io/Moses/) `M.sum(M.range(100))`
 - 📦[LPEG DSL](https://luyuhuang.tech/2020/06/24/lpeg.html#lpeg) `cvar=(l.alpha + P'_') * (l.alnum + P'_')^0; list=e=>e * (',' * e)^0`
-  - **每算法只有1种 best practice**，请Ctrl+F PEG ，本文有在线试玩的更好版本，这段只是说明「同业务可封装出N种不同写法」，请多触类旁通 #码哲
+  - **每算法只有1种 best practice**，请Ctrl+F PEG ，本文有在线试玩的更好版本，这段只是说明「同业务可封装出N种不同写法」——[例如Kotlin版就复杂更多](https://wojs.org/Others/essay-kotlin-parser)，请多触类旁通 #码哲
 - 📦[cJSON](https://blog.95id.com/lua-json) `luvit -e 'require"json"'` 便[基于以上PEG](https://github.com/LuaDist/dkjson/blob/master/dkjson.lua#L648)
 - 📦WebLit [socket](https://alexarjing.github.io/2016/12/08/chapter16/)，基于回调式 `uv.new_tcp()`: `#ask luvit net.createServer tcp echo, with nc`
 - [sql](https://scilua.org/ljsqlite3.html) `db=require("sqlite3").open(""); x=db:prepare[[SELECT 1+?, 3]]:bind(2):step()`
@@ -178,22 +188,25 @@ echo 打开终端 . socks 即联网，插拔数据线自动重连
 - 5.1 十年前纪念版
   - `a,b = ...`; VA_ARGS 无需{}来模拟，kwarg和js保持一致
   - `(--)?[==[ [[heredoc任意嵌套&多行注释]] ]==]` Wiki语法
-  - 😓：刚说「深先求值」？ 哦对， `eval('1+(2*3)')` 是深先数重写(树重写)，有用 `['farg'].map((k,i)=>env[k]=arg[i])` 实现「Dynamic Scope」
+  - 😓：刚说「深先求值」？ 哦对， `eval('1+(2*3)')` 是深先改数(改树)，有用 `['farg'].map((k,i)=>env[k]=arg[i])` 实现「Dynamic Scope」
   - 🤓：CS称其「树的后序遍历」「SDT之综合属性」，快想想最有趣的点！bash和Lua里 `0&&print(包括or)` 是空，这叫「传名调用」求值序。Lisp的 `[cond (A) 爽 (B) 更爽]` 函数就是靠这来模拟宏
   - 😓： `@autoclosure` 嘛，低性能。 `IO ()` Monad 就是拿回调链表伪装纯函数-美其名曰fmap，和Lisp的CPS半斤八两 *（注：读书遇到生词折个角，很快要跳转回填的！）*
   - 🤓：等等， `['farg'].map{env.k=v}` ? 应该是在分词时就搞清farg是$1号局部or全局"farg"，仿佛有N条线把'farg'们的slot都连在一起，像电路那样直白！
-  - 😄：`{k:v}` 的出现让编译器开发更低幼了，「解释器开销」其实是KV和递归这些高层结构的开销。 变量名只是助记符，malloc地址/栈分配/偏移编号/ret地址 才是本质。如果解释器都用链表手写Map.get禁止set，没人会再拿函数传参当传{}。这就是Luac
+  - 😄：没错，seal(的KV)才可以编号优化。 `{k:v}` 的出现让编译器开发更低幼了，「解释器开销」其实是KV和递归这些高层结构的开销。 变量名只是助记符，malloc地址/栈分配/偏移编号/ret地址 才是本质。如果解释器都用链表手写Map.get禁止set，没人会再拿函数传参当传{}。这就是Luac
+  - 🤓：Bingo~ Lambda入演算称其为变量名的 a-等价、 b-归纳化简。 [《The little schemer》](https://www.hugchange.life/posts/202306_the_little_schemer.html) η-变换则暗示了 point·free style 函参颗粒化，可以说是FP的正统了，Haskell引入了语法糖和类型匹配，涉猎一下。
+  - 😓： *哇，这个blog的插件好酷！悬停在圆括号上试试看！ 点击左下角，那也是S表达式呦* ，[我拿draggable试写过，失败了](https://github.com/duangsuse/mkey/blob/main/lice.js#L188)
+  - 😄：我敢说国内80%的FP乃至IT理论人追求的就是这种「不明觉厉感」，你真抽丝剥茧，他们便散了。 “纯”就像Rust那样给你画了个饼，一旦你搞懂后却没有能写真东西的灵感or需求来，又丢了当白象成就感，这种信息差的杠杆便崩塌了。更无语的是，这是阳谋。 我的工程师文化，并非套人套现自己润的庞氏泡沫学。 熬夜和烧脑就是负资产假本事，科举4ky呦搞出四大发明的祖国人心里不清楚吗？
   - 😓：没礼貌和不高兴，你俩别聊了， 我用这俩法做了demo，都有bug！  `f=(A)=>A+1; A=0; f(2)==3` 后A居然被改写了，我换🤓的方法虽然OK，但在上文的 `sum(1)(2)` 一例竟输出了4？ 1+2==4 ！
   - 😄：没错啊 `sum=A=> B=>env.A+B` 该得4，另外，我的方法需要有 `val=(e/*单值*/,env)=>e.id?env[it] : e.call? val(e,{__proto__:env}) : e.lit? ..` 这样的层叠KV，你想啊，那是调用「栈」呢
   - 🤓：我希望你在解析 `load=(s/*字面流*/,fenv)=>e.id&&(e.等号左? fenv.新局部() : fenv.局部或_ENV(e.id)) or e.lit ..` 时就编好号，对重名左值要报错，别“变量遮蔽”。另外，再读遍 `class sum(A){..}` 那块吧
-  - 😓：有种 `2^8=xor(2,8)=0b1010` 的美感。闭包是私有化的对象，SAM接口，IntRef，原来如此！
+  - 😓：你😄的话有种 `2^8=xor(2,8)=0b1010` 的美感。闭包是私有化的对象，SAM接口，IntRef，用途原来如此！
   - 😄：Java设计模式「抽象Factory」里就有闭包。为 `grep -oE '^#'` 他们写 `InStream().FilterInStream {it[0]=='#'}` 。许多时候class只是{k:funV}，让 `override class D2(xy).Rect(wh)` 像覆写fun那样自然，少加重复的命名传参，正成为主流。
   - 🤓：对了，😄你又不是nerd专家，没黑框眼镜，为啥抢在我前面当「语言律师」
   - 😄：那我是freak，看我的头顶。 不用高知的口吻，就不会说话了？ 知识就是知识，不要用别人的对错，搪塞自己的取舍和求知。 #码哲
   - 🤓：原来，我们普通人和Lua的作者一样都是「天材」。学者生而平等，只是有自己的个性选择；这无关对错，而是旧知和新知。 **我们不需要靠圈子的符号来包装自己，成为他们的复读和附庸。 失口为知，不失口，怎始口？**
   - 😄：往常，我是说往常，知识不能被1:1传达。这种变异若是“天”择，便成了八股和鄙视链。 这种变异若是人择，便不成功，也成人之美。 没礼貌者，正是对前者：我认真理，我不认真。 我不当[套子里的人](https://www.thepaper.cn/newsDetail_forward_15633677)，不说套子接的字的句柄。它是双管道库启。
   - 🤓：长衫可以脱，这熬夜攻读和刷题的烙印，咱简中人没法破茧而出。我那么刻苦，按Lua三作者的源码一词词摸索赏析，你随便一句「真理不认真」就把我的天才赶下神坛。 我和那三人资质一样，我却写不出Lua吗？我心理该如何平衡？
-  - 😄：对于无回报的努力，我们总说「天才」「运气」来给自己上价值。仿佛学鸟了，从吃灰的书堆里挑一本，便成了暴发户；却实在无休无止的“刻苦”中搞丢了自己的天材，赢了比赛，当了人牲。 Dijkstra说，他不懂为何简单与美的算法都如此高效？ 或许我们该用[「经济」的直觉算法](https://t.me/dsuse/19978)投资学习、分工、挑选、联合，在务实与务虚间找到坦荡与平衡。 别学晕了自己，也PUA捧杀了别人。
+  - 😄：对于无回报的努力，我们总说「天才」「运气」来给自己上价值。仿佛学鸟了，从吃灰的书堆里挑一本，便成了暴发户；却实在无休无止的“刻苦”中搞丢了自己的天材，赢了比赛，当了人牲。 Dijkstra说，他不懂为何简单与美的算法都如此高效？ 或许我们该用[「经济」的直觉算法](https://t.me/dsuse/19978)投资学习、分工、挑选、联合，在务实与务虚间找到坦荡与平衡。 别学晕了自己，也别PUA捧杀了别人。
   - 😓：其实…最正宗的工程师文化是「有头脑，更高兴」。 [Ierusalimschy在论文（感谢spin6lock翻译）中](https://github.com/spin6lock/the_evolution_of_lua_zh_CN/blob/master/the_evolution_of_lua.md#51-----lua-1) 对Lua初创时的个性和试错直言不讳、对贡献了协程和Upval的「无名之辈」不乏赞美，这种宠辱不惊的定力，正是某些重视形式的人所匮乏的。 啥样的土壤开啥样的花，积累多重的果；对不知reason只懂how的问题少碰多等，复杂性自然就小了。
   - 🤓：……分工？ 那需要一个个分化的动态环境吧，也就是：函数导包！
 - 5.2
@@ -202,10 +215,12 @@ echo 打开终端 . socks 即联网，插拔数据线自动重连
   - `coroutine:yield()` 可以在try{}和元方法(pcall,Proxy)里返回，此魔法比 LuaJIT/CoCo(用户态线程)聪明。
     - 不允许等lua_call()返回，因为C调用栈会丢失yield后then()回的位置，全部用 `L.callk(0,LUA_MULTRET,0, k);return k(L);` Kont即回调。在L栈上的函数未休眠时直接k(L)，否则longjmp(throw)。
     - 😄：yield或许很难理解，请你叫它 `sleep(sec=random())` 或 `dieWithCallback(f=> looper[0]=f )`
-    - 🤓：以防你不知道，王垠的【40行代码】CPS 就是这种东西的编译期优化版。实现while{yield}并不简单，但在Lisp里一般用伪递归tailrec(改参goto0)和unquote宏(eval串留字面)做，因此Lisp可以说是元编程祖师。 在「内核油猴」BPF里，通过强制while为 `n.times do{}` 的形式消灭此类分析，也挺聪明。
+    - 🤓：以防你不知道，王垠的[【40行代码】CPS](https://www.yinwang.org/blog-cn/2012/07/04/dan-friedman) 就是这种东西的编译期优化版。实现while{yield}并不简单，但在Lisp里一般用伪递归tailrec(改参goto0)和unquote宏(eval串留字面)做，因此Lisp可以说是元编程祖师。 在「内核油猴」BPF里，通过强制while为 `n.times do{}` 的形式消灭此类分析，也挺聪明。
     - 🤓：Lisper 还有更牛的，yield 只是 call/1cc ，callcc 可以实现fork()、可恢复异常、函数断点续传到N台机上算(workflow序列化)，等等，不过那样就没用处了(依赖注入即隐式传参可实现大半)。 Ruby曾经的 `obj.taint!` 能分析值涉及的函数，shadowJar则能爬清函数涉及的函数。只有Lisp的表示法，最方便揭示它们的原理。WASM选择圆括号。
-    - 😄：和goto一样酷呗？ CPS的魅力在于无需「调用栈」等运行时，任何函数都能看清caller的结构。 `f=x=>x0?0:f(x-1)+1; ft=(x,y=0)=>x0?y:ft(x-1,y+1)` 的判别就易如反掌： `f(x-1, R=>r(R+1))` 显然不是伪递归tailrec。 nerd们觉得这超酷，图灵机啊，不可判定啊，让P=NP啦，和goto一样酷。
-    - 😄：栏目答、码可揉、函续体，本就是三位一体。FP的 `enum{A(int)B(str)}` ADT正择也挺完备，可惜他们只忠于链表和回调链表的简洁，忽视了更简单的「约定优于配置」。 #码史
+    - 😄：和goto一样酷呗？ CPS的魅力在于无需「调用栈」等运行时，任何函数都能看清caller的结构。 `f=x=>x0?0:f(x-1)+1; ft=(x,y=0)=>x0?y:ft(x-1,y+1)` 的判别就易如反掌： `f(x-1, R=>r(R+1))` 显然不是伪递归tailrec。 nerd们觉得这超酷，图灵机啊，不可判定啊，让P=NP啦，[Y组合子]()和SKI啦，和goto一样酷。
+    - 🤓：彼知乎者也？ `say(int); say(str); .char(str,idx)int` 这样的类型查表本质上，只是编译期据常量生成的(a is T and..)黑盒测试。根据CH同构，初中定理都等效于函数的类型、泛型，比如 `itself::A->A; not::{A->new('¬' A), ('¬' A)->A}` ，要证明proptest真假的恒定性，只需把重载def出来；也就因为，你new的数据必然符合Type的树结构，像「真值表」「九九表」那样严谨形式化！
+    - 😄：噫嘘唏，嗯哼，Does it run backwards? [mini関連](https://tca.github.io/veneer/editor.html) 和 [SWI-Prolog](https://t.me/dsuse/18899)-搜#sql 都有更简洁的搞法。类型的根在字面 `1 2 3::int; "1" "2"::[char ln]; f(x)::y,查表有(f,x,y)` 和解构等位关系 `get::[A ln], idx->A` ，它们也不是TEKV这些助记符。 propTest可以自动生成测试数据，高过fakerjs，这正是关系式编程(DFS搜索)擅长的，把struct-enum称为prod-sumTypes乘加不是FP/PF/RP，它是LP逻辑算法啊。
+    - 😄：栏目答、码可揉、函续体，本就是三位一体。FP的 `enum{A(int)B(str)}` ADT正择(二叠合时1=x,x=1赋值,unification)也挺完备，可惜他们只忠于链表和回调链表的简洁，忽视了更简单的「约定优于配置」。 #码史
     - 🤓：有点道理。 软工软工，是懂汇编会背书的少才组成的体系；如果编译器优化和语法糖只是 make CPU happy，忽视问题集和API的本源逻辑，我们已自相矛盾。 白魔法里有黑魔法，当心权力里的阴影！ #码哲
   - 垃圾收集器（GC）增加了分代模式，LuaJIT未跟进，因为使用了v8的 1bit pointer|float tag 优化！
   - 🤓：Rust::`Option<()>` 同款呦！ x64地址总线有40bit，万国码即UTF32有21bit，浪费了{24,11}位，许多语言拿它来存typeof甚至strUmbra长度。按CBOR的编法3bit就够 `enum JSON{A(int)B(str)}`..了
@@ -215,12 +230,14 @@ echo 打开终端 . socks 即联网，插拔数据线自动重连
   - 'bit32'库(与LuaJIT的64位'bit'割席)，不再需lightuserdata裸指针
   - GC不默认分代模式 `collectgarbage("generational")`
 - 5.4
-  - `local n const, x close = 1, {__close = (x,err)=>}`
+  - `local n const = 1, x close = {__close = (x,err)=>}`
   - `1 + "2" ==3`, 基于运算符重载 `x=""; for k,v in pairs(getmetatable(x)) do print(k,v) end`
-  - 采用C99 computed goto, for int 等新魔法，2D数组的性能提升达1倍
+  - 采用[C99 computed goto](#jmpJIT) `goto opcodeDef[op];`, for(int;) 等新魔法，2D数组的性能提升达1倍
   - 😓：对了，谈那么多闭包对象、回调链表的事，await 怎么靠 `f=co.wrap{yield sleep()}; z=f(); co.resume(f).then` 实现
   - 🤓：给个DuktapeJS的实例呗 
 [▶️播放](https://duktape.org/dukweb#main%20%3D%20async%28function%20%28arg%2C%20aw%29%20%7B%0A%20%20print%28aw%28txt.bind%280%2C%22你%22%29%29%29%3B%20%2F%2F别忘了bind是SAM对象%0A%7D%29%3B%0Atxt%20%3D%20async%28function%20%28s%2Caw%29%20%7B%0A%20%20aw.ok%20%3D%20s%2B%27没睡呢%27%3B%0A%7D%29%3B%0A%0Afunction%20async%28f%20%2CMe%2CR%29%7B%20return%20function%28%29%20%7B%20var%20a%3D%5B%5D.slice.call%28arguments%29%2C%0A%20%20CONT%3Dco.resume%2C%20ok%3Da.pop%28%29%3B%20%2F%2F回调链表尾%0A%20%20function%20HUP%28f%29%7B%20return%20co.yield%28f%29%20%7D%0A%20%20function%20go%28R%29%7Bvar%20r%3DCONT%28Me%2CR%29%3Breturn%20%28void%200!%3D%3Dr%29%3F%20%28r.call%3F%20r%28go%29%20%3A%20r%29%20%3A%20ok%28HUP.ok||HUP.ko%26%26Error%28HUP.ko%29%29%7D%0A%20%20a.push%28HUP%29%3B%20Me%3Dnew%20co%28starmap%28f%29%29%3B%20return%20go%28a%29%0A%7D%7D%0A%20%20co%3DDuktape.Thread%20%2F%2Ff%28*%5B..%5D%29%2C%20和%20import%20threading%20一样传argv%0A%20%20function%20starmap%28f%29%7Breturn%20function%28a%29%7Breturn%20f.apply%28this%2Ca%29%7D%7D%0A%0Amain%28%5B%5D%2Cprint%29)
+  - 😓：这里有 `main=()=>out= txt("你").await+txt("我也").await` 。你之前说 **协程=闭包+switch(var 语句号)** ，这俩都是同语句啊
+  - 🤓：表达式外提呗 `_0=txt("你"); _1=txt("我也"); case 2: out=_0+_1` ，walk到await或(?.)时得 `fenv.新局部` ，改状态号加回调并return嘛
 
 ```js
 main = async((arg, aw)=>{
@@ -247,6 +264,7 @@ main([],print)
   - 🤓：？！
   - 😄： `def:yield` 很好理解，`cat|grep|less` 的行缓冲区就是，PyJS支持很好。它本身又如何用await实现？
   - 🤓：有奇思妙想建议查查C++术语就服了。yield给到.next()的caller是上下级协程，`await Promise(ok=>给到回调注册)` 是对称协程，什么杂七杂八的[蓝红黄“函数染色”](https://www.whexy.com/posts/func-color)， 是有栈协程/回调链表协程甚至语法糖也， 什么Context/Dispatcher是依赖注入和线程池配置，Scope是模拟finally{共同exit}用的。背压是write不需await写比读速慢占爆，双核机开make -j8 导致切来换去更慢，和拿4K页swap“下载RAM”更慢的原理一样
+  - 😄： 这我懂，Kt inline fun let{} 和 `#define let(x,f) f(x)` 一样可异步，更支持内联跳转(crossinline)。就是模板 Stream$OfInt{}的一堆，就是这种优化
   - 😄： Talk cheap 收收code
   - 🤓： ReactiveX.io 自己去看，Emitter流 onNext onDone ，Compose的Flow用的这玩意，只比React.State少保存个当前value 多个onErr
   - 😄：本书不教这些？ 好吧，以上就是闭包、协程、模块化、元编程的全部解说了，咱还谈了「Dynamic Scope」和一点微小的感悟
@@ -275,7 +293,7 @@ f"以f开头均使用{ES6}模板字串" == f({"以f开头均使用","模板字�
 
 -aZ {"not" "too"}
 aZ -1 "fast~"
-aZ(1)(1) == "n" -- 是的，没有类型推理，您必须以 a,aX,a1, nums 这样的变量名调用才能忘记故作深沉的 push_back/append/concat
+aZ(1)(1) == "n" -- 是的，没有类型推理，您必须以 a,aX,a1, nums 这样的变量名调用才能忘记奇奇怪怪的 push_back/append/concat
 aZ(1,NO) -- 参2不能以a开头，但可以 a -1 {42,'.',1};a[-1]=[#a-0] 宏展开
 -extend(2,) { table.move(B, 1, #B, A, #A + 1) }
 
@@ -352,10 +370,12 @@ Pair{1,2} if {
 -tbl Tri{
   1,2,3,
   'a','b','c',
-  {-(Pair){666,233}}
+  {-[]Pair{666,233}}
 }
 tbl [3]A pairs [1]B==233
 tbl [2]C=='c'
+-i 3
+-tbl.iPrev.C '草' --iNext同理
 
 -o Proxy({}, {get:{x=1}}) --getmetatable并赋值
 o.__proto__.x == 1
@@ -388,6 +408,24 @@ con读作「扛来可忑」，Lua里没有子包的概念(`__init__.py`, javax.,
 
 禁止 `for x in"ABC": class(x,{run:()=>x })` 或 `class Apis: for x in"ABC": vars()[x]=lambda:x` 才是错写漏写、类型标注不完全的根源，是架构师的瓶颈，不对吗？
 
+
+回顾上文那么多条消息，类型的动态/静态的唯二区别，就是 int f()定义/f()复用乃至class{}间有无先后顺序。如果有，能否从input()生成，让宏利用标准库大量的便利函数减少冗余，避免「两门语言问题」。
+printf"%d%s", data class{copy}, Gson, SSM框架和依赖注入的AOP/模板EL 都需要某种反射自查。 动静的另一区别是， a=[3]int b=[1]int a+b在comptime是否可知可inline。这种GLSL数组对java int[]是无米之炊，对C int[] 更是内存都不安全。
+
+typehint往往都是作为编译期test DSL，它们不是Object，分支很有限，enum,list,dict 就足够描述C,Java的函数/结构/泛型区分 1+1, 1+"1" 了，这不是它们被框架设计的需求尤其讨厌的原因。
+js可以在xx.f()时再去确认xx或全局表存在f，而f只是一种类似()=> 的字面常量，xx只是有原型链的字典；但java要按一个生硬的语法或ClassFile限制函数的组合，导致 for k in "eat no play": def T.[k]():return k 之类简单的冗余代码(json,http,RPC,argparse..)，以至于T=[str list]类型标注的推理和 T.toStr,List.$OfStr 类的生成，都无法靠编程解决，甚至难于理解使用
+
+当然，安卓和gcc也用 设计模式,reflect,Proxy,#define 来掩盖「某些强类型结构无法消冗余」的问题，比如Builder vs Pair()apply{A=1;B=2}，null调用链 vs ?.run{}?:。 为何我说 def T.[k]() 呢？因为jspy就支持 any[k]=any.getattr.k, C预处理也有函数名<=>str的宏形式。
+只有 ur.age 等于 ur["age"] (所谓的反射)，json和各种框架才能没有顾忌地连接其他语言的相同结构，这种[""]也就是所谓的eval即unquote{ur.["age"]}脱糖
+
+java 使用Proxy<接口> {fform,arg->}， 其实就是对 for in: eval: def [k](..): 不能配合着javac运行的变通而已。 虽然不能从json,http接口生成对应的API类结构，但可以反过来，从fform确认URL前缀这种东西，配合所谓的T.注解:@interface元数据 - 函数式的jspy里显然不需要这种东西。函数体，可以依赖于input()而不止const元数据自由的新建，不需要C++和rust们扭来扭去的编译期计算
+
+这种思路类似反射-就是把 print(int); print(str) 两个定义合并成 print(Any) 来自动强转，甚至自定义函数名和this，这样弱化类型便能提升组合力，降低性能，其标志性特征便是 xx.f 知道自己叫 "getF"，还知道参数类型，因此能对应到kv["f"]或 oo["f"].invoke(parse(arg))，这就是一种constexpr
+不过，Proxy+反射强转 是可以被优化掉的，型参和实参类型一致就行。 macro.copy(T|T1) 也可以被理解为 interface Macro{+=fun copy(T):T} ，无论是用reflect或手写class实现了Macro，效果一样。因此我认为java和js的元编程只是切入点有别，在简繁或干涉力上一样强悍，不需要-poet或ASM那样的模板codegen。
+
+具体应用，例如 u=Col2(A=0,B=0); trim(u, {k,v-> k[0] as Int})=(41 42) 里trim(it:T,f:(Str,Any)->Any)是区别于T的trait。 (ITrim as Trait)[T.class].cast(u) 就能够「同时是」反射或手写的。让Proxy传入 it:T 而非T值，以令 f(it["A"]) = "f(it.A)" 被围在 fun(it:T){} 里，称为反射常量。
+
+
 ```kt
 import java.lang.reflect.*
 import kotlin.Array
@@ -404,13 +442,42 @@ val u:Api=Eval{A,ar-> ar?.let{""+listOf(*ar,"-${ar.size}$name")} ?: name}
 
 u.posts(2) eq "[2, -1posts]"
 //试试编写 infix fun eq 和 SAM<Runnable> {1} 代理。当
+
+(cpp -E|tail -n+7 > a.kts; kotlinc -script a.kts) <<OK
+#define any(k) var k:Any?=pass
+#define pass Unit
+
+dd="match destruct w/o compiler features"
+"你好 我好 你坏坏 它坏".split(" ").map {
+  val (A,B)=it.split("").drop(1)
+  Var(2) { (x,y) -> 
+    when(val u=Col2(A,B)) {
+      Col2.js("你",x) -> {dd=x}
+      Col2.js(x,"好") -> {dd=x}
+      Col2.js(B=y) -> {dd=u.A+"被省略"}
+    }
+  }
+}
+data class Col2<A,B> (val A:A, val B:B) {
+  class js(any(A), any(B))
+  override fun equals(u: Any?) = if(u is Col2.js) (u.A eq A&&u.B eq B) else (u eq this)
+}
+
+any(dd)
+  set(v)=println(if(v is Var) v.v else v)
+class Var(any(v)) {
+  override fun equals(u: Any?)=if(pass==v){v=u; true}else{v==u}
+}
+fun<R> Var(n:Int, op:(Array<Var>)->R)=op(Array(n){Var()})
+infix fun Any? .eq(u:Any?)=if(pass==this)true else this==u
+OK
 ```
 
 但TDDc也并非单纯给「eval串留字面」。你应该听过Python2的一个梗， `True,False=False,True` 后新def运行正确，调用旧函数却崩了，这说明只要 `override operator fn` 足够多，编程语言的语意可以天翻地覆，是佯装成「别人家的语言」，是嵌入0尖括号版HTML(vanjs.org)，是在GPU上计算(numpy,taichi-lang.org)，或是被“SQL注入”…… DSL考验的不是算法，是你的需求和想象力。 今天前后端和安卓的“魔法”，远远不够，而类型体操，搞错了方向。
 
 就像 `await www.baidu.com ({wd="酷壳"},'/')` 和 `"查真资料(void) { https://goog.le;\n goto https; }"` ，当你真懂语法，知道 `cout<<; printf("%d",1)` 也只不过是同行的作品，你才能明白元编程和PLT的reason。
 
-无需parser或算法/函数式特技，您可以阅读 [运行即编译，TDDc就是Visitor]。长话短说，把 `x=Pair(1,2); x.B.times(n=> dd=n.十(1))` 里的2变成 [2,'x.B'], 无论是生成 `while(x.B-->0) dd=x.B+1` 或是将函数体变成「别人家的语言」都易如反掌，这才是TDDc
+无需parser或算法/函数式特技，您可以阅读 [运行即编译，TDDc就是Visitor]。长话短说，把 `x=Pair(1,2); x.B.times(n=> dd=n.十(1))` 里的2变成 [2,'x_B'], 无论是生成 `while(x_B-->0) dd=x_B+1` 或是将函数体变成「别人家的语言」都易如反掌，这才是TDDc --也叫 abstract interpretation
 
 ## HOLPful概念
 
@@ -486,7 +553,8 @@ def eat(s,c1):
 JSON递归下降解析器，和语法就是一一对应：
 
 ```ini
-JSON  (S|D|{S:JSON ,}|[JSON ,]|true|false|null)
+JSON  X
+X  (S|D|{S:X ,}|[X ,]|true|false|null)
 S '"' ([^\\"]+|\\Esc)* '"' #G-
 Esc ["\/nrtfb]|u hex{4} #Gk
 
@@ -522,7 +590,7 @@ ws ' \n\r\t'*
   - CBOR.me: `byte0=0bT{3}N{5}; T0~7=N-hsaked`, N:+立即数, hex:尾随Nbytes ，基于大端bitfield压缩而已，不展开讲
 - rapidjson, SIMDjson 快在哪里？
   - 向量化，1指令跳N空格。 后者会预筛 `\"` 等边界位置，强制SAX的pull模式：单次遍历免GC
-  - Visitor模式也可以pull，叫啥之algebra，这类术语文尾我会表格出，文内我不容忍这类含糊其辞的命名。
+  - Visitor模式也可以pull，叫啥之algebra，这类[术语表格]文尾我会贴出，文内我不容忍这类含糊其辞的命名。
 - 😉咱不讲Lua了，这算跑题吗？ 
   - 先学会跑，你才能飞得更practical。 读书不是当Luac那种one-pass编译器，**和原创者「共同面对问题」你才能消除代沟，而不是复读他附庸他。** #码哲
   - 从PLT&DSL实践讲，树结构的分析处理，触类旁通，且有简繁先后。 别内卷，勤学，提好问！
@@ -569,6 +637,8 @@ env被称为运行时，它可以是JVM, import dis PVM或者别的bytecode解�
 
 我看过许多“编译原理书”，他们连这个=>都写不明白。 更何谈[用Visitor实现(正反)序列化](https://t.me/dsuse/19808)……
 
+## 多型态：子类型、泛型的inout
+
 ## 扁平读写AST：逆波兰字节码
 
 ## 卷王，跑下分
@@ -584,7 +654,7 @@ env被称为运行时，它可以是JVM, import dis PVM或者别的bytecode解�
 datatype(Calc,
   (A, int),
   (Op, Calc*, int(op)(int,int), Calc*)
-);
+); //纯预处理宏ML99 ADT写法
 */
 interface Goes<out T> { fun go(): T }
 
@@ -624,13 +694,24 @@ operator fun <R>Calc.invoke(u: TrimCalc<R>): R = when (this) {
 ## 活学活用：sexp脑图、高级搜索语法、真·步骤计算器
 
 ```js
-sexp=s=>{let a=[],x;for(;(x=s())&&x!=')';)a.push(x=='('?sexp(s):x); return a}
-//^ 一般需配对')'。此省行数
-sexp=(s, a=[], f=()=>{let x,i=0;for(;(x=s())&&x!=')';i++) {x=='('?f():a.push(x)} a.push(i) })=>(f(),a)
-//'(a (b c) d)' 换RPN [a b c 2 d 3], 可显示步骤
-
-tok=(cod, s=cod.split(/\s+|([()]|\W+)/).filter(x=>!!x).values())=>
+//Top  Str|[0-9]+| '(' Top* ')'
+tok=(cod, s=cod.split(/\s+|([()]|\w+|\S+?)/).filter(x=>!!x).values())=>
  ()=>s.next().value
+
+sexp=s=>{let a=[],x;for(;(x=s())&&x!=')';)a.push(x=='('?sexp(s):x); return a}
+//^ 一般需配对')'。此省行数，F12 sexp(tok(prompt()))
+sexp=(s, a=[], f=()=>{let x,i=0;for(;(x=s())&&x!=')';i++) {x=='('?f():a.push(x)} a.push(i) })=>(f(),a)
+//'(a (b c) d)' 换RPN [a b c 2 d 3], 才可单步，显示步骤
+
+strm=([s], i=0)=>(n,took)=>{ let k=s.slice(i,i+n); i+=n; return (took===NO)? k : (took)? took(k) :  (i-=n, k) }
+NO=null, ps={parser:'json'}
+ps.D=(s, it=0,shr=0)=>{ //D num (.int)?
+  while(+s(1)) it=it*10+(+s(1,NO))
+  if(s(1)=='.') { s(1,NO) // 这些逻辑可以靠Combinator复用
+    for(;+s(1); shr++) it=it*10+(+s(1,NO))
+  }
+  return it*Math.pow(10,-shr)
+}
 
 optab={[';']:-1}
 "=;+ -;* /".split(';').map((a,L)=>a.split(' ').forEach(x=> optab[x]=L ))
@@ -645,6 +726,8 @@ exp=(L/*evels 大则深,紧 */, s/*字面流: x单项 o算符 xo..*/, ord=[])=>{
 (e=exp(optab,tok(prompt())) ).join(' ')
 //如 1*2*3+4 '1 2 * 3 * 4 + ;' 令12*=[*1 2]，遇到相同深度追加，否则内嵌可。
 e.Sum((f,A,B)=>f==';'? A : eval(A+f+B)) 
+
+//小作业: 执行 A=NN, A且B或C; A=YY,B=YY, A且(B 或 C是1) 。 遇'('递归exp即可，ord[]自动被保存恢复的
 
 //import re 官方示例
 RElex=kv=>{
@@ -729,3 +812,7 @@ rnHL(hl)
 显然有种程序最易测试编译器是否完备： 它自己！ 这便是bootstrap编译，rust和gcc用它来自我测试。
 
 [Quine 编译接龙](https://www.fxzhihu.com/question/30262900/answer/47877068)
+
+[esolangs 图灵完全极简语言(可用于低速模拟任意虚拟机)](https://www.zhihu.com/question/5968069862/answer/48623206225)
+
+## 术语表格

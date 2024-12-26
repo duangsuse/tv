@@ -1,7 +1,7 @@
 
-ww.Name=({name="John"})=>
-h1(html`Hello ${name}`)
-
+ww.Name=F[({name="John"})=>
+  h1(html`Hello ${name}`)
+]
 ww.Name=({name="John"},
 _=_=>{ name("Jane") }
 )=>
@@ -49,7 +49,7 @@ html(
   p(html`Counter: ${count}`),
   button(wOP({tap:count((x,to)=>x+1)}), `+1`)
 )
-
+  
 ww.InputFocused=()=>
 input({type:"text"}, (sel,e)=>e.focus() )
 
@@ -151,7 +151,7 @@ button($({
   outline: "0",
 }), slot(span(`No content found`)))
 
-ww.main=({
+ww.main=F[({
   user={id:1, username:`unicorn42`,
     email:`unicorn42@example.com`
   },
@@ -160,15 +160,15 @@ ww.main=({
 html(
   h1(html`Welcome back, ${user.username}`),
   UserProfile(empty, {...user}) // html k=v inherince, so no 'setXX' passing
-)
+)]
 
-ww.UserProfile=({u:{username='',email=''}})=>
+ww.UserProfile=F[({u:{username='',email=''}})=>
 div({our:u, slot:'parent to find email,.'||NO, edit:$Y},
   h2(`My Profile`),
   p(html`Username: ${u.username}`),
   p(html`Email: ${u.email}`),
   btn([`Update username to Jane`], u.username(to=>'Jane'))
-)
+)]
 
 
 ww.InputHello=({text="Hello world"})=>
