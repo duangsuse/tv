@@ -20,8 +20,12 @@
 https://en.wikipedia.org/wiki/CBOR#:~:text=CBOR%20data%20item%20header +ihsakeo flatBuffers.dev flatMap
 https://en.wikipedia.org/wiki/Bencode#:~:text=integer%20is%20encoded V=i(N)e|N:h|[ld](V*)e
 https://dox.ipxe.org/cpio_8h_source.html To.ch(bsdcpio)
+https://datatracker.ietf.org/doc/html/rfc7541#appendix-A http2
+https://github.com/brunelli/wl-clipboard-x11/issues/10
 https://blog.mozcp.com/use-host-directory-for-geust-rootfs/ E17,TinyWM PipeWire/syste.md
-https://hackmd.io/@0xff07/r1wCFz0ut P9 namespaces
+https://git.kernel.org/pub/scm/network/wireless/iwd.git/commit/?id=e64de776a7653890466150876cf7ba601999d4a9 wifid
+/lib/python3*/idlelib/pyshell.py /lib/tk8.6/demos/widget
+https://hackmd.io/@0xff07/r1wCFz0ut P9 namespaces CRIU rr-debugger/rr
 https://developer.mozilla.org/en-US/docs/WebAssembly/Understanding_the_text_format#exploring_fundamentals
 https://github.com/strace/strace/blob/master/src/linux/64/syscallent.h _IOWR(kttyFD,http,body) IOC_SETFLAGS,IMMUTABLE_FL
 https://man.openbsd.org/MAKEDEV.8 char&pipes
@@ -93,11 +97,13 @@ _Mark2D_ the MD syntax for <_Web_ devs>>  _Web <Apps>>_
 
 _粗体_ <Book书名 斜体> _粗<斜>体_ <斜 _粗_ 体 > <_唯一粗斜_>
 
-[链接](方+圆括号) [!img](方括号+叹) [^悬停注解; Abbr;title] [^1自动尾注](引用) <footer/>
+[链接](方+圆括号) [!img](方括号+叹) [^悬停注解; Abbr;title] [^1自动尾注](引用) <footer/> <h1></>
 
 ~~划去s~~ ~~高亮~~mark  [^^上标sup] ~~下标sub~~sub ~~注意力u~~u
 
 URL前缀缩写统一放在文章末尾 `[!goog]: https://www.google.com/favicon.ico` ，支持相对链接和 `# 标题` 锚点
+
+支持 f"---\n{yaml元数据}\n---", slug,type,date,tags
 
 [注音 ruby; rt rt] `#RRGGBB` 颜色预览 `Ctrl+W` kbd标签 [:trollface: 表情包](https://github.com/ikatyang/emoji-cheat-sheet/blob/master/README.md#person-role)
 
@@ -119,6 +125,14 @@ URL前缀缩写统一放在文章末尾 `[!goog]: https://www.google.com/favicon
 - dt
   - dd
 
+>
+连续行引用块
+
+--
+连续行ol
+内部是ul
+-
+内部是ul
 
 Pair|A|B
 -:|-|-
@@ -306,7 +320,7 @@ Runar🌤🗓&cpp-Exlit.md
 - auto alloca() & Type_t=no '*', pointer tagged CBOR(with sizeof)
 - (x,y){ok()/cry("")}, [0 0]0  are fn expr&type (SAM-struct, effective final boxed)
 - OOP interfaces must be kwargs-struct(aka this / vtable)
-- rust_enum(), class 'T impl'{}, 'IClose' impl?{} sugar supported
+- rust_enum(), class :T 'impl'{}, :IClose 'impl?'{} sugar supported
 in new syntax:
 - #require "dll".c 'stdio:io'.h; a.stdout=run
 - fXX"{1}" for asprintf/fXX, (-strify) ''' and --[=[]=] docstr comment
@@ -314,3 +328,4 @@ in new syntax:
 - #def f(x,y,...) #line 0".js,py, f-x-y" #ok eval
 - var/lit chain arg, {-k v,} , users#1/cENV: -name set
 - type infer eg. map $AB_Col2, as
+

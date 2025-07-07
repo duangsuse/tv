@@ -1,22 +1,22 @@
 # 妙妙词典
 
 同时矫正术语的发音和语意😊 音标如同五线谱，妙妙只想当简谱。 非AI编写哦☝️🤓
-> [空耳mishearing]可以减少拼音化(参考日语片假名地狱)，但制胜秘诀在[启发兴趣](https://www.bilibili.com/video/BV1eNtieWEZH)(《诗·彼阳》)！ 标'🔑'的项可视为正式翻译。适用生产环境和传播的[音标表格]见文尾
+> [空耳mishearing]可以减少拼音化(参考日语片假名地狱)，但制胜秘诀在[启发](https://www.bilibili.com/video/BV1eNtieWEZH)-[兴](https://www.bilibili.com/video/BV1Ex4y197k5)-[趣](https://youtu.be/3DeWsRVy3A8?t=2)(《诗·彼阳》)！ 标'🔑'的项可视为正式翻译。适用生产环境和传播的[音标表格]见文尾
 
 首先！ P2P 英音为 p to p, log4j 读 log for java, 它们和 eg. btw(by the way) [fyi](https://levels.fyi/)(4u info, learn more) 同是[日用缩写]，不是IT群里的专利
 
 以A开头的专有名词往往念æ(爱'app')而非əaʌ(厄阿鹅)，包括: admin爱得民 matrix.max Amazon(Aleksa) Azure-agile !
 
 YouTube 有图不，意译为友观！不亦乐乎
-UbunTu 无本图，🔑免费版win，使用 `apt install` 。是(Debian得便 [ustc加速](https://mirrors.ustc.edu.cn/help/debian.html))的二创，代码公开透明，以云服务收费
+UbunTu 无本图，🔑免费版win，使用 `apt install` 。是(Debian得便 [ustc加速](https://mirrors.ustc.edu.cn/help/debian.html))的二创，代码公开透明，以云服务收费。 apt/dnf系是嵌入式和云容器默认的发行。更适合小白的是 [Manjaro-pacman](https://manjaro.org/), [Mint-apt](linuxmint.com), [Asahi-dnf (ARM Macs only)](https://asahilinux.org/fedora/)
+FeDora 费躲rua，使用 `dnf in` 更新的蓝帽RedHat(开源[发行版distro](https://distrowatch.com/))。带 [cockpit](https://cockpit-project.org/running.html#fedora):[Docker GUI](https://blog.while-true-do.io/podman-web-ui-via-cockpit/#:~:text=Fedora%20derivates), OpenShift PaaS 同款公司。平替有[SUSE-rpm(KDE,Qt同款) YaST](https://github.com/yast/yast-docker?tab=readme-ov-file#the-images-tab)。Fedora与[Arch](https://wiki.archlinuxcn.org/wiki/Arch_与其他发行版的比较#Fedora)-MSYS2的容器格式根目录级兼容。
 AdoBe 呃逗比，创作力软件比如Flash。另一个 *行业事实标准* 是 Oracle Java 欧入口加娃
-Meta 脉他，Facebook(FB) 是不卡顿的朋友圈。私下用 X(twitter),tg, 见 [IFTTT](https://sspai.com/post/25270)
-Skype 是该破，和 [Facetime](https://apps.apple.com/hk/app/facetime/id1110145091) [Zoom.us] 一样用于线上破冰。私下用 WhatsApp (whatsup guys)，和微信钉钉/QQ微博贴吧同理
+Meta 脉他，或 [Facebook(FB)](https://www.statista.com/statistics/272014/global-social-networks-ranked-by-number-of-users/) 是不卡顿的朋友圈。私下用 X(twitter)/Instagram(IG), 见 [IFTTT](https://sspai.com/post/25270)
+Skype 是该破，私下用 WhatsApp (whatsup guys)/Telegram ，和微信钉钉/QQ微博贴吧同理。和 [Facetime](https://apps.apple.com/hk/app/facetime/id1110145091) [Zoom.us] 一样用于线上破冰。
 LinkeDin 领英，🔑类似BOSS直聘和叮叮的分布式HR，更倾向于找内推而非"劳力式电商"。 简历Résumé/rɛzʊmeɪ/, suspend的反义词，写博概况你在[空档年gap year]对领域或行业有所积累(尽管过的Asian笑Bsian挂了,A长大成瓷器变A股了)。哪怕是学土木+实习且被“毒打”，大学生活也是值得的，带动消费和摆摊（笑）， 混个应届不应酬的价格亲民，直到35岁被清名
-TumbLR 汤博乐，🔑和Instagram(IG)并称艺术界的快手抖音，类似 [Discord.gg] [Twitch.tv] 比较行业化
+Google mIcrosoft 谷钩 巨硬，七大恶人榜(FAANG/MAMAA)： [NASDAQ:MSFT](https://www.google.com/finance/quote/MSFT:NASDAQ), [Alphabet](https://www.google.com/finance/quote/GOOG:NASDAQ) 亞馬遜(AMZN) 蘋果(AAPL) Meta(META) NVIDIA(NVDA) Tesla(TSLA)。 纳斯达克是一种美元指数基金，复利比纯借钱给银行/活期养基场要高。
+TumbLR 汤博乐，🔑和IG并称艺术界的快手抖音，类似 [Discord.gg] [Twitch.tv]，比较行业化
 PhotoShop 否头像，P图。
-Google mIcrosoft 谷钩 巨硬，七大恶人榜： [NASDAQ:MSFT](https://www.google.com/finance/quote/MSFT:NASDAQ), [Alphabet](https://www.google.com/finance/quote/GOOG:NASDAQ) 亞馬遜(AMZN) 蘋果(AAPL) Meta(META) NVIDIA(NVDA) Tesla(TSLA)。 纳斯达克是一种美元指数基金，复利比纯借钱给银行/活期养基场要高。
-FeDora 费躲rua，使用 `dnf in` 管理的蓝帽RedHat(开源[发行版distro](https://distrowatch.com/))。带 [cockpit](https://cockpit-project.org/running.html#fedora):[Docker GUI](https://blog.while-true-do.io/podman-web-ui-via-cockpit/#:~:text=Fedora%20derivates)。平替有[SUSE YaST](https://github.com/yast/yast-docker?tab=readme-ov-file#the-images-tab)。与[Arch](https://wiki.archlinuxcn.org/wiki/Arch_与其他发行版的比较#Fedora)根目录级兼容
 linear Linux 林里耳 林类X🐧，主场在📱📟。源码树林里开源的类OS X(os ten) [Kernel.org]。线代线性变换比如说 `D2(x,y)*2=D2(2x,2y)` ，CSS用这运算的组合实现3D旋转、伸缩、投影，学线代的你不幸学无用武之地，除非战胜既有轮子-如消元 [numpy.linalg.solve](https://github.com/duangsuse/tv/blob/main/参动之画/如何像人类一样5行完成FFT.md?plain=1#L335)
 algeBra algoRithm 尔惧吧 奥狗rezem📚，知识学爆！我们就是该拿公式的用途和本质，带考题形式主义防自学的节奏，学 [3blue1brown.com],[拓扑排序](https://clementmihailescu.github.io/Pathfinding-Visualizer/#)[可视](https://gallery.selfboot.cn/en/algorithms/dijkstra)[化!](https://visualgo.net/en/sssp) 那样磨洋工是偷懒！你和GPT急去吧☝️🤓  --唉，就为念单词硬去认歪七扭八的希腊字，是能上奥赛？在知识市场炒作限购的庸俗风气罢
 archive 阿开悟📦，值得收藏的东西。 比如这篇blog?
@@ -25,7 +25,7 @@ comment common commit 扛们 扛梦 康米commy，无私且平凡。
 cache cash 💸，很快取的现金 作为值。(memo [lru](https://docs.python.org/3/library/functools.html#:~:text=efficiently%20computing%20Fibonacci))，空间换时间。清缓存反而会减速吧 ~~不是Clash🪜~~
 chain 区块链，排除各种纪念币和投机属性，XX链是一「分布式数据库」，等同BT等P2P自组网。与传统账户比，一户一公司，一链一算法，在[隐私和中立性](https://github.com/pstadler/keybase-gpg-github)上如同黄金。 BTC以十分钟交易为1记帐区块，算力如hash碰撞最高者得1次扩链权，使得做假账改旧账的重放攻击要战胜51%的矿工，这便产生了价值和印钞。ETH已改用更环保的资本量证明。 不炒币也可持有受VISA支持的USDC
 clang GNU 没G 没G，Git有G，🐃怒啊！把源码上传 给它(Hub哈不)？  原意角马，GNOME也可没G，原意地精
-Python 排深，通过缩进:对json,Excel等数据与其功能点拆分择深、调包分def击破的代码。[交互式编程,即刻入门！](https://jupyter.org/try-jupyter/lab/index.html?fromURL=https://gist.githubusercontent.com/kenjyco/69eeb503125035f21a9d/raw/learning-python3.ipynb) 另有[numpy和图表](https://cs231n.github.io/python-numpy-tutorial/), [yt习题](https://github.com/LearnPythonWithJupyter/Notebooks/blob/main/01_string_input_print.ipynb)(u=点Raw后CtrlL复制; 第[0]个链接."File/..URL"菜单.打开u)。 也有人批评翻页和深嵌套时要拿游标卡尺量。请致敬荷兰人Guido
+Python 排深，通过缩进:对json,Excel等数据与其功能点拆分择深、调包分def击破的代码。[交互式编程,即刻入门！](https://jupyter.org/try-jupyter/lab/index.html?fromURL=https://gist.githubusercontent.com/kenjyco/69eeb503125035f21a9d/raw/learning-python3.ipynb) 另有[numpy和图表](https://cs231n.github.io/python-numpy-tutorial/), [yt习题](https://github.com/LearnPythonWithJupyter/Notebooks/blob/main/01_string_input_print.ipynb)(u=点Raw后CtrlL复制; 第[0]个链接."File/..URL"菜单.打开u)。 您可能也想入门[Rust](https://github.com/rust-lang/rustlings/tree/main/exercises)以避免C++的坑。 也有人批评翻页和深嵌套时要拿游标卡尺量。请致敬荷兰人Guido
 <details>
 # 下载 ghrepo.zip 并拖入 文件栏/ 。/notebooks/ 下遇页空白试试双击
 import zipfile as Z; from glob import* #改变了vars()和Out[2]
@@ -41,7 +41,7 @@ VLC可以放各种格式解霸-cmd下都可用。其前辈是 MPlayer FFmpeg, �
 echo 挨口，把代码里的常量"",''挨到stdout对应的pty端口。
 json 择深，🔑1字分类型 `[{"":0tfn}]` 不费脑力的嵌套键值。(点明批评Java 别扭new)，不经网络建议[YAML.org]，浅嵌套建议ini+prop的后继[TOML.io]，学读写库: bencode `X=i(N)e|N:Hex|[ld](X*)e` 压缩 [CBOR.me](https://www.rfc-editor.org/rfc/rfc8949#name-jump-table-for-initial-byte) 可见 <details>byte0=0bT{3}N{5}; T0~7=N-hsaked, N:+立即数, hex:尾随bytes a:ary k,dict:KVs e:xtra o:0.tfnull@0xf4; N 如18=1char,39=2char.neg<br>bin(0x3A)=0b0011_1010, A即10=8+0+2+0 (chmod 755=rwxr-xr-x 算法同理), 以3T5N观001_11010,其中T=1,被乘2+1 N=24(0x18)+2=26, T=0:正数N时同理<br>5F/9F~FF是缓冲/数组流， 长度<26 的优化很像StrUmbra(16b=4+(12c|4c+8))</details>
 
-Lambda 栏目答🧲，🔑 `|x| rust(x+1)` 看x,A,B等栏目回答的算式。可指Amazon云计算。(希腊字'入x.') 能偷偷携带非全局变数，如 `f=a=> (b=>a+b)` 即curry颗粒化🔑，括号里 “人生苦短，λ闭包是穷人的对象”
+Lambda 栏目答🧲，🔑 `|x| rust(x+1)` 看x,A,B等栏目回答的算式。可指Amazon云计算。(希腊字'入x.') 能偷偷携带非全局变数，如 `f=a=> (b=>a+b)` 即curry颗粒化🔑，括号里 “人生苦短，λ闭包是穷人的对象”。 栏目答可以仅靠单参函数「组合子」的递归+解构匹配编码bool,int(reduce链状数),list(carcdr链表)，常用于在[宏/模板/类型体操](https://t.me/dsuse/20195)里实现算法
 LaTeX 拿态课🍯，🔑所见即所得编辑器不免费，也不能对富文本自由替换。为脚本化排版 `sed -r 's/([0-9]+)/**\1**/g'` 设计的标记语言。原意乳胶，常用于[Markdown](https://markdown.lovejade.cn/)，后继[Typst](https://typst.app/universe/package/brilliant-cv/)
 mobile phone app 魔播 风 @谱🎼，共享图谱菜谱的平台。适合在(地铁metro)上播吗？
 maven 美文，🔑值得分享的java SDK/封装/算法。后继为很慢-apk运行更比网页卡的☝️😊龟斗[Gradle](https://docs.gradle.org/current/samples/sample_building_java_applications.html) 同类为[pip](https://mirrors.ustc.edu.cn/help/pypi.html)-[pdm](https://pdm-project.org/zh-cn/latest/), [pNPM](https://pnpm.io/zh/feature-comparison)
@@ -85,7 +85,7 @@ eDition 爱迪生💡，把[别人的发明](https://www.sohu.com/a/378858843_12
 adverSarial AD版本的serial，(salary工资)。
 impLeMent 因慕普丽ment，平庸的接口也要完整爱。
 miscellaneous 觅搜泪你yes~，一般叫:觅搜 utils tools。
-dePreCate migrate 废弃 埋great，撤回猫抓的代码！
+dePreCate migrate 废弃 埋great，撤回猫抓的代码！ 也可以用于制造，“伞兵” "NMSL" [“十步口一人”](https://www.163.com/dy/article/FRDVR9PN0521Q1HR.html),ZG,JC等新话。 “傻逼”一词自动转换为“傻宝”——3dm论坛还可以自动把“你妈”换成“我妈”
 teLemeTry 远程统计信息， `navigator.sendBeacon(u,{})` 。
 
 GraphQL.org 个睿福扣🔗，数据库比程序开发值钱。有扣扣删库跑路的权力，是很大的福报😅？
@@ -120,15 +120,15 @@ legaCy ⬇️，被后来者居上的小趴菜。
 phantom 饭桶木，只是个占位符stub！
 Flutter 浮落得 ，[demo](https://codelabs.developers.google.cn/codelabs/flutter-codelab-first?hl=zh-cn#3)。动态版FrontPage: Axure (Ack-Sure)
 pRocessing  处理中， [P5](https://p5js.org/zh-Hans/examples//angles-and-motion-sine-cosine/) 是 [类于3b1b/manim](https://processing.org/examples/), [ShaderToy](https://iquilezles.org/articles/distfunctions2d/), [van](https://vanjs.org/demo#counter),[js:Atwood定律](https://gl-transitions.com/) 的创作式编程库
-Haskell 哈死科嗷，会笑死scipy科学家的魔法师链表语言。。 不适合 [algebra algorithm]。搜下"线代 消元"吧，都会消。找找有几篇博文能10行内点明为何消元的。 [洋洋洒洒公式代数](https://t.me/dsuse/19995)，如同让代码长如汇编、文档细如代码，编程人可不吃这套面条啊。真理在哪呢？ 算法的调用不该研究，算法的灵魂不该学术，这才是Pythonic。
+Haskell 哈死科嗷，会笑死scipy科学家的魔法师链表语言。。相比于其他的编程语言，Python更像是一个碳基生物。书上写的打不倒的空气人，学不会的 Haskell。 不适合 [algebra algorithm]。搜下"线代 消元"吧，都会消。找找有几篇博文能10行内点明为何消元的。 [洋洋洒洒公式代数](https://t.me/dsuse/19995)，如同让代码长如汇编、文档细如代码，编程人可不吃这套面条啊。真理在哪呢？ 算法的调用不该研究，算法的灵魂不该学术，这才是Pythonic。
 Scala 死尬啦，因为写法太多却太尬，而埋没了许多出色魔法的废土工业语言？ 然而，黑魔法从主创的动机开始就烂了，无法变成白魔法，只能连根换掉
 Bazel [杯粥](https://github.com/bazelbuild/bazel-website/pull/323#issuecomment-912437099)，因为太像简化版CMake反而不如Maven流行的跨平台构建器。
 OriGin aNalogy 起源 呃纳了既，不是橘子平台。 `git remote add orange git@github.com:User/`
 premise debt 破灭死 贷它，不动产？ on the premise that(根據...的假設)
 gauge cHaos 给计 靠死，怎么不在 discord.gg 里也无序啊！
 reSume 睿族母，浙大CS睿智！ then回调后跳到for(){;i++ ..}继续求和的回调函数。各种流控 `if(i<2)goto _for;` 其实不是嵌套的，可以switch(语句号){}
-Continuation 看屉留ation，函续体？ 调用栈=函续链表，没错，async就是允许你setTimeout(retAddr,0s)并return的空函数，你们叫它yield或await。
-Unification 有你非cation，叠合(1=1 1=x)各得 真, x:1。 `UnionFind=x=> x==Fa[x]?x:Fa[x]=find(Fa[x]); Fa=Array(N).fill(0).map((x,i)=>i)` (误)
+Continuation 看题留闭包，函续体？ 调用栈=函续链表，没错，async就是允许你setTimeout(retAddr,0s)并return的空函数，你们叫它yield或await。
+Unification 有离非匹配，叠合(1=1 1=x)各得 真, x:1。 `UnionFind=x=> x==Fa[x]?x:Fa[x]=find(Fa[x]); Fa=Array(N).fill(0).map((x,i)=>i)` (误)
 
 >这不仅仅是起了名，而是在脑子里先遭遇了这个概念，再根据从不同的角度，用这个概念的理解来起名。 音意译不是纸面的文字游戏。删繁就简才有空间标新立异。
 
@@ -142,7 +142,7 @@ Unification 有你非cation，叠合(1=1 1=x)各得 真, x:1。 `UnionFind=x=> x
 - manim/lotties: [🔎VFX js](https://rossning92.github.io/movy/?file=examples/demo/opening.js), [Tridiv.com](https://petertyliu.github.io/toaster/) (movy>[mojs/motion/barba](https://www.nunustudio.org/editor/index.html?nsp=../../examples/flappy.nsp)?), [blendswap](https://armory3d.github.io/armory_examples_browser/#templates-first_person),[VR](https://aframe.io/examples/showcase/responsiveui/); [导航](https://dribbble.com/tags/3d-website) [awwards](https://www.awwwards.com/websites/3d/)
 - [节点图](https://apvarun.github.io/graphize/): [OpenArt](https://openart.ai/workflows/openart/-/lkOtNJ2UexVd6vK0kYhd)-[带AI](https://eternal.rob.computer/) [TFjs](https://magenta.tensorflow.org/demos/web/)-[带事件](https://tamats.com/projects/litegraph/editor/), [libA/V滤镜](https://www.audiotool.com/product) by [andré](https://andremichelle.io/lab/): [🤔为啥DSP代码能微言大义](https://ncase.me/joy/demo/music/?song=fractal)-[教辅Desmos](https://www.geogebra.org/calculator), Draw.io: asciiflow.com q.uiver.app#TeX cryptii.com svgfilters.com houdini.how
 - blog: [Bezier贝兹](https://blog.richardekwonye.com/bezier-curves)-[PtsJS](https://ptsjs.org/demo/?name=curve.bezier)-[png算法](https://iter.ca/post/png/) [FFT变声](https://www.jezzamon.com/fourier/)-[公式动画](https://www.andreinc.net/2024/04/24/from-the-circle-to-epicycles)-[用PS做mp3](https://t.me/dsuse/18423)-[音乐可视化](https://github.com/icopy-site/awesome-cn/blob/master/docs/awesome/awesome-audio-visualization.md)-[老游戏电音](https://chiptune.app/browse/Demo%20MIDI/Voyetra%20Orchestrator)-[D2入门](https://t.me/dsuse/19402) [图灵机可视化](https://samwho.dev/turing-machines/) [三角壁纸](https://trianglify.io/)-[svg一笔画](https://zhuanlan.zhihu.com/p/72632360)-[更多](https://t.me/dsuse/18154) [Taichi](https://github.com/taichi-dev/awesome-taichi?tab=readme-ov-file#:~:text=2d%20physics%20engine)-[MC.py!](https://youtu.be/Ab8TOSFfNp4?t=3700)
-- [物理人Omio](https://oimo.io/works),antfu.me, [3D博客首页](https://dev.to/hr21don/six-stunning-web-developer-portfolios-showcasing-threejs-mastery-206n#:~:text=Bruno%20Simon),[jessezhou.com](https://t.me/NewlearnerChannel/11536),[导游](kubota.com/futurecube/)
+- [物理人Omio](https://oimo.io/works),[@离屏画板](https://offscreencanvas.com), antfu.me, [3D博客首页](https://dev.to/hr21don/six-stunning-web-developer-portfolios-showcasing-threejs-mastery-206n#:~:text=Bruno%20Simon),[jessezhou.com](https://t.me/NewlearnerChannel/11536),[导游](kubota.com/futurecube/)
 - [Live2D](https://guansss.github.io/live2d-viewer-web/) 算法 [clmface, js verlet, js Homography](https://subprotocol.com/system/tree.html) 或 [svg morph](https://pavellaptev.github.io/warp-svg/), "skimage straighten [curved text](https://type.constraint.systems/)"
 
 ### 物理常识
@@ -213,6 +213,10 @@ import this;
 - call调用 exec执行(单步操作) runs运行(无返回值) bind回应端口(Reactive回应式编程🔑)
 - parallel平行调用(数据分块不相交) concurrent多任务🔑(单线程池-回调列队)。 平并行就像同向/对向双车道，平行的超车失败(资源被锁)顶多比单车道还慢，竞争的就在读写时撞车：随机注释掉一条赋值会产生什么bug？想象一下
 
+>单线程是 `bash exec()` 调用的，但如果你想从UI或HTTP调用，并且输出到stdio以外的变量里，就不能靠进程(线程)。
+>比如对UIUX框架，即便每个请求新建线程，鼠标/触摸屏也只有一块，没法按1毫秒或4K块生硬的区分监听，
+>何况正常App就不会用 while(1) 做阻塞性轮询，可以说新线程无意义。
+
 好的文字游戏：
 - GCC = GNU Compiler Collection \ General C Compiler
 - PHP的解释为 PHP Hypertext Preprocessor \ Personal HomePage
@@ -236,15 +240,15 @@ import this;
 <br>new一个抽象类对象，报错，继承它再多加个静态整型属性和颜色枚举，编译pass
 
 ### Metaprogram
-
-- 元编程的一切： DCBA树图+ABCD引用+"浅深后前SDPO"算法 实现 parser爬撕饵 compiler刊木排而 VMachine微迈细硬 interpreter深先改树(改数)aka解释器
+ 
+- 元编程的一切： DCBA树图+ABCD引用+"浅深后前SDPO"算法 实现 parser爬撕饵(传入常量给宏即)macro码可揉,包含: compiler刊木排而 VMachine微迈细硬 interpreter深先改树(改数)aka解释器
   - AST树的DCBA: 最开始，你只是将 `"十一Xノ"(A,B)=A+B, get[""]call(varg)` 等Decl组合成求值脚本，再靠Connect复用(var x=啥,ret=x+x)链树为图，再将条件重复块Block{Blk;}规范为一种宏参数("字面")，最后用 `Arg[i]或this._slot[J]` 建模Blk里的空洞，就有了函数or闭包词法域。 `[空洞 List], [Str 空洞 KV]` 被称为形参默认参，调用栈被称为实参，编译期Test的断言被称为Typehint，各种VM字节码汇编的共同点在此。ld.so"relocation"也是待回填空洞。
   - 名字字面寻址序ABCD: (Arg$i Blk$j,J)靠堆栈偏移量 ConstV Dict'K' 靠运行时常量池。 线程栈也实现了return，协程回调链表更是fun-retAddr的重量级实现，但它仍比线程的4K栈轻量许多，可对接RPC的叫号取“参”。
   - AST解码与解释的"浅深后前": 浅先遍历 `s=>if(s(1)=='-'){s(1,NO);num(s)}` 深先遍历 `(e,env)=>e.lit ?? e.dictK?(env) ??..` 前后缀栈调用 `1*2+3=[12*3+], 1+2*3=[1 23* +]` 可用于扁平读写树结构，Blk列表只需多个算式和赋值构成。 前缀式 `[+1[*2 3]]` 与之等效，但适合编码 `(A,B)=>A+B`,forif 等需要统计分配或'}'回填goto才能执行的结构
   - 关于CS科班：未闻数学生=计算器。与其把lex-YaCC都搞成「状态机」呢，还不如把x86也视为while(ASM op=*pc++)的模板解释器。 懂goto不仅比懂ndarray的难编程，还会把Trie文件夹+failptr搞成KMP那样麻烦。要说自底向上，await栈就是新的LR。 省点IQ留给直觉吧，科举4ky搞出四大发明，玩够了吗？ 
 - varDecl(在某行)添加变数🔑 local局部 global全局对象(适用pyjs,kt,C) ^2  GC自全局树剪枝(图=树+硬链复用=Rc,DFS和Weak解循环引用)
 - callback回应 return回值 inline免链接🔑 void()可调 void*可调引数(引向可写的数) assembly(x86,dalvik等具体的ISA指令结构!"汇编"可不是语言 identifier变量名/函数 qualified带前缀)
-- syntax写法 semantic语意🔑 lambda栏目答 macro码可揉🔑 thenCont函续体🔑 reduce单步调用🔑 reflect类型查询 tailrec伪递归🔑(continue到开头)
+- syntax写法 semantic语意🔑 lambda栏目答 combinator侃半同 macro码可揉🔑 reduce单步调用🔑 thenCont函续体🔑 reflect类型查询 tailrec伪递归🔑(continue到开头)
 - stmt句式 expr算式 funDeclare函式(公式) constLiteral常数/param引数("某调用"参数) arg参数 operator运算函数🔑  ^1
 - parser 常量或字面树的编解码器，和整体的关系类似 png-AdobePS zip-JVM json-GitHubAPI
   - 它使 class{fun(x){x}} 等调用在编译期运行，相对于JIT和curry，这是一种 partialEval二段求值🔑
@@ -326,287 +330,6 @@ WannaCry(SMB SrvOs2FeaListSizeToNt), CrowdStrike(CSAgent.sys VM空指针), log4j
 >纯血=Linux 内核 + musl libc + LLVM/Clang + 魔改 node.ts + 基于魔改 TypeScript 疑似大量借鉴 Flutter 的 GUI 框架。鉴定完毕。
 >当年“汉芯”已经被精心打磨得找不到Motorola字样了，[“红芯”](https://github.com/monyhar/monyhar)和“[cecIDE](https://github.com/qxchuckle/vsc-cec-ide)”也没有Chrome和VSCode的Logo了, muLang和“众标麒麟”更是打脸了开源界的卡脖子，为什么海量个例依然顽固地认为是造假？
 
-## BYGRP1N挟意音-英日谐音
-
-这是一种免输入法的(半中日)英音标，足以准确表达英语书上的发音。 IPA参考自[多邻国](https://duome.eu/vocabulary/zs/en)、及[SynthV语音合成](https://dreamtonics.com/zh-CN/svstudio-resources/)内的[CMUdict/pronouncing.py](https://en.wikipedia.org/wiki/ARPABET)
-
-> 15元音(呼气音vowel)
-
-舌|不动|15
--|-|-
-hLt/[^o]() ɑ [L]()|k@t æ [@]()|bat ʌ [a]()
-byd ɛ [y]()|sA eɪ [A]()|bRd ɚ [R]()
-x^1p ɪ [1]()|xEp i  [E]()|egO ə [e]()
-bOt oʊ [O]()|fa~t ʊ  [a~]()|fud [u]()
-koa aʊ [oa]()|tIm aɪ [I]()|bo1 ɔɪ [o1]()
-
-翘|唇舌|24
--|-|-
-buk [b]()|q1R tʃ [q]()|dA [d]()
-f^1x [f]()|gO [g]()|hOm [h]()
-jLb dʒ [j]()|kE [k]()|lYen [l]()
-mAjR [m]()|noZ [n]()|s1N ŋ [N]()
-p^1g [p]()|r.id ɹ [r]()|sE [s]()
-myJR ʒ [J]()|xu ʃ [x]()|tYm [t]()
-zi.n ð [z]()|S^1Nk θ [S]()|Wi.rE v [W]()
-woDR [w]()|Uu j [U]()|Zu z [Z]()
-
-あア a|いイ 1|うウ u|えエ y|おオをヲ o
--|-|-|-|-
-かカがガ Ka=ga|きキぎギ k1 K1|くクぐグ ku Ku|けケげゲ ky Ky|こコごゴ ko Ko
-さサざザ Sa=za|しシじジ x1 j1|すスずズ S- Z-|せセぜゼ sy Sy|そソぞゾ so So
-たタだダ Ta=da|ちチぢヂ q1 j-|つツづヅcu Z-|てテでデ D- Ty|とトどド to To
-なナ na|にニ n1|ぬヌ nu|ねネ ny|のノ no
-まマma|みミm1|むムmu|めメmy|もモ mo
-やヤia||ゆユiu||よヨyo|
-らラla|りリli|るルlu|れレly|ろロlo|
-||わワwa||んン N-
-はハばバぱパha ba Ba|ひヒびビぴピh1 b1 B1|ふフぶブぷプhu bu Bu|へヘべベぺペhy by By|ほホぼボぽポho bo Bo
-
-> 大写变音： kgsz bptd  通假:は含=わwa へ=えe を=おo
-
-片假转拉丁，平假转谐音。 人形:ぬねれわを 易混:さちらつ
-あ→按	い→疑	う→悟	え→哎	お→喔
-か→喀个?«	き→可机	く→酷	 け→刻戈	こ→口勾
-さ→飒	し→系即	す→十足	 せ→示	そ→所
-た→踏哒@!	ち→其	つ→出_	て→忑得	と→同都&
-な→哪	に→哩»	ぬ→奴	ね→你	の→那>
-は→玩吧<	ひ→黑比披	ふ→不	へ→挨彼<=	ほ→后保
-ま→没	み→媚	む→抹	め→美	も→眸..
-や→也		ゆ→由		よ→有
-ら→啦	り→理	る→路	れ→里	ろ→露
-わ→娃				を→握=>
-ん→ǹ
-
-あ→安	い→以	う→宇	え→衣	お→於
-か→加	き→機	く→久	 け→計	こ→己
-さ→左	し→之	す→寸	 せ→世	そ→曾
-た→太	ち→知	つ→川	て→天	と→止
-な→奈	に→仁	ぬ→奴	ね→祢	の→乃
-は→波	ひ→比	ふ→不	へ→部	ほ→保
-ま→末	み→美	む→武	め→女	も→毛
-や→也		ゆ→由		よ→与
-ら→良	り→利	る→留	れ→礼	ろ→呂
-わ→和				を→遠
-ん→无		
-
-- [学发音](https://japanese.yunser.com)、[练字](https://nya.ink/50yin/index.html) `$$('main .mdui-card').map((x,s)=>[].slice.call(/(\S+).*片：(\S+)/s.exec(x.innerText) ||[],1).join())`
-- [动漫例句](https://www.sigure.tw/learn-japanese/basic/50/master-50-quickly)
-- [逐句解析器&文法通](https://mottojp.net/)
-- [中文语法](https://resources.allsetlearning.com/chinese/grammar/B2_grammar_points)
-- [日文语法 by Tae Jim](https://acgers.github.io/jp-study/basic.html)
-- [西游水浒红楼三国，聊斋儒林瓶梅(范进出处) 七大名著小说](https://doosho.com/cn/6)、 [四字为计，三十六策](https://sunzi.5000yan.com/36/)，海涵了「中华文化」和成语、对子、[诗词三百](https://aspoem.com/zh-Hans/poem/2567)等文创产品。
-- 流行文体/网络句式/蝉鸣文学造句：你在盛夏把那个橘子味汽水上的少年日出蝉鸣
-- “i念1 在zh~s后念日, ie=ê”  单独i/u(ing)在前面加y/w   “ü(üe/üan)前面没有声母时变成yu”
-
-kanji: [jpDB字典](https://jpdb.io/kanji-by-frequency) [jisho字典](https://jisho.org/docs)
-
-想用好BYGRP表意色标来学英文，u MUST check-out 美国流行文化语料酷，闹！
-
-- NBC,ABC(美/加公立电视) 无纸媒，但观看B站的 SNL, Tonight Show(脱口秀), Friends(1994), The BigBang Theory(2007) 以及NPR著名的《芝麻街》，ABC投资的Bluey(澳洲蓝狗的加拿大童年)，玩味更流行的辛普森、瑞莫、恶搞之家、丧Bojack(Wojack)，会让人觉得“本地人也没那么标准嘛”！ 更是可在 [SubDL](https://subdl.com/) 阅读全文 (S1E1即季1话1, DVD即S1全季连播,先点右上设定filter=EN)
-- [媒体唐人街的《黑悟空》](https://jingdaily.com/posts/myth-to-market-the-global-rise-of-chinese-game-black-myth-wukong) 和 [美国青少年读物](https://www.readworks.org/article/How-Charlie-Got-Her-Chopsticks/73ebf436-d660-4427-b090-e1c6b12746f8)(免邮箱验证)
-- [PTT英语awesome-list精华板](https://www.ptt.cc/man/Eng-Class/index.html) ——感谢[PCMan医师洪任谕，开源了BBS界面和LXDE Linux](https://pcman.ptt.cc/about.html)
-- 兴趣饭
-  - 喜欢日图壁纸的， [QotD `fortune`](https://www.forbes.com/quotes/), [XKCD漫画](https://www.explainxkcd.com/)-[查词](https://findxkcd.com/) 绝对适合你练新词！
-  - 喜欢科幻、恐怖片、规则怪谈！ ——[SCP](https://scp-wiki.wikidot.com/scp-173) ([萌百说的道理](https://zh.moegirl.org.cn/SCP-173%28雕像-最初之作%29#))
-  - 二次元[ACG](https://boards.4chan.org/a/)/[程序员](https://news.ycombinator.com/) 的天堂4Chan&YC。 比起被动跟风查错，主动出击..吧？
-  - 和GPTs对话-包括小爱同学-长按电源键，不如从麻婆豆腐、豆腐脑聊起？ 或者，续写你动物朋友的「梦之岛」，"tell me a joke" 也行 ，在AI的补充下设定你的“最初之作”(SCP-173)更好玩！
-- 经济饭
-  - [纽时的王婆也卖瓜](https://www.nytimes.com/spotlight/best-of-the-times)？ [左中右里](https://www.allsides.com/media-bias/media-bias-chart)，NYtimes是左，WSJ是右，The Economist(MBA)是中，民众该有bias的，请酌情褒贬。 注意：左公益右效益，经而不济，下自由上特权，治而不正。开个玩笑，别以左为上，别宗教化二极管化。 [学识读能力，防范媒体带节奏请观此](https://www.ptskids.tw/article/ptsnewslabmedialiteracy-6629cc45859f9)
-  - 政府，财路上的交警，适合练废话文学。请提纲 [三权分立左右互考](https://www.constituteproject.org/constitution/United_States_of_America_1992) 和 第四权：[鸟不是真的！](https://birdsarentreal.com/pages/about#chapter-1), [The_silence_city](https://www.peterjxl.com/censorship/The_silence_city) 宣言全文。but [R&M: The only thingOfValue onIt is secret treaure map](https://www.bilibili.com/video/BV1xc411t7M2)
-  - “写鬼写妖却高人一等，刺贪刺虐该入骨三分”，[《聊斋：尸变》](https://doosho.com/cn/6/1/3) 如画皮般经典的中式恐怖令人难忘， [其英译版](https://www.gutenberg.org/files/43628/43628-h/43628-h.htm#Anchor-173) 也是记叙文理解和连线题！ (其文言虽短，却趋于白话，字字铿锵)。你可以在 [Anna书库](https://zh.annas-archive.org/md5/39df49d5e38443658165fddcbd1f3042) 阅读丰富人生。 一问世便风靡欧美的传奇文 Rickshaw Boy《骆驼祥子》也在
-  - [最少要用Ctrl+L bing.com替代百度。](https://coolshell.org/articles/9308.html/) 既然决定依靠世界外贸，请与二手[信息呕吐物](https://www.wenxuecity.com/news/2022/07/25/11710399.html)一刀两断。 “据<u>某部门</u>的<u>可靠专家</u>” 可没有本文级别的来源透明度
-- 清单阅读以上链接，并找到日用它们的价值--圈子何时何地使用它？ 你就能用美式思维说英语了。 或许不够native，但90分和0分差距还是，大大地有。
-- 最后：单词防忘的 [Anki APP](https://ankiweb.net/shared/info/657511105) 。[不过](https://www.peterjxl.com/English/Larry/memory-word-is-a-typical-coward-behavior/#:~:text=从英语爱好者变成词典爱好者)，也别太依赖单语素。语境和逻辑相邻性决定词汇量！ 但作者的「方法无效论」言重了。词根词性法不科学，只因为没人用编程写这些方法…… 差生文具多，但会创造文具的人永远不差。
-- [OPUS:真·跟着AI学翻译](https://opus.nlpl.eu/sample/en&zh/CCMatrix&v1/sample)
-- [电纸书](https://sspai.com/post/58496), [二手Kindle](https://post.smzdm.com/p/akl5l268/) 适合在一定词汇量的基础上，离线阅读，保护视力。 你总能[Google到分享使用经验的博客开源](https://anotherdayu.com/2022/3681/)
-- [IPTV:反锁区梯买值了！](https://github.com/iptv-org/awesome-iptv#:~:text=streams%20directly%20from%20your%20browser), 除了字幕组必备的 CBS NBC CNN 源，[adultswim等动漫](https://noerls.github.io/iptv-m3u-viewer/)有很多，但需下载并加载[m3u节目单](https://iptv-org.github.io/iptv/index.m3u),并在VLC[或这](https://hlsjs.video-dev.org/demo/) 播放m3u8链接
-- 您可以按 Win+Ctrl+L 全局字幕，其他系统可用Chrome专有的播放期字幕或[LiveCaptions](https://flathub.org/apps/net.sapples.LiveCaptions)
-
-+ 长短:R O阿嗷 Er e儿呃 E Ey噫一 u w唔额
-- **R=ɑ:,[ɒɔ]阿嗷** far not dog /dɒɡ/dOog hot /hɒt/hOot /hɑːt/hLt
-- Ea=æ暧 batman's hit /hiːt/hEt hat /hæt/hEat
-- a=ʌ啊 backup a doc /ˈdɑːktər/dRkter 大~duck /dʌk/dok
-- **Oh=ɔ:喔** all fought lawyering /ˈlɔːjərɪŋ/-lOwyerN lawer /ˈlɔɪər/-lOyer
-- Oa=aʊ凹 cow /kaʊ/kOa hour /ˈaʊər/-Oaer
-- e=ə呃 about /əˈbaʊt/么~e-bOat one /ˈwən/-Wen replicate/ˈreplɪkə/-ryplike
-- **I=ɑɪ=aɪ爱 eye /ɑɪ/I  time /taɪm/tIm**
-+ **A=eɪ欸 say /seɪ/sA sea /si:/sE day able /ˈeɪbəl/-Abal**
-+ y=[ɛe]唉~get bed /bɛd/byd /bæd/bEad
-+ **Er=ɚɝ[ɜə]:,ə儿呃** bird sir /sɜ:r/sErr
-- i=ɪ一 sit 亿~ear /ɪər/ier ship /ʃɪp/Xip
-- **E=i:,i噫一 family /ˈfæməli/-fEamelEy peak sheep /ʃiːp/XEp**
-+ **Ow=oʊ噢 low boat /boʊt/bOt**
-+ Oy=ɔɪ噢一 boy /bɔɪ/bOy
-- w=ʊ额 ~full book /bʊk/bwk
-- **u=u:,ʊ唔额 do=due 负~fool food /fuːd/fud**
-
-罕见
-- ie here /hɪər/hEir
-- o no /nəʊ/no
-- ye air /eə,ɛə/ye
-- we poor /pʊə/pwe
-ew 哦=əʊ Ei以=ɪə we=ʊə ae=eə
-- https://github.com/LinXueyuanStdio/DictionaryData/tree/master
-
-> 24辅音(舌音consonant) 为声母，音节由声+韵二项 +调构成。轻声和1~4声记为[-/<\\]: ma吗 ma-妈 ma/麻 ma<码 ma\骂
-
-> 英学中的难点是声调和字多音(英美的音高可以随心情)，中学英的难点是时态和语序：的-of,吗/是什么-倒装,在了要-ing-ed-ll,比最-than-the-est. [more](https://llwslc.github.io/grammar-club/content/Preface.html)
-
-+ 英音:n N, xi X, z Z, Zh, w W
-- b波 black book /bʊk/bwk
-- p泼 champion-CuzIamA煎饼儿 pineapple pen /pen/pyn
-- m么 man made /meɪd/mAd
-- f佛 feed /fiːd/fEd fire /ˈfaɪər/-fIyr
-- d的 dog day /deɪ/dA
-- *T=tə得 outer /ˈaʊtər/-OaTr otter /ˈɑːtər/-RTr*
-- t特 top time /taɪm/tIm
-- n呢 note: night now /naʊ/nOa
-- N=ŋ song going /ˈɡoʊɪŋ/-gOuiN sing /sɪŋ/siN
-- l了 let love /lʌv/lav
-- g个 go glow /ɡloʊ/glOu
-- k可 kitten rockin' key /kiː/kE
-- h和 hey happier home /hoʊm/hum
-+ Y=j易 yard /jɑːrd/YRrd yay /jeɪ/Yai y2b /ˈjuːtuːb/-Yutub
-+ j=ʒ又 measure /ˈmeʒər/-majer your 也~vision /ˈvɪʒən/-Vijen
-+ q,th=tʃ奇 chalks' 器~cheer /tʃɪr/qir --清Ts'ing 是威妥玛拼音缺少jqx的变通。音标是能拼出清华。另有不对(pu tui),让这京哥请(jang che ching ke chin)
-+ X,sh=ʃ细 asia /ˈeɪʃə/-AXe shrimp shoe /ʃuː/Xu
-+ z=ð that /ðæt/zEat these /ði:z/zEZ rhythm /ˈrɪðəm/-rizem
-+ (c=ts)
-+ S=θ think false 4th /fɔːrθ/fors thing /θɪŋ/siN
-+ s是 still see sunset /ˈsʌnset/-sehnsat
-- Zh=dr织 drive a drum /drʌm/Zhehm
-+ zh=dʒ这 just /dʒʌst/zhehst job /dʒɑb/zhOb major /ˈmeɪdʒər/-mAzher
-+ Z 租~zoo /zuː/Zu
-+ *ch=tr 初~true try /traɪ/chI*
-+ r=ɹ惹 run road rights /ˈɹaɪts/-rIts
-- W=w would /wʊd/Wwd we /wi/WEy
-+ V vanilla /vəˈnɪlə/Ve-ni.le very /ˈvɛri/-VYri v=ü
-
-```
-
-```
-
-> 能听懂(台词字幕cue of caption)甚至(歌词lyrics)是许多人学英语最理想的目的……其实你已经学了一些，以下中文用Chinglish发音就是英语了！这被称为(空耳solamimi)或(幻听Mishearing)
-
-- (funny mud chew go pee /-fani mad pE phony/fewni) (was all'in mind/wO!z ol N mIn) (what's ur mind/wOc yo mI 我就买) (granny peace管你奶奶) (tree knee mud newbie 跪泥新手)
-- unconditionally /ˌʌnkənˈdɪʃənəli/--anken-diXe.neli 俺肯定设那里  (sugar yes plz /ˈʃʊɡə jɛs/-Xw ge yes plEz 削个椰子皮) (dIe.mendz-in呆萌真 Ze skI)
-- /aɪm frɛndz wɪð ðə ˈmɒnstə ðæts ˈʌndə maɪ bɛd/Im fre ndz Ze -mOn ste ZEat s-an de mI bYd 俺发现个盲僧在山东卖鳖
-- /ɡɛt əˈlɒŋ wɪð ðə ˈvɔɪsɪz ɪnˈsaɪd ɒv maɪ hɛd/get a -lON Wi Ze -VOi siz.in in -seid O!V mI he 看到了我的外甥在厦门卖海尔
-- We don't talk anymore like we used to do /wiː dəʊnt tɔːk ˌɛniˈmɔː laɪk wiː juːzd tuː duː/WE dew tok --ani-mo lI WE yuz Zu du 为了脱给你摸来回有速度
-- Look what you've done /lʊk juːv dʌn/lw k yuV dan 来个鸡蛋 (watch your six背后 小心老六) 《日在校园》 日穿校园 你の名器 往来无白丁-不黑不吹 yardbirds鸭脖 
-- We Found Love——潍坊爱 Diamond war--呆萌的我 Star Farming——四大发明  U need cry dear——有你的快递
-- People mountain people sea, I'll give you some color to see see, you paper tiger No zuo no die
-- Long time no see, LiHua. Good study, day day up. Add oil! Dad had no guanxi, but he like mianzi
-
-> My ABCs 24字母歌 101(one o one 课程，不是在台北哦)
-
-- **Aa/eɪ/A** 欸 a唉
-- Bb/bi:/bE 播
-- Cc/si:/sE ts ch出
-- Dd/di:/dE 的
-- **Ee/i:/E** 噫 e呃
-- Ff/ef/af 佛
-- Gg/dʒi:/zhE 个
-- Hh/eɪtʃ/Aq 和
-- **Ii/aɪ/I**  爱 i也
-- Jj/dʒeɪ/zhA zh
-- Kk/keɪ/kA 可
-- Ll/el/al 了
-- Mm/em/am 么
-- Nn/en/an ng 那
-- Oo/əʊ/ew 嗷 o哦
-- Pp/pi:/pE 破
-- Qq/kju:/kyu ch
-- Rr/ɑ:r/Rr 阿 r日
-- Ss/es/as th s是
-- Tt/ti:/tE 替
-- Uu/ju:/yu u唔
-- Vv/vi:/VE 
-- Ww/ˈdʌbəl.ju:/dahbel.yu w呃
-- Xx/eks/aks sh
-- Yy/waɪ/wI jh
-- Zz/z/z dh
-
-在学发音之后，您可以体会下例句如何变化。相同语意下，中文的语序不太随内容而改变
-
-- (桌子)下面是什么 What's under the-table |有1只猫|是第一只|畅想其他数量词/时地词?
-- (他)开心吗 Was he happy? |开心|将不开心 |be时态能保留吗
-- (大家)渴就喝水 Have some water when thirsty |饭前饭后喝|请的人太多水会喝完
-- (麦克阿瑟)在二战中没有听(他的) MacArthur didn't listen-to him at WW2 |有听|省略"在"|失败(无宾语)
-- 有托福路好走 TOEFL makes a easy life |发音成了难题|"她的"路 (动宾?补 句型)
-
-BYGRP 名💙💜动💛介💚单❤️形🩷🧡，是一种语法高亮规范： Blue代指(免冠名词,书)或存无量词(any/every/some/no) Yellow动词 Green介词-数逻辑方位 Red数量时地 Pink-形容或副词
-- (名词noun)是不受上文或主语特化的(代词pro-noun)： Amy's 👉👨‍🎓<u>son</u> was in that 👉🏫<u>school</u>, what a life!
-- (动词verb)是表述句的主干(陈述,疑问..)，不及物动词(is hungry vs eat sth.) 包含时态和状态
-- (介词pre-pos)是定义句的核心，连接意群来给动词"传参"： 悟空聪慧，(在半夜三更从后门 searched in:🌃🕛 through:🚪) (寻得师父 ..for: ur.🧑‍🏫) |注意:语序从右往左,3个the
-- (单位num,quant)比如0~9/$刀¥元/年月日时地/经纬度，是国际通用。能被比划出来，其有用程度被低估了
-- (形容adj)是对名动的补充，称为定语(bad boy) 状语(eat quickly)，副词是对形容的补充(very bad很伤, all cried都哭)，有时要用[词根后缀](https://zh.wikibooks.org/wiki/英语/英语单词后缀#形容词后缀)如 natur-al slow-ly creat-ive
-
-BYGRP本是为代码设计。(💙函数参数/引数/常数 💜=非参数变量) 💛def或调用 💚"文本"和文档 ❤️🧡文法对错 🩷导入链接 受IDEA,VSCode(💙💛🩷)默认支持 ，参考了色彩心理学、因斯布鲁克倒立镜实验、克斯勒褪色(类屏保)
-
-另外，分析句法时，[应下划线的](https://blog.readwise.io/bionic-reading-results/)是 **固定项(若SVOC=主动宾补)** ： SV SVC S[VO] S[VO]O S[V]O[C]
-
-祝您学习顺利 ~~若您生来语感不好，不妨让DeepL和右键+T代劳？现在AI很强的，尤其IOS的跨国听译比较友好。~~ 也可在1或2部手机上使用「有道翻译官」麦克风同声传译
-
-有3个语种优势在最广泛/最易学/[最密集](https://www.ituring.com.cn/article/216105#:~:text=九九乘法口诀表)，在语序上是英大端，日小端，中几乎大端。 妈拿手机/中英、妈手机拿/日韩(SOV首微)，企鹅Tux之友、pal of Tux the 企鹅。中心词在前在后，真不影响get语意意境，但有别于弹幕or聊天回放、文言or白话等密度敏感的情景。 汉文圈一字为词，23字动宾语意 45字意境的tofor现象是真理，但白话常以双音/叠词语素给大脑缓冲，同时产生"X球Y车牛Z"这样的偏正/正偏分类。方块词根能同化外来术语-协和制词或文言-复合与单字，“时不我待” “自信自强”等宾主谓在现代也不显突兀。 君日本語本当上手か？ 何至行込(1盯口: 一力土 二丁而 促入,干啥到这挤)
-
-分词语、折词语即[要在了]干/干[会过着]，有单词在或折词-ing，黏语有“见而不视”也不分“不否弗非”省变形省词库。ACG例句 ばくはつ爆発 ここよ見るlu/見miない/miだ/こno DIOです， 但，语言不比文化能决定思维，七色不比五色强。emoji和(军事)手语能交流和编程。 
-而音根上，日语70-韩语40个元辅1:1的音，表音字好听且抗噪，难度类似粤语(外来词占50%利好黏语)。英音48个，汉200x4即一声一韵韵为辅。难点上，汉发英:多音节双辅音重音节, 英发汉:21元音4音调-比时态人格折词还难学。 
-
-- 再干快点，再流利些，工资就会多
-- Do it faster, work more fluently yields more salary
-- もっと早Hayaく行Yaるよ，すらすら哒よう~，給料(多Ta々で/も高く)よう  (料同料理、無料)
-
-- 快来，坐在银龙背上开美食大会！
-- Come and sit on the back of the silver dragon, we have a food festival!
-- 直Suぐ来Kiって、銀龍背中Ni乗Noる、食事会ShiyoKuJiを开こう
-
-- https://zh.moegirl.org.cn/zh-hans/君日本语本当上手#:~:text=冒充日本人 太君(太金/态kun)塞氏翻译法,反向协和语 [有小说！](https://www.zhihu.com/question/40588039/answer/3059426045) [天皇诏书](https://www.zhihu.com/question/44769704/answer/753611973)，雷同于韩语=汉方言+注音字母+黏和词
-- 「研表究明，汉字序顺并不定一影阅响读」母语者听说读写的单位是意群即语素而非一词，介词和生词不错，逻辑就不乱。 读书提纲挈领，可从句逗之左读，忘记句首。逐词读速慢，导致英文必以ofBy前置中心，比之中日更散。
-- SOV的口语化形成了动词软化(百搭动+虚名词)，颜值高=很美帅、知名度高=有名气人气、前瞻性=远见卓识、A“作出”⼤贡献=A贡献巨大、已在B身上“进行”验证=用B得证， 包括滥用代词「的」：我家狗至少能活20岁 vs 我的狗的预期寿命是20年。 这两条语法冷知识摘自《中文的常态与变态》——余光中 1987
-
-CJEnK中英日韩等同认为，在语泾下，语言传输语意/意境，组合词根词缀-声韵元辅调，而一句话含时数罐搭4点
-
-- 💙罐袋值漏词 B run😈冇b 
-  - 要在了会过着就才再边 to'd'ing'ed'll've so,yet,[wc]ouldBe
-  - no/some/any/everY 四倒表:咋啥为人时哪几1H6Wh how-h2 What-w why who When (Where which1); 括号可搭句(that..) 的值定语 地值状语
-  - 蓝词罐袋: 们的是去很于,被这那第一个只都另又 ofThe'm's're only-both-{an,ot,nei}her
-  - &/\butToo eachSuch 和或也不比但有等如能成
-  - 数态并非 1/#1st%/ones/1块片，名词的性表意太少。值词=单位+字面，袋= 🙋🧏🎏々👧👦👯‍♀ 那👉这👈卖self🙌的>是很:
-
-- 🦐动自动lyer形 Y 🧡al
-  - 5划3粗:AB我爱你,AC你好/BC好你,ABC安全带系好,ABb送你回家,ACc路在变宽; 定状语(的左语好右语) 动黏补语
-  -  词缀不高亮,?¿!声调 的前那于后/于门'z旁 the仅最高级 lyerThe免erst
-- 🥦黏动黏 G 💚a
-  - oninat asTFbyWF 作到从跟用为在里当若 if,while'cuz,else,case    
-  - 时向前以外者似在上下左右 不一对最全见得出 .:I动私以下以上彼:.
-  - 词缀:可前性无型化类度人版学 地而让把给据约
-- 🥓位链入时地 R apt
-  - Oh uh well nah hey yay wow ew eg etc.
-- 💓形问SO漏 P 💜0🐷12❤️3
-  - 心态0~3为[呢吗 吧 该 必否] yesno
-  - many/much/lot/few/theMostLeast
-
-  CJE中日观英 中观日 中心语在前缺点
-- go/take/have  {in,on,}to from with{out,in,} 靠over/沿through/via before/after/during/since/until/till /outOf/against/oppositeTo/becauseOf/however
-- {un,}like/about/than/including/except/as{long,much,soon}as between/towards/among 3/across near/around/besides/nextTo/along/beyond
-- above below behind under beneath beside inside off up down upon past despite	underneath frontOf nextTo
-- although though, toBe haveHad unless ,, whenever, whetherOrNot, bytTime, evenIf, evenThough, once onlyIf inCase suppose provided given
-
-```
-用以为按于 从沿到自至向往当 即似是与和或的对比较更很最全皆如化去 让使变把被该将就着 因由在跟趁凭依即 及连挨有没朝冲暨指 之前后内里外中间上下左右 大小高矮低短长曲直
-在为对与以从往把被于
-由用向给沿至自跟视而 通经-过 根依-据 为除-了 为-着了 针对 依照 大约‍‍ 尽管 每当 自打 较之-于
-比因凭替顺 对关基由至鉴缘-于 自打顺跟依-从 随-之从同  连-着同 缘经-由 缘自
-按依对关比-照 沿顺向朝乘趁帮冲-着
-随当凭借本-着 对比按靠按开关-着  某每任含 同另 头 其中 唯一 作到从 把将用 拿靠
-```
-- `python -m jieba; grep ' p$' ~/.local/lib/python*/site-packages/jieba/dict.txt` p/介词 u/助词 w/标点 d/副词 c/连词 f/方位词 q/量词
-
-
-
-
 ## 术语破解
 
 论 **仅在 bytes numeric (0 ~ 2^nBit-1) 和时间上**，程序员能整出什么花活：
@@ -665,39 +388,6 @@ Ruby|"#{2}"|Time.new|Time.parse
 - ASAP 尽快As soon as possible
 - NOYB 滚啊None of your biz (没你半毛钱关系/不干你事)
 
-更好的说法 (免中式英语的干活！说的その通り)
-- 10% 一成/+10个点/10pa(percent) 后缀式交流起来延迟更低，类似优化表达的公制格式有很多。
-- I very like (like it very)
-- I think I can’t, I have no (I don’t think/have)
-- How to say? (How doU say/spell, 为表尊重，不涉及how2play,.)
-- What time is it now? (NO now / whats t time, Mr wolf)
-- 你好吗？ Ur body is/are healthy (NO body)
-- The price is too expensive/cheap (NO price / price is high-low)
-- Of course (Sure / Certainly, 除非是1=1等“课程”题)
-- speed of car fast(car speeding)
-- ⚠️清长虫(讽刺猪尾巴,心里辫子剪不掉) 或秦强穷，为华人欺下媚上的刻板印象，属于地域歧视。常搭配《侧美案》的「金钱焊机 香肠协作」， 如果在欧美日韩看到，请记录证据向其单位举报，在东南亚也应尝试揭发。Nigger和Chink一字齐名，有老板骂员工赔25万美元的判例。 维护种族外貌自由，也是为港澳台新人维权。
-- Chinese, Japanese, dirty knees, Chi Na 这些是历史上的仇恨用语。 「不彀本(太穷疯)」「蝗虫(不文明陆客)」比之更轻
-
-真！中式英语 (Funny mud pee)
-- 音节数量有限，同义词库大，不同语种里音意兼译的雷同巧合多。中日韩实属三种语系，只是互相借词超5成，拆字不解其意例如“基因gene”里没有“基base” 可区分外来词
-- 基因gene 维他命vitamin 脱口秀talkshow 幽默humor(侯默) 雪茄cigar 泊车园Park 卡拉KaraOK,卡司cast 酷喔cool 易贝eBay 销铺shop 费fee用 销sell 售sold 销士onSales 贴示tip 康为廉士多convenientStore 绊忽悠banFoolu
-- 忙 徒死 问死 社死 福来 洒脱day 伤day
-- 模都Model 风味Flavor 系列series,consequence 香波Shampoo 泡泡bubble 泼起司优格pourCheeseYogurt 传媒transitMedia 单身狗damnSingle 骇客Hacker 盖世太保Gestapo 霸凌bully 梗迷因meme 休克shock
-- 引擎ngin 逻辑logic 几何geometry 拓扑topology 图腾totem 设定setting 绑定bonding 对偶dual 魔改模块Mod 模是Mode U盘disk X光镭射LASER(有穿透力的激光/“红外线”) 雷达RADAR(radio detection and ranging) 声呐sonar(sora suno) 霓虹neon(日本) 矽谷silicon 朊protein 皮卡车pickupTruck 石栋stone 是偷stole 死壮strong 依靠农民economy 卡是他么custom 制导遥感remoteSensing 坦克tank 向量外积wedge
-- 往之was 妄图wantTo 歪脑whyNot 猫腻迷思myth 妈mum 爹dad 父pa 亲戚姻络inLaw 爱慕未停ImWaiting 图样TooYoung 亦可赛艇excited 喉舌齿唇(试试怎么发音?) 绳线丝(发音长短?) 沙发sofa 谷子goods(ACG) 尼龙吉他nylonGuitar  歇斯底里hysteria(呓怔) 苦力怕creeper,coolie 力奔labor 无产普罗大众proletariat
-- cola,McDonalds,Pokemon,Minecraft麦块,BenzBWM,JEEP 高德god 伏地魔Voldemort 舒肤佳safeGuard 宜家IKEA 凡士林,威士忌,蕾丝lace,Ballet,伟哥Viagra,啃的鸡kentuckyFChicken 孩子王KidsWant 狗不理GoBelieve
-粉丝fans 黑hater 马刻笔mark 趴体party 1派pie 1听tin 1米meter 1卡card 迪吧discoBar 聊天沙龙salon 嬉皮嘻哈hiphop 体恤Tshirt 夹克jacket 胖此pants 泰迪Teddy 焙根beacon 网咖啡吐司cafeToast 白脱butter 红茶红糖blacktea 威化wafer 柠檬芒果lemonMango 汽水曲奇sodaCookie 三文鱼salmon 披萨pizza 嗨拜拜hiBye 摩托克motorCycle 巴适bus 卡通cartoon 耳麦mic 迷你mini 拷贝cabi 寄了GG 摩登modern 时髦/杀马特smart 抓马dramatic 赛博朋克cyberPunk 爵士jazz 扑克脸pokerFace 风尚fashion 猫modem 马赛克蒙太奇montage 高尔夫glof 荷尔蒙hormone 抬头title 阀valve
-- 挞tart 奶油淇淋cream 泵pump 加农canon  yogaSauna瑜伽桑拿  克隆刻隆clone 瓦斯gas  truly愤怒 留hair屏 脑秀逗shortCircuit 晒share 自拍秀shot 扎啤jardraftBeer
-板board 抬take 给give 离leave 嗲dear 台风Typhoon 闪shine kiwi果 为奇百科
-引得index 抛光polish 百战不Die 二货asshole 出包trouble 魔技magic 缺西trash 赤佬cheater 混腔势chance 噱头shitOwe 舶来borrow 瘪三begSir 陋死Loser
-奥赛outsider 旮旯corner 轮tire 阿片opium(纳洛酮解酒)
-跑飞perfect 瘟神oneCent 吃瘪cheap 是带脱Starter 插扑Plug 叉座charger
-移民immigrant 跩务速driveThrough 发烧友fancier 扑街poorguy 托盘天平topPanBalance
-池塘泊pool 合一耳hear 示已睃see 刻漏刻clock 跨砍厅crossCanteen 大老banker 拍死它pestPat 叫俺不能死ambulance 额的妈呀admire 牛败newbie 黑浅傻逼shabby 思丢皮得stupid 结巴jabber 靠坟coffin 皮凹peel  赔比尔payBill 他刻儒takeRule 官领导governLeader 唆弟suckDick 拖我towel 易浮easy2Float  否纽时falseNews  搏击Boxing
-焙肉格bakeRoastGrid 闹腾naughty 投鲨tossShark 瞥嚎peepHowl  踩背马杀鸡Massage 控裆Condom
-圣saint 颂song 盘pan 给give 富full 胶gel 拽drag 屯town   啼tear 
-
-
 ### 国内常见
 
 - CRM 理发店什么的用的特制版(Excel Customer relationship management)，虽然貌似都是盗版，但软工注重触类旁通
@@ -724,8 +414,21 @@ Ruby|"#{2}"|Time.new|Time.parse
 - REST 用类似CLI工具的参数结构 `(*pathArg,**kw) stdin=body,env=cookie` 读写json，之前是基于XML-POST的SOAP
 - LINQ link,语言内插查询，类似于 "hi $name" 这样结合了运维语言的优势，但其实是filterMap的语法糖
 - GNU is not Unix, 发明GCC和bash的(自由软件 software liberty)组织
-- WINE is not an emulator, 类似的免版权项有 Linux [Steam Proton](https://www.protondb.com/) 和 ReactOS.org
-- 类似的模拟器有 waydro.id; termux; `wsl --install`;  genymotion.com (`scrcpy` 的作者)
+- WINE is not an emulator, 类似的免版权项有 ReactOS.org
+- 类似的模拟器有 waydro.id; termux; `wsl --install`;  genymotion.com (`scrcpy` 的作者),  UxPlay(iPhone),MiracleCast
+  - MSYS2 [Steam-Proton](https://www.protondb.com/) KODI. KoReader VLC GIMP-PS 也是很优秀的开发和媒体软件
+
+## 首次出行
+
+### 首飞概述供参考
+
+-飞机与高铁线上服务流程差别不大，身份证即可，丰俭由己，经济舱有餐食零食的也少。飞机场与“地空网宿”四种交通方式融合先进，中转灵活，建议买双单程勿接机。 建议与武汉、广州、西安等大城市的G高铁/TD特快动车联程，不必直达，慢一点省几百
+-飞机的唯一缺点是，退票只退机建燃油费，改签难，钱也基本折半。因此合并行程很重要：机票价格并非越早越便宜，一般有余票的都可以撑几天-直到当天。 晚买防变卦，一次安排3张很危险
+-安检非常麻烦，晚点半小时、频繁颠簸实属正常，和坐船一个道理。 开点近半小时会有最大24度的爬升，着陆会慢慢来，其他时间基本没有风险。
+基本要求
+-若无大箱包要用行李转盘，提前1小时到达机场地铁站， 需确认航司+登机口。 初次到机场建议留3小时熟悉标识位置，出发/到达层数等等
+-如果不需要购物消费，建议直接过安检(~10min)，后面也有娱乐空间，甚至更舒适。 开点前20min就不能上客，再20就不能checkin， 在用中转票省钱时迟到会尤其卧槽
+-去香港建议上港铁落马洲口岸，不要直飞。来深圳青年旅社+港铁单程只花100
 
 ## 政经一句解
 
@@ -737,15 +440,107 @@ Ruby|"#{2}"|Time.new|Time.parse
 
 假如课本里教你《经济》，却漏掉了三种「换位思考」，可以说你学的就是野鸡课程。
 
-- 「工人」是劳力市场的批发商家，有不同周期的卖法。有淡热季保收的，也有接小单接大项目的，有保险度低、自由度高，自负盈亏的卖法。
+- 「工人」是劳力市场的批发商家，有不同周期的卖法。有淡热季保收的，也有接小单接大项目的，有保险度低、自由度高，自负盈亏的卖法。 工人友好度=巨无霸指数/基尼系数
   - 我们是精打细算的客人，更是商家。提供适合你个性或天材的合作很重要，这能省下很多情绪内耗、报复消费、或缘木求鱼或摸鱼怠工的隐形成本，极大节省削足适履所产生学习和医疗费溢价，以更轻松地满足更苛刻的消费者。 提升双边幸福度，才是有效的经济。何必朝三暮四，厚此薄彼地倾销劳动力呢？
   - 榜一不代表垄断。 只有能扼制「创造性破坏」的实体有能力让市场干涸，它们一般会利用低价倾销(内卷)破坏规则，以图达到强制消费的唯一地位
 - 「储户」是银行的债主，小资通过钱庄汇集力量，足够完成稳赚不赔的事业。风险对冲好的银行家有更多利润，但放高利贷便意味着高风险。利息不是大风刮来的。谈到钱，没人会白给。
   - 银行只靠信用支票便设立基金，赚到钱，说明人的声誉、资质和生产力资本一样属于价值投资；不过，许多金融游戏也就在“存”钱这些字眼上。你不理财财不理你，人的财富不断与认知眼界相匹配。同样资产的购买力尚且有别，增长就更需要“流”出舒适区，用勇气和智谋玩出来了！
-  - 现代经济体以信用本位印钞，一张名而符实的支票，就是真钞。 名不符实，印钞会助长贫穷，学历会带来迷信，钻戒会戳破爱情，法律会背叛正义，资本会压垮自己。 并非财富需要纸币，是纸币需要有财富背书和兜底。财富不必是金银，它可以是隐私的便民性，可以是苹果特斯拉那样绝妙的点子，最好是生产力工具，最好是无处投资只能消费的剩余价值“购买力”，它甚至能是被印在钱币上的“人民”。 钱不是目的。别像《The Golden Touch》那样许完愿所触之物都成了黄金，才醒悟被恐惧匮乏诱发的狂热，献祭了你生而为人最根本的食欲。
+  - 现代经济体以信用本位印钞，一张名而符实的支票，就是真钞。 名不符实，印钞会助长贫穷，学历会带来迷信，钻戒会戳破爱情，法律会背叛正义，资本会压垮自己。 并非财富需要纸币，是纸币需要有财富背书和兜底。财富不必是金银，它可以是隐私的便民性，可以是苹果特斯拉那样绝妙的点子，最好是生产力工具，最好是无处投资只能消费的剩余价值的“购买力”，它甚至能是被印在钱币上的“人民”。 银行利息差,中间商,产销链都吃剩余价值来投资。 
 - 「供需端」平衡时，才能避免“周期性的”萧条或通胀，并且为科技生产力与其对应社会文化的进步扫清障碍。 
-  - 经济人很少谈宏大叙事，都是着眼于摆摊买菜的大妈都听懂的「真金白眼」钱进钱出，但想成为能解读「风口」的金猪也是基本操作。 得钱只有4种方法：挣钱>借钱>骗钱>坑钱 ，借钱也是债主房东的获利法，最常见的庞氏骗局是套人=套现，以次充好看多做空，例如楼市和学土木“八股”市。 骗钱骗的也未必是钱，精力、舆论或尊严等有天然价值的权利常被用于套现。 坑钱(如赌狗)较骗局更不可持续，法律风险大。
-  - ¤"COPP机器" 便是某一供需端节点，例如公司或个体。左侧做空 Consume物料 Offer人力 右侧提供 Product产品 Provide服务 ，理想的机器无需人力(令物价<工价)，既有技术增长有回头客也卖周边服务；但高昂的获客成本和过低的劳价，常使资本趋于保守，无处发挥其革命性，这就是人口红利的优势和缺陷。 跨国供应链虽有上游下游之分，使能者多劳，薄利多销，却有工资分配的不足。 教育投资是强国之本，产业升级和三公意识方能让人矿变成人。
+  - 通缩=货胀=物价降(货架空)+工价升(职位空)，利好骨折价清仓裁员/等底价捡漏。 工资是劳动的补偿，有时也体现社会风口。钱不等于金银细软，存钱兜底是福利缺位的体现，存钱或产能错配能导致通缩。
+  - 经济金融很少谈宏大叙事，都是着眼于摆摊买菜的大妈都听懂的「真金白眼」钱进钱出，远期利益、杠杆、对冲。但想成为能解读「风口」的金猪也是基本操作。 得钱只有4种方法：挣钱>借钱>骗钱>坑钱 ，借钱也是债主房东的获利法，最常见的庞氏骗局是套人=套现，以次充好看多做空，例如楼市和学土木“八股”市。 骗钱骗的也未必是钱，精力、舆论或尊严等有天然价值的权利常被用于套现。 坑钱(如赌狗)较骗局更不可持续，法律风险大。
+  - 银行金融业的“大众会员”是靠「公私存贷卡」。更省差价的，楼股债币汇市的惯例：春天开红花，秋后割绿果，种子补加在手，汁水对空分红。 勿追涨杀跌，可高抛低吸，可指数定投(成本平均价值投资)
+  - ¤"COPP机器" 便是某一供需端节点，例如公司或个体。左侧做空 Consume物料 Offer人力 右侧提供 Product产品 Provide服务 ，中间的是利差(=劳动价值+剩余价值)和溢价(=情绪价值、品牌信誉等)，如果是个体户利差即劳价，无溢价。 理想的机器无需人力(令物价<工价)，既有技术增长有回头客也卖周边服务；但高昂的获客成本和过低的劳价，常使资本趋于保守，无处发挥其革命性，这就是人口红利的优势和缺陷。 跨国供应链虽有上游下游之分，使能者多劳，薄利多销，却有工资分配的不足。 教育投资是强国之本，产业升级和三公意识方能让人矿变成人。
+  - 资本七彩权： 为了「医食住型校劳老保」等人权，资本有「竞股债期主产契」七彩权，有产的本质，是对器务的重复或扩张有利多。
+  - 情绪价值「主要」因经济群体而不同。基本盘消费能力下降，利率也会减少，因此寻找和对接适合的、急缺的下游也能实现价值提升
+  - 中国特色：量大价低质次词多，两个犹太开加油站和餐厅，两个华人开俩加油站，在内卷上聊的很投机。 投资者爱便宜胜过爱低价，国潮国货还是要多验。 
+  - 我常说经济要举一反三、略知一二，不要一嘴考词牙卖弄课本。树挪死人挪活，物挪失思挪悟。 人脑AI与硬盘不同，需要你有超集，才能问出发挥出子集，但只谈知识量就很机器。 优秀的教育人总是用疑问、反问、摆明因果的陈述句，从不自说自话。
+ 
+
+许多人一生追求的是价值实现。 价值就是个体的真理和正义，它可以是不坎坷、不得病、不匮乏、不恐惧的自由保障，甚至也能是霸凌弱者、奉承强者、专横独断的特权保险， 那么，现代社会如何定义价值？
+
+
+
+- 价，人介。 可信第三方(如央行/淘宝/论坛主/学信网)“一定份数”的质押担保和「永久垄断公证」，用于达成「卖x收y」的买卖合作，就是价格，例如美元每金。价格并非价值，如同当年的日本市值。
+- 值，人十目一。 换手率高，好卖的通货最有价值。不同的经济圈或季节稀缺的货物不同，就像不同的人才能不同，伟大无法被计划。 价=(需/供)×值质，就像饭圈币圈内外的价值观难以互通，同阶层「买账」接盘者最多的风口最有价值。  资本的业务是让“流通自由”的手组合出劳动与消费模式的最优解，达成循环的平衡。
+- 钞票，即央行支票=主权股票=个人对社会债权=无限期权。  钞票价值锚定于相关「优质交易的数量」和门槛，在发达国家是提货单+投资筹码的总和，在高储蓄率国家则是包身工的赎身税+保障的总和，即「剩余价值」，会引发通缩/现货膨胀/消费过冷的失业螺旋。
+- 钱不是目的。周杰伦的粉丝为签名一掷千金，利得阶级对小众奢侈品爱不释手，沙漠的居民用金沙换水源，人对“溢价” “投资” “消费”的体感并不相通。没错，钱和分配只是手段，优质交易的繁荣升级才是目的，这就是为何欧盟与SWIFT对黑钱监管严厉。 认知外的暴富马云也拿不住，上山容易下山难。尊重自我，别像《The Golden Touch》那样许完点石成金的宿愿，才醒悟被匮乏的恐惧诱发的狂热，献祭了你生而为人最宝贵的食欲。
+- 有趣的力：  购买力 生产力 创造力 执行力 
+- 《墨菲定律》：  幸存者偏差 沉没成本 机会成本
+
+资本主义是以生产力作为支票币值来主导的易帝逻辑。资本负责组装生产单位和自负盈亏，工人负责自由消费和再生产（以及在日奥加等地左倾的旱涝保收），在理想的市竞下，旧商品扩张反而降价，新商品和科技受股东注资并竞选股董，假冒伪劣者能够破产退市，全球资本进场为全球，形成青黄并接的环保可持续发展。 
+最简单的两种商业是批发劳动力、批量买单价卖自负盈亏（低买高卖:买涨不买跌:落袋为安现金为王:高风险高回报），其次是跨境经销，其次是客厅即工厂3D打印开发版飞线可做玩具。 如果不知道卖啥可以自己和朋友票选，做中餐小吃去任何国家都分红！
+工会消费和政府退税是一条隐形供应链，负责立法，法维人权，武卫主权，财禁特权，三位一体，三权分立。 立法权和执法权的有关院系，是专为架空行政权而设计。 立法四铁律：疑罪从无、对等权利、普世价值、既往不咎。也就是，有罪不自证(禁止替罪认罚)、无权利无义务(禁止恩情债)、法规只能是常识的社会契约、法规的前后版上下级不得矛盾。
+钱的流通性比黄金好，但它随消费升级缓慢通胀，在特定历史背景，会产生「金圆券」等恶性事件。理想的现货通货只以「提货单」的数量比定，通缩货胀，通胀货缩，这是[国际组织NGO]常讨论的经济结构话题。
+知识资本，也可以作为配重压上杠杆，知识不是特指饱和竞争的文凭或者说「学习」的能力，能满足风口领域的多元性、产生创造性破坏的[天赋intrest]具有稀缺性，也是资本。 科举人，不要等到第五千年还只有四大发明。
+情绪价值，如低买高卖的“先机”作为币值的股票ETF是投机产品（免税赌场），但在NASDAQ等工业指数基金上，就基本是活期存款。北欧的高福利税源就是重工业。银行金融业会收取一定利息差，财年报表会公开坏账率。次贷危机就是关于房产担保物的做空降价螺旋。低风险低收益，也是一种需要被争取的财富自由，就像不婚也是一种婚姻自由。
+
+不过，供不足求的资源也需要影响力（获客成本/研发成本），这就是各领域富裕阶层剩余价值的全部意义，有其他用处说明福利制不够公平，或市场太小竞争不够激烈，这就是为何殖民主义最重视港口权而非矿物资源。
+正因为公知们愈发普及天赋人权、文艺复兴这些同理科生共享的灵感与伯乐之源，人类从帝国主义、殖民主义、资本主义、走向官民大同，世界为公，知识分子们把受过这样教养的新人称为公民。
+
+在讨论富人对穷人唯血统论的剥削压榨时，要认识到福特其实也解放了科技和产能，让马夫有晋升为司机的公平机会。要公平，也要意识到劳权vs生产力并非「互损博弈」，福特们应当获得投资或补偿。若只是以权反腐，当心特权者死而不亡。 
+幸运的是，千千万万的头脑有一百亿种方案战胜封建僵化的独裁模式。 才敌人、耗材、奴工、智人，到「上帝之子与人类之子」，文明的演化并非贪婪的弱肉强食，让我们回到开头对比着读一遍：
+霸权主义、帝国主义、军国主义和纳粹是由垄断暴力和特权主导的易帝逻辑，穿上新装的皇帝被迫负责用民脂民膏投喂致胜集团的权贵婆罗门、设立Asian股-八股等庞氏泡沫、维持大一统以榨取和集中剩余的价值矿藏与无用的人矿，人民只需考虑当牛做马时如何更高效、面对不属于自己的不义之财和腐化特权如何精神胜利，以及最不敢忘记的政确记忆：如何侮辱操弄同胞以政治化民生民权问题、如何在宏大问题上双重思想、如何在为反动业绩出卖家人与亲情/受害者与公正/老弱病残与福利/自身的天材与匠心时毫无负罪感或同理心。想必他们也只能在吃力不苦、吃人不苦、"人不吃苦"里择一而从
+
+租售比是啥？ 把你几百万的房价借给银行，但凡利息能cover附近房租，你就没有理由持有这种资产，甚至要自愿再补几百因为搞装修麻烦。 反言之，如果租房太便宜，说明房租蕴含的权益被磨损了，因此才有「这么好的生意」可以做。  被上那么多价值吃那么多画饼，却还要给售楼处4S店鞠一躬？
+
+譬如好事，高利贷。 人家为啥不找银行放款，偏给你高息低风险？  难道你比机构懂金融？还是集资的散户做审核效果比较好？
+卖U赚差价。 为啥小站买U价那么高，反言之，小站CNY价值那么低？ 币值的磨损出在哪里？赌资诈资呗。 为啥批发价那么低，P2P价时高时低？ 为提高换手率自负盈亏呗。
+落袋为安现金为王。房的流动性和换手率都是德不配位， 无根之水、无本之木，镜花水月的宣传包装，只要一政确哟，还是能骗到这么多高学历人才，哎！？ 
+
+经济总是一本买菜大妈都能对出的账。
+有1个点的利率，1w放银行就有10块/月收益。美联储降息后是4个点，也就是120w的套房🏠对应>4.8k/mo 的租金(>, 房屋有大修折旧费)，还真是连公式都不用问AI呢！
+利食阶层，还真不是能考成证的。经济，从来不是短视的对错输赢、贫富高低，而是可以衡量的价值， 它属于我们每一个个体。存钱并非保障，它是对医生和超市货架的赶尽杀绝。
+
+马户喜欢和阿Q靠着土墙喝着粥，争论皇帝每天吃的包子是肉心儿的还是豆腐心？家里金块那么多，该请咱们做成金锄头还是金锅？
+王二麻子总期待着世界末日，只需要剩下仨人：他、村花、巷口卖烧饼的王叔。
+
+他们无法认知到财富的本质是「需求」而非数字的升级。  资本扩张的本质，是生产力革命为劳动价值带来的复利。 经济体里的人，输不起不叫务实，「走正道」时别被自己卷死，才算自理。🙉
+经而不济，倾销产品就是再生产革命。济而不经，平分财富就是重分配贫困。 左右谁都跑快不了，因为，这两条腿都长在同一具身体上。可叹，不是苏联
+哈耶克的大手伸向哪里，哪里就富裕安居，恨民党的赃手去掏哪里，哪里就演变出一批忘祖悖宗的'zg人' '符拉迪沃斯托克皇人' '亡口月贝几点学家'。
+
+对没有安全感的人而言，钱已经从实现梦想的手段变成了活着的目的，钱从科技人的选票变成了赎身税，合同从平等的互利变成了包身工的遮羞布。
+
+人生不需要意义，意义却需要人生；可换成钱时，往往是人的尊严要为它们的情绪价值服务了！
+认知回到过去了，财富也会与之匹配，便是这样的假冒伪劣。
+
+```
+货币是科创增肥下的冷藏劳动。让工作或创作在「最优惠的时间地点人物」上产生，这需要丛林互信的合力契约。
+
+资本有“竞股债期主产契”七彩权，有产的本质，是对器务的重复或扩张有利多，钱像科学定律般简明。
+
+钱的“单位一”是工时乘购买力，不是几个120k乘美元欧元，城市的大小不是千米，是双休日乘公交效能；房价是月利息减房租、资产是月增降乘惯性，无关于价格和观点；财富是信息差乘认知勇谋乘有产存量，无关于鄙视链。
+
+剩余价值只能是投资消费，存贷数字的“复制”产生了为你工作的钱，这就是货/币实至名归论。
+用反手来换位思考，相同市场的产能竞价之下，产力才是产权，赚钱非挣钱。你想抛砖引玉无中生有，会负很大压力，而你只能立正挨打：
+
+但假如科创“立仓”前，连你的同道都在骂你诈骗，在拉黑你，连一种新可能都不愿倾听，就说明我们的定价权到手了。
+不科创-应受剥削，无勇气-必输时代，天道-酬勤如此。你想当一个天才投资人、疯子投资人，还是博傻的“投纸人”呢？ 
+巴菲特的朋友圈并不是爱投机倒把的“纸人”哟。
+我们总说货币是从“金本位” “油本位”变成了“主权股本位”，但却忘记了为这些白条兑现的职缺商家，而他们的科创文创，才是真正的“人本位”！
+```
+
+- “你总把所有鸡蛋放在一个篮子里。——潮水退去才知道谁在裸泳，树可不能长到天上去。[巴菲特]”
+- “低风险、高回报、你配打听到——金融散户在熊市的不可能三角。覆巢之下焉有完卵？”
+- “最好的投资是投资自己。——多元化的个人能力和行业知识是稳赚不赔的”
+- “市场总是对的，消费者永远是上帝。——但别当客大欺店的上帝”
+- “价格是由供需决定的。机会总是留给有准备的人，在风险中寻找机会。”
+- “别人贪婪时我恐惧，别人恐惧时我贪婪。——巴菲特的逆向思维（独到眼光）”
+- “贪婪与恐惧是投资的大敌，知己知彼。切勿跟风，独立思考。量入为出，数据投资。”
+- “时机在市场下，而不是市场在时机下——「长期持有」优质资产，比机会主义者互割更赚钱”
+- “并非任何人都能成为大厨，但是大厨可能来自任何地方，哪怕是城市的下水道里——英雄不问出处”
+- “城门失火，殃及池鱼。——局部危机可能波及整体，但有时也只是让骆驼破产的最后一根稻草”
+- “越简单越好。风险来自于你不知道自己在做什么！——银行业，永远是卖菜大妈都能理解的流入流出”
+- “股市短期是投票机，长期是称重机。不要追涨杀跌。——情绪化交易要不得，你比得过量化高频bot吗”
+- 凡是带你挣钱的，都是挣你钱的，99.99%的空气币貔貅股都要归零，pump&dump做高砸盘，截图都是假的。 ——[出什么金？玩币归赵](https://www.binance.com/zh-CN/square/post/19400560076186)
+- 集体主义并非经济失败，那是一场胜利的抢劫。对科技革命一窍不通的革命家狂信于将财富二次分配，也可以说，贫困被重新分配。金钱会向穷人开放，真正的立法权，永远不会
+- 皇帝每天吃包子，还是带肉馅的那种——仨臭皮匠靠着烂墙根儿边喝稀粥边说。“胡说！皇帝会拿金子做锄头锄地的”——以己度人、田忌赛马、指鼠为鸭的阿Q预制人要不得
+- 在全员淘金热的趋势下，为啥卖铲子的会破产？——机构不是散户的朋友，银行业永远会先吃饱自己 
+- 安得广厦千万间？谁能请全国吃肉喝酒？只要咱们把资本家吊路灯，分了保险箱里的绿花花——梁山好汉·欧内的手，并不知道投入产出定价的规律，想要印钞治贫
+- 大多数人为医院996地学习、工作，剩下的员工为银行房贷与不会兑现的房价增幅工作，少数聪明人为钱或投机工作。 我想为自己的事业付出劳动和信用，让钱为我工作——小德MOMO的观众
+- 我喜欢“最小消耗原则”的精神状态。就是秉持“做一件事只是为了做事”的态度，把精力用在“做决策”上，而不是无关紧要的精神上。 做事有乐趣和必要意义，easy come easy go，做事的结果不会让你的人生一步登天或者坠入深渊，更不能说明你nb或low；就事论事，在商言商，不是角色扮演。这便是在进行一场高效的资源配置。
+
+## 股市和区块链
 
 ETF代币(memecoin)是一种投机产品， 就像数字人民币和房价，它既没法日常交易，也没有 **资产、不可替代的资质、'内行'的声誉、生产力** 当作支票的锚点（价值质押）。  和BTC一样，加密货币隐私性很好，人为价格操控很难监管，也有高频交易bot在投机收割。
 
@@ -755,11 +550,26 @@ ETF代币(memecoin)是一种投机产品， 就像数字人民币和房价，它
 
 代币和股市上市基本是1:1对应。在内盘(IPO/ICO)阶段是一定能赚到钱的，因此有证监会来阻止这种自我做空或两手倒做高的炒作。币圈甚至有空投钱包、老鼠仓、鲸鱼仓、貔貅发币的玩法(Pump&Dump做高砸盘,搜13岁币圈少年)
 
-BTC是ETH,SOL等区块链项目的模板， 是P2P私钥钱包+分布式账本的结合，每几分钟+1区块(1条红绿bar)由显卡价高者记帐上链，借算力众筹选拔可信中间人，防范私钥签名的重放攻击aka假账旧账51%攻击。挖矿=印钞+收税，因此衍生出矿工脚本和病毒的形式。ETH和SOL基于资本证明，已无法算力挖矿。 ETH和BTC有两大区别：是否金本位(BTC的钱包地址不公开-基于找零)、有无智能合约(支持定时定量锁仓&[禁止找零的NFT脚本](https://jason.mirror.xyz/kqYrbhtDeLu8ciH9tkblf9K1F1TIo5BuCLPn89h-DR0))
+BTC是ETH,SOL等区块链项目的模板， 是P2P私钥钱包+分布式账本的组合，每几分钟链上+1区块(1条红绿bar)由显卡价高者记帐，借算力众筹选拔可信中间人，防范私钥签名的重放攻击aka假账旧账51%攻击。 挖矿=记帐+收税or印钞，因此衍生出矿工脚本的病毒的形式。ETH和SOL基于资本证明，已无法算力挖矿。 ETH和BTC有两大区别：是否金本位(BTC的钱包地址不公开-基于找零)、有无智能合约(支持定时定量锁仓&订阅制&[禁止找零的NFT脚本](https://jason.mirror.xyz/kqYrbhtDeLu8ciH9tkblf9K1F1TIo5BuCLPn89h-DR0)&抽签天气彩票..等)。转账只是 DApps 的一个函数或步骤，矿工根据步数收gas燃料费，这是EVM对BTC代码广播的扩展。
+稳定币有两种常见玩法： u搬砖(分平台低买高卖)和质押(活期或定存Staking)， 前者涉及卖USDT收CNY/USD的商家问题，很可能是为黑u摆渡变洗钱牢弟， 后者利率>美联储4%，是因为不同平台借款利差不同(影子银行)。如果没信息差，杠杆多风险大<=>利息高
 
-公私钥体系(单向防窃听握手)无法破解，[P2P集群又有君子共识](https://www.ruanyifeng.com/blog/2017/12/blockchain-tutorial.html)，数字币就不是自由复制的数据。 这产生了几种话术：去中心化、互联共享(反集权)、WEB3元宇宙、账本透明(钱包匿名。)、0知识证明(1链算法=1家阿里)，但说实话 fuck off，上文讲过“价值”的本源逻辑了。画饼的技术力先比赢过VR游戏吧，别老拿看不见的代码说事。
-目前受到VISA背书的稳定币是USDc。 即便交易所有“一口价”监管，加密货币的隐私性仍受支持。
+公私钥体系(单向防窃听握手)无法破解，[P2P集群又有君子共识](https://www.ruanyifeng.com/blog/2017/12/blockchain-tutorial.html)，数字币就不是自由复制的数据。 这产生了几种话术：去中心化、互联共享(反集权免税)、Web3元宇宙、账本透明(钱包匿名。)、0知识证明(1链算法=1家阿里)，但说实话 fuck off，上文讲过“价值”的本源逻辑了。画饼的技术力先比赢过VR游戏吧，别老拿看不见的代码说事。
+稳定币锚定[法币fiat]，目前受到VISA万事达/Coinbase.com 背书的是USDc，而USDT已经成为币圈的美金，在Biance/tg(BSC/TON链)和OKX/DEX交易的最多(卖CNY收U, 卖U收USD收云服务收货..)，在孙宇晨的链(E/TRC20)手续费最“坑”。交易有风险，参见FTX/硅谷银行暴雷-受牵扯的USDc未曾暴雷。
+[法币fiat]是法律和交易办法的法。“此时此地”一手交钱一手交货是不存在的，事业成功在于有后手背书。  光有「卖x收y」的公示可没法做买卖，需要第三方担保、抵押监管。
+再读BTC开头那行，有了“银行卡私钥”还要广播给链上转账！ 还有两点： 骇客矿工占比超过了51%也不能偷旧帐记的钱，只能逆转1页交易并让链失去公信力；即便交易所需要“一口价”KYC(knowur客户)监管，防范利用卖U者洗钱，加密币交易的隐私性仍受支持。
 
+说起来讽刺，WEB3 最初设想的公私钥价值传输网络、分时垄断式公证、跨国法币兑现跨链算法币……根本没有锚定任何商品。  空气币的反复归零和朝鲜 $BTC 让许多人有了刻板印象。 
+有人为「周杰伦的签名照」一掷千金，有人抱团分享豪车名表球鞋，为常识以外的共识倾其所有、生产合同，有时会带来烂尾楼、恒大链爆雷这样的骗局。 没错，被「认账」的提货单就有币值，但这往往需要天时地利，和一位老大哥。
+
+想当然有个交易所的话， 鲸鱼仓随便低价抛两手倒，其他卖家为变现也只能接盘，决不会有监管来托底，现货膨胀 降价螺旋，这样的常打折没人愿意存钱。 
+如果有金本位就不一样了，鲸鱼仓想砸盘？想搞饥饿营销做高击鼓传花？投机不成蚀把米。
+
+账本可不是价值的来源，印钞可不能解决贫困， 得靠套人来套现 ，树立起信用和贪婪恐惧才行。 数字的1:1，啥都不是，被沪币京币奴役的人失去的多彩人生，他们的如你所愿，才是价值--至少对某国人上人们如此。健康的社会本该是双赢
+
+人民币的锚是中国人矿的体力和智力，楼市和茅台的锚是农村小伙民营大哥的发财梦，股票是在股东权和基本面，比特币则是在首创性和隐私性， 许多做币的就只是想低买高卖，没有任何贡献，没有基本面。
+梦碎了，钱自然会不值钱；就像目的是虚空，手段再成功也永不满足。
+
+所以无论炒币面积有多大，都只能回到最初宗教给人讲故事的方法，而且在合法交易所成立之前，币也无法“一定”保值
 
 经济权利，“仁义礼智信”
 - 钱：市场合作的提货单。农户给磨坊半吨米作为物料，磨坊主将劳动价值与生产资料租养费折算，还农户小于半吨面粉的提货单。 人言谓信；利人终利己，用“提货单”“信心支票”跨行业合作所产生的互利博弈和规模效益，是比黄金储量更长久的社会财富
@@ -779,6 +589,8 @@ BTC是ETH,SOL等区块链项目的模板， 是P2P私钥钱包+分布式账本�
 ☭波布特  🖕特权 卐民粹日
 🕊左公益 🤓沉默 💸右效益
 🇨🇦社民加 👇自由 🇺🇸社自美
+
+在分配上，左右之分就像先到先得vs见者有份，因此右派鼓励寻找处女地，但没有左派分享基础设施的话，有创新也难深耕。 左右之间没有绝对的正义，效益公益都要全心全意，经营济世二人转，才叫经济。
 
 经济学比二极管繁多些，如[小德MOMO“茅房类风口为何贬值”](http://www.bilibili.com/video/BV1wS42197kB)就只是讲投机主义--不比较收/支/兜底/预期，不关心投资的是何行业何领域。俩口袋左右倒、俩砖头来回搬便能把“牛市”“楼市”或“劳动价值”唱多，幕后都是看空和做多，豪绅托儿满 百姓只踏空。  “羊的对手首先是羊，然后才是狼
 ”：没人能劝住无知自负到去投机top1%的赌徒呀。庞氏骗局是亏利赚本，赌场创业是操盘上桌贪婪+下套恐惧，套人=套现，但是政治投机根适合中国巨婴体制。
@@ -835,7 +647,7 @@ BTC是ETH,SOL等区块链项目的模板， 是P2P私钥钱包+分布式账本�
 秦国有一条法律，叫挟书律。携带，收藏书籍的，灭族。 1+1等于几？说出 1+1=3 也是暗令禁止的。“不知道”才是正确答案。 连知道的权利都是因外宾提起，又何必辩护？
 
 政治权利
-- 政府：财路上的交警，属于物业(财政财税)，以立宪为正证，法维人权、武卫主权， 三权分别代表立法正义、司法平等，行政透明。是谓兼听则明，偏听则暗。
+- 政府：财路上的交警，属于物业(财政财税)，以立宪为正证，法维人权、武卫主权， 三权分别代表立法正义、司法平等，行政透明。是谓兼听则明，偏听则暗。 ~~四个法制指标：政治正确>社会舆论>权钱关系>法典法条~
 - 国民：路边店铺或小区的业主，在自己挣到钱后供养设施基建与福利：医食住行校劳老保。 (即市场竞争初次分配后)透过直接税与社保税、价格含税等方式；又百家争鸣，以保行业经济的可持续性、利民性。消费者便是「无形的大手」，产服学研 买卖方供需端 收支债险，有许多指标易被断章取义。
 - 国家：可替换为人口、政府、陆海权、主权国格四者之一，近现代"国家"即全体国民。 国家有主体民族/多民族、民主/法制/威权/独裁、陆国/岛国/资源/地缘、宗教或帝王崇拜/经济增速为中心/主权在民 的区分。参数不同的经济体没有比较意义，如汉语中国和多语言印度、新加坡城和台湾岛
 - 社会：暴力和谎言是万恶之源，要突破它们达成合作，人要聚会结社，至土于礼，礼理之森生产的光能穿透黑暗。 家是最小国，国是千万家。 
@@ -845,7 +657,8 @@ BTC是ETH,SOL等区块链项目的模板， 是P2P私钥钱包+分布式账本�
   - 「自由主义」的自由，是弱肉不受强食，才有自由。让穷人免于贫瘠，富人免于恐惧，才能正当竞争，和而不同，实现可持续发展的合作经济，而不对垄断倾销抱有幻想，重蹈大萧条覆辙。
   - 这样的法制符合人性和科学实验，不会因贪婪恐惧而旱死涝死，也满足人本主义+主权在民的联合国合规要求。统治阶级？人人有份。 达尔文进化论的愿景是进化，淘汰只是手段。很明显，社达愿景是淘汰，结果是退化。 美国240年前有殖民和太监，今天也有毒品和黑命贵，所以禁毒禁成了伪君子么？穷苦人维权不贵么？ 慎防带节奏。
 - 外汇：央行间的价值交换。中国可以用科技或劳力(人民)甚至债务为锚印钞，向泰国买榴梿，也可以由美国向国内出资，进口再按美元结算。 `币的价值=流通率(市场体量)/总水量M2×信用 ，广义货币M2=现金M0+现金存款M1+定期存款`
-- 兜底新三样：如果算劳动价值，是只要性价比不要劳价比，单从需求端算真金白眼，外卖网约其实比外包雇佣更适合省差价，网红甚至是送差价的，主打一个分布式企业化，店商兼电商
+- 兜底新三样： ~~洗脑捂嘴打击报复~~ 如果算劳动价值，是只要性价比不要劳价比，单从需求端算真金白眼，外卖网约其实比外包雇佣更适合省差价，网红甚至是送差价的，主打一个分布式企业化，店商兼电商
+- 资产：需要在「负资产」(房车等有养护折旧月费)之前买入到名下的权力。 广义的「产权」包含二手租售、著作专利、格调商标(IP)，甚至于公信力、声望、热度、人脉、信用、科创文创。 
 - 社融：社融(债券杠杆)和M1M2剪刀差，与萧条成反比；但繁荣也需要有可持续的锚，否则是泡沫。 即便有刚需，赤字太高，一旦资源错配就容易导致萧条裁员欠债坏账，银行破产，物价上涨；错配的产物卖不出就只能“倒牛奶”，为修复坏账失去30年。
 - 破产/债务重组： 拿低息换高息，拿低风险换高风险。不破就会增加周期率风险：通缩=货胀 通胀=货缩，通缩降价=生产端遭遇通胀，买不起劳动力要卷款跑了，消费端为等5折也不买了，大家都只投机不看增长了，钱的购买力随即下降。
 - 外汇(1)： 假设你是中国，刚入世，那先出口产品换币，或先卖支票(债权)买进口，都行，目标利益最大化。 放水要放到消费者需要的行业，否则换手率过冷，M0M1M2依次结成冰就又要印钞了 放水要浇根，叶子都那么大了要把树压塌，杠杆压断啊。
@@ -853,10 +666,22 @@ BTC是ETH,SOL等区块链项目的模板， 是P2P私钥钱包+分布式账本�
 - 核平： 荆轲，专诸、聂政、豫让、要离、核弹……哪个国君不怕斩首？ 但，你是平民，你怕不怕？犯不上。谁是战争的教唆者，谁怕。 送领导先走，就没人需要断后。
 - 同理心：慈善（同情心）是一种共情（同理心），在主要矛盾之外共情对象，往往能减小信息差提高效率
 - 中式唯物：「吃饱了撑的」「养活自己再说」等等双重思想的社会文化惯性，是原生家庭问题、受害者有罪论、唯实物经济论等等阻碍中国发展与法制化的思想遗留
-- 国家的意义：不必拘泥形式，知识来自本质。国家不是公司，更不是一群人控制一群人的互损博弈。人类从丛林走出，才产生了社会，国家便是避免社会变回黑暗森林的机器。即便你眼中内战才是目的-公平只是手段，国家认同也是不断调和着矛盾的产物。 所谓亡国奴啊，亡的不在山河，而在人心。反战，那我国赢两次便好么？反殖民者，那由京爷沪爷官老爷来殖民便对么？效法庚子俄难清洗后再统一么？天下兴亡，百姓皆苦；平庸之恶，作茧自缚
+- 国家的意义：不必拘泥形式，知识来自本质。国家不是公司，更不是一群人控制一群人的互损博弈。人类走出丛林，才产生了社会，利用团结的力量战胜弱肉强食和不可信论。国家便是避免社会变回黑暗森林的机器，和平本就能创造自制力和财富。即便你眼中内战才是目的-公平只是手段，国家认同也是不断调和着矛盾的产物。 所谓亡国奴啊，亡的不在山河，而在人心。反战，那我国赢两次便好么？反殖民者，那由京爷沪爷官老爷来殖民便对么？效法庚子俄难清洗后再统一么？天下兴亡，百姓皆苦；平庸之恶，作茧自缚
 - 供应链：国际主义生产队，输出技术革命以图发达，规避颜色革命的阵痛
 - 上市：IPO即立项，在之前AB天使融资轮一般有500倍以上的股权。 A股股东并不能选上股董，股票变成债券，互利变成对赌，「明牌斗地主」
 - 破产：一边消灭债权，一边消灭信用。劣次级资产不早点打破，暴雷后会拖累更多人的生产计划。
+- 加密货币：
+  - 法币：由公检法和全国商家担保价值的钱，亦即提货单。 与[法币fiat]相比，[算法币crypto](https://bitcoin.org/zh_CN/faq#can-bitcoin-be-regulated)以挖矿做题来印钞，如同数字黄金，其金融规则是开源且确定的(如BTC总量有1200万枚,通胀率缓慢下跌)，强如中本聪也不能偷走或印钞稀释， **并且，已有锚定法币的日用币。**
+  - 区块链,XX链：  由矿工网络「分时垄断公证」的账本， 一种公链币(ETH,SOL,TON..)必须按区块打赏或印钞给矿工质押者，以「高薪养廉」奖励不做假帐。由所有矿工验证的链表头部，也称为XX数据库或XX虚拟机(DApps,博彩/NFT小游戏/定时脚本会使用)。 可以在[BEP20@EVM](https://etherscan.io/address/0xf977814e90da44bfa03b6295a0616a897441acec)观测ETH商户与币安热钱包的转账历史，但你无法通过社工得知某人有多少钱。
+  - 区块： 网络可能以5min/1block接受广播来记帐，由Hash速度或质押成本>全网51%者操控这1块包含几项交易， 由[公私钥体系pki]也即12字密语操控你的钱包地址，该私钥用支付密码存储在本地。 设立了一种0知识证明的善意第三方的共识，在DEX上便可只以「卖x收y」的广播做买卖，中介费竞价排名。
+  - 51%攻击： 小站的缺陷。如在[质押证明ProofOfStake]链，A若转钱给B，A是鲸鱼仓，A就能给自己退款。 *这是病毒/退单诈骗/表单漏填外，WEB3上最坏的可能性，平台买卖U不会遇到这些。*
+  - Hash率： 网络确认交易的效率，一般有5次确认即不可推翻。$BTC 是基于Hash函数(Nto1单向映射)的逆运算挖矿的。文件的Hash(md5,sha256..)也叫特征码，想从 `btHash(x,难度级别)=y` 之y找到x需要庞大的集群，所以将x放在链表头，身体是转账列表，尾部是旧头部的y，带上时间戳和随机nOnce便成立了区块，其难度随矿工增加而增加。 高并发和仅最长链原则有机会撞车出分叉和“孤儿链”，导致某笔转账丢失，这时支付页才会要求你等待几分钟，或者加点小费，直到最终一致性。 另见2016"The DAO"智能合约漏洞事件。
+  - WEB3： 所有币种和区块链、U商家、收款方、DApp的桥接，影子银行(免中介借款)生态圈。 同美元欧元一样，WEB3币种的价值来且仅来自于愿意用WEB3买账的商家和数字储户。公链需要微量原生币种付转账或换汇小费
+  - DeFi,币圈 ：分布式金融，包含法币CEX(币安,OKX,海妖)/匿名DEX(UniSwap,Raydium)，基于智能合约DApp设立，像没有证监会的 $NVDA:NASDAQ
+  - 交易所,CEX： 有公检法背书的PtoP/C2C买卖担保者，一般需要[KYC,know ur costumer]实名以反洗钱，与SWIFT跨国转账系统的长时审核同理。 面前最大的币安已是A股市值的一半
+  - 流动性(宽松/紧缩)： 景气度/市场活跃度，太紧缩时面临被迫打折和断供的风险更大。央行通过降准降息等手段定向放水，缓解危机。继续资源错配容易导致萧条裁员债务坏账，银行破产，物价上涨(滞胀)
+  - 宏观金融术语： 货币发行量；M0现金、M1活期、M2潜在购买力。 杠杆率；供需端通过抵押借债来扩大盈利或消费能力的程度，高风险高收益。 剪刀差；AB指标间不平衡的现象。社融规模；全国投资力度含债。 
+  - 金融,银行业： 以利差来扩张的借款中介，是七大姑八大姨之投资和兜底职能的替补。金融机构吸收闲置资金、放债放贷和征信、提供银联结算、投资保险，基于资本股债期三权的第二法权。二级市场还交易使用权、收益权、处置权、转让权。
 - 资本：分布式计划经济官，名下财富可借出投资，但不准打压垄断，欧盟等政府将制裁财阀行为。知识和公共关系亦资本，资本金融/就业创业/精英教育，由人性的自私贪婪嫉妒强力驱动，却也人性化。 当你的恶包含了别人：保卫家人的自私，对知识和专利的贪婪，对不合理秩序的嫉妒，便成了勇敢、进取、正义。人是复杂的，因此现代剧情越来越“三观不正”去脸谱化
   - 杠杆高风险大，相同信用下利息就多， 这是一种价值计算。 银行和保险的本质都是存1贷2的货币杠杆，最怕挤兑和坏账，杠杆断裂会套住不少人
   - 比如对房价吧，当租金比房价放银行的利息高，+折旧-新移民率 即得 1~3% 的租售比。房租/租售比 即保值底价
@@ -883,6 +708,7 @@ BTC是ETH,SOL等区块链项目的模板， 是P2P私钥钱包+分布式账本�
 “代码胜于雄辩。——Linus”
 但，“迟到好过不做，不做好过蛮干——import this, Timsort作者”
 “功率≠(1时间 人数)/1工作量，功率=有用功/总功——酷壳网陈皓·千古”
+“当一个决策人的智慧不足以衡量专业化产出时，加大无效投入就会成为他们被孤立并失败前的政治正确。”
 “简明是可靠的先验，不是可靠的祭品。——Dijkstra，或许和Linus聊不来”
 “优雅的程序与它对应的数据，读写前就直观绑定——Daniel Friedman, ~~费曼~~ 箭头函数的先驱”
 “编程无关于计算机，就像天文学无关望远镜——Dijkstra, 在'软工'未诞生时写代码的荷兰人”
@@ -890,6 +716,7 @@ BTC是ETH,SOL等区块链项目的模板， 是P2P私钥钱包+分布式账本�
 “只有当我们训练自己去思考程序本身，而不是仅把它们看作可执行代码时，我们才有可能进步。——Dijkstra”
 “业界总有两派程序设计方法，一派简洁真诚，明确不堆砌缺陷，一派繁复空洞，连缺陷设计都不明确——Hoare, 快速排序之父”
 “一个人在教会电脑之前，就别说他真正理解这个东西了。——[TeX,Donald Knuth](https://www.easemob.com/news/7198), 与Dijkstra隔空对峙”
+What I cannot create, I do not understand. -- Feynman: 要和作者同频，别只是会用
 但，“以代码行数衡量软件功能的进度，就像凭零件有多重，来衡量飞机制造的进度——Gates”
 “假如让最初90%的代码消耗90%的开发时间，剩下10%的代码就需要另外90%的除错时间—— 90-90法则的《C++编程风格》，不愧是你”
 “如果debugging是消灭bug的过程，那编程就必然是把bug放进去的过程。测试只能够提示边界情况的存在，而无法断言代码的安全——Dijkstra”
@@ -910,36 +737,81 @@ BTC是ETH,SOL等区块链项目的模板， 是P2P私钥钱包+分布式账本�
 “愚者信誓旦旦，智者满腹狐疑。——罗素
   愚者学习，智者反问。愚者重写，智者筛选。”
 
-“要打破人的偏见比原子核无限可分还难——Einstein: 我可没说过?
-  大多数人宁愿受【美丽的谎言】诈骗而不愿意直面【逆耳的真相】”
-
 “这是个人的一小步，却是人类的一大步。”——这个男人叫[大壮](https://zh.moegirl.org.cn/zh-hans/阿姆斯特朗回旋加速喷气式阿姆斯特朗炮#/media/File:MLP_S04E12_15min39s.png)
 
-- “从来就没有什么救世主！万岁，他是人民的大救星！——听《东方红》《国际歌》觉醒的品客合订本”
-- 你可以一时欺骗所有人，也可以永远欺骗某些人，但不可能永远欺骗所有人。——林肯
-- 教育就是当一个人把学校所学全部忘光后剩下的东西。 常识就是人到十八岁为止所累积的各种偏见。——Einstein 
-- 焚书伊始，焚人以终。——[德]海利希．海涅(Heinrich Heine, 1797-1856) ——致生于逆宪不义，死于逆公投之屈辱的苏联
-- 甘地遇到英國人是聖雄，遇到斯大林就是無名屍。
+“要打破人的偏见比原子核无限可分还难——Einstein: 我可没说过?
+  流量很忠实，钱包很诚实。鸵鸟宁愿再受【美丽的谎言】诈骗而不愿意直面【逆耳的真相】”
+
 - 人生不需要意义，意义却需要人生——Tom Cat
+- “失败是成功之母-只要它不是难的。——选择大于努力”
+- “世界上有两种bug——用的好就是feature, 比如可空类型”
 - “产品说明书里不存在可操作性 —— 37 Signals，很懂中式教育的防自学”
 - “罗马帝国之所以灭亡，是因为缺少能return 0 的皇帝。——下次就回归void吧”
+- 一个从未犯错的人是因为他不能容纳新鲜事物。当我们的知识之圆扩大之时，我们所面临的未知的圆周也一样。
+- 教育就是一个毕业生把曾经所学全部忘光后剩下的东西。 常识就是人到十八岁为止所累积的各种偏见。——Einstein 
+- 焚书伊始，焚人以终。——[德]海利希．海涅(Heinrich Heine, 1797-1856) ——致生于逆宪不义，死于逆公投之屈辱的苏联
+- 安全之地最勇敢，自家地盘跪城管。诈骗之时最团结，抗争之时自分裂。向文明撒野，向野蛮撒币，向祖辈撒谎——<a id=1984 title="真理理而不真、富强强而不付、仁爱爱而无人、和平凭障维和">真理部、富强部</a>、<a title="真理部宣传谎言，富强部诈取贫弱，仁爱部恐怖霸凌，和平部贩卖革命。失去信息屏障，便不攻自破的联盟">仁爱部、和平部</a>
+- 把芝麻大的事看得比天还大，把天大的事看得还没芝麻大。把人际关系搞得像国际关系一样复杂，把国际关系看得像人际关系一样简单。——中国人的逆向思维
+- 当你不服从恶人恶法，只守法，你就是自由的。 法条不是要剥夺或限制自由，而是要维护和扩张公民不受强者之特权霸凌和掠夺的自由的尊严。——约翰·洛克
+- 历史我真不懂，反正，曾经的殖民地，去一次北上广都是人上人。外人不因为你是中国人就歧视你，而是因为你，才想要歧视中国人——世界上只有一种爱国主义
 - “世界上有10种人——理解2进制的和不理解的”
-- “程序员有一根金属棒，上面有一道细细地划痕，他就靠这个划痕的位置浮点数记住了上亿字节。——”
-- “我get不到这些笑话的笑点” “你用put试一下”
 - “push的反义词是什么？” “pop”  “poll”
-- “世界上有两种bug——用的好就是feature, 比如可空类型”
-- “为了理解递归，我们首先要理解的是递归——哈哈，那是死锁，其实要弄清的是，不再递归时你想return的类型”
+- “我get不到这些笑话的笑点” “你用put试一下”
 - “C数据类型不死，只是被cast成了void*——隐藏于汇编偏移量”
-- “我问了一下我的学生们：一个完全不会享乐，对娱乐持批判态度的人能否帮助人们过上快乐的生活。这群四五年级的小孩几乎全都回答这不可能。”
-- “早打大打打核战，多死点人，我们生活压力就小一半。 ——这桌一共十人，你想死哪五个？ ——法西斯经济学就在我们身边，当心宏大叙事下的乌合麒麟。”
-- 当掠夺成为某些阶层的生活方式，一种反向淘汰压迫的新法制和一个美化掠夺的新道德，就会日渐主流——The Law
-- 爱国教育，搞成“恨国”教育，我觉得反了。 蛋糕哪里都有，甚至每个时代都有，然而有的地方是只有一个人吃，其他人赞。 你根本没搞清楚矛盾，美国的伟大就在于蛋糕人人都能分到，而不是像印度这样，婆罗门吃蛋糕，其他人只能吃刀叉吃盘子，直到铤而走险吃泥模吃蛋鸡。
-- “苏联只有一颗大脑在思考，其他的只需服从即可。而美国有千千万万颗大脑在思考，苏联必寡不敌众。 ——没人比他祂聪明！等他死了，我们13亿的智慧才从0岁往上成长——袁腾飞”
-- 若政治没有竞争对手，权力必不受制衡，维权必无处言论，罪恶不便披露，罪行不受惩罚： 立法是作弊，司法是作案，行政是作死，权力是凶器，部下是家奴；国企只懂夺富于民，银行只剩自动欠款机——戈巴契夫
-- “苏联把阵营里第二和第三都开除工籍，14名元首又有12名是“叛徒”，后面的都被定义为修正者。你要不是叛徒，我就成叛徒了，牛顿发现苹果是靠战斗，顶层和顶层更是决斗——城市化的车怎么都在逆行啊？”
-- 一个从未犯错的人是因为他不曾尝试新鲜事物。当我们的知识之圆扩大之时，我们所面临的未知的圆周也一样。
+- “为了理解递归，我们首先要理解的是递归——哈哈，那是死锁，其实要弄清的是，不再递归时你想return的类型”
+- “程序员有一根金属棒，上面有一道细细地划痕，他是靠这个划痕位置的浮点数记住了上亿字节。 ——做题家预制人如何理解编程”
+- 人类的骄傲多半是发源于人类的无知，人类的灾难多半是由于人类的愚蠢和无耻。——多丽丝·莱辛​
 - 在水上行走和按需求开发软件都很容易，前提是，它们已经冻结。——Edward V Berard
+- 甘地遇到英國人是聖雄，遇到斯大林就是無名屍。
+- 根据能量守恒定律，物美价廉的背后一定有负重迁徙的。——河南人矿经济+皇粮经济
+- 只有金钱会向穷人开放，而特权永远不会——哈耶克，你没敬酒过特供病房的有形小手吗？
+- 「东升西降」已进入不可逆转的加速阶段——让我们放开人民币自由兑换，给美元"汇心一击"！
+- “如果你把下雨的权力交给卖伞的人，你还会有晴天吗？——Lenin, We the Government”
+- 行政夹克身上穿，技术官僚不一般，防水防晒不防腐，透气透汗不透明​。 ——反反复复，无防沉迷机制
+- 商业，不能是为了让女王拥有更多丝袜。商业，是让越来越多的女工穿得起自己织的丝袜。——熊彼特，你享受过当权威人上人演讲时的「存在感」吗？
+- 社会和科技，是人行为的产物，但不是人设计的产物。自由，是一切发明创新的前提。​——《自由宪章》《文明是副产品》 OpenAI笑传之《为什么伟大不能被计划》 “独立决策权、容忍失败的文化、脱离短期盈利压力的环境。”
+- 稍有经济常识的都知道：你的合作伙伴、销售对象越富，你的利润越高。这是双向的。太穷了牛马会自我了断，浪费送去的生产资料——恒大与罗永浩《大而不能倒》说的道理
+- 自食其力交赎身税的人很清楚血汗钱、棺材本是加班得来的，可不敢易消费。产销的闭环可藏不住买996倾销剩余的赃钱，它拉升的基尼系数一定会演变成不合作运动，拖垮生产端，做空投资和出口，债滚债雷爆雷，引起经济崩溃。——欧洲的民主不是舔来的，除非你想供着一群民主。
 - 光速不是一个速度，而是一种结构，就像急弯的弧度、路面条件，跟怎么走没关系。就比如达到了第一宇宙速度你就没法呆在地上了，只要是这个宇宙时空的一部分，怎么也不会超过光速，而且达到光速的粒子还必定产生重大变化。——果壳中的宇宙 
+
+## 苏联笑话
+
+- “早打大打打核战，多死点人，我们生活压力小一半。 ——这桌一共十人，你想死哪五个？”
+- 所有的宣战，所有对战争的投机取巧、谎言和仇恨，都来自那些自以为脱离了战场的人——George Orwell
+- 当掠夺成为某些阶层的生活方式，一种逆向淘汰的新压迫法制和一个美化的新掠夺道德，就会日渐主流——The Law
+- 你怎么知道被侮辱和消灭的是共享资产的同胞，还是共抬轿子的同事矿物质？ ——法西斯经济学就在我们身边，当心宏大叙事下的乌合麒麟。
+- 若政治没有竞争对手，权力必不受制衡，维权必无处言论，罪恶不得显露，罪行不受惩罚； 立法是作弊，司法是作案，行政是作死，权力是凶器，下属是狗腿；国企只懂夺富于民，银行是自动欠款机——戈巴契夫
+- 一个人被洗脑之后有四大表现：1对素昧平生的人恨之入骨；2对不知所云的事引以为豪；3对不许讨论的神狂信牺牲；4对画而未得的饼感恩“贷得”。谁想提醒他们电诈的风险，他们就要血祭谁——​胡适，“昭”花西拾​
+- 从没见过外宾的人，总感觉墙内外最大隔阂是肤色。现在网上进来好多白人，他们就以为是自己傲立于群雄了。这种思维，就好比经常连摆摊都被罚的人，在街上看到个外国旅行团，就觉得是自己出了国一样。
+- “苏联只有一颗大脑在想，其他的只需服从即可。而美国有千千万万颗大脑正在思想。我们寡不敌众。 ——没人比祂聪明！等他死了，我们13亿的智慧才从0岁起步，往上成长——袁腾飞”
+- “我问了一下我的学生们：一个完全不会享乐，对娱乐持批判态度的《套中人》，能否帮全社会过上幸福快乐的生活。这群四五年级的小朋友几乎全都回答：不可能。”
+- “新邮件：我们知道你们国家所有核导弹发射井的位置。” NSA回复：“那又有什么？我拿着你们未来20年全体政治局委员 国家亲属赴美留学的名单。”
+- “从来就没什么救世主，从来就没有神仙皇帝！ 万岁，他是人民的大救星！——合订本：听《东方红》《国际歌》觉醒的品客”
+- 皇帝每天吃包子，还是带肉馅的那种——仨臭皮匠靠着烂墙根儿边喝稀粥边说。“胡说！皇帝会拿金子做锄头锄地的”
+- 安得广厦千万间？谁能请全国吃肉喝酒？只要咱们把资本家吊路灯，分了保险箱里的绿花花——梁山好汉·欧内的手
+- “咱们国强到有霸权向西方国家买那么多小麦！”  “要知道资本主义的最大缺点，就是生产力过剩？！”
+- “黄俄是否可以享有两党制？” “不，不可能，我们养不起。” “那为何先锋队以人民为中心？” “这样便可从四面八方立下条目，射向他们。”
+- “什么在计划内是最常见的？” “短缺的匮乏和长期的向好。” “你没什么不满意的，为什么朝大萧条的🇺🇸盲流？” “在美国，咱们工会😓可以有不满意。”
+- “苏联把阵营里第二和第三都视为工贼，14名元首又有12名是“叛徒”，后面的都被定义为修正者。你要不叛国，我们就叛国了，牛顿们发现苹果是靠战斗，顶层和顶层那更得是决斗——城市化的车怎么都在逆行啊？”
+- 爱国教育，搞成“恨国”教育，我觉得反了。 蛋糕哪里都有，每个时代都有，然而有的地方，一个人吃，其他人赞。 美国的伟大就在于蛋糕人人都能分到，而不是像印度这样，婆罗门吃蛋糕，其他人只能吃刀叉吃盘子，直到铤而走险吃蛋鸡吃泥模。
+- “ 🇺🇸 有两个农场，一间别墅。”  “ 🇨🇦  有一个农场，两间别墅。” “☭有一把铁铲，共三个农场的人集体所有。”
+- 🇺🇦: 咱们国家真可恶，想吃根香肠🌭还要排队领。 🇺🇸:"Join the queue?"  🇷🇺:"🌭 ?"
+- 2022. 美国狗：只要你大声叫🔊，主人🦻就给你战斧牛排🥩吃。 🇺🇦狗:"🥩?" 🇷🇺狗:"🔊?"
+- 每个朝鲜人民都拥有迈巴赫的所有权，但处分权不是任何人的，只是最终解释权，归将军所有。
+- 在英国，实验先有过程，然后有结论。在苏联，实验先有结论，然后才有过程。——射哪指哪才够赢的僵化程度
+- 一些人士认为假如「好人掌权」，左派蜂巢就能赢。从定义上来说，正人君子，可是不想彻底掌控别人的生活——米塞斯
+- 放任一堆资本家治国or爱一个究极资本家，用不限额度的「黑卡」 替民众分配？ 放任行业专家治事or捧一个究极垄断家，用不会出错的「金笔」 替民生计划？ 
+- 集体主义并非经济失败，那是一场胜利的抢劫。对科技革命一窍不通的革命家狂信于将财富二次分配，也可以说，贫困被重新分配。金钱会向穷人开放，而立法权，永远不会
+- 如果存在伟大的公有制，那一个苏联人从出生开始就必须无偿分红国土、矿产、国企央企的利润。也就是说：就算粉红者什么都不干，也足以过上北欧人的生活。 巨大的悖论？或者谎言。
+- WTO在2020年前，7名成员组成的仲裁上诉机构仅剩1人，陷入瘫痪。2020年后，唯一的法官就是中国人，中国1人说了算比7个人更有效率，夺得了话语权！ ——战报会撒谎，战线不会。CPTPP不会
+- 战争=反美=和平\=反智非人  自由=独占=奴役\=尊重平等 无知无德=爱国=力量 普发钱=没发钱 有票选=没得选。纳税不是要享受权利的，是养土匪胃口的；当官当吏不是吃皇粮的，是要去献忠等着登基的。
+- 在撒哈拉沙漠里实行计划经济，那么沙子就会短缺。 计划经济无价格韧性，无动力去精算数据，豢养自私自利拒绝破产的官僚，还敢打压创造性破坏，更是缺乏激励机制，吃大锅饭，大事化小。——米塞斯&熊彼特
+- 癌细胞在穷兵黩武时是无敌的，但已经放弃自己制造养分的功能。切断受害组织的输血，阻止癌症基因的转移，它自己只能亡过灭种。病灶组织，就连1:1的劳动供养率都达不到，无法独立产生或维系。——现代医学
+- 你可以一时欺骗所有人，也可以永远欺骗某些人，但不可能永远欺骗所有人。——林肯
+- 自由就像空气，拥有它时你什么都感觉不到，失去它时，立刻就会感到窒息——还是那句老话
+- 计划经济是一次伟大的社会实验。万幸中的不幸，这个实验在俄国的人民身上开展。——[俄]叶利钦
+- “為什麼某些革命派一直在拒絕文明正义？” “因為文明一旦到來，他們觊觎的特權阶级机会主义就再也沒有了！”
+- 我不知道第三次世界大战该怎么打，但我知道：第四次世界大战人们用的应该是石头和木棍！——爱因斯坦 1946年7月1日
 
 ## 编程暴论
 
@@ -975,4 +847,6 @@ BTC是ETH,SOL等区块链项目的模板， 是P2P私钥钱包+分布式账本�
 “KISS（Keep It Simple, Stupid）这个缩写词在商界已经流行了几十年，历久弥新。”
 “在简化时，根据客户的实际需求，针对性地删除正在做的功能至关重要”
 “解决简单的问题，把棘手的、困难的问题留给其他人。不要一味追求高人一等，而要努力追求低人一等”——Rob Tannen
+
+
 

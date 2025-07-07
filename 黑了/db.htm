@@ -1,10 +1,14 @@
-<input id=eTxt>以<input size=3 id=eK> <input type=checkbox id=eSel>点选复制
+<input id=eTxt>以<input size=3 id=eK> <input type=checkbox id=eSel>点选复制 <input type=checkbox id=eASCII>清真命名
 <div class=SQC><table></table>
 <pre id=SQCo>SQL</pre>
 <textarea id=SQC placeholder="SQ糖代码"></textarea>
 </div>
+<!-- <script src="https://cdn.jsdelivr.net/gh/duangsuse/WebSQL-Polyfill@85d838e/v1.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/gh/agershun/WebSQLShim/websqlshim.js"></script> -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.6.1/sql-wasm.js"></script>
+
 <script>doc=document
-dbSql=(k,o=openDatabase(k,0,k,1024*4))=>(s,ok)=>s[0]=='/'?ok({rows:[{注释:s}],rowsAffected:n(s)}) : o.transaction(x=> x.executeSql(s,[], (_,r)=>ok(r),(_,ex)=>alert(ex.message)) )
+dbSql=(k,o=openDatabase(k,0,k,1024*4))=>(s,ok)=>/^[\/;]/.test(s[0])?ok({rows:[{"注释☝️🤓":s}],rowsAffected:n(s)}) : o.transaction(x=> x.executeSql((s),[], (_,r)=>doc.startViewTransition(()=> ok(r)),(_,ex)=>alert(ex.message)) )
 onload=()=>{
 试析={有:[_RE(/\d+.\d*/), {数目:_1("奥特光线","奥利奥", ["伽马",_RE(/./),"人",(_,x,__)=>x], _N(_RE(/\d+/),'+') ), 阿巴:_N(_RE(/[啊波吃的]/) ) ,['']:just('_1和{}必须穷举')},Array],
 取:[P.f(s=>s(-1), x=>+x+1), P.f(_RE(/\d+/) ,s=>[...s].reduce((a,b)=>a+(+b) ,0) ), (a,b)=>`+首${a} 尾和${b}`],
@@ -15,9 +19,37 @@ P受用();P查询(); eDB("pre:not(#SQCo),pre>code")
 doc.querySelector("code").innerText=留loc()
 }
 
+initSqlJs({locateFile: file => `https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.6.1/${file}`})
+this.openDatabase??=(id,v,idh, nbyt, A,u)=>(A={_shim:NO},
+A.transaction=f=>f(A),
+initSqlJsPromise.then(T=> u??=A._shim=new T.Database),
+A.executeSql = (fn, arg, ok,ko) => {
+  try {
+    const st = u.prepare(fn, arg)
+      , rows = [];
+    while (st.step()) {
+      rows.push(st.getAsObject())
+    }
+    st.free();
+    ok('tx',{
+      rows,
+      rowsAffected: u.getRowsModified() || 0,
+      insertId: u.insertId
+    })
+  }catch(ex){ko('tx',ex)}
+},
+A
+)
+// this.openDatabase??=WebSQLShim.openDatabase
+
+nonASCII=s=>//replace to codePoint outside "\"" 
+  s.replace(/"(([^"\\]|\\")*)"|([^\x00-\x7F])/g, (_, q,_1, ch)=> q? _ : `_${ch.codePointAt(0).toString(16).padStart(4, '0')}` )
+
 eDB=css=>{
-SQC.onchange=()=>{set(SQCo,"p", P.喂(SQ糖,SQC.value+'\0')); cop(SQCo) } //emm之前还以为只有blur
-let f=dbSql("a"),e=SQC.parentNode,eC,tbl; on("click",css, eHid(e,E=>{SQC.value=E.innerText;SQC.onchange()} ) )(doc.body)
+SQC.onchange=()=>{set(SQCo,"p", P.喂(SQ糖,SQC.value+'\0')); if(eASCII.checked)SQC.value=nonASCII(SQCo.innerText); cop(SQCo) } //emm之前还以为只有blur
+let f=dbSql("a"),e=SQC.parentNode,eC,tbl; 
+  
+on("click",SQC.css=css, eHider(e,E=>{SQC.value=E.innerText;SQC.onchange()} ) )(doc.body)
 
 on("click","p", ev=>f((eC=ev.target).innerText,tbl) )(e)
 tbl=({rows:a,rowsAffected:num})=>{eC.before(el("span",`*${n(a)}+`,num));cop(eC); if(n(a)){let k=Object.keys(a[0]),th={},x;for(x of k)th[x]=x;
@@ -26,29 +58,43 @@ tbl=({rows:a,rowsAffected:num})=>{eC.before(el("span",`*${n(a)}+`,num));cop(eC);
 
 set=(ul,li,a)=>{if(li)a.forEach((x,i)=>a[i]=el(li,x)); ul.innerHTML=``;return el(ul,...a) }
 cop=e=>{if(eSel.checked){getSelection().selectAllChildren(e);doc.execCommand("copy")}}
-eHid=(e,f)=>{
-let c=e.style,ct=k=>e.classList.toggle(k);
+eHider=(e,f)=>{
+let c=e.style,ct=k=>e.classList.toggle(k), e0;
 ct("gone");e.onblur=()=>{ct("show");e.addEventListener("transitionend",()=>ct("gone"),{once:$Y}) }
-return ev=>{if(e.classList.contains("gone")){f(ev.target); Object.assign(c,{left:ev.pageX,top:ev.pageY});}  e.onblur()}
+
+  return (ev,e1,mv)=>{
+    if((e1=ev.target).matches(SQC.css)&&e1!=e0){mv=!!e0; e0=e1}
+    if(mv||e.classList.contains("gone")){f(ev.target); c.translate=`${ev.pageX}px ${ev.pageY}px`;}  if(!mv)e.onblur() }
 }
 
 el=(k/*tag*/,...fe)=>{if(!k.nodeType)k=doc.createElement(k);  while(typeof fe=="function")fe.shift()(k) ;for(let e of fe)k.append(e) ;return k}
 on=(k,css,f)=>e=>e.addEventListener(k, ev=>{if(ev.target.matches(css))f(ev)})
 </script>
 <style>
-.SQC{    border: 2px solid gray; position:absolute; background:whitesmoke;
-    margin: 0.5em; opacity:0;
-    transition: .5s opacity cubic-bezier(0.42, 0.09, 0, 1.01); max-width:120vw; }
+.SQC{
+  border: 2px solid gray;
+  position:absolute;
+  background:whitesmoke;
+  margin: 0.5em;
+  opacity:0;
+  transition: .5s  cubic-bezier(0.42, 0.09, 0, 1.01);
+  max-width:120vw;
+  left: 0;
+  top:0
+}
+:root {overflow-x:hidden}
 .show{opacity:1}.gone{pointer-events:none}
 #SQC{width:100%}
-#SQCo>p:hover{background:yellowgreen}
+#SQCo>p:hover{background: sandybrown;}
+#SQCo>p{cursor: zoom-in;}
 #SQCo span{float:right;background:skyblue; border-left: 2px solid red;}
 
 .SQC table>tr:first-child {
-    background: yellow;
-    font-size: 1.4em;}
-.SQC tr:hover {background: aqua;}
-.SQC td:hover {background: pink;}
+    background: yellowgreen;
+    font-size: 1.4em;
+    }
+.SQC tr:hover {background: powderblue;}
+.SQC td:hover {background: cyan;t(black, transparent);}
 
 blockquote {
     margin: 6px;
@@ -224,7 +270,7 @@ P.典=(o,t=tadd(o,trieS) )=>P.tok(10,s=>{
 <!--https://codebeautify.org/markdown-viewer-->
 <h1 id="sqsu查询语言">SQsu查询语言</h1>
 <p><strong>SQsugar(SQ糖)</strong> 是我设计的一门翻译到SQL的查询语言，作为一次小实验。我给它写了个简单的查询界面，你可以在浏览器里离线地学习/简写通用 SQL 来操作数据库。</p>
-<p>请不要试着打字或默写本文的SQL语句，然后去粘贴到什么 <em>且忽略掉查询结果</em> ，它不值得你这么做。</p>
+<p>* 请不要试着打字或默写本文的SQL语句，然后去粘贴到什么黑框框 <em>且忽略掉查询结果</em> ，nerd Excel 不值得你这么做。☝️🤓</p>
 <blockquote>
 <p>学会SQ糖等于学会 SQL 吗？</p>
 </blockquote>
@@ -238,7 +284,7 @@ P.典=(o,t=tadd(o,trieS) )=>P.tok(10,s=>{
 名 文, 重 浮(3), 高 数1,
 品种 文(5), 月龄 数1, 毛色 文(1)/*定(&quot;白&quot;,&quot;黄&quot; ,&quot;黑&quot;)*/
 )
-有删!表狗 //如果首句报错才
+有删!表狗 //如果首句报错可以
 新建狗
 (1 &quot;Mike&quot; 3 28 &quot;吉娃娃&quot; 10 &quot;白&quot;)
 (2 &quot;Sala&quot; 6.5 40 &quot;柴犬&quot; 15 &quot;黄&quot;)
@@ -257,6 +303,11 @@ P.典=(o,t=tadd(o,trieS) )=>P.tok(10,s=>{
 取(极大月龄,名)狗
 有用表;取;
 取(月龄/12 as 年龄,名)
+
+// <a href=https://sql.js.org/examples/GUI/> ⭐️ 点亮星星收藏夹！</a>
+// 这不是代码注入(UGC code injection)哦😁 提示：<b>往代码里内插数据必须`${}`转义</b>，用 loads("fn")(...vals)，或者干脆用变量名(xx=json.loads / xx=?1)
+// 点开看看，这里不该有蓝链哦。 以前评论区经常出现 & lt gt amp; 就是因为PHP脚本小子被注入怕了，什么地方都要替换一下。
+//      现在也有分别 [emoji]【用户方括号】 哦，还有拿假头像𝕏𝕕𝕕𝕜𝕜高仿名<abbr title=这也不是黑体哦，不过它只影响排版，安全性有举报就还好>𝓧𝓭𝓭𝓬𝓬</abbr>骗人的（甚至于，伪造“文件传输助手”...）
 </code></pre>
 <pre><code>有表X(x 狗 当 删 跟着) //外键
 有改表狗(id 数4? 正 自增)

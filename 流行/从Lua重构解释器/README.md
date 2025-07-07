@@ -63,15 +63,16 @@ Lua解释器是开源的，其输入Lua脚本却有两种形式: loadstr|chunk �
 - [美团技术沙龙：JVM -O3编译优化，从for开始读](https://tech.meituan.com/2020/10/22/java-jit-practice-in-meituan.html)  ([可对照@sysprog的C语言化简案例](https://hackmd.io/@sysprog/c-compiler-optimization?type=view#:~:text=Loop%20Optimizations))
 - [HW-PLLab 朱子润谈类型检查兼推导](https://zhuanlan.zhihu.com/p/634217295) (“数学”公式的部分不用看，[本文](#子类型断言)有覆盖)
 - [文言编程语言](https://wy-lang.org/) (类似生成PDF的PostScript，基于传参栈，难点还是在IDE封装与设计美工)
-- [代码罗塞塔](https://rosettacode.org/wiki/Guess_the_number/With_feedback#Rust)！ [特感兴趣的代码段,请可视化编译](https://godbolt.org/)-[或解析](https://astexplorer.net/)。 code.golf 是认识语言差异的好方法，当然也可当[OJ赛](https://www.freecodecamp.org/learn/rosetta-code/rosetta-code-challenges/execute-brain)-[OI.wiki](https://oi-wiki.org/intro/what-oi-wiki-is-not/) 来用。
-  - 比helloworld更有趣的是，前端 Counter(n=1), [fakeJSON.data](https://www.jsonplaceholder.org)+component-party.dev; 后端 EchoServer, 动物几何OOP/组合, lsTree+sqlGrepr
+- [代码罗塞塔](https://rosettacode.org/wiki/Guess_the_number/With_feedback#Rust)！ 特感兴趣的代码段,请[可视化编译](https://godbolt.org/)-[或解析](https://github.com/mingodad/parsertl-playground/pull/1/files?short_path=b335630#diff-b335630551682c19a781afebcf4d07bf978fb1f8ac04c6bf87428ed5106870f5)。 code.golf 是认识语言差异的好方法，当然也可当[OJ赛](https://www.freecodecamp.org/learn/rosetta-code/rosetta-code-challenges/execute-brain)-[OI.wiki](https://oi-wiki.org/intro/what-oi-wiki-is-not/) 来用。
+  - 比helloworld更有趣的是，前端 Counter(n=1), [fakeJSON.data](https://www.jsonplaceholder.org)+component-party.dev+www.jsonkeeper.com; 后端 EchoServer, 动物几何OOP/组合, lsTree+sqlGrepr
   - 最强文档在 [DevDocs](https://devdocs.io/vue~3/api/composition-api-setup)+[速查表](https://speedsheet.io/s/java?q=date#LjyM), [QuickRef](https://quickref.me/rust.html) devhints.io, cht.sh  tldr.sh
-  - 我曾用8种不同范式的语言[写CSV](https://wojs.org/Others/FillTemplate)或四则([甚至SQL](https://duangsuse.github.io/tv/黑了/db.htm#:~:text=SQLite%20甚至能),["Swagger"OpenAPI](https://github.com/duangsuse-valid-projects/GeekApk/blob/master/geekapk_v1b_api.geekspec))parser、[贪吃蛇](https://duangsuse.github.io/tv/游戏时间/贪吃蛇/?v=0.js)兼[2048](https://duangsuse.github.io/tv/流行/2048.htm?配0%287,7,2,128%29;doc.body.style.userSelect=%60none%60;cfg.动感=1)、[Desmos触屏乞丐版🎨](https://wojs.org/HTMLs/xy/xy.html)这种简单任务，别怕推倒重来，重构是Vue大那种架构师的日程。 (小作业:[DFS步骤可视化](https://clementmihailescu.github.io/Pathfinding-Visualizer/#),《广度优先的染色，从下面看？从侧面看？》)
-  - [日语分词器](https://wojs.org/HTMLs/Tokenizer_examples)、[人脸滤镜](https://duangsuse.github.io/tv/参动之画/斜眼/base)(移鼠标时绘制)、[图文模板](https://wojs.org/HTMLs/YounthLearn)(同目录共3种)、[FFT可视化](https://t.me/dsuse/18964)、[快排 归并 visualize](https://duangsuse.github.io/mkey/making_reco/#sorts3)、[baseN编码解码](https://t.me/dsuse/18917) 也比大家想的简单，就看您敢不敢上乞丐版。
-  - 喜欢OI、CTF、黑客松的js人可涉猎[这篇游记](https://blog.hanlin.press/2021/01/project-nano-official-writeup/)，程序员的时代，大概比1024节、软考、技术鄙视链、35岁淘汰论丰富一点儿。 倒不如说编程比数学更像「元学习」
+说编程比数学更像「元学习」
 - [草蟒和zhpy](https://www.grasspy.cn/zwdocs/grasspy-bible/chapter16_monkeypatch/)、 [一个OI生的Kotlin:kamet](https://mivik.moe/2020/tech/kamet-basic-implementation/)
+  - 我曾用8种不同范式的语言[写CSV](https://wojs.org/Others/FillTemplate)或四则([甚至SQL](https://duangsuse.github.io/tv/黑了/db.htm#:~:text=SQLite%20甚至能),["Swagger"OpenAPI](https://github.com/duangsuse-valid-projects/GeekApk/blob/master/geekapk_v1b_api.geekspec))parser、[贪吃蛇](https://duangsuse.github.io/tv/游戏时间/贪吃蛇/?v=0.js)兼[2048](https://duangsuse.github.io/tv/流行/2048.htm?配0%287,7,2,128%29;doc.body.style.userSelect=%60none%60;cfg.动感=1)、[Desmos触屏乞丐版🎨](https://wojs.org/HTMLs/xy/xy.html)这种简单任务，别怕推倒重来，重构是Vue大那种架构师的日程。 (小作业:[DFS步骤可视化](https://clementmihailescu.github.io/Pathfinding-Visualizer/#))
+  - [日语分词器](https://wojs.org/HTMLs/Tokenizer_examples)、[人脸滤镜](https://duangsuse.github.io/tv/参动之画/斜眼/base)(移鼠标时绘制)、[图文模板](https://wojs.org/HTMLs/YounthLearn)(同目录共3种)、[FFT可视化](https://t.me/dsuse/18964)、[快排 归并 visualize](https://duangsuse.github.io/mkey/making_reco/#sorts3)、[baseN编码解码](https://t.me/dsuse/18917) 也比大家想的简单，就看您敢不敢上乞丐版。 [500LoC里也有这些](https://github.com/aosabook/500lines/blob/master/blockcode/blockcode-images/blockcode_ide.png)
+  - 喜欢OI、CTF、黑客松的js人可涉猎[这篇游记](https://blog.hanlin.press/2021/01/project-nano-official-writeup/)，程序员的时代，大概比1024节、软考、技术鄙视链、35岁淘汰论丰富一点儿。 
 - 读完本书后，您再关注国内少数的优秀公知，便有更深的理解：  阮一峰(原经济博士,尤雨溪原室内设计) 廖雪峰 云风 陈皓 鸟哥 张鑫旭CSS, 王垠 [“温赵轮”之vczh轮子哥](http://www.cppblog.com/vczh/category/6824.html) Barret李靖 编程随想 clowwindy(SSR的原作) [Conmajia译DNN](https://www.cnblogs.com/conmajia/p/annt-feed-forward-fully-connected-neural-networks.html)
-- *这里说的优秀，不是B站编程娱乐圈「Java之父余胜军 C爹谭浩强」哦*
+  - *这里说的优秀，不是B站编程娱乐圈「Java之父余胜军 C爹谭浩强」哦*
 
 >“如果Markdown和YAML需要有深度解读的话，那就不需要它们了” ——最有「潜力」的知识，总是所见即所得的，因为语言只是个载体，唯心态有雅俗之别。 读书时若一些章节不那么易见，不妨多读几个链接，再待几周你且看他。
 ><br> <br>  谈点[功利主义](https://www.zhihu.com/question/544112523/answer/2586209720)和知识付费笑话：Linux可购买用户更名卡，首充6元赠送终端皮肤，黄金会员解锁bashrc配置……
@@ -207,7 +208,7 @@ echo 打开终端 . socks 即联网，插拔数据线自动重连
   - 😄：往常，我是说往常，知识不能被1:1传达。这种变异若是“天”择，便成了八股和鄙视链。 这种变异若是人择，便不成功，也成人之美。 没礼貌者，正是对前者：我认真理，我不认真。 我不当[套子里的人](https://www.thepaper.cn/newsDetail_forward_15633677)，不说套子接的字的句柄。它是双管道库启。
   - 🤓：长衫可以脱，这熬夜攻读和刷题的烙印，咱简中人没法破茧而出。我那么刻苦，按Lua三作者的源码一词词摸索赏析，你随便一句「真理不认真」就把我的天才赶下神坛。 我和那三人资质一样，我却写不出Lua吗？我心理该如何平衡？
   - 😄：对于无回报的努力，我们总说「天才」「运气」来给自己上价值。仿佛学鸟了，从吃灰的书堆里挑一本，便成了暴发户；却实在无休无止的“刻苦”中搞丢了自己的天材，赢了比赛，当了人牲。 Dijkstra说，他不懂为何简单与美的算法都如此高效？ 或许我们该用[「经济」的直觉算法](https://t.me/dsuse/19978)投资学习、分工、挑选、联合，在务实与务虚间找到坦荡与平衡。 别学晕了自己，也别PUA捧杀了别人。
-  - 😓：其实…最正宗的工程师文化是「有头脑，更高兴」。 [Ierusalimschy在论文（感谢spin6lock翻译）中](https://github.com/spin6lock/the_evolution_of_lua_zh_CN/blob/master/the_evolution_of_lua.md#51-----lua-1) 对Lua初创时的个性和试错直言不讳、对贡献了协程和Upval的「无名之辈」不乏赞美，这种宠辱不惊的定力，正是某些重视形式的人所匮乏的。 啥样的土壤开啥样的花，积累多重的果；对不知reason只懂how的问题少碰多等，复杂性自然就小了。
+  - 😓：其实…最正宗的工程师文化是「有头脑，更高兴」。 [Ierusalimschy在论文（感谢spin6lock翻译）中](https://github.com/spin6lock/the_evolution_of_lua_zh_CN/blob/master/the_evolution_of_lua.md#51-----lua-1)  对Lua初创时的个性和试错直言不讳、对贡献了[协程和Upval](https://github.com/spin6lock/the_evolution_of_lua_zh_CN/blob/master/the_evolution_of_lua.md#68-----可扩展语义)的「无名之辈」不乏赞美，这种宠辱不惊的定力，正是某些重视形式的人所匮乏的。 啥样的土壤开啥样的花，积累多重的果；对不知reason只懂how的问题少碰多等，复杂性自然就小了。
   - 🤓：……分工？ 那需要一个个分化的动态环境吧，也就是：函数导包！
 - 5.2
   - 自由变量指向 `_ENV`, `_ENV ??= globalThis` (5.1非 `const,arg[i],nonlocal[i,j]` 的变量名即全局键, 现在改成"this键", 以实现模块)
@@ -286,7 +287,7 @@ main([],print)
 
 ```lua
 -- 词法
-x = -(y) if kebab-case-小不忍则乱大谋啊
+x = -1(y) if kebab-case-小不忍则乱大谋啊
 1\=1  if '对仗\n'
 f"以f开头均使用{ES6}模板字串" == f({"以f开头均使用","模板字串"},ES6)
 -kst {YY=true,NN=false,NO=json.null, oo=1/0, pass={nil}} --kv和ret里没pass,ary里没NO, nil=delete
@@ -327,7 +328,7 @@ http":url" or{cry("fail")} { -- or"fail" { 配合 f!(x) = pcall(f,x) or{cry("(�
   isOK if({"错误","成功"})
 }
 pass () {
-  inc -i 0
+  -i inc(0)
   if (pick -YN) { -i i+1 }
   -i: u+1 -- 实在不想写 -x if{u} 宏。Lua的流水帐keywords和定义式编程有仇……
   -fs DAL("/$fs/tmp") cue
@@ -386,7 +387,7 @@ pass() {
   } cue
   Pair{1,2} -swap --不翻转了, AOP refine! 别在协程里用
 }
-con [[
+meet [[
   lu json:j io math:M coro-spawn
   io 仅lines
   coro-- fs net
@@ -398,7 +399,7 @@ con [[
 out m
 ```
 
-con读作「扛来可忑」，Lua里没有子包的概念(`__init__.py`, javax., PIL. Image ImgDraw..)，但左值仍不能以'.'结尾，'io'包重复会报错
+meet，Lua里没有子包的概念(`__init__.py`, javax., PIL. Image ImgDraw..)，但左值仍不能以'.'结尾，'io'包重复会报错
 
 我们叫她 Runar.lu(るな路娜er)，她是Ruby(路彼)的闺密。这便是本书送给你「比原理更重要的东西」： 追求原理的动力！ #码哲
 
@@ -444,8 +445,7 @@ u.posts(2) eq "[2, -1posts]"
 //试试编写 infix fun eq 和 SAM<Runnable> {1} 代理。当
 
 (cpp -E|tail -n+7 > a.kts; kotlinc -script a.kts) <<OK
-#define any(k) var k:Any?=pass
-#define pass Unit
+#define any(k) var k:Any?=null
 
 dd="match destruct w/o compiler features"
 "你好 我好 你坏坏 它坏".split(" ").map {
@@ -460,16 +460,16 @@ dd="match destruct w/o compiler features"
 }
 data class Col2<A,B> (val A:A, val B:B) {
   class js(any(A), any(B))
-  override fun equals(u: Any?) = if(u is Col2.js) (u.A eq A&&u.B eq B) else (u eq this)
+    override fun equals(u: Any?) = if(u is Col2.js) (u.A eq A&&u.B eq B) else (u eq this)
 }
 
 any(dd)
   set(v)=println(if(v is Var) v.v else v)
 class Var(any(v)) {
-  override fun equals(u: Any?)=if(pass==v){v=u; true}else{v==u}
+  override fun equals(u: Any?)=v?.run{v==u} ?: run{v=u; true}
 }
 fun<R> Var(n:Int, op:(Array<Var>)->R)=op(Array(n){Var()})
-infix fun Any? .eq(u:Any?)=if(pass==this)true else this==u
+infix fun Any? .eq(u:Any?)=if(null==this)true else (this==u)
 OK
 ```
 

@@ -82,5 +82,36 @@ fi
 #unzip -O shift-jis
 #diff -y x1 - #u加减c各自上文e补丁  #sed -i 's/\n\n/\n/'
 #for f in *.ust;do iconv -f shift-jis $f>"_$f";done
+# clip.lines(){ IFS=$'\n' read -d'' -r -a it <<<$(xclip -selection clipboard -o); }
+# mvBulk='process.argv.slice(1).map(x=>`mv -i "${x}"`).join("\n")' 
+#vidMMSS(){ ffprobe -v quiet -print_format json -show_format "$1"|jq -r '.format.duration|tonumber as $ss|"\($ss/60|floor):\($ss%60)"'; }
+# for f in *.mp4; do mv "$f" "t\$$(vidMMSS "$f"|sed 's/:/m/') $f";done
 
 #subaud(){ for f in "$@"; do cd $f; ffmpeg -i *.mp4 -i *.wav -c:a flac -sample_fmt s32 -map 0:v:0 -map 1:a:0 a.mp4; done }
+#vidATI(){ ffmpeg -vaapi_device /dev/dri/renderD128 -i $1 -c:v hevc_vaapi -profile:v main -vf 'format=nv12,hwupload' -c:a copy  "$(cut -d. -f1 <<<$1).mkv"; }
+# ffmpeg  -hide_banner -encoders|grep api; vainfo -a
+
+test && cat <<OK
+//js convert all img tags to OffscreenCanvas canvas webp Blob, then use showDirectoryPicker to save
+
+mod={
+  async dirIO() {
+    let ud=await window.showDirectoryPicker();
+    return {async to(u,v) {
+      let w=await (await ud.getFileHandle(u, { create: true })).createWritable()
+      await w.write(v); await w.close();
+    }}
+  },
+  img2pix(img) {
+    let ug = new OffscreenCanvas(img.naturalWidth, img.naturalHeight), g = ug.getContext('2d');g.drawImage(img, 0, 0);
+    g.blob=(k)=>ug.convertToBlob({ type: 'image/'+k })
+    return g
+  }
+}
+$$('img:not([class])').map(async(e,i)=>{
+  let path={':':'m','|':'#', '/':' of ', '\n':'-', ' ':'~' },
+  s=e.closest(`:is([class$=box],[class$=item])`).innerText.replace(/\s|:|\/|\|/g,m=>path[m]??m ); e.alt=/-(.*)/.exec(s)?.[1] ?? s ?? ''+i;
+  try{await ud.to(`${e.alt}.webp`, await mod.img2pix(e).blob('webp')) } catch{throw e.alt}
+})
+ud=await mod.dirIO()
+OK

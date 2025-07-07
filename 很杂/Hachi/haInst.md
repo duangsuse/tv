@@ -167,6 +167,7 @@ https://kgithub.com/YaoFANGUK/video-subtitle-extractor#3-安装依赖文件
 https://kgithub.com/YaoFANGUK/video-subtitle-extractor/blob/main/README_en.md#3-install-dependencies
 
 tool.browser.qq.com online.aimu-app.com#SRT字幕
+https://cloudconvert.com/ pdf docx
 https://bgsub.cn/webapp/ https://magicstudio.com/magiceraser#ribbet.ai  https://photokit.com/editor fotoforensics.com
 https://web.baimiaoapp.com/
 https://www.ventusky.com/
