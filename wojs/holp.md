@@ -101,7 +101,7 @@ def和class既是能增改审视的列表和字典，又是字面量；Type和co
 
 
 
-node -p 'eval(`"${process.argv.join("\\")}"`)' u{{400..406},500}{E,D,F}
+node -p 'eval(`"${process.argv.join("\\")}"`)' `u{{400..406},500}{E,D,F}`
 > oo.fs: Xupd(8) existsOk XTDDtc Xf5fs件 halfIO XnbIONeg1 jvmU16 raceOk MapOrd; oo.space(); sum/+oo deeperetry makej .dtavprxy=fpsDpr(svg2)
 
 need " before \n, of (lit String@ x.js:1:1)
